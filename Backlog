@@ -1,0 +1,191 @@
+Experiment
+US 01.01.01
+Risk: High
+Rationale: Create an experiment ID, upload the description and experiment area to the database based on this ID, and set an attribute to record the minimum number of trials
+Related Stories: 
+
+US 01.02.01
+Risk: High
+Rationale:Delete the information in the database according to the experiment ID
+Related Stories: US 01.01.01 US 01.03.01
+
+US 01.03.01
+Risk: High
+Rationale:An end button is set, and the owner can click the button to end the experiment and publish it. Set an Attributes called EndExperiment, the value is False when the end button is not clicked, and the value is True after clicking.
+Related Stories: US 01.01.01 US 01.02.01
+
+
+US 01.04.01
+Risk: High
+Rationale:I created a listview with a check box and a subscribe button. The experimenter first checks the experiment that he wants to participate in and then clicks the button to subscribe and participate in the experiment.Record the selected experiment id in the database based on the user id of the experimenter
+Related Stories:
+
+US 01.05.01
+Risk: Low
+Rationale: Create a new Activity which contains multiple buttons related to the experiment trails actions. There will be an add button related to the new fragment for adding new trails to the experiment. Once finished adding, the listView will notify the change and upload to the database.
+Related Stories: US 04.01.01
+
+US 01.08.01
+Risk: Low
+Rationale: Create an alertdialog. User will input a trail ID for ignoring which will be updated to the database, then back to previous activity, the listView will refresh and download new listview content from the database (but ignored data will still preserve in the database, just not showing in listview).
+Related Stories: US 01.05.01
+
+
+US 01.09.01
+Risk: Low
+Rationale: Get data from the database, analyze the data. There will be a button call experiment result, once click will jump to a new fragment that displays  the statistics result.
+Related Stories:US 01.05.01
+
+US 01.06.01
+Risk: Low
+Rationale:Using Getting data from the database and generating a histogram. There will be a button, once clicked will popup a new fragment that displays the histogram.
+Related Stories: US 01.05.01 US 01.08.01
+
+US 01.07.01
+Risk: Low
+Rationale:Using Getting data from the database and generating plots of trails over time. There will be a button, once clicked will popup a new fragment  that displays the plot.
+Related Stories: US 01.05.01 US 01.08.01
+
+
+
+
+
+US 02.01.01
+Risk: Medium
+Rationale: I use a button named “Question” to let the experimenter ask questions.
+Related Stories: US 01.04.01
+US 02.02.01
+Risk: Medium
+Rationale: I use an onClickListener to jump to the answer fragment when the experimenter or owner clicks a question.
+Related Stories: US 01.04.01, US 02.01.01
+US 02.03.01
+Risk: Low
+Rationale: I use a button named “Add” to let the experimenter or owner add answers to a question
+Related Stories:US 01.04.01, US 02.02.01
+
+
+US 03.01.01
+Risk: Medium
+Rationale: I import zxing packages from github and create QR codes, the QRcodes will help users to view the result of experiments.
+Related Stories: US 01.05.01,US 01.09.01
+
+US 03.02.01
+Risk: Low
+Rationale: I import zxing package from github and create QR codes, the QRcodes will help experimenters to add trials.
+Related Stories: US 01.05.01,US 01.07.01,US 01.06.01,US 01.09.01
+
+US 03.03.01
+Risk: Low
+Rationale: I use a pop-up window to show the barcode, and the barcode should be store with the trial information.
+Related Stories: US 01.05.01
+
+
+User profile
+US 04.01.01
+Risk: Low
+Rationale: Create a database with user name key to record user id, contact information and personal information
+Related Stories:
+
+US 04.02.01
+Risk: Low
+Rationale: Create an edit button, and the owner can edit personal information by clicking the button. After the user edits the personal information, the personal information is updated into the database
+Related Stories:US 04.01.01
+
+US 04.03.01
+Risk: Low
+Rationale:Perform a basic search on the database based on the user name entered by the user and return the obtained data for the user to view
+Related Stories:US 04.01.01
+
+
+Searching
+US 05.01.01
+Risk: Low
+Rationale:Perform a keywords search on the database based on the user keywords entered by the user,  and return all the obtained data for the user to view
+Related Stories:US 01.01.01 
+
+US 05.02.01
+Risk: Low
+Rationale:According to the experiment id, extract the description from the database, the owner id, and confirm the status of the acting according to EndExperiment. Finally displayed
+Related Stories: US 01.01.01 US 01.0 3 .01 
+Location
+US 06.01.01
+As an owner, I want to specify a Geo-location is required or not for trials.
+
+US 06.02.01
+As an experimenter, I want to add Geo-location to experimental trials that need it.
+
+US 06.03.01
+As an experimenter, I want to be warned about geo-location trials.
+
+US 06.04.01
+As an experimenter, I want to see a map of geo-locations of a geo-location enabled expirement.
+
+
+
+
+
+Experiment
+US 01.01.01
+As an owner, I want to publish an experiment with a description, a region, and a minimum number of trials.
+US 01.02.01
+As an owner, I want to unpublish an experiment.
+US 01.03.01
+As an owner, I want to end an experiment. This leaves the results available and public but does not allow new results to be added.
+US 01.04.01
+As an owner or experimenter, I want to subscribe to an experiment to participate in it.
+US 01.05.01
+As an experimenter, I want to be able to execute trials for an experiment and upload them to the experiment.
+US 01.08.01
+As an owner, I want to ignore certain experimenters results.
+US 01.09.01
+As an owner or experimenter, I want to observe statistics (quartiles, median, mean, stdev) about a current trials.
+US 01.06.01
+As an owner or experimenter, I want to see histograms of the results of trials.
+US 01.07.01
+As an owner or experimenter, I want to see plots of the results of trials over time.
+
+
+Questions
+US 02.01.01
+As an experimenter, I want to ask a question about an experiment.
+US 02.02.01
+As an experimenter or owner, I want to ask to reply to questions about an experiment.
+US 02.03.01
+As an experimenter or owner, I want to browse questions and replies about an experiment.
+QR Codes
+US 03.01.01
+As an experimenter, I want to be able to generate QR codes that I can print for a specific experiment and trial result (for instance PASS for a binomial trial I subscribed to).
+US 03.02.01
+As an experimenter, I want to be able scan QR codes to indicate success or failure, or increment counts for trials I subscribed to.
+US 03.03.01
+As an experimenter, I want to be able to register an arbitrary bar code (such as one off of your favourite book) to act a specific experiment result for a trial.
+
+
+
+
+
+
+User profile
+US 04.01.01
+As an owner or experimenter, I want a profile with a unique username and my contact information.
+US 04.02.01
+As an owner or experimenter, I want to edit the contact information in my profile.
+US 04.03.01
+As an owner or experimenter, I want to retrieve and show the profile of a presented username.
+Searching
+US 05.01.01
+As an experimenter, I want to specify a keyword, and search for all experiments that are available.
+US 05.02.01
+As an experimenter, I want search results to show each experiment with its description, owner username, and status.
+
+
+Location
+US 06.01.01
+As an owner, I want to specify a Geo-location is required or not for trials.
+US 06.02.01
+As an experimenter, I want to add Geo-location to experimental trials that need it.
+US 06.03.01
+As an experimenter, I want to be warned about geo-location trials.
+US 06.04.01
+As an experimenter, I want to see a map of geo-locations of a geo-location enabled expirement.
+
