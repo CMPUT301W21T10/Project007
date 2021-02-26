@@ -2,23 +2,23 @@ Experiment
 US 01.01.01
 Risk: High
 Rationale: Create an experiment ID, upload the description and experiment area to the database based on this ID, and set an attribute to record the minimum number of trials
-Related Stories: 
+Related Stories: US 01.02.01 US 01.03.01 US 01.04.01
 
 US 01.02.01
-Risk: High
+Risk: Medium
 Rationale:Delete the information in the database according to the experiment ID
 Related Stories: US 01.01.01 US 01.03.01
 
 US 01.03.01
-Risk: High
+Risk: Medium
 Rationale:An end button is set, and the owner can click the button to end the experiment and publish it. Set an Attributes called EndExperiment, the value is False when the end button is not clicked, and the value is True after clicking.
 Related Stories: US 01.01.01 US 01.02.01
 
 
 US 01.04.01
-Risk: High
+Risk: Medium
 Rationale:I created a listview with a check box and a subscribe button. The experimenter first checks the experiment that he wants to participate in and then clicks the button to subscribe and participate in the experiment.Record the selected experiment id in the database based on the user id of the experimenter
-Related Stories:
+Related Stories:US 01.01.01 US 04.01.01
 
 US 01.05.01
 Risk: Low
@@ -70,7 +70,7 @@ Rationale: I import zxing packages from github and create QR codes, the QRcodes 
 Related Stories: US 01.05.01,US 01.09.01
 
 US 03.02.01
-Risk: Low
+Risk: High
 Rationale: I import zxing package from github and create QR codes, the QRcodes will help experimenters to add trials.
 Related Stories: US 01.05.01,US 01.07.01,US 01.06.01,US 01.09.01
 
@@ -109,13 +109,17 @@ Rationale:According to the experiment id, extract the description from the datab
 Related Stories: US 01.01.01 US 01.0 3 .01 
 
 Location
-US 06.01.01
-As an owner, I want to specify a Geo-location is required or not for trials.
 
-US 01.01.01
+US 06.01.01
+Risk: Low
+Rationale: Determine whether the owner has set the region by the attributes of the region (region==True for has region)
+Related Stories: US 01.01.01
+
 
 US 06.02.01
-As an experimenter, I want to add Geo-location to experimental trials that need it.
+Risk: Low
+Rationale:When region==True is established, click the button region to jump to the google map to obtain geographic information and return to the database
+Related Stories: US 01.01.01 US 06.01.01
 
 US 06.03.01
 As an experimenter, I want to be warned about geo-location trials.
