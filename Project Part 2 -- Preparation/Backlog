@@ -122,4 +122,4 @@ US 06.04.01
 Risk: High
 Rationale: When experimentor want to create a new tail location in map fragment, the existing map location will display on the map. Once user click region button in the addtrailfragment, 
 it will jump to new fragment call map fragment, which will update the map info with the database.
-Related Stories: US 06.02.01
+Related Stories: US 06.02.01 US 01.01.01
