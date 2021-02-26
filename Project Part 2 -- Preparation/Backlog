@@ -1,4 +1,3 @@
-Experiment
 US 01.01.01
 Risk: High
 Rationale: Create an experiment ID, upload the description and experiment area to the database based on this ID, and set an attribute to record the minimum number of trials
@@ -47,9 +46,6 @@ Rationale:Using Getting data from the database and generating plots of trails ov
 Related Stories: US 01.05.01 US 01.08.01
 
 
-
-
-
 US 02.01.01
 Risk: Medium
 Rationale: I use a button named “Question” to let the experimenter ask questions.
@@ -79,8 +75,6 @@ Risk: Low
 Rationale: I use a pop-up window to show the barcode, and the barcode should be store with the trial information.
 Related Stories: US 01.05.01
 
-
-User profile
 US 04.01.01
 Risk: Low
 Rationale: Create a database with user name key to record user id, contact information and personal information
@@ -97,7 +91,6 @@ Rationale:Perform a basic search on the database based on the user name entered 
 Related Stories:US 04.01.01
 
 
-Searching
 US 05.01.01
 Risk: Low
 Rationale:Perform a keywords search on the database based on the user keywords entered by the user,  and return all the obtained data for the user to view
@@ -108,7 +101,6 @@ Risk: Low
 Rationale:According to the experiment id, extract the description from the database, the owner id, and confirm the status of the acting according to EndExperiment. Finally displayed
 Related Stories: US 01.01.01 US 01.0 3 .01 
 
-Location
 
 US 06.01.01
 Risk: Low
@@ -122,7 +114,12 @@ Rationale:When region==True is established, click the button region to jump to t
 Related Stories: US 01.01.01 US 06.01.01
 
 US 06.03.01
-As an experimenter, I want to be warned about geo-location trials.
+Risk: Low
+Rationale: When experimentor click the add button, at the button of the screen will generate a toast text which will warn user this trail will record location
+Related Stories: US 06.02.01
 
 US 06.04.01
-As an experimenter, I want to see a map of geo-locations of a geo-location enabled expirement.
+Risk: High
+Rationale: When experimentor want to create a new tail location in map fragment, the existing map location will display on the map. Once user click region button in the addtrailfragment, 
+it will jump to new fragment call map fragment, which will update the map info with the database.
+Related Stories: US 06.02.01
