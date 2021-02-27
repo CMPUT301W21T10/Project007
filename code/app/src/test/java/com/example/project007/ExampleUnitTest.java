@@ -1,4 +1,4 @@
-package com.example.jinglong_trialbook;
+package com.example.project007;
 
 import org.junit.Test;
 
