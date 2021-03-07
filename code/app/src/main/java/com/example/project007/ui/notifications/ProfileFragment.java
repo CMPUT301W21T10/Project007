@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.project007.R;
 
 public class ProfileFragment extends Fragment {
+    Integer userId;
 
     private ProfileViewModel profileViewModel;
 
