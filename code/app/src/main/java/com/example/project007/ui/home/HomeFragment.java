@@ -34,8 +34,7 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // init adapter
         experimentDataList = new ArrayList<>();
-        experimentAdapter = new CustomList(this, experimentDataList);
-
+        experimentAdapter = new CustomList(this.getContext(), experimentDataList);
 
     }
 

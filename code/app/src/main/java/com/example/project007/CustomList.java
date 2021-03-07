@@ -20,7 +20,7 @@ public class CustomList extends ArrayAdapter<Experiment> {
     private final ArrayList<Experiment> experiments;
     private final Context context;
 
-    public CustomList(HomeFragment context, ArrayList<Experiment> experiments) {
+    public CustomList(Context context, ArrayList<Experiment> experiments) {
         super(context,0,experiments);
         this.experiments = experiments;
         this.context = context;
