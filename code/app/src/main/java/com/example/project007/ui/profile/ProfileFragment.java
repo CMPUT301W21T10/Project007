@@ -1,4 +1,4 @@
-package com.example.project007.ui.notifications;
+package com.example.project007.ui.profile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

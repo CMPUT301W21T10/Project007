@@ -6,6 +6,13 @@ public class Experiment {
     private String date;
     private String type;
 
+    public Experiment(String name, String description, String date, String type) {
+        this.name = name;
+        this.description = description;
+        this.date = date;
+        this.type = type;
+    }
+
     public String getName() {
         return name;
     }
