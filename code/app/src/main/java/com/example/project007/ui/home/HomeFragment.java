@@ -98,8 +98,8 @@ public class HomeFragment extends Fragment implements ModifyExperimentFragment.O
         return root;
     }
 
-    public void initDatabase(){
-
+    public void initUI(){
+        //databaseDIY.setDatabase(db);
     }
 
     @Override
