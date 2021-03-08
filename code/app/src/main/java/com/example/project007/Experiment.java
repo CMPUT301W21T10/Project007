@@ -1,5 +1,7 @@
 package com.example.project007;
 
+import androidx.annotation.Nullable;
+
 import java.io.Serializable;
 
 public class Experiment implements Serializable {
@@ -9,11 +11,17 @@ public class Experiment implements Serializable {
     private String type;
     private Integer id;
 
-    public Experiment(String name, String description, String date, String type) {
+    public Experiment(String name, String description, String date, String type, @Nullable Integer id) {
         this.name = name;
         this.description = description;
         this.date = date;
         this.type = type;
+        if (id != null){
+            this.id = id;
+        }
+        else{
+            this.id = DatabaseDIY.generateId();
+        }
     }
 
     public String getName() {
