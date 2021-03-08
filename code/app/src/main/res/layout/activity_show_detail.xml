@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    tools:context=".ShowDetailActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/add_success_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_success" />
+
+        <Button
+            android:id="@+id/add_failure_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_failure" />
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:onClick="confirmChange"
+            android:text="@string/save" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/edit_experiment_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_experiment"
+            android:layout_gravity="center_horizontal"/>
+
+        <Button
+            android:id="@+id/delete_experiment_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="deleteExperiment"
+            android:text="@string/delete_experiment" />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/name_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="@string/name" />
+
+    <TextView
+        android:id="@+id/description_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="@string/description" />
+
+    <TextView
+        android:id="@+id/date_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="@string/date" />
+
+    <TextView
+        android:id="@+id/trails_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="@string/trails" />
+
+    <TextView
+        android:id="@+id/rate_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="@string/rate" />
+
+</LinearLayout>
+

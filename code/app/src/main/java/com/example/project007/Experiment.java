@@ -1,6 +1,8 @@
 package com.example.project007;
 
-public class Experiment {
+import java.io.Serializable;
+
+public class Experiment implements Serializable {
     private String name;
     private String description;
     private String date;
