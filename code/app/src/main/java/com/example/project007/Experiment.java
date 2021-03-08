@@ -9,7 +9,7 @@ public class Experiment implements Serializable {
     private String description;
     private String date;
     private String type;
-    private Integer id;
+    final private Integer id;
 
     public Experiment(String name, String description, String date, String type, @Nullable Integer id) {
         this.name = name;
@@ -54,5 +54,9 @@ public class Experiment implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Integer getId() {
+        return id;
     }
 }
