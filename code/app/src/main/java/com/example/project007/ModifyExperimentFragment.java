@@ -84,15 +84,19 @@ public class ModifyExperimentFragment extends DialogFragment {
                 int year = cldr.get(Calendar.YEAR);
                 int month = cldr.get(Calendar.MONTH);
                 int day = cldr.get(Calendar.DAY_OF_MONTH);
+                SimpleDateFormat timeF = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                String time = timeF.format(Calendar.getInstance().getTime());
+                //https://stackoverflow.com/questions/21917107/automatic-date-and-time-in-edittext-android
+                //answered by Smile2Life Feb 20
                 // date picker dialog
                 DatePickerDialog picker = new DatePickerDialog(getActivity(),
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int day) {
-                                @SuppressLint("DefaultLocale") String value = String.format("%d-%d-%d",year,month+1,day);
+                                @SuppressLint("DefaultLocale") String value = String.format("%d-%d-%d-%d",year,month+1,day, time);
                                 experimentDate.setText(value);
                             }
-                        }, year, month, day);
+                        }, year, month, day, time);
                 picker.show();
             }
         });

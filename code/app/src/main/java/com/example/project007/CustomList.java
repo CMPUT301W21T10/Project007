@@ -1,6 +1,5 @@
 package com.example.project007;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.example.project007.ui.home.HomeFragment;
 
 import java.util.ArrayList;
 

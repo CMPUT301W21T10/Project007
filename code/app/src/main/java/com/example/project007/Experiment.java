@@ -5,6 +5,8 @@ public class Experiment {
     private String description;
     private String date;
     private String type;
+    private String time;
+
 
     public Experiment(String name, String description, String date, String type) {
         this.name = name;
@@ -12,6 +14,7 @@ public class Experiment {
         this.date = date;
         this.type = type;
     }
+
 
     public String getName() {
         return name;
