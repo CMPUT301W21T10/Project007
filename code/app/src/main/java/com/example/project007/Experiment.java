@@ -1,16 +1,27 @@
 package com.example.project007;
 
-public class Experiment {
+import androidx.annotation.Nullable;
+
+import java.io.Serializable;
+
+public class Experiment implements Serializable {
     private String name;
     private String description;
     private String date;
     private String type;
+    final private Integer id;
 
-    public Experiment(String name, String description, String date, String type) {
+    public Experiment(String name, String description, String date, String type, @Nullable Integer id) {
         this.name = name;
         this.description = description;
         this.date = date;
         this.type = type;
+        if (id != null){
+            this.id = id;
+        }
+        else{
+            this.id = DatabaseDIY.generateId();
+        }
     }
 
     public String getName() {
@@ -43,5 +54,9 @@ public class Experiment {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Integer getId() {
+        return id;
     }
 }

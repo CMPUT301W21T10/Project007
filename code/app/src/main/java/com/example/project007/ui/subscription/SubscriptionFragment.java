@@ -1,4 +1,4 @@
-package com.example.project007.ui.dashboard;
+package com.example.project007.ui.subscription;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.project007.R;
 
-public class DashboardFragment extends Fragment {
+public class SubscriptionFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
+    private SubscriptionViewModel subscriptionViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        subscriptionViewModel =
+                new ViewModelProvider(this).get(SubscriptionViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_subscription, container, false);
         final TextView textView = root.findViewById(R.id.text_dashboard);
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        subscriptionViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
