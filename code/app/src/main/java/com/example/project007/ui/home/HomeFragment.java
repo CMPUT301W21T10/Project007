@@ -49,12 +49,16 @@ public class HomeFragment extends Fragment implements ModifyExperimentFragment.O
 
         // init adapter
         experimentDataList = new ArrayList<>();
+
+        experimentDataList.add(new Experiment("name","description","date","type",1)); // Adding the cities and provinces from FireStore
+
         experimentAdapter = new CustomList(this.getContext(), experimentDataList);
         experimentList = root.findViewById(R.id.experiment_list);
         experimentList.setAdapter(experimentAdapter);
         this.context=getActivity();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DatabaseDIY databaseDiy = new DatabaseDIY(db);
+        databaseDiy.add_one("Experiments",new Experiment("name","description","date","type",1));
 
         final CollectionReference collectionReference = db.collection("Experiments");
 
