@@ -3,6 +3,7 @@ package com.example.project007;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,7 +29,7 @@ public class DatabaseDIY {
         return true;
     }
 
-    public boolean add_one(String collection, Experiment experiment){
+    public boolean add_one(String collection,@Nullable Experiment experiment){
         // Retrieving the city name and the province name from the EditText fields
         CollectionReference collectionReference =  db.collection(collection);
         HashMap<String, String> data = new HashMap<>();
