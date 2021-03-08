@@ -12,13 +12,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 
-public abstract class DatabaseDIY {
+public class DatabaseDIY {
     private FirebaseFirestore db;
 
-    public void setDatabase(FirebaseFirestore instanceDb){
-        this.db = instanceDb;
+    public DatabaseDIY(FirebaseFirestore db) {
+        this.db = db;
     }
-
 
     public boolean delete_document(String value, String collection){
         if (value.length()>0) {

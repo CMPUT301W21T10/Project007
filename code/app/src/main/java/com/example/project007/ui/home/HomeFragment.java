@@ -3,6 +3,7 @@ package com.example.project007.ui.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.project007.CustomList;
+import com.example.project007.DatabaseDIY;
 import com.example.project007.Experiment;
 import com.example.project007.ModifyExperimentFragment;
 import com.example.project007.R;
@@ -38,8 +40,8 @@ public class HomeFragment extends Fragment implements ModifyExperimentFragment.O
     private ArrayAdapter<Experiment> experimentAdapter;
     private ArrayList<Experiment> experimentDataList;
     private Context context;
-    private FirebaseFirestore db;
     final String TAG = "Sample";
+    DatabaseDIY databaseDiy;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -51,7 +53,9 @@ public class HomeFragment extends Fragment implements ModifyExperimentFragment.O
         experimentList = root.findViewById(R.id.experiment_list);
         experimentList.setAdapter(experimentAdapter);
         this.context=getActivity();
-        db = FirebaseFirestore.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DatabaseDIY databaseDiy = new DatabaseDIY(db);
+
         final CollectionReference collectionReference = db.collection("Experiments");
 
         // Listener of add new instance button
@@ -62,7 +66,6 @@ public class HomeFragment extends Fragment implements ModifyExperimentFragment.O
                 new ModifyExperimentFragment().show(getFragmentManager(), "ADD_EXPERIMENT");
             }
         });
-
 
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -86,20 +89,7 @@ public class HomeFragment extends Fragment implements ModifyExperimentFragment.O
             }
         });
 
-
-
-        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                //  textView.setText(s);
-            }
-        });
         return root;
-    }
-
-    public void initUI(){
-        //databaseDIY.setDatabase(db);
     }
 
     @Override
