@@ -15,18 +15,6 @@
         android:gravity="center_horizontal">
 
         <Button
-            android:id="@+id/add_success_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_success" />
-
-        <Button
-            android:id="@+id/add_failure_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_failure" />
-
-        <Button
             android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
