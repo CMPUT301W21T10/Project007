@@ -7,6 +7,7 @@ public class Experiment implements Serializable {
     private String description;
     private String date;
     private String type;
+    private Integer id;
 
     public Experiment(String name, String description, String date, String type) {
         this.name = name;
