@@ -50,6 +50,9 @@ public class AddNnCBTrailFragment extends Fragment {
         if (!NnCBData_info.matches("[0-9]+") & !NnCBData_info.equals("")){
             Toast.makeText(getActivity(),"Input int number plz!",Toast.LENGTH_SHORT).show();
             return false;
+        }else if(!Trail_title.equals("")){
+            Toast.makeText(getActivity(),"Input a title plz!",Toast.LENGTH_SHORT).show();
+            return false;
         }else{
             return true;
         }

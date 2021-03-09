@@ -15,36 +15,30 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFragment.FragmentInteractionListener {
+public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFragment.FragmentInteractionListener, AddMesuTrailFragment.FragmentInteractionListener, AddNnCBTrailFragment.FragmentInteractionListener {
     ListView trail_List;
     ArrayAdapter<Experiment> trail_Adapter;
     ArrayList<Experiment> experi_DataList;
-    Button addButton;
     AddBinoTrailFragment addBinoTrailFragment;
+    AddMesuTrailFragment addMesuTrailFragment;
+    AddNnCBTrailFragment addNnCBTrailFragment;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+
 
         final FloatingActionButton addButton = findViewById(R.id.experimentBtn);
         trail_List = findViewById(R.id.trail_list);
 
-        String []experiments = {};
-        String []date = {};
-        String []success ={};
-        String []time ={};
-        String []fail = {};
-        String []type = {};
+
+        String type = "";
+        //String type = "Binomial";
 
         experi_DataList = new ArrayList<>();
 
-        for(int i=0; i<experiments.length; i++){
-            experi_DataList.add((new Experiment(experiments[i], date[i], time[i], success[i], fail[i], type[i])));
-        }
 
         trail_Adapter = new CustomList(this, experi_DataList);
         trail_List.setAdapter(trail_Adapter);
@@ -52,16 +46,39 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         //answered by stephen Ruda Dec 27 '16 at 18:35
 
 
+        //add button is where we specify the different experiment trails
+        //currently use fixed variable for debugging
+        //once firestrore ready this part will get type from database
+        if (type == "Binomial"){
+            addButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //initialize fragment
+                    addBinoTrailFragment = new AddBinoTrailFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.data_container, addBinoTrailFragment).addToBackStack(null).commit();
+                    //addButton.hide();
+                }
+            });
+        }else if(type == "Measurement"){
+            addButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //initialize fragment
+                    addMesuTrailFragment = new AddMesuTrailFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.data_container, addMesuTrailFragment).addToBackStack(null).commit();
+                }
+            });
+        }else{
+            addButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //initialize fragment
+                    addNnCBTrailFragment = new AddNnCBTrailFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.data_container, addNnCBTrailFragment).addToBackStack(null).commit();
+                }
+            });
+        }
 
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //initialize fragment
-                addBinoTrailFragment = new AddBinoTrailFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.data_container, addBinoTrailFragment).addToBackStack(null).commit();
-                //addButton.hide();
-            }
-        });
 
         //short click action for editting data
         trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {

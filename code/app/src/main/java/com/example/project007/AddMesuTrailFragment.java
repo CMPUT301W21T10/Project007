@@ -153,22 +153,5 @@ public class AddMesuTrailFragment extends Fragment {
         }
         return view;
     }
-/*    public String rate(String success, String fail){
-        String rate_text;
-        if (success.equals("") || fail.equals("")){
-            rate_text = "0";
-            return rate_text;
-        }
-        float success_count = Float.valueOf(success).floatValue();
-        float fail_count = Float.valueOf(fail).floatValue();
-        float rate = 0;
-        rate = success_count/(success_count + fail_count);
-        rate_text = String.valueOf(rate);
-        return rate_text;
-    }
-    //https://www.tutorialspoint.com/convert-from-string-to-float-in-java#:~:text=To%20convert%20String%20to%20float%2C%20use%20the%20valueOf()%20method.
-    //By Samual Sam 10-Dec-2018 16:33:58
-    //https://stackoverflow.com/questions/5071040/java-convert-integer-to-string
-    //By Bozho Feb 21 '11 at 20:45*/
 }
 

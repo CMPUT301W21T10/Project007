@@ -113,10 +113,6 @@ public class AddBinoTrailFragment extends Fragment{
                     String success_info = success.getText().toString();
                     String fail_info = fail.getText().toString();
                     String type_info = "Binomial";
-                    //temp written as this
-                    if (!success_info.matches("[0-9]+") & !success_info.equals("")){
-                    }else if(!fail_info.matches("[0-9]+")& !fail_info.equals("")) {
-                    }
 
                     Experiment experiment = new Experiment(title_info, time_info, date_info, success_info, fail_info, type_info);
                     //error prone
@@ -144,43 +140,22 @@ public class AddBinoTrailFragment extends Fragment{
                     String time_info = time_generate.getText().toString();
                     String success_info = success.getText().toString();
                     String fail_info = fail.getText().toString();
-                    //String rate_text = "";
-                    if (!success_info.matches("[0-9]+")&!success_info.equals("")){
-                        Toast.makeText(getActivity(),"Input number plz!",Toast.LENGTH_SHORT).show();
-                    }else if(!fail_info.matches("[0-9]+")&!fail_info.equals("")) {
-                        Toast.makeText(getActivity(), "Input number plz!", Toast.LENGTH_SHORT).show();
-                    }else{
-                        if (checkText(argument)) {
-                            listener.editing_data(argument);
-                            argument.setTrail_title(title_info);
-                            argument.setDate(date_info);
-                            argument.setTime(time_info);
-                            argument.setSuccess(success_info);
-                            argument.setFailure(fail_info);
-                            getParentFragmentManager().popBackStack();
-                        }
+
+
+                    if (checkText(argument)) {
+                        listener.editing_data(argument);
+                        argument.setTrail_title(title_info);
+                        argument.setDate(date_info);
+                        argument.setTime(time_info);
+                        argument.setSuccess(success_info);
+                        argument.setFailure(fail_info);
+                        getParentFragmentManager().popBackStack();
                     }
+
                 }
             });
 
         }
         return view;
     }
-/*    public String rate(String success, String fail){
-        String rate_text;
-        if (success.equals("") || fail.equals("")){
-            rate_text = "0";
-            return rate_text;
-        }
-        float success_count = Float.valueOf(success).floatValue();
-        float fail_count = Float.valueOf(fail).floatValue();
-        float rate = 0;
-        rate = success_count/(success_count + fail_count);
-        rate_text = String.valueOf(rate);
-        return rate_text;
-    }
-    //https://www.tutorialspoint.com/convert-from-string-to-float-in-java#:~:text=To%20convert%20String%20to%20float%2C%20use%20the%20valueOf()%20method.
-    //By Samual Sam 10-Dec-2018 16:33:58
-    //https://stackoverflow.com/questions/5071040/java-convert-integer-to-string
-    //By Bozho Feb 21 '11 at 20:45*/
 }
