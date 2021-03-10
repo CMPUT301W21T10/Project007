@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
-public class ShowDetailActivity extends AppCompatActivity implements ModifyExperimentFragment.OnFragmentInteractionListener{
+public class ShowDetailActivity extends AppCompatActivity {
 
     private static Experiment experiment;
     private static Integer position;
@@ -74,6 +74,7 @@ public class ShowDetailActivity extends AppCompatActivity implements ModifyExper
         finish();
     }
 
+    /*
     // when edit button is pressed, and finish input info, check name not none and modify current info.
     @Override
     public void onOkPressed(Experiment newExperiment) {
@@ -88,6 +89,8 @@ public class ShowDetailActivity extends AppCompatActivity implements ModifyExper
             setText();
         }
     }
+    */
+
 
 
 }
