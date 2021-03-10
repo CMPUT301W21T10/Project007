@@ -1,5 +1,6 @@
 package com.example.project007;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -15,21 +16,22 @@ import java.util.HashMap;
 
 import static android.content.ContentValues.TAG;
 
-public class DatabaseDIY {
-    private FirebaseFirestore db;
+public class DatabaseController {
+    @SuppressLint("StaticFieldLeak")
+    private static FirebaseFirestore db;
 
-    public DatabaseDIY(FirebaseFirestore db) {
-        this.db = db;
+    public static void setDatabaseController(FirebaseFirestore givenDB) {
+        db = givenDB;
     }
 
-    public boolean delete_document(String value, String collection){
+    public static boolean delete_document(String value, String collection){
         if (value.length()>0) {
             Task<Void> writeResult = db.collection(collection).document(value).delete();
         }
         return true;
     }
 
-    public boolean add_one(String collection,@Nullable Experiment experiment){
+    public static boolean add_one(String collection,@Nullable Experiment experiment){
         // Retrieving the city name and the province name from the EditText fields
         CollectionReference collectionReference =  db.collection(collection);
         HashMap<String, String> data = new HashMap<>();
