@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/main_color"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    >
+    <LinearLayout
+        android:padding="10dp"
+        android:background="@drawable/circle_bg_white"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="400dp">
+        <TextView
+            android:background="#F4F4F7"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:layout_marginTop="15dp"
+            android:id="@+id/pop_edit"
+            android:textSize="15sp"
+            android:textColor="@color/color_fff"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/main_color"
+            android:gravity="center"
+            android:text="Dismiss"
+            android:layout_width="100dp"
+            android:layout_height="40dp"/>
+    </LinearLayout>
+
+</LinearLayout>
