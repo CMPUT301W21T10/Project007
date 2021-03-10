@@ -1,13 +1,10 @@
 package com.example.project007.ui.home;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,41 +15,50 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.project007.CustomList;
 import com.example.project007.Experiment;
 import com.example.project007.ModifyExperimentFragment;
 import com.example.project007.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment implements ModifyExperimentFragment.OnFragmentInteractionListener{
+public class HomeFragment extends Fragment{
 
     private ListView experimentList;
     private ArrayAdapter<Experiment> experimentAdapter;
     private ArrayList<Experiment> experimentDataList;
     private Context context;
-    private FirebaseFirestore db;
     final String TAG = "Sample";
+    private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        homeViewModel =
+                new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
+        final TextView textView = root.findViewById(R.id.trytry);
+        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                textView.setText(s);
+            }
+        });
+        /*
         // init adapter
         experimentDataList = new ArrayList<>();
+
+        experimentDataList.add(new Experiment("name","description","date","type",1)); // Adding the cities and provinces from FireStore
+
         experimentAdapter = new CustomList(this.getContext(), experimentDataList);
         experimentList = root.findViewById(R.id.experiment_list);
         experimentList.setAdapter(experimentAdapter);
         this.context=getActivity();
-        db = FirebaseFirestore.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DatabaseController databaseControler = new DatabaseController(db);
+        databaseControler.add_one("Experiments",new Experiment("name","description","date","type",1));
+
         final CollectionReference collectionReference = db.collection("Experiments");
+
 
         // Listener of add new instance button
         final FloatingActionButton addCityButton = root.findViewById(R.id.add_experiment_button);
@@ -62,7 +68,6 @@ public class HomeFragment extends Fragment implements ModifyExperimentFragment.O
                 new ModifyExperimentFragment().show(getFragmentManager(), "ADD_EXPERIMENT");
             }
         });
-
 
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -85,25 +90,9 @@ public class HomeFragment extends Fragment implements ModifyExperimentFragment.O
 
             }
         });
-
-
-
-        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                //  textView.setText(s);
-            }
-        });
+*/
         return root;
     }
 
-    public void initUI(){
-        //databaseDIY.setDatabase(db);
-    }
 
-    @Override
-    public void onOkPressed(Experiment newExperiment) {
-
-    }
 }
