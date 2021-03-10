@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
 
 
         getChildFragmentManager()
-                .setFragmentResultListener("requestKey", this, new FragmentResultListener() {
+                .setFragmentResultListener("com.example.project007.modifiedExperiment", this, new FragmentResultListener() {
                     @Override
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
                         // Do something with the result
