@@ -138,7 +138,7 @@ public class HomeFragment extends Fragment {
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, ShowDetail.class);
+                Intent intent = new Intent(AfterLoginActivity.this, ShowDetail.class);
                 Experiment instanceExperiment = experimentDataList.get(position);
                 intent.putExtra("com.example.jinglong_trialbook.INSTANCE", instanceExperiment);
                 intent.putExtra("com.example.jinglong_trialbook.POSITION", position);
