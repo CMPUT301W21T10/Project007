@@ -96,7 +96,7 @@ public class ModifyExperimentFragment extends DialogFragment {
                         String type = experimentType.getText().toString();
                         Bundle result = new Bundle();
                         result.putSerializable("com.example.project007.modifiedExperiment", new Experiment(name,description,date,type,null) );
-                        getParentFragmentManager().setFragmentResult("requestKey", result);
+                        getParentFragmentManager().setFragmentResult("homeRequest", result);
                     }}).create();
     }
 }

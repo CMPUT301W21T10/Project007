@@ -26,6 +26,7 @@ import com.example.project007.DatabaseController;
 import com.example.project007.Experiment;
 import com.example.project007.ModifyExperimentFragment;
 import com.example.project007.R;
+import com.example.project007.ShowDetailActivity;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
@@ -58,13 +59,18 @@ public class HomeFragment extends Fragment {
 
 
         getChildFragmentManager()
-                .setFragmentResultListener("com.example.project007.modifiedExperiment", this, new FragmentResultListener() {
+                .setFragmentResultListener("homeRequest", this, new FragmentResultListener() {
                     @Override
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
                         // Do something with the result
                         Experiment experiment = (Experiment) bundle.getSerializable("com.example.project007.modifiedExperiment");
-                        DatabaseController.add_one("Experiments", experiment);
-                        Toast.makeText(getActivity(), "You did not enter a name", Toast.LENGTH_SHORT).show();
+                        boolean addResult = DatabaseController.add_one("Experiments", experiment);
+                        if (addResult){
+                            Toast.makeText(getActivity(), "Add Succeed", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(getActivity(), "Add Failed", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }
@@ -132,20 +138,20 @@ public class HomeFragment extends Fragment {
 
 
 
-        /*
+
         // listener to access detail of an element
         // package an experiment and position info in intent
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, ShowDetail.class);
+                Intent intent = new Intent(getActivity(), ShowDetailActivity.class);
                 Experiment instanceExperiment = experimentDataList.get(position);
-                intent.putExtra("com.example.jinglong_trialbook.INSTANCE", instanceExperiment);
-                intent.putExtra("com.example.jinglong_trialbook.POSITION", position);
-                startActivityForResult(intent, 100);
+                intent.putExtra("com.example.project007.INSTANCE", instanceExperiment);
+                intent.putExtra("com.example.project007.POSITION", position);
+                startActivity(intent);
             }
         });
-*/
+
         return root;
     }
 }
