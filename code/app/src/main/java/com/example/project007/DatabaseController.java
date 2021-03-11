@@ -42,6 +42,7 @@ public class DatabaseController {
         data.put("Date", experiment.getDate());
         data.put("Type", experiment.getType());
 
+        final boolean[] condition = new boolean[1];
         // The set method sets a unique id for the document
         collectionReference
                 .document(idString)
@@ -51,6 +52,7 @@ public class DatabaseController {
                     public void onSuccess(Void aVoid) {
                         // These are a method which gets executed when the task is succeeded
                         Log.d(TAG, "Data has been added successfully!");
+                        condition[0] = true;
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -58,10 +60,10 @@ public class DatabaseController {
                     public void onFailure(@NonNull Exception e) {
                         // These are a method which gets executed if there’s any problem
                         Log.d(TAG, "Data could not be added!" + e.toString());
+                        condition[0] = false;
                     }
                 });
-
-        return true;
+        return condition[0];
     }
 
     public static Integer generateId(){
