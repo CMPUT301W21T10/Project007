@@ -13,12 +13,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 
 public abstract class DatabaseDIY {
-    FirebaseFirestore db;
+    private FirebaseFirestore db;
 
-
-    public void initDatabase(){
-        db = FirebaseFirestore.getInstance();
+    public void setDatabase(FirebaseFirestore instanceDb){
+        this.db = instanceDb;
     }
+
 
     public boolean delete_document(String value, String collection){
         if (value.length()>0) {
@@ -32,5 +32,7 @@ public abstract class DatabaseDIY {
         return true;
     }
 
-
+    public static Integer generateId(){
+        return 1;
+    }
 }

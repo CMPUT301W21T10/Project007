@@ -109,7 +109,7 @@ public class ModifyExperimentFragment extends DialogFragment {
                         String description = experimentDescription.getText().toString();
                         String date = experimentDate.getText().toString();
                         String type = experimentType.getText().toString();
-                        listener.onOkPressed(new Experiment(name,description,date,type) );
+                        listener.onOkPressed(new Experiment(name,description,date,type,null) );
                     }}).create();
     }
 }

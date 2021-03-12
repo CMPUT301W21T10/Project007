@@ -2,6 +2,10 @@ package com.example.project007;
 
 import java.io.Serializable;
 
+
+import androidx.annotation.Nullable;
+
+
 public class Experiment implements Serializable {
     private String name;
     private String trail_title;
@@ -12,15 +16,19 @@ public class Experiment implements Serializable {
     private String success;
     private String failure;
     private String VariesData;
-    private int ID;
+    final private Integer id;
 
-
-
-    public Experiment(String name, String description, String date, String type) {
+    public Experiment(String name, String description, String date, String type, @Nullable Integer id) {
         this.name = name;
         this.description = description;
         this.date = date;
         this.type = type;
+        if (id != null){
+            this.id = id;
+        }
+        else{
+            this.id = DatabaseDIY.generateId();
+        }
     }
 
     //binomial trail
@@ -114,11 +122,12 @@ public class Experiment implements Serializable {
         this.VariesData = VariesData;
     }
 
-    public int getID() {
-        return ID;
+
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public Integer getId() {
+        return id;
     }
 }
