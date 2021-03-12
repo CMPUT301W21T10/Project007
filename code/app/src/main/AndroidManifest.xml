@@ -19,6 +19,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".AfterLoginActivity" />
         <activity android:name=".RegActivity" />
+        <activity android:name=".ShowDetailActivity" />
 
     </application>
 
