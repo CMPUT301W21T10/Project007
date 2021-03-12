@@ -38,7 +38,7 @@
             android:layout_width="195dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:maxLength="10"
+            android:maxLength="25"
             android:inputType="textPersonName" />
 
         <EditText
@@ -68,6 +68,13 @@
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="500dp" />-->
+
+    <FrameLayout
+        android:id="@+id/map_container"
+        android:layout_width="match_parent"
+        android:layout_height="500dp">
+
+    </FrameLayout>
 
     <Button
         android:id="@+id/ok_pressed"
