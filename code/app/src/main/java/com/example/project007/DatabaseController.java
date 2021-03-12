@@ -19,19 +19,25 @@ import static android.content.ContentValues.TAG;
 public class DatabaseController {
     @SuppressLint("StaticFieldLeak")
     private static FirebaseFirestore db;
+    private static String UserId = "1";
 
-    public static void setDatabaseController(FirebaseFirestore givenDB) {
-        db = givenDB;
+    public static String getUserId() {
+        return UserId;
     }
 
-    public static boolean delete_document(String value, String collection){
-        if (value.length()>0) {
-            Task<Void> writeResult = db.collection(collection).document(value).delete();
-        }
-        return true;
+    public static void setUserId(String userId) {
+        UserId = userId;
     }
 
-    public static boolean add_one(String collection,@Nullable Experiment experiment){
+    public static FirebaseFirestore getDb() {
+        return db;
+    }
+
+    public static void setDb(FirebaseFirestore db) {
+        DatabaseController.db = db;
+    }
+
+    public static boolean add_one(String collection, @Nullable Experiment experiment){
         // Retrieving the city name and the province name from the EditText fields
         CollectionReference collectionReference =  db.collection(collection);
         HashMap<String, String> data = new HashMap<>();

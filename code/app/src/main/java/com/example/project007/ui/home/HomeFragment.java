@@ -98,7 +98,7 @@ public class HomeFragment extends Fragment {
 
         final FirebaseFirestore db;
         db = FirebaseFirestore.getInstance();
-        DatabaseController.setDatabaseController(db);
+        DatabaseController.setDb(db);
         final CollectionReference collectionReference = db.collection("Experiments");
 
         // Listener of add new instance button
