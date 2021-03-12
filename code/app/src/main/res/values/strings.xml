@@ -18,5 +18,6 @@
     <string name="save">Confirm</string>
     <string name="pick_date">XXXX-XX-XX</string>
     <string name="type">Experiment type</string>
+    <string name="trail">Trail#</string>
 
 </resources>

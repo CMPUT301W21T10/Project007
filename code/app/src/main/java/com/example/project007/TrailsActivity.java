@@ -6,7 +6,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,8 +16,8 @@ import java.util.ArrayList;
 
 public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFragment.FragmentInteractionListener, AddMesuTrailFragment.FragmentInteractionListener, AddNnCBTrailFragment.FragmentInteractionListener {
     ListView trail_List;
-    ArrayAdapter<Experiment> trail_Adapter;
-    ArrayList<Experiment> experi_DataList;
+    ArrayAdapter<Trails> trail_Adapter;
+    ArrayList<Trails> trails_DataList;
     AddBinoTrailFragment addBinoTrailFragment;
     AddMesuTrailFragment addMesuTrailFragment;
     AddNnCBTrailFragment addNnCBTrailFragment;
@@ -27,20 +26,26 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.trails_activity_main);
 
 
         final FloatingActionButton addButton = findViewById(R.id.experimentBtn);
         trail_List = findViewById(R.id.trail_list);
 
 
-        String type = "";
-        //String type = "Binomial";
+        //String type = "";
+        String type = "Binomial";
 
-        experi_DataList = new ArrayList<>();
+        trails_DataList = new ArrayList<>();
+
+        if (type.equals("Binomial")){
+            trail_Adapter = new TrailList_Bino(this, trails_DataList);
+        }else{
+            trail_Adapter = new TrailList_OtherFrags(this, trails_DataList);
+        }
 
 
-        trail_Adapter = new CustomList(this, experi_DataList);
+
         trail_List.setAdapter(trail_Adapter);
         //https://stackoverflow.com/questions/41350269/my-listview-is-showing-the-object-and-not-the-contents-of-each-object/41350519
         //answered by stephen Ruda Dec 27 '16 at 18:35
@@ -49,7 +54,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         //add button is where we specify the different experiment trails
         //currently use fixed variable for debugging
         //once firestrore ready this part will get type from database
-        if (type == "Binomial"){
+        if (type.equals("Binomial")){
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -59,13 +64,32 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                     //addButton.hide();
                 }
             });
-        }else if(type == "Measurement"){
+
+            trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Trails newtrail = trail_Adapter.getItem(position);
+                    AddBinoTrailFragment fragment = AddBinoTrailFragment.newInstance(newtrail);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.data_container, fragment).addToBackStack(null).commit();
+                }
+            });
+
+        }else if(type.equals("Measurement")){
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //initialize fragment
                     addMesuTrailFragment = new AddMesuTrailFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.data_container, addMesuTrailFragment).addToBackStack(null).commit();
+                }
+            });
+
+            trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Trails newtrail = trail_Adapter.getItem(position);
+                    AddMesuTrailFragment Me_fragment = AddMesuTrailFragment.newInstance(newtrail);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.data_container, Me_fragment).addToBackStack(null).commit();
                 }
             });
         }else{
@@ -77,18 +101,16 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                     getSupportFragmentManager().beginTransaction().replace(R.id.data_container, addNnCBTrailFragment).addToBackStack(null).commit();
                 }
             });
+            trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Trails newtrail = trail_Adapter.getItem(position);
+                    AddNnCBTrailFragment NcCb_fragment = AddNnCBTrailFragment.newInstance(newtrail);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.data_container, NcCb_fragment).addToBackStack(null).commit();
+                }
+            });
         }
 
-
-        //short click action for editting data
-        trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Experiment newtrail = trail_Adapter.getItem(position);
-                AddBinoTrailFragment fragment = AddBinoTrailFragment.newInstance(newtrail);
-                getSupportFragmentManager().beginTransaction().replace(R.id.data_container, fragment).addToBackStack(null).commit();
-            }
-        });
 
 
         //longClick action for delete data
@@ -96,7 +118,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 //Delete event
-                experi_DataList.remove(position);
+                trails_DataList.remove(position);
                 trail_Adapter.notifyDataSetChanged();
                 return false;
             }
@@ -107,11 +129,11 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     }
 
     @Override
-    public void sending_data(Experiment experiment) {
-        trail_Adapter.add(experiment);
+    public void sending_data(Trails trails) {
+        trail_Adapter.add(trails);
     }
     @Override
-    public void editing_data(Experiment experiment) {
+    public void editing_data(Trails trails) {
         trail_Adapter.notifyDataSetChanged();
     }
 

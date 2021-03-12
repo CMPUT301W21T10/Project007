@@ -25,31 +25,31 @@ public class AddMesuTrailFragment extends Fragment {
     //https://stackoverflow.com/questions/37121091/passing-data-from-activity-to-fragment-using-interface
     //Answered by Masum at May 9 '16 at 17:57
     public interface FragmentInteractionListener{
-        void sending_data(Experiment experiment);
-        void editing_data(Experiment experiment);
+        void sending_data(Trails trails);
+        void editing_data(Trails trails);
     }
 
 
-    static AddBinoTrailFragment newInstance(Experiment experiment){
+    static AddMesuTrailFragment newInstance(Trails trails){
         Bundle args = new Bundle();
-        args.putSerializable("result", experiment);
-        AddBinoTrailFragment fragment = new AddBinoTrailFragment();
+        args.putSerializable("result", trails);
+        AddMesuTrailFragment fragment = new AddMesuTrailFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public boolean checkText (Experiment experiment){
+    public boolean checkText (Trails trails){
         //https://stackoverflow.com/questions/18259644/how-to-check-if-a-string-matches-a-specific-format
         //answered by arshajii  Aug 15 '13 at 18:55
 
 
         //String success = experiment.getSuccess();
-        String Trail_title = experiment.getTrail_title();
-        String measurementData_info = experiment.getVariesData();
+        String Trail_title = trails.getTrail_title();
+        String measurementData_info = trails.getVariesData();
 
 
-        if (!measurementData_info.matches("[+-]?([0-9]*[.])?[0-9]+")){
-            Toast.makeText(getActivity(),"Input number plz!",Toast.LENGTH_SHORT).show();
+        if (!measurementData_info.matches("([0-9]*[.])[0-9]+")){
+            Toast.makeText(getActivity(),"Input a positive float number plz!",Toast.LENGTH_SHORT).show();
             return false;
         }else if (Trail_title.equals("")){
             Toast.makeText(getActivity(),"Title is empty!",Toast.LENGTH_SHORT).show();
@@ -77,10 +77,10 @@ public class AddMesuTrailFragment extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        View view =inflater.inflate(R.layout.fragment_add_trail, container, false);
+        View view =inflater.inflate(R.layout.fragment_add_othertrail, container, false);
         title = view.findViewById(R.id.trail_Title_editText);
         date_generate = view.findViewById(R.id.date_editText);
-        measurementData = view.findViewById(R.id.SuccessText);
+        measurementData = view.findViewById(R.id.ResultText);
         //using same Textview for different showing
         time_generate = view.findViewById(R.id.time_editText);
 
@@ -110,10 +110,10 @@ public class AddMesuTrailFragment extends Fragment {
                     String type_info = "Measurement";
                     //temp written as this
 
-                    Experiment experiment = new Experiment(title_info, time_info, date_info, measurementData_info, type_info);
+                    Trails trails = new Trails(title_info, date_info, type_info, time_info, measurementData_info);
                     //error prone
-                    if (checkText(experiment)){
-                        listener.sending_data(experiment);
+                    if (checkText(trails)){
+                        listener.sending_data(trails);
                         getParentFragmentManager().popBackStack();
                         //https://stackoverflow.com/questions/43043936/close-a-fragment-on-button-click-which-is-inside-that-fragment
                         //answered by DrGregoryHouse Apr 23 '19 at 13:48
@@ -121,10 +121,10 @@ public class AddMesuTrailFragment extends Fragment {
                 }
             });
         }else{
-            Experiment argument = (Experiment) getArguments().get("result");
+            Trails argument = (Trails) getArguments().get("result");
             title.setText(argument.getTrail_title());
             date_generate.setText(argument.getDate());
-            time_generate.setText(argument.getDate());
+            time_generate.setText(argument.getTime());
             measurementData.setText(argument.getVariesData());
             //edit items
             okButton.setOnClickListener(new View.OnClickListener() {
@@ -134,18 +134,14 @@ public class AddMesuTrailFragment extends Fragment {
                     String date_info= date_generate.getText().toString();
                     String time_info = time_generate.getText().toString();
                     String measurementData_info = measurementData.getText().toString();
-                    //String rate_text = "";
-                    if (!measurementData_info.matches("[+-]?([0-9]*[.])?[0-9]+")&!measurementData_info.equals("")){
-                        Toast.makeText(getActivity(),"Input float plz!",Toast.LENGTH_SHORT).show();
-                    }else{
-                        if (checkText(argument)) {
-                            listener.editing_data(argument);
-                            argument.setTrail_title(title_info);
-                            argument.setDate(date_info);
-                            argument.setTime(time_info);
-                            argument.setVariesData(measurementData_info);
-                            getParentFragmentManager().popBackStack();
-                        }
+                    if (checkText(argument)) {
+                        listener.editing_data(argument);
+                        argument.setTrail_title(title_info);
+                        argument.setDate(date_info);
+                        argument.setTime(time_info);
+                        argument.setVariesData(measurementData_info);
+                        getParentFragmentManager().popBackStack();
+
                     }
                 }
             });

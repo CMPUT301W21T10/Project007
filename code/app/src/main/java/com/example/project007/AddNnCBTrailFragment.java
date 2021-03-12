@@ -25,32 +25,32 @@ public class AddNnCBTrailFragment extends Fragment {
     //https://stackoverflow.com/questions/37121091/passing-data-from-activity-to-fragment-using-interface
     //Answered by Masum at May 9 '16 at 17:57
     public interface FragmentInteractionListener{
-        void sending_data(Experiment experiment);
-        void editing_data(Experiment experiment);
+        void sending_data(Trails trails);
+        void editing_data(Trails trails);
     }
 
 
-    static AddBinoTrailFragment newInstance(Experiment experiment){
+    static AddNnCBTrailFragment newInstance(Trails trails){
         Bundle args = new Bundle();
-        args.putSerializable("result", experiment);
-        AddBinoTrailFragment fragment = new AddBinoTrailFragment();
+        args.putSerializable("result", trails);
+        AddNnCBTrailFragment fragment = new AddNnCBTrailFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public boolean checkText (Experiment experiment){
+    public boolean checkText (Trails trails){
         //https://stackoverflow.com/questions/18259644/how-to-check-if-a-string-matches-a-specific-format
         //answered by arshajii  Aug 15 '13 at 18:55
 
 
-        String NnCBData_info = experiment.getVariesData();
-        String Trail_title = experiment.getTrail_title();
+        String NnCBData_info = trails.getVariesData();
+        String Trail_title = trails.getTrail_title();
 
 
         if (!NnCBData_info.matches("[0-9]+") & !NnCBData_info.equals("")){
             Toast.makeText(getActivity(),"Input int number plz!",Toast.LENGTH_SHORT).show();
             return false;
-        }else if(!Trail_title.equals("")){
+        }else if(Trail_title.equals("")){
             Toast.makeText(getActivity(),"Input a title plz!",Toast.LENGTH_SHORT).show();
             return false;
         }else{
@@ -76,10 +76,10 @@ public class AddNnCBTrailFragment extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        View view =inflater.inflate(R.layout.fragment_add_trail, container, false);
+        View view =inflater.inflate(R.layout.fragment_add_othertrail, container, false);
         title = view.findViewById(R.id.trail_Title_editText);
         date_generate = view.findViewById(R.id.date_editText);
-        NnCBData = view.findViewById(R.id.SuccessText);
+        NnCBData = view.findViewById(R.id.ResultText);
         time_generate = view.findViewById(R.id.time_editText);
 
         Button okButton= view.findViewById(R.id.ok_pressed );
@@ -108,10 +108,10 @@ public class AddNnCBTrailFragment extends Fragment {
                     String type_info = "Binomial";
                     //temp written as this
 
-                    Experiment experiment = new Experiment(title_info, time_info, date_info, NnCBData_info, type_info);
+                    Trails trails = new Trails(title_info, date_info, type_info, time_info, NnCBData_info);
                     //error prone
-                    if (checkText(experiment)){
-                        listener.sending_data(experiment);
+                    if (checkText(trails)){
+                        listener.sending_data(trails);
                         getParentFragmentManager().popBackStack();
                         //https://stackoverflow.com/questions/43043936/close-a-fragment-on-button-click-which-is-inside-that-fragment
                         //answered by DrGregoryHouse Apr 23 '19 at 13:48
@@ -119,10 +119,10 @@ public class AddNnCBTrailFragment extends Fragment {
                 }
             });
         }else{
-            Experiment argument = (Experiment) getArguments().get("result");
+            Trails argument = (Trails) getArguments().get("result");
             title.setText(argument.getTrail_title());
             date_generate.setText(argument.getDate());
-            time_generate.setText(argument.getDate());
+            time_generate.setText(argument.getTime());
             NnCBData.setText(argument.getVariesData());
             //edit items
             okButton.setOnClickListener(new View.OnClickListener() {

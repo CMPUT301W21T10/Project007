@@ -26,34 +26,34 @@ public class AddBinoTrailFragment extends Fragment{
     //https://stackoverflow.com/questions/37121091/passing-data-from-activity-to-fragment-using-interface
     //Answered by Masum at May 9 '16 at 17:57
     public interface FragmentInteractionListener{
-        void sending_data(Experiment experiment);
-        void editing_data(Experiment experiment);
+        void sending_data(Trails trails);
+        void editing_data(Trails trails);
     }
 
 
-    static AddBinoTrailFragment newInstance(Experiment experiment){
+    static AddBinoTrailFragment newInstance(Trails trails){
         Bundle args = new Bundle();
-        args.putSerializable("result", experiment);
+        args.putSerializable("result", trails);
         AddBinoTrailFragment fragment = new AddBinoTrailFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public boolean checkText (Experiment experiment){
+    public boolean checkText (Trails trails){
         //https://stackoverflow.com/questions/18259644/how-to-check-if-a-string-matches-a-specific-format
         //answered by arshajii  Aug 15 '13 at 18:55
 
 
-        String success = experiment.getSuccess();
-        String fail = experiment.getFailure();
-        String Trail_title = experiment.getTrail_title();
+        String success = trails.getSuccess();
+        String fail = trails.getFailure();
+        String Trail_title = trails.getTrail_title();
 
 
         if (!success.matches("[0-9]+") & !success.equals("")){
-            Toast.makeText(getActivity(),"Input number plz!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),"Input success count plz!",Toast.LENGTH_SHORT).show();
             return false;
         }else if(!fail.matches("[0-9]+")& !fail.equals("")){
-            Toast.makeText(getActivity(),"Input number plz!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),"Input failure count plz!",Toast.LENGTH_SHORT).show();
             return false;
         }else if (Trail_title.equals("")){
             Toast.makeText(getActivity(),"Title is empty!",Toast.LENGTH_SHORT).show();
@@ -114,10 +114,10 @@ public class AddBinoTrailFragment extends Fragment{
                     String fail_info = fail.getText().toString();
                     String type_info = "Binomial";
 
-                    Experiment experiment = new Experiment(title_info, time_info, date_info, success_info, fail_info, type_info);
+                    Trails trails = new Trails(title_info, date_info, type_info, time_info, success_info, fail_info);
                     //error prone
-                    if (checkText(experiment)){
-                        listener.sending_data(experiment);
+                    if (checkText(trails)){
+                        listener.sending_data(trails);
                         getParentFragmentManager().popBackStack();
                         //https://stackoverflow.com/questions/43043936/close-a-fragment-on-button-click-which-is-inside-that-fragment
                         //answered by DrGregoryHouse Apr 23 '19 at 13:48
@@ -125,10 +125,10 @@ public class AddBinoTrailFragment extends Fragment{
                 }
             });
         }else{
-            Experiment argument = (Experiment) getArguments().get("result");
+            Trails argument = (Trails) getArguments().get("result");
             title.setText(argument.getTrail_title());
             date_generate.setText(argument.getDate());
-            time_generate.setText(argument.getDate());
+            time_generate.setText(argument.getTime());
             success.setText(argument.getSuccess());
             fail.setText(argument.getFailure());
             //edit items

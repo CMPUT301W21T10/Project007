@@ -36,9 +36,13 @@ public class CustomList extends ArrayAdapter<Experiment> {
         TextView experimentName = view.findViewById(R.id.name_view);
         TextView experimentDescription = view.findViewById(R.id.description_view);
         TextView experimentDate = view.findViewById(R.id.date_view);
+
+        //error Prone!!! this file may contain previous version experiment xml path, check it before use it!!!!
+
         TextView experimentTrails = view.findViewById(R.id.trails_view);
         TextView experimentRate = view.findViewById(R.id.rate_view);
 
+        //error Prone!!! this file may contain previous version experiment xml path, check it before use it!!!!
 
         experimentName.setText(experiment.getName());
         experimentDescription.setText(experiment.getDescription());
