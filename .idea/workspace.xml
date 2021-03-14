@@ -32,7 +32,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4146808a-939b-46bf-b41d-abeaeff7f582" name="Default Changelist" comment="Add Current time to the Date string; This part just for testing Commit">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/code/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/app/src/main/java/com/example/project007/MapFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/app/src/main/java/com/example/project007/MapFragment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +57,7 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/code" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
