@@ -10,6 +10,7 @@ public class Experiment implements Serializable {
     private String date;
     private String type;
     private Integer id;
+    private String userId;
 
     public Experiment(String name, String description, String date, String type, @Nullable Integer id) {
         this.name = name;
@@ -22,6 +23,11 @@ public class Experiment implements Serializable {
         else{
             this.id = DatabaseController.generateId();
         }
+        this.userId = DatabaseController.getUserId();
+    }
+
+    public String getUserId() {
+        return userId;
     }
 
     public String getName() {
