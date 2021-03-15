@@ -27,6 +27,7 @@ import com.example.project007.Experiment;
 import com.example.project007.ModifyExperimentFragment;
 import com.example.project007.R;
 import com.example.project007.ShowDetailActivity;
+import com.example.project007.TrailsActivity;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
@@ -144,7 +145,7 @@ public class HomeFragment extends Fragment {
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), ShowDetailActivity.class);
+                Intent intent = new Intent(getActivity(), TrailsActivity.class);
                 Experiment instanceExperiment = experimentDataList.get(position);
                 intent.putExtra("com.example.project007.INSTANCE", instanceExperiment);
                 intent.putExtra("com.example.project007.POSITION", position);

@@ -1,5 +1,6 @@
 package com.example.project007;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,20 +22,24 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     AddBinoTrailFragment addBinoTrailFragment;
     AddMesuTrailFragment addMesuTrailFragment;
     AddNnCBTrailFragment addNnCBTrailFragment;
-
+    private Experiment experiment;
+    private Integer position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trails_activity_main);
 
+        Intent intent = getIntent();
+        experiment = (Experiment) intent.getSerializableExtra("com.example.project007.INSTANCE");
+        position = intent.getIntExtra("com.example.project007.POSITION", -1);
 
         final FloatingActionButton addButton = findViewById(R.id.experimentBtn);
         trail_List = findViewById(R.id.trail_list);
 
 
         //String type = "";
-        String type = "Binomial";
+        String type = experiment.getType();
 
         trails_DataList = new ArrayList<>();
 

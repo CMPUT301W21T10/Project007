@@ -20,7 +20,7 @@ public class Experiment implements Serializable {
             this.id = id;
         }
         else{
-            //this.id = DatabaseController.generateId();
+            this.id = DatabaseController.generateId();
         }
     }
 
