@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                             DataSnapshot next = iterator.next();
                             if (next.getKey().equals(regEmail.getText().toString())){
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class).putExtra("uid",next.getKey()));
-                                return;
+                                finish();
                             }
                         }
                         Toast.makeText(LoginActivity.this, " Uid err!",

@@ -70,6 +70,7 @@ public class ProfileFragment extends Fragment {
     private List<UserEntity> temp;
     private ProfileViewModel profileViewModel;
 
+    @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         profileViewModel =
