@@ -23,6 +23,7 @@ public class CustomList extends ArrayAdapter<Experiment> {
         this.context = context;
     }
 
+    @SuppressLint("SetTextI18n")
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
 
@@ -37,16 +38,14 @@ public class CustomList extends ArrayAdapter<Experiment> {
         TextView experimentDescription = view.findViewById(R.id.description_view);
         TextView experimentDate = view.findViewById(R.id.date_view);
 
-        //error Prone!!! this file may contain previous version experiment xml path, check it before use it!!!!
-
-        TextView experimentTrails = view.findViewById(R.id.trails_view);
-        TextView experimentRate = view.findViewById(R.id.rate_view);
-
-        //error Prone!!! this file may contain previous version experiment xml path, check it before use it!!!!
+        TextView experimentType = view.findViewById(R.id.type_view);
+        TextView experimentId = view.findViewById(R.id.id_view);
 
         experimentName.setText(experiment.getName());
         experimentDescription.setText(experiment.getDescription());
         experimentDate.setText(experiment.getDate());
+        experimentType.setText(experiment.getType());
+        experimentId.setText(Integer.toString(experiment.getId()));
 
         return view;
     }

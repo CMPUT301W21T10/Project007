@@ -2,20 +2,13 @@ package com.example.project007;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
-
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
-
-public class ShowDetailActivity extends AppCompatActivity implements ModifyExperimentFragment.OnFragmentInteractionListener{
+public class ShowDetailActivity extends AppCompatActivity {
 
     private static Experiment experiment;
     private static Integer position;
@@ -55,7 +48,7 @@ public class ShowDetailActivity extends AppCompatActivity implements ModifyExper
 
     // delete current select element, return result to main
     public void deleteExperiment(View view) {
-        Intent intent = new Intent(ShowDetailActivity.this,MainActivity.class);
+        Intent intent = new Intent(ShowDetailActivity.this, AfterLoginActivity.class);
         intent.putExtra("delete",true);
         intent.putExtra("position", position);
         setResult(100, intent);
@@ -64,7 +57,7 @@ public class ShowDetailActivity extends AppCompatActivity implements ModifyExper
 
     // confirm change, return result to main
     public void confirmChange(View view){
-        Intent intent = new Intent(ShowDetailActivity.this,MainActivity.class);
+        Intent intent = new Intent(ShowDetailActivity.this, AfterLoginActivity.class);
         setResult(100, intent);
         intent.putExtra("delete",false);
         intent.putExtra("position", position);
@@ -74,6 +67,7 @@ public class ShowDetailActivity extends AppCompatActivity implements ModifyExper
         finish();
     }
 
+    /*
     // when edit button is pressed, and finish input info, check name not none and modify current info.
     @Override
     public void onOkPressed(Experiment newExperiment) {
@@ -88,6 +82,8 @@ public class ShowDetailActivity extends AppCompatActivity implements ModifyExper
             setText();
         }
     }
+    */
+
 
 
 }

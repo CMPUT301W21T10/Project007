@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -26,7 +28,6 @@ public class ModifyExperimentFragment extends DialogFragment {
     private EditText experimentDescription;
     private EditText experimentDate;
     private EditText experimentType;
-    private OnFragmentInteractionListener listener;
 
     public Experiment currentExperiment = null;
 
@@ -37,23 +38,6 @@ public class ModifyExperimentFragment extends DialogFragment {
 
     // no argument means create a new one
     public ModifyExperimentFragment() {
-    }
-
-    // interface
-    public interface OnFragmentInteractionListener {
-        void onOkPressed(Experiment newExperiment);
-    }
-
-    // life cycle
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener){
-            listener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     // create dialog
@@ -109,7 +93,9 @@ public class ModifyExperimentFragment extends DialogFragment {
                         String description = experimentDescription.getText().toString();
                         String date = experimentDate.getText().toString();
                         String type = experimentType.getText().toString();
-                        listener.onOkPressed(new Experiment(name,description,date,type,null) );
+                        Bundle result = new Bundle();
+                        result.putSerializable("com.example.project007.modifiedExperiment", new Experiment(name,description,date,type,null) );
+                        getParentFragmentManager().setFragmentResult("homeRequest", result);
                     }}).create();
     }
 }
