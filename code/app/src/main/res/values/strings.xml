@@ -18,6 +18,8 @@
     <string name="save">Confirm</string>
     <string name="pick_date">XXXX-XX-XX</string>
     <string name="type">Experiment type</string>
+    <string name="trail">Trail#</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="id">Experiment id</string>
 
 </resources>

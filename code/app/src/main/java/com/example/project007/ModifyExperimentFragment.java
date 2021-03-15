@@ -68,7 +68,6 @@ public class ModifyExperimentFragment extends DialogFragment {
                 int year = cldr.get(Calendar.YEAR);
                 int month = cldr.get(Calendar.MONTH);
                 int day = cldr.get(Calendar.DAY_OF_MONTH);
-                // date picker dialog
                 DatePickerDialog picker = new DatePickerDialog(getActivity(),
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
