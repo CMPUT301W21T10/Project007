@@ -19,23 +19,14 @@ public class DatabaseController {
     @SuppressLint("StaticFieldLeak")
     private static FirebaseFirestore db;
     private static String UserId;
-    private static Integer maxUserId;
-    private static Integer maxTrailId;
+    private static Integer maxExperimentId;
 
-    public static Integer getMaxTrailId() {
-        return maxTrailId;
+    public static Integer getMaxExperimentId() {
+        return maxExperimentId;
     }
 
-    public static void setMaxTrailId(Integer maxTrailId) {
-        DatabaseController.maxTrailId = maxTrailId;
-    }
-
-    public static Integer getMaxUserId() {
-        return maxUserId;
-    }
-
-    public static void setMaxUserId(Integer maxUserId) {
-        DatabaseController.maxUserId = maxUserId;
+    public static void setMaxExperimentId(Integer maxExperimentId) {
+        DatabaseController.maxExperimentId = maxExperimentId;
     }
 
     public static String getUserId() {
@@ -54,7 +45,7 @@ public class DatabaseController {
         DatabaseController.db = db;
     }
 
-    public static boolean modify_experiment(String collection, @Nullable Experiment experiment){
+    public static boolean modify_experiment(String collection, Experiment experiment){
         // Retrieving the city name and the province name from the EditText fields
         CollectionReference collectionReference =  db.collection(collection);
         HashMap<String, String> data = new HashMap<>();
@@ -91,10 +82,7 @@ public class DatabaseController {
     }
 
 
-    public static Integer generateId(){
-        return maxUserId + 1;
-    }
-    public static Integer generateTrailId(){
-        return maxTrailId + 1;
+    public static Integer generateExperimentId(){
+        return maxExperimentId + 1;
     }
 }
