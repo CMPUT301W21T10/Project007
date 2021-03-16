@@ -20,6 +20,15 @@ public class DatabaseController {
     private static FirebaseFirestore db;
     private static String UserId;
     private static Integer maxUserId;
+    private static Integer maxTrailId;
+
+    public static Integer getMaxTrailId() {
+        return maxTrailId;
+    }
+
+    public static void setMaxTrailId(Integer maxTrailId) {
+        DatabaseController.maxTrailId = maxTrailId;
+    }
 
     public static Integer getMaxUserId() {
         return maxUserId;
@@ -84,5 +93,8 @@ public class DatabaseController {
 
     public static Integer generateId(){
         return maxUserId + 1;
+    }
+    public static Integer generateTrailId(){
+        return maxTrailId + 1;
     }
 }

@@ -24,13 +24,13 @@
         </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity" />
+        <activity android:name=".TrailsActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value=""/>
               
-        <activity android:name=".TrailsActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".AfterLoginActivity" />
         <activity android:name=".RegActivity" />
     </application>

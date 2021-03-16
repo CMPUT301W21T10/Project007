@@ -10,23 +10,28 @@ public class Trails implements Serializable {
     private String success;
     private String failure;
     private String VariesData;
+    private Integer ID;
+
+
 
     //for Binomial Trails
-    public Trails(String trail_title, String date, String type, String time, String success, String failure) {
+    public Trails(String trail_title, String date, String type, String time, String success, String failure, Integer ID) {
         this.trail_title = trail_title;
         this.date = date;
         this.type = type;
         this.time = time;
         this.success = success;
         this.failure = failure;
+        this.ID = ID;
     }
     //for Three other Trails
-    public Trails(String trail_title, String date, String type, String time, String variesData) {
+    public Trails(String trail_title, String date, String type, String time, String variesData, Integer ID) {
         this.trail_title = trail_title;
         this.date = date;
         this.type = type;
         this.time = time;
-        VariesData = variesData;
+        this.VariesData = variesData;
+        this.ID = ID;
     }
 
     public String getTrail_title() {
@@ -83,5 +88,13 @@ public class Trails implements Serializable {
 
     public void setVariesData(String variesData) {
         VariesData = variesData;
+    }
+
+    public Integer getID() {
+        return ID;
+    }
+
+    public void setID(Integer ID) {
+        this.ID = ID;
     }
 }
