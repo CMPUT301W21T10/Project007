@@ -21,10 +21,6 @@ public class DatabaseController {
     private static String UserId;
     private static Integer maxExperimentId;
 
-    public static Integer getMaxExperimentId() {
-        return maxExperimentId;
-    }
-
     public static void setMaxExperimentId(Integer maxExperimentId) {
         DatabaseController.maxExperimentId = maxExperimentId;
     }
