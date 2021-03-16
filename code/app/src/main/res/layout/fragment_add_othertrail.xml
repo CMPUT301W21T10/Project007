@@ -35,19 +35,20 @@
 
         <EditText
             android:id="@+id/date_editText"
-            android:layout_width="195dp"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:maxLength="25"
-            android:inputType="textPersonName" />
+            android:hint="Click here to select date"
+            android:inputType="textPersonName"
+            android:maxLength="25" />
 
         <EditText
             android:id="@+id/time_editText"
-            android:layout_width="197dp"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:maxLength="10"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:maxLength="10" />
     </LinearLayout>
 
 

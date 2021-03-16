@@ -159,7 +159,6 @@ public class AddNnCBTrailFragment extends Fragment {
                     String date_info= date_generate.getText().toString();
                     String time_info = time_generate.getText().toString();
                     String NnCBData_info = NnCBData.getText().toString();
-                    //String rate_text = "";
 
                     if (checkText(argument)) {
                         listener.editing_data(argument);
