@@ -23,6 +23,7 @@ public class Trails implements Serializable {
         this.success = success;
         this.failure = failure;
         this.ID = ID;
+        VariesData = String.valueOf(Integer.parseInt(success)-Integer.parseInt(failure));
     }
     //for Three other Trails
     public Trails(String trail_title, String date, String type, String time, String variesData, Integer ID) {

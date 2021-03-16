@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     AddBinoTrailFragment addBinoTrailFragment;
     AddMesuTrailFragment addMesuTrailFragment;
     AddNnCBTrailFragment addNnCBTrailFragment;
+    Result result;
     private Experiment experiment;
     private Integer position;
 
@@ -169,6 +171,15 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         if (id == R.id.questionsOpt) {
             return true;
         }else if (id == R.id.viewResult) {
+            if(trails_DataList.size()==0){
+                Toast toast = Toast.makeText(getApplicationContext(),"There's no trails for this experiment!",Toast.LENGTH_SHORT);
+                toast.show();
+            }else{
+                result = new Result();
+                getSupportFragmentManager().beginTransaction().replace(R.id.data_container, result).addToBackStack(null).commit();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("result",trails_DataList);
+                result.setArguments(bundle);}
             return true;
         }else if (id == R.id.QROpt) {
             return true;

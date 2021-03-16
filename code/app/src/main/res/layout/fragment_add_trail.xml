@@ -3,8 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:background="@android:color/white"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+>
 
     <!--https://stackoverflow.com/questions/16575177/fragment-is-transparent-and-shows-activity-below/16595086
     answered by Goofyahead Feb 17 '14 at 17:50-->
