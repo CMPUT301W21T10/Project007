@@ -45,7 +45,7 @@ public class DatabaseController {
         DatabaseController.db = db;
     }
 
-    public static boolean modify_experiment(String collection, @Nullable Experiment experiment){
+    public static boolean modify_experiment(String collection, Experiment experiment){
         // Retrieving the city name and the province name from the EditText fields
         CollectionReference collectionReference =  db.collection(collection);
         HashMap<String, String> data = new HashMap<>();

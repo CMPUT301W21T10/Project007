@@ -3,14 +3,16 @@ package com.example.project007;
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Experiment implements Serializable {
     private String name;
     private String description;
     private String date;
     private String type;
-    private Integer id;
-    private String userId;
+    private final Integer id;
+    private final String userId;
+    private ArrayList<Trails> trails = new ArrayList<Trails>();
 
     public Experiment(String name, String description, String date, String type, @Nullable Integer id) {
         this.name = name;
@@ -65,4 +67,17 @@ public class Experiment implements Serializable {
     public Integer getId() {
         return id;
     }
+
+    public ArrayList<Trails> getTrails() {
+        return trails;
+    }
+
+    public void setTrails(ArrayList<Trails> trails) {
+        this.trails = trails;
+    }
+
+    public void addTrail(Trails trail) {
+        this.trails.add(trail);
+    }
+
 }
