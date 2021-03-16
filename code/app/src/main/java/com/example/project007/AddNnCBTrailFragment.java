@@ -1,11 +1,15 @@
 package com.example.project007;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -20,6 +24,7 @@ public class AddNnCBTrailFragment extends Fragment {
     private EditText title;
     private EditText NnCBData;
     private EditText time_generate;
+    private Integer ID;
     private AddBinoTrailFragment.FragmentInteractionListener listener;
 
     //https://stackoverflow.com/questions/37121091/passing-data-from-activity-to-fragment-using-interface
@@ -85,15 +90,37 @@ public class AddNnCBTrailFragment extends Fragment {
         Button okButton= view.findViewById(R.id.ok_pressed );
 
         //get local date and time and put it into the edittext
-        SimpleDateFormat dateF = new SimpleDateFormat("EEE, d MMM yyyy", Locale.getDefault());
         SimpleDateFormat timeF = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        String date = dateF.format(Calendar.getInstance().getTime());
         String time = timeF.format(Calendar.getInstance().getTime());
         //https://stackoverflow.com/questions/21917107/automatic-date-and-time-in-edittext-android
         //answered by Smile2Life Feb 20
 
-        date_generate.setText(date);
+        //date_generate.setText(date);
         time_generate.setText(time);
+
+
+        // datePicker part
+        // prevent type
+        date_generate.setInputType(InputType.TYPE_NULL);
+        // start datePicker if clicked
+        date_generate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar cldr = Calendar.getInstance();
+                int year = cldr.get(Calendar.YEAR);
+                int month = cldr.get(Calendar.MONTH);
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog picker = new DatePickerDialog(getActivity(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int day) {
+                                @SuppressLint("DefaultLocale") String value = String.format("%d-%d-%d",year,month+1,day);
+                                date_generate.setText(value);
+                            }
+                        }, year, month, day);
+                picker.show();
+            }
+        });
 
 
         if (getArguments() == null){
@@ -108,7 +135,7 @@ public class AddNnCBTrailFragment extends Fragment {
                     String type_info = "Binomial";
                     //temp written as this
 
-                    Trails trails = new Trails(title_info, date_info, type_info, time_info, NnCBData_info);
+                    Trails trails = new Trails(title_info, date_info, type_info, time_info, NnCBData_info, ID);
                     //error prone
                     if (checkText(trails)){
                         listener.sending_data(trails);
@@ -132,7 +159,6 @@ public class AddNnCBTrailFragment extends Fragment {
                     String date_info= date_generate.getText().toString();
                     String time_info = time_generate.getText().toString();
                     String NnCBData_info = NnCBData.getText().toString();
-                    //String rate_text = "";
 
                     if (checkText(argument)) {
                         listener.editing_data(argument);

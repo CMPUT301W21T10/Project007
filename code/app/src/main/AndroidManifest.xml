@@ -15,7 +15,7 @@
 
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity 
-            android:name=".LoginActivity"
+            android:name=".TrailsActivity"
             android:label="@string/app_name">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -30,7 +30,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value=""/>
               
-        <activity android:name=".TrailsActivity" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".AfterLoginActivity" />
         <activity android:name=".RegActivity" />
     </application>
