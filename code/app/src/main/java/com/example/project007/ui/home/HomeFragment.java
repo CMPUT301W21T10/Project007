@@ -122,7 +122,7 @@ public class HomeFragment extends Fragment {
 
                         experimentDataList.add(new Experiment(name, description, date, type, id)); // Adding the cities and provinces from FireStore
                     }
-                    DatabaseController.setMaxUserId(experimentDataList.size());
+                    DatabaseController.setMaxExperimentId(experimentDataList.size());
 
                     experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
                 }
