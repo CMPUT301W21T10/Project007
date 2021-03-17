@@ -11,8 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.project007.ui.home.HomeFragment;
-
 import java.util.ArrayList;
 
 public class CustomList extends ArrayAdapter<Experiment> {
@@ -40,9 +38,9 @@ public class CustomList extends ArrayAdapter<Experiment> {
         TextView experimentName = view.findViewById(R.id.name_view);
         TextView experimentDescription = view.findViewById(R.id.description_view);
         TextView experimentDate = view.findViewById(R.id.date_view);
+
         TextView experimentType = view.findViewById(R.id.type_view);
         TextView experimentId = view.findViewById(R.id.id_view);
-
 
         experimentName.setText(experiment.getName());
         experimentDescription.setText(experiment.getDescription());

@@ -1,6 +1,5 @@
 package com.example.project007.ui.home;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,16 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.project007.CustomList;
@@ -26,10 +22,8 @@ import com.example.project007.DatabaseController;
 import com.example.project007.Experiment;
 import com.example.project007.ModifyExperimentFragment;
 import com.example.project007.R;
-import com.example.project007.ShowDetailActivity;
-import com.google.android.gms.tasks.Task;
+import com.example.project007.TrailsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -38,9 +32,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import javax.annotation.Nonnull;
 
 public class HomeFragment extends Fragment {
 
@@ -64,7 +55,7 @@ public class HomeFragment extends Fragment {
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
                         // Do something with the result
                         Experiment experiment = (Experiment) bundle.getSerializable("com.example.project007.modifiedExperiment");
-                        boolean addResult = DatabaseController.add_one("Experiments", experiment);
+                        boolean addResult = DatabaseController.modify_experiment("Experiments", experiment);
                         if (addResult){
                             Toast.makeText(getActivity(), "Add Succeed", Toast.LENGTH_SHORT).show();
                         }
@@ -131,6 +122,8 @@ public class HomeFragment extends Fragment {
 
                         experimentDataList.add(new Experiment(name, description, date, type, id)); // Adding the cities and provinces from FireStore
                     }
+                    DatabaseController.setMaxExperimentId(experimentDataList.size());
+
                     experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
                 }
             }
@@ -144,7 +137,7 @@ public class HomeFragment extends Fragment {
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), ShowDetailActivity.class);
+                Intent intent = new Intent(getActivity(), TrailsActivity.class);
                 Experiment instanceExperiment = experimentDataList.get(position);
                 intent.putExtra("com.example.project007.INSTANCE", instanceExperiment);
                 intent.putExtra("com.example.project007.POSITION", position);

@@ -3,13 +3,16 @@ package com.example.project007;
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Experiment implements Serializable {
     private String name;
     private String description;
     private String date;
     private String type;
-    final private Integer id;
+    private final Integer id;
+    private final String userId;
+    private Integer[] trailsId;
 
     public Experiment(String name, String description, String date, String type, @Nullable Integer id) {
         this.name = name;
@@ -20,8 +23,13 @@ public class Experiment implements Serializable {
             this.id = id;
         }
         else{
-            this.id = DatabaseController.generateId();
+            this.id = DatabaseController.generateExperimentId();
         }
+        this.userId = DatabaseController.getUserId();
+    }
+
+    public String getUserId() {
+        return userId;
     }
 
     public String getName() {
@@ -59,4 +67,14 @@ public class Experiment implements Serializable {
     public Integer getId() {
         return id;
     }
+
+    public Integer[] getTrailsId() {
+        return trailsId;
+    }
+
+    public void setTrailsId(Integer[] trailsId) {
+        this.trailsId = trailsId;
+    }
+
+
 }
