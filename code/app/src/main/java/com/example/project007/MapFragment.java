@@ -18,6 +18,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapFragment extends Fragment {
 
+    double returnLatitude;
+    double returnLongitude;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,6 +41,8 @@ public class MapFragment extends Fragment {
                     public void onMapClick(LatLng latLng) {
                         MarkerOptions markerOptions = new MarkerOptions();
                         markerOptions.position(latLng);
+                        returnLatitude = latLng.latitude;
+                        returnLongitude = latLng.longitude;//return value for location class
                         markerOptions.title(latLng.latitude + " : " + latLng.longitude);
                         googleMap.clear();
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
@@ -45,6 +51,8 @@ public class MapFragment extends Fragment {
                 });
             }
         });
+
+        Location location = new Location(returnLatitude, returnLongitude);
 
         return view;
     }
