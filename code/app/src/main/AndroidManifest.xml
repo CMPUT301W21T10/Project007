@@ -15,7 +15,7 @@
 
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity 
-            android:name=".TrailsActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,7 @@
         </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity" />
+        <activity android:name=".TrailsActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
