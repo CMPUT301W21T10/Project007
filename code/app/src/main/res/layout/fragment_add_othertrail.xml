@@ -38,7 +38,7 @@
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Click here to select date"
+            android:hint="Click twice to select date"
             android:inputType="textPersonName"
             android:maxLength="25" />
 
@@ -95,7 +95,7 @@
     <FrameLayout
         android:id="@+id/map_container"
         android:layout_width="match_parent"
-        android:layout_height="401dp">
+        android:layout_height="419dp">
 
     </FrameLayout>
 

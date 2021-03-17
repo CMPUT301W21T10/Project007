@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:maxLength="25"
-            android:hint="Click here to select date"
+            android:hint="Click twice to select date"
             android:inputType="textPersonName" />
 
         <EditText
@@ -100,9 +100,15 @@
     <FrameLayout
         android:id="@+id/map_container"
         android:layout_width="match_parent"
-        android:layout_height="345dp">
+        android:layout_height="431dp">
 
     </FrameLayout>
+
+    <Button
+        android:id="@+id/map_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose Location" />
 
     <Button
         android:id="@+id/ok_pressed"
@@ -110,11 +116,7 @@
         android:layout_height="wrap_content"
         android:text="OK"/>
 
-    <Button
-        android:id="@+id/map_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Choose Location" />
+
 
     <!--<FrameLayout
         android:id="@+id/data_container"

@@ -7,11 +7,10 @@
     tools:context=".MainActivity">
 
 
-
     <ListView
         android:id="@+id/trail_list"
         android:layout_width="match_parent"
-        android:layout_height="670dp"
+        android:layout_height="760dp"
         android:choiceMode="singleChoice"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,39 +22,50 @@
 
     </ListView>
 
+    <!--    <Button
+        android:id="@+id/experimentBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="650dp"
+        android:layout_marginBottom="15dp"
+        android:text="Add Trails?"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <FrameLayout
+        android:id="@+id/data_container"
+        android:layout_width="match_parent"
+        android:layout_height="710dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+    </FrameLayout>
+
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/experimentBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginStart="360dp"
-        android:layout_marginLeft="360dp"
-        android:layout_marginTop="564dp"
-        android:layout_marginEnd="29dp"
-        android:layout_marginRight="29dp"
-        android:layout_marginBottom="92dp"
+        android:layout_marginStart="321dp"
+        android:layout_marginTop="548dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="109dp"
         android:clickable="true"
-        android:contentDescription="TODO"
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
-
-    <FrameLayout
-        android:id="@+id/data_container"
-        android:layout_width="match_parent"
-        android:layout_height="670dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.949">
-
-
-    </FrameLayout>
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -72,15 +82,16 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.Design.NoActionBar" >
+            app:popupTheme="@style/Theme.Design.NoActionBar">
+
             <TextView
                 android:id="@+id/toolbarTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:gravity="left"
-                android:textSize="30dp"
                 android:textAppearance="@android:style/TextAppearance.WindowTitle"
+                android:textSize="30dp"
                 android:visibility="visible" />
         </androidx.appcompat.widget.Toolbar>
 
