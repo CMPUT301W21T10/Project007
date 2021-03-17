@@ -73,7 +73,7 @@
     <FrameLayout
         android:id="@+id/map_container"
         android:layout_width="match_parent"
-        android:layout_height="500dp">
+        android:layout_height="450dp">
 
     </FrameLayout>
 
@@ -81,15 +81,8 @@
         android:id="@+id/ok_pressed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="OK"/>
+        android:text="OK" />
 
-    <!--<FrameLayout
-        android:id="@+id/data_container"
-        android:layout_width="match_parent"
-        android:layout_height="540dp">
-
-
-    </FrameLayout>-->
 
 
 
