@@ -10,7 +10,7 @@
     <ListView
         android:id="@+id/trail_list"
         android:layout_width="match_parent"
-        android:layout_height="760dp"
+        android:layout_height="680dp"
         android:choiceMode="singleChoice"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,20 +35,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />-->
 
+
     <FrameLayout
         android:id="@+id/data_container"
         android:layout_width="match_parent"
-        android:layout_height="710dp"
+        android:layout_height="670dp"
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
 
     </FrameLayout>
-
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/experimentBtn"
