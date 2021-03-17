@@ -44,9 +44,9 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         trail_List = findViewById(R.id.trail_list);
 
 
-        //String type = experiment.getType();
+        String type = experiment.getType();
 
-        String type = "Binomial";
+        //String type = "Measurement";
 
         trails_DataList = new ArrayList<>();
 
