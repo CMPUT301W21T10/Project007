@@ -44,9 +44,9 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
 
 
         //String type = "";
-        String type = experiment.getType();
+        //String type = experiment.getType();
 
-        //String type = "Measurement";
+        String type = "Measurement";
 
         trails_DataList = new ArrayList<>();
 

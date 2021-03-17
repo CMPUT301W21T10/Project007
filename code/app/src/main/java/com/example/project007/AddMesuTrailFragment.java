@@ -91,6 +91,21 @@ public class AddMesuTrailFragment extends Fragment {
 
         Button okButton= view.findViewById(R.id.ok_pressed );
 
+        //initialize map content
+        Button mapButton = view.findViewById(R.id.map_button);
+        Fragment fragment = new MapFragment();
+
+        //testing
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction().replace(R.id.map_container, fragment).commit();
+            }
+        });
+
+        //testing
+        //initialize map content
+
         //get local date and time and put it into the edittext
         SimpleDateFormat timeF = new SimpleDateFormat("HH:mm", Locale.getDefault());
         String time = timeF.format(Calendar.getInstance().getTime());
