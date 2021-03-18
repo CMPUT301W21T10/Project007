@@ -1,15 +1,19 @@
 package com.example.project007;
 
-public class Location {
-    float longitude;
-    float latitude;
+import java.io.Serializable;
 
-    public Location(float longitude, float latitude) {
+public class Location implements Serializable {
+    double longitude;
+    double latitude;
+
+    public Location(double longitude, double latitude) {
         this.longitude = longitude;
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+
+
+    public double getLongitude() {
         return longitude;
     }
 
@@ -17,7 +21,7 @@ public class Location {
         this.longitude = longitude;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
