@@ -14,6 +14,8 @@
         android:maxLength="10"
         android:hint="@string/add_name_hint"
         android:inputType="textPersonName"
+        android:textSize="20sp"
+
         android:autofillHints="true"/>
 
     <EditText
@@ -22,6 +24,8 @@
         android:layout_height="wrap_content"
         android:autofillHints="true"
         android:maxLength="40"
+        android:textSize="20sp"
+
         android:hint="@string/add_description_hint"
         android:inputType="textPersonName" />
 
@@ -30,11 +34,11 @@
         android:id="@+id/editTextDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="date"
-        android:hint="@string/add_date_hint"
-
-        android:autofillHints="true"/>
+        android:text="@string/add_date_hint"
+        android:textSize="20sp"
+        android:autofillHints="true"
+        android:editable="false"
+        tools:ignore="Deprecated" />
 
     <EditText
         android:id="@+id/editTextType"
@@ -42,6 +46,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/add_date_hint"
+        android:textSize="20sp"
 
         android:autofillHints="true"/>
 

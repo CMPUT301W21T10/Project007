@@ -14,7 +14,7 @@ public class Experiment implements Serializable {
     private final String userId;
     private Integer[] trailsId;
     private String[] subscriptionId;
-
+    private boolean requireLocation;
 
     public Experiment(String name, String description, String date, String type, @Nullable Integer id,@Nullable Integer[] trailsId, @Nullable String[] subscriptionId) {
         this.name = name;

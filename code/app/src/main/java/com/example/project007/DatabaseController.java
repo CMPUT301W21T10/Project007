@@ -18,7 +18,7 @@ import static android.content.ContentValues.TAG;
 public class DatabaseController {
     @SuppressLint("StaticFieldLeak")
     private static FirebaseFirestore db;
-    private static String UserId;
+    private static String UserId = "1";
     private static Integer maxExperimentId;
 
     public static void setMaxExperimentId(Integer maxExperimentId) {
@@ -51,7 +51,8 @@ public class DatabaseController {
         data.put("Description", experiment.getDescription());
         data.put("Date", experiment.getDate());
         data.put("Type", experiment.getType());
-        data.put("User", experiment.getUserId());
+        data.put("trailsId", experiment.getUserId());
+        data.put("subscriptionId", experiment.getUserId());
 
         final boolean[] condition = new boolean[1];
         // The set method sets a unique id for the document
