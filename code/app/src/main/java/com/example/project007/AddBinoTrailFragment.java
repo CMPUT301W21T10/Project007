@@ -11,9 +11,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,6 +31,9 @@ public class AddBinoTrailFragment extends Fragment{
     private EditText time_generate;
     private Integer ID;
     private FragmentInteractionListener listener;
+    private TextView latitude;
+    private TextView longitude;
+    private Location location;
 
     //https://stackoverflow.com/questions/37121091/passing-data-from-activity-to-fragment-using-interface
     //Answered by Masum at May 9 '16 at 17:57
@@ -52,6 +59,7 @@ public class AddBinoTrailFragment extends Fragment{
         String success = trails.getSuccess();
         String fail = trails.getFailure();
         String Trail_title = trails.getTrail_title();
+        Location location = trails.getLocation();
 
 
         if (!success.matches("[0-9]+") & !success.equals("")){
@@ -62,6 +70,9 @@ public class AddBinoTrailFragment extends Fragment{
             return false;
         }else if (Trail_title.equals("")){
             Toast.makeText(getActivity(),"Title is empty!",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if(location == null){
+            Toast.makeText(getActivity(),"Enter a location plz!",Toast.LENGTH_SHORT).show();
             return false;
         }else{
             return true;
@@ -81,6 +92,21 @@ public class AddBinoTrailFragment extends Fragment{
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+        getChildFragmentManager()
+                .setFragmentResultListener("showLocation", this, new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
+                        // Do something with the result
+                        location = (Location) bundle.getSerializable("Location");
+                    }
+                });
+    }
+
+    @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
@@ -92,18 +118,39 @@ public class AddBinoTrailFragment extends Fragment{
         success = view.findViewById(R.id.SuccessText);
         fail = view.findViewById(R.id.failText);
         time_generate = view.findViewById(R.id.time_editText);
-
+        latitude = view.findViewById(R.id.latitude_editText );
+        longitude = view.findViewById(R.id.longitude_editText );
         Button okButton= view.findViewById(R.id.ok_pressed );
 
+        //initialize map content
+        Button mapButton = view.findViewById(R.id.map_button);
+        Fragment fragment = new MapFragment();
+        getChildFragmentManager().beginTransaction().replace(R.id.map_container, fragment).commit();
 
+
+
+        //initialize map content
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                //Location location =(Location)getArguments().getSerializable("location");
+                if (location!=null){
+                    latitude.setText(String.valueOf(location.getLatitude()));
+                    longitude.setText(String.valueOf(location.getLongitude()));
+
+                    Toast.makeText(getActivity(),"No location selected!",Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
         //get local date and time and put it into the edittext
         SimpleDateFormat timeF = new SimpleDateFormat("HH:mm", Locale.getDefault());
         String time = timeF.format(Calendar.getInstance().getTime());
         //https://stackoverflow.com/questions/21917107/automatic-date-and-time-in-edittext-android
         //answered by Smile2Life Feb 20
-
-        //date_generate.setText(date);
         time_generate.setText(time);
 
 

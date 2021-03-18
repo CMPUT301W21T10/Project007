@@ -2,11 +2,13 @@ package com.example.project007;
 
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -44,6 +46,11 @@ public class MapFragment extends Fragment {
                         returnLatitude = latLng.latitude;
                         returnLongitude = latLng.longitude;//return value for location class
                         markerOptions.title(latLng.latitude + " : " + latLng.longitude);
+
+                        Bundle location = new Bundle();
+                        location.putSerializable("Location", new Location(returnLongitude, returnLatitude) );
+                        getParentFragmentManager().setFragmentResult("showLocation", location);
+
                         googleMap.clear();
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
                         googleMap.addMarker(markerOptions);
@@ -52,7 +59,6 @@ public class MapFragment extends Fragment {
             }
         });
 
-        Location location = new Location(returnLatitude, returnLongitude);
 
         return view;
     }

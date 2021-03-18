@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -25,17 +27,30 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     AddBinoTrailFragment addBinoTrailFragment;
     AddMesuTrailFragment addMesuTrailFragment;
     AddNnCBTrailFragment addNnCBTrailFragment;
+    TextView descriptionTrail;
     private Experiment experiment;
     private Integer position;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trails_activity_main);
+        descriptionTrail = findViewById(R.id.descriptionforTrail);
+        //database for unique trails
+        final FirebaseFirestore db;
+        db = FirebaseFirestore.getInstance();
+        DatabaseController.setDb(db);
+        final CollectionReference collectionReference = db.collection("Trails");
+        //database for unique trails
 
         //String type = "";
         //String type = experiment.getType();
         //String title = experiment.getName();
+        //String description = experiment.getDescription();
+        String description ="SB!";
+        descriptionTrail.setText(description);
         String title = "Measurement One";
 
         String type = "Measurement";
