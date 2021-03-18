@@ -41,14 +41,14 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         experiment = (Experiment) intent.getSerializableExtra("com.example.project007.INSTANCE");
         position = intent.getIntExtra("com.example.project007.POSITION", -1);
 
-
         final FloatingActionButton addButton = findViewById(R.id.experimentBtn);
         trail_List = findViewById(R.id.trail_list);
 
 
-        //String type = experiment.getType();
+        //String type = "";
+        String type = experiment.getType();
 
-        String type = "Binomial";
+        //String type = "Measurement";
 
         trails_DataList = new ArrayList<>();
 
