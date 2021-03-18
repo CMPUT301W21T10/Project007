@@ -26,6 +26,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     AddMesuTrailFragment addMesuTrailFragment;
     AddNnCBTrailFragment addNnCBTrailFragment;
     Result result;
+    Qrcode qrcode;
     private Experiment experiment;
     private Integer position;
 
@@ -182,7 +183,13 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 result.setArguments(bundle);}
             return true;
         }else if (id == R.id.QROpt) {
-            return true;
+            if(trails_DataList.size()==0){
+                Toast toast = Toast.makeText(getApplicationContext(),"There's no trails for this experiment!",Toast.LENGTH_SHORT);
+                toast.show();
+            }
+//            else{
+//
+//            }
         }
 
         return super.onOptionsItemSelected(item);
