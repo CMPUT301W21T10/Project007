@@ -133,9 +133,9 @@ public class AddNnCBTrailFragment extends Fragment {
                     latitude.setText(String.valueOf(location.getLatitude()));
                     longitude.setText(String.valueOf(location.getLongitude()));
 
-                    Toast.makeText(getActivity(),"No location selected!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"location selected!",Toast.LENGTH_SHORT).show();
                 }
-
+                Toast.makeText(getActivity(),"NO location selected!",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -183,7 +183,7 @@ public class AddNnCBTrailFragment extends Fragment {
                     String type_info = "Binomial";
                     //temp written as this
 
-                    Trails trails = new Trails(title_info, date_info, type_info, time_info, NnCBData_info, ID);
+                    Trails trails = new Trails(title_info, date_info, type_info, time_info, NnCBData_info, ID, location);
                     //error prone
                     if (checkText(trails)){
                         listener.sending_data(trails);
@@ -199,6 +199,9 @@ public class AddNnCBTrailFragment extends Fragment {
             date_generate.setText(argument.getDate());
             time_generate.setText(argument.getTime());
             NnCBData.setText(argument.getVariesData());
+            Location oldLocation = argument.getLocation();
+            latitude.setText(String.valueOf(oldLocation.getLatitude()));
+            longitude.setText(String.valueOf(oldLocation.getLongitude()));
             //edit items
             okButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -214,6 +217,7 @@ public class AddNnCBTrailFragment extends Fragment {
                         argument.setDate(date_info);
                         argument.setTime(time_info);
                         argument.setSuccess(NnCBData_info);
+                        argument.setLocation(location);
                         getParentFragmentManager().popBackStack();
 
                     }

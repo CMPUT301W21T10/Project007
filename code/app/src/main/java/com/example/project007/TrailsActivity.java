@@ -30,6 +30,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     TextView descriptionTrail;
     private Experiment experiment;
     private Integer position;
+    boolean needLocation;
 
 
 
@@ -49,6 +50,8 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         //String type = experiment.getType();
         //String title = experiment.getName();
         //String description = experiment.getDescription();
+        //needLocation = experiment.getRequireLocation();
+        needLocation = true;
         String description ="SB!";
         descriptionTrail.setText(description);
         String title = "Measurement One";

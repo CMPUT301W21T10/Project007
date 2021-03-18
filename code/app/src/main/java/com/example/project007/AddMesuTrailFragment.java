@@ -97,6 +97,7 @@ public class AddMesuTrailFragment extends Fragment {
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
                         // Do something with the result
                         location = (Location) bundle.getSerializable("Location");
+
                     }
                 });
     }
@@ -135,9 +136,9 @@ public class AddMesuTrailFragment extends Fragment {
                     latitude.setText(String.valueOf(location.getLatitude()));
                     longitude.setText(String.valueOf(location.getLongitude()));
 
-                    Toast.makeText(getActivity(),"No location selected!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"location selected!",Toast.LENGTH_SHORT).show();
                 }
-
+                Toast.makeText(getActivity(),"NO location selected!",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -186,9 +187,10 @@ public class AddMesuTrailFragment extends Fragment {
                     String time_info = time_generate.getText().toString();
                     String measurementData_info = measurementData.getText().toString();
                     String type_info = "Measurement";
+
                     //temp written as this
 
-                    Trails trails = new Trails(title_info, date_info, type_info, time_info, measurementData_info, ID);
+                    Trails trails = new Trails(title_info, date_info, type_info, time_info, measurementData_info, ID, location);
                     //error prone
                     if (checkText(trails)){
                         listener.sending_data(trails);
@@ -204,6 +206,9 @@ public class AddMesuTrailFragment extends Fragment {
             date_generate.setText(argument.getDate());
             time_generate.setText(argument.getTime());
             measurementData.setText(argument.getVariesData());
+            Location oldLocation = argument.getLocation();
+            latitude.setText(String.valueOf(oldLocation.getLatitude()));
+            longitude.setText(String.valueOf(oldLocation.getLongitude()));
             //edit items
             okButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -218,8 +223,8 @@ public class AddMesuTrailFragment extends Fragment {
                         argument.setDate(date_info);
                         argument.setTime(time_info);
                         argument.setVariesData(measurementData_info);
+                        argument.setLocation(location);
                         getParentFragmentManager().popBackStack();
-
                     }
                 }
             });
