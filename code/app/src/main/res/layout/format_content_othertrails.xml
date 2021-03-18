@@ -103,7 +103,7 @@
                 android:layout_marginStart="0dp"
                 android:layout_marginLeft="0dp"
                 android:padding="10dp"
-                android:text="Location"
+                android:text="N/A"
                 android:textSize="15dp" />
         </LinearLayout>
 

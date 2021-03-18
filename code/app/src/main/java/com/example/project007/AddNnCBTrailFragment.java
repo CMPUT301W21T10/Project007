@@ -33,6 +33,8 @@ public class AddNnCBTrailFragment extends Fragment {
     private TextView latitude;
     private TextView longitude;
     private Location location;
+    private boolean needLocation;
+    private String type;
 
     //https://stackoverflow.com/questions/37121091/passing-data-from-activity-to-fragment-using-interface
     //Answered by Masum at May 9 '16 at 17:57
@@ -58,19 +60,27 @@ public class AddNnCBTrailFragment extends Fragment {
         String NnCBData_info = trails.getVariesData();
         String Trail_title = trails.getTrail_title();
         Location location = trails.getLocation();
+        String type = trails.getType();
 
-        if (!NnCBData_info.matches("[0-9]+") & !NnCBData_info.equals("")){
-            Toast.makeText(getActivity(),"Input int number plz!",Toast.LENGTH_SHORT).show();
-            return false;
+
+        if (type.equals("Measurement")){
+            if (!NnCBData_info.matches("([0-9]*[.])[0-9]+")){
+                Toast.makeText(getActivity(),"Input a positive float number plz!",Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }else if (!type.equals("Measurement")&!type.equals("Binomial")){
+            if (!NnCBData_info.matches("[0-9]+") & !NnCBData_info.equals("")){
+                Toast.makeText(getActivity(),"Input int number plz!",Toast.LENGTH_SHORT).show();
+                return false;
+            }
         }else if(Trail_title.equals("")){
             Toast.makeText(getActivity(),"Input a title plz!",Toast.LENGTH_SHORT).show();
             return false;
-        }else if(location == null){
+        }else if(needLocation & location == null){
             Toast.makeText(getActivity(),"Enter a location plz!",Toast.LENGTH_SHORT).show();
             return false;
-        }else{
-            return true;
         }
+        return true;
         //https://stackoverflow.com/questions/10770055/use-toast-inside-fragment by Senimii Jul 17 '13 at 14:26
     }
 
@@ -114,13 +124,24 @@ public class AddNnCBTrailFragment extends Fragment {
         latitude = view.findViewById(R.id.latitude_editText );
         longitude = view.findViewById(R.id.longitude_editText );
         Button okButton= view.findViewById(R.id.ok_pressed );
-
-        //initialize map content
         Button mapButton = view.findViewById(R.id.map_button);
-        Fragment fragment = new MapFragment();
-        getChildFragmentManager().beginTransaction().replace(R.id.map_container, fragment).commit();
 
 
+        //receive data from activity
+        TrailsActivity activity = (TrailsActivity) getActivity();
+        needLocation = activity.WhetherTrailsLoc();
+        type = activity.getTrailsType();
+
+        if (!needLocation){
+            mapButton.setVisibility(View.INVISIBLE);
+            //if doesn't require the location
+        }else{
+            //initialize map content
+            Fragment fragment = new MapFragment();
+            getChildFragmentManager().beginTransaction().replace(R.id.map_container, fragment).commit();
+            Toast.makeText(getActivity(), "This trail require you to enter location data!",Toast.LENGTH_SHORT).show();
+            //warn experimenter for location data acquire
+        }
 
         //initialize map content
         mapButton.setOnClickListener(new View.OnClickListener() {
@@ -173,6 +194,8 @@ public class AddNnCBTrailFragment extends Fragment {
 
         if (getArguments() == null){
             //add items
+            latitude.setText("N/A");
+            longitude.setText("N/A");
             okButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -180,10 +203,11 @@ public class AddNnCBTrailFragment extends Fragment {
                     String date_info = date_generate.getText().toString();
                     String time_info = time_generate.getText().toString();
                     String NnCBData_info = NnCBData.getText().toString();
-                    String type_info = "Binomial";
                     //temp written as this
-
-                    Trails trails = new Trails(title_info, date_info, type_info, time_info, NnCBData_info, ID, location);
+                    if (needLocation){
+                        Trails trails = new Trails(title_info, date_info, type, time_info, NnCBData_info, ID, location);
+                    }
+                    Trails trails = new Trails(title_info, date_info, type, time_info, NnCBData_info, ID);
                     //error prone
                     if (checkText(trails)){
                         listener.sending_data(trails);
@@ -199,9 +223,14 @@ public class AddNnCBTrailFragment extends Fragment {
             date_generate.setText(argument.getDate());
             time_generate.setText(argument.getTime());
             NnCBData.setText(argument.getVariesData());
-            Location oldLocation = argument.getLocation();
-            latitude.setText(String.valueOf(oldLocation.getLatitude()));
-            longitude.setText(String.valueOf(oldLocation.getLongitude()));
+            if (needLocation){
+                Location oldLocation = argument.getLocation();
+                latitude.setText(String.valueOf(oldLocation.getLatitude()));
+                longitude.setText(String.valueOf(oldLocation.getLongitude()));
+            }else{
+                latitude.setText("N/A");
+                longitude.setText("N/A");
+            }
             //edit items
             okButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -217,7 +246,9 @@ public class AddNnCBTrailFragment extends Fragment {
                         argument.setDate(date_info);
                         argument.setTime(time_info);
                         argument.setSuccess(NnCBData_info);
-                        argument.setLocation(location);
+                        if (needLocation){
+                            argument.setLocation(location);
+                        }
                         getParentFragmentManager().popBackStack();
 
                     }

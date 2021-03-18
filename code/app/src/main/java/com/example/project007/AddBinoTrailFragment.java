@@ -19,6 +19,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 
+import com.google.protobuf.StringValue;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -34,6 +36,7 @@ public class AddBinoTrailFragment extends Fragment{
     private TextView latitude;
     private TextView longitude;
     private Location location;
+    private boolean needLocation;
 
     //https://stackoverflow.com/questions/37121091/passing-data-from-activity-to-fragment-using-interface
     //Answered by Masum at May 9 '16 at 17:57
@@ -71,7 +74,7 @@ public class AddBinoTrailFragment extends Fragment{
         }else if (Trail_title.equals("")){
             Toast.makeText(getActivity(),"Title is empty!",Toast.LENGTH_SHORT).show();
             return false;
-        }else if(location == null){
+        }else if(needLocation & location == null){
             Toast.makeText(getActivity(),"Enter a location plz!",Toast.LENGTH_SHORT).show();
             return false;
         }else{
@@ -122,11 +125,23 @@ public class AddBinoTrailFragment extends Fragment{
         longitude = view.findViewById(R.id.longitude_editText );
         Button okButton= view.findViewById(R.id.ok_pressed );
 
-        //initialize map content
-        Button mapButton = view.findViewById(R.id.map_button);
-        Fragment fragment = new MapFragment();
-        getChildFragmentManager().beginTransaction().replace(R.id.map_container, fragment).commit();
+        //receive data from activity
+        TrailsActivity activity = (TrailsActivity) getActivity();
+        needLocation = activity.WhetherTrailsLoc();
 
+
+        Button mapButton = view.findViewById(R.id.map_button);
+
+        if (!needLocation){
+            mapButton.setVisibility(View.INVISIBLE);
+            //if doesn't require the location
+        }else{
+            //initialize map content
+            Fragment fragment = new MapFragment();
+            getChildFragmentManager().beginTransaction().replace(R.id.map_container, fragment).commit();
+            Toast.makeText(getActivity(), "This trail require you to enter location data!",Toast.LENGTH_SHORT).show();
+            //warn experimenter for location data acquire
+        }
 
 
         //initialize map content
@@ -181,6 +196,8 @@ public class AddBinoTrailFragment extends Fragment{
 
         if (getArguments() == null){
             //add items
+            latitude.setText("N/A");
+            longitude.setText("N/A");
             okButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -190,8 +207,10 @@ public class AddBinoTrailFragment extends Fragment{
                     String success_info = success.getText().toString();
                     String fail_info = fail.getText().toString();
                     String type_info = "Binomial";
-
-                    Trails trails = new Trails(title_info, date_info, type_info, time_info, success_info, fail_info, ID, location);
+                    if (needLocation){
+                        Trails trails = new Trails(title_info, date_info, type_info, time_info, success_info, fail_info, ID, location);
+                    }
+                    Trails trails = new Trails(title_info, date_info, type_info, time_info, success_info, fail_info, ID);
                     //error prone
                     if (checkText(trails)){
                         listener.sending_data(trails);
@@ -208,9 +227,15 @@ public class AddBinoTrailFragment extends Fragment{
             time_generate.setText(argument.getTime());
             success.setText(argument.getSuccess());
             fail.setText(argument.getFailure());
-            Location oldLocation = argument.getLocation();
-            latitude.setText(String.valueOf(oldLocation.getLatitude()));
-            longitude.setText(String.valueOf(oldLocation.getLongitude()));
+            if (needLocation){
+                Location oldLocation = argument.getLocation();
+                latitude.setText(String.valueOf(oldLocation.getLatitude()));
+                longitude.setText(String.valueOf(oldLocation.getLongitude()));
+            }else{
+                latitude.setText("N/A");
+                longitude.setText("N/A");
+            }
+
             //edit items
             okButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -229,7 +254,9 @@ public class AddBinoTrailFragment extends Fragment{
                         argument.setTime(time_info);
                         argument.setSuccess(success_info);
                         argument.setFailure(fail_info);
-                        argument.setLocation(location);
+                        if (needLocation){
+                            argument.setLocation(location);
+                        }
                         getParentFragmentManager().popBackStack();
                     }
 

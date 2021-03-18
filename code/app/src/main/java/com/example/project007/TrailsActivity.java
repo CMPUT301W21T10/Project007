@@ -20,17 +20,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFragment.FragmentInteractionListener, AddMesuTrailFragment.FragmentInteractionListener, AddNnCBTrailFragment.FragmentInteractionListener {
+public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFragment.FragmentInteractionListener, AddNnCBTrailFragment.FragmentInteractionListener {
     ListView trail_List;
     ArrayAdapter<Trails> trail_Adapter;
     ArrayList<Trails> trails_DataList;
     AddBinoTrailFragment addBinoTrailFragment;
-    AddMesuTrailFragment addMesuTrailFragment;
     AddNnCBTrailFragment addNnCBTrailFragment;
     TextView descriptionTrail;
     private Experiment experiment;
     private Integer position;
     boolean needLocation;
+    String type;
 
 
 
@@ -46,17 +46,16 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         final CollectionReference collectionReference = db.collection("Trails");
         //database for unique trails
 
-        //String type = "";
-        //String type = experiment.getType();
-        //String title = experiment.getName();
-        //String description = experiment.getDescription();
+        String type = experiment.getType();
+        String title = experiment.getName();
+        String description = experiment.getDescription();
         //needLocation = experiment.getRequireLocation();
-        needLocation = true;
-        String description ="SB!";
+        needLocation = false;
+        //String description ="SB!";
         descriptionTrail.setText(description);
-        String title = "Measurement One";
+        //String title = "Measurement One";
 
-        String type = "Measurement";
+        //type = "NonNegative";
 
         //toolbar content may vary with the input type
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -115,24 +114,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 }
             });
 
-        }else if(type.equals("Measurement")){
-            addButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //initialize fragment
-                    addMesuTrailFragment = new AddMesuTrailFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.data_container, addMesuTrailFragment).addToBackStack(null).commit();
-                }
-            });
-
-            trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Trails newtrail = trail_Adapter.getItem(position);
-                    AddMesuTrailFragment Me_fragment = AddMesuTrailFragment.newInstance(newtrail);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.data_container, Me_fragment).addToBackStack(null).commit();
-                }
-            });
         }else{
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -172,12 +153,12 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     @Override
     public void sending_data(Trails trails) {
         trail_Adapter.add(trails);
-        Toast.makeText(getApplicationContext(),"New Trail:" + trails.getTrail_title() + "added success!",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),"New Trail:" + trails.getTrail_title() + " added success!",Toast.LENGTH_SHORT).show();
     }
     @Override
     public void editing_data(Trails trails) {
         trail_Adapter.notifyDataSetChanged();
-        Toast.makeText(getApplicationContext(),"Trail:" + trails.getTrail_title() + "edited success!",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),"Trail:" + trails.getTrail_title() + " edited success!",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -187,7 +168,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         return true;
     }
 
-    //YO!!! This is where you inplement those fragements under the if
+    //YO!!! This is where you implement those fragments under the if
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -206,6 +187,15 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //sending data from activity to frags
+    public boolean WhetherTrailsLoc() {
+        return needLocation;
+    }
+
+    public String getTrailsType() {
+        return type;
     }
 }
 

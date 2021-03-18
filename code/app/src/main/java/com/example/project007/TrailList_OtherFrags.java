@@ -28,18 +28,20 @@ public class TrailList_OtherFrags extends ArrayAdapter<Trails> {
         }
         Trails trail = trails.get(position);
         Location displayLoc = trail.getLocation();
-        String LocString = String.valueOf(displayLoc.getLatitude()) + ":" + String.valueOf(displayLoc.getLongitude());
         TextView trailTitle = view.findViewById(R.id.trail_text);
         TextView date = view.findViewById(R.id.date_text);
         TextView time = view.findViewById(R.id.time_text);
         TextView variesData = view.findViewById(R.id.result_text);
         TextView location = view.findViewById(R.id.Location_text);
 
+        if (displayLoc!=null){
+            String LocString = String.valueOf(displayLoc.getLatitude()) + ":" + String.valueOf(displayLoc.getLongitude());
+            location.setText(LocString);
+        }
         trailTitle.setText(trail.getTrail_title());
         date.setText(trail.getDate());
         time.setText(trail.getTime());
         variesData.setText(trail.getVariesData());
-        location.setText(LocString);
 
         return view;
     }
