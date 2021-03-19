@@ -23,8 +23,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -57,12 +55,12 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trails_activity_main);
         descriptionTrail = findViewById(R.id.descriptionforTrail);
-        /*//database for unique trails
+        //database for unique trails
         final FirebaseFirestore db;
         db = FirebaseFirestore.getInstance();
         TrailsDatabaseController.setTrail_db(db);
         final CollectionReference collectionReference = db.collection("Trails");
-        //database for unique trails*/
+        //database for unique trails
 
 
         //receive data from experiment
@@ -275,7 +273,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 resultFragment.setArguments(bundle);}
             return true;
         }else if (id == R.id.ScanQROpt) { // this is where you put generate the qr
-            startActivity(new Intent(TrailsActivity.this, ScanActivity.class));
+            //startActivity(new Intent(TrailsActivity.this, ScanActivity.class));
 
         }else if (id == R.id.QROpt){  // this is where you put the scan yi scan
             if(trails_DataList.size()==0){
