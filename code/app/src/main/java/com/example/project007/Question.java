@@ -7,10 +7,10 @@ public class Question implements Serializable {
 
     private String question;
     private Integer id;
-    private Integer answer_id;
+    private ArrayList<Integer> answer_id;
 
 
-    Question(Integer id, String question, Integer answer_id) {
+    Question(Integer id, String question, ArrayList<Integer> answer_id) {
         this.question = question;
         if (id != null){
             this.id = id;
@@ -37,11 +37,11 @@ public class Question implements Serializable {
         this.id = id;
     }
 
-    public Integer getAnswer_id() {
+    public ArrayList<Integer> getAnswer_id() {
         return answer_id;
     }
 
-    public void setAnswer_id(Integer answer_id) {
+    public void setAnswer_id(ArrayList<Integer> answer_id) {
         this.answer_id = answer_id;
     }
 }

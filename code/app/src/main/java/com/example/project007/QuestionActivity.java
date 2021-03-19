@@ -2,9 +2,10 @@ package com.example.project007;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,7 +30,7 @@ public class QuestionActivity extends AppCompatActivity {
     ArrayAdapter<Question> questionAdapter;
     ArrayList<Question> questionDataList;
     Integer id =  null;
-    Integer answer_id = null;
+    ArrayList<Integer> answer_id = new ArrayList<Integer>();
 
 
     @Override
@@ -85,9 +86,7 @@ public class QuestionActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Question question = questionAdapter.getItem(position);
 
-                FragmentManager fm = getSupportFragmentManager();
                 AnswerFragment fragment = new AnswerFragment();
-                fm.beginTransaction().replace(R.id.question_activity, fragment).commit();
                 Bundle b1 = new Bundle();
                 Bundle b2 = new Bundle();
                 Bundle b3 = new Bundle();
@@ -97,6 +96,9 @@ public class QuestionActivity extends AppCompatActivity {
                 fragment.setArguments(b1);
                 fragment.setArguments(b2);
                 fragment.setArguments(b3);
+                findViewById(R.id.container_answer).setVisibility(View.VISIBLE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_answer, fragment).addToBackStack(null).commit();
+
             }
         });
 

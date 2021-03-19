@@ -270,7 +270,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.questionsOpt) {
-
+            openQuestionActivity();
             return true;
         }else if (id == R.id.viewResult) {
             if(trails_DataList.size()==0){
@@ -307,6 +307,11 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     }
     public String getTitleName(){
         return title;
+    }
+
+    public void openQuestionActivity() {
+        Intent intent = new Intent(this, QuestionActivity.class);
+        startActivity(intent);
     }
 }
 
