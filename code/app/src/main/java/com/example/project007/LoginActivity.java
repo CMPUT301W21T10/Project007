@@ -74,15 +74,18 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
+                        boolean logged = false;
                         while (iterator.hasNext()){
                             DataSnapshot next = iterator.next();
                             if (next.getKey().equals(regEmail.getText().toString())){
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class).putExtra("uid",next.getKey()));
+                                logged = true;
                                 finish();
                             }
                         }
-                        Toast.makeText(LoginActivity.this, " Uid err!",
-                                Toast.LENGTH_SHORT).show();
+                        if (!logged){
+                            Toast.makeText(LoginActivity.this, " Uid err!",Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
