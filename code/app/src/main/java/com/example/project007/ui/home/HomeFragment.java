@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.project007.CustomList;
+import com.example.project007.ExperimentAdapter;
 import com.example.project007.DatabaseController;
 import com.example.project007.Experiment;
 import com.example.project007.ModifyExperimentFragment;
@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         experimentDataList = new ArrayList<>();
 
-        experimentAdapter = new CustomList(this.getContext(), experimentDataList);
+        experimentAdapter = new ExperimentAdapter(this.getContext(), experimentDataList);
 
 
         getChildFragmentManager()

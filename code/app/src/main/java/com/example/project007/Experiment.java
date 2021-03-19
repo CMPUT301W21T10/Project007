@@ -92,4 +92,12 @@ public class Experiment implements Serializable {
     public void setSubscriptionId(String[] subscriptionId) {
         this.subscriptionId = subscriptionId;
     }
+
+    public boolean isRequireLocation() {
+        return requireLocation;
+    }
+
+    public void setRequireLocation(boolean requireLocation) {
+        this.requireLocation = requireLocation;
+    }
 }

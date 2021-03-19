@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -20,10 +21,6 @@ public class DatabaseController {
     private static FirebaseFirestore db;
     private static String UserId = "1";
     private static Integer maxExperimentId;
-
-    public static void setMaxExperimentId(Integer maxExperimentId) {
-        DatabaseController.maxExperimentId = maxExperimentId;
-    }
 
     public static String getUserId() {
         return UserId;
@@ -78,6 +75,10 @@ public class DatabaseController {
         return condition[0];
     }
 
+    public static void deleteExperiment(String name){
+        Task<Void> writeResult = db.collection("Experiments").document(name).delete();
+
+    }
 
     public static Integer generateExperimentId(){
         return maxExperimentId + 1;

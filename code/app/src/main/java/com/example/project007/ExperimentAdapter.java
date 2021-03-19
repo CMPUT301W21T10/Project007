@@ -17,7 +17,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-public class CustomList extends ArrayAdapter<Experiment> {
+public class ExperimentAdapter extends ArrayAdapter<Experiment> {
 
     private final ArrayList<Experiment> experiments;
     private final Context context;
@@ -27,11 +27,11 @@ public class CustomList extends ArrayAdapter<Experiment> {
     private Button globalButton; //用于执行删除的button
     private View globalView;
 
-    public CustomList(Context context, ArrayList<Experiment> experiments) {
+    public ExperimentAdapter(Context context, ArrayList<Experiment> experiments) {
         super(context,0,experiments);
         this.experiments = experiments;
         this.context = context;
-        //animation= AnimationUtils.loadAnimation(context, R.anim.push_out);  //用xml获取一个动画
+        animation= AnimationUtils.loadAnimation(context, R.anim.push_out);  //用xml获取一个动画
 
     }
 
@@ -63,16 +63,10 @@ public class CustomList extends ArrayAdapter<Experiment> {
 
         TextView experimentName = view.findViewById(R.id.name_view);
         TextView experimentDescription = view.findViewById(R.id.description_view);
-        TextView experimentDate = view.findViewById(R.id.date_view);
-        TextView experimentType = view.findViewById(R.id.type_view);
-        TextView experimentId = view.findViewById(R.id.id_view);
         Button delButton = view.findViewById(R.id.del_button);
 
         experimentName.setText(experiment.getName());
         experimentDescription.setText(experiment.getDescription());
-        experimentDate.setText(experiment.getDate());
-        experimentType.setText(experiment.getType());
-        experimentId.setText(Integer.toString(experiment.getId()));
 
 
         view.setOnTouchListener(new View.OnTouchListener() {
@@ -93,7 +87,7 @@ public class CustomList extends ArrayAdapter<Experiment> {
                 }
 
                 if (delButton != null) {
-                    if (Math.abs(downX - upX) > 35) {  //2次坐标的绝对值如果大于35，就认为是左右滑动
+                    if (Math.abs(downX - upX) > 300) {  //2次坐标的绝对值如果大于35，就认为是左右滑动
                         delButton.setVisibility(View.VISIBLE);  //显示删除button
                         globalButton = delButton;  //赋值给全局button，一会儿用
                         globalView = v; //得到itemview，在上面加动画
@@ -136,6 +130,8 @@ public class CustomList extends ArrayAdapter<Experiment> {
 
             @Override
             public void onAnimationEnd(Animation animation) { //动画执行完毕
+                Experiment instance = experiments.get(position);
+                DatabaseController.deleteExperiment(String.valueOf(instance.getId()));
                 experiments.remove(position);  //把数据源里面相应数据删除
                 notifyDataSetChanged();
             }
