@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -18,7 +19,7 @@ import static android.content.ContentValues.TAG;
 public class DatabaseController {
     @SuppressLint("StaticFieldLeak")
     private static FirebaseFirestore db;
-    private static String UserId;
+    private static String UserId = "1";
     private static Integer maxExperimentId;
 
     public static Integer getMaxExperimentId() {
@@ -55,7 +56,8 @@ public class DatabaseController {
         data.put("Description", experiment.getDescription());
         data.put("Date", experiment.getDate());
         data.put("Type", experiment.getType());
-        data.put("User", experiment.getUserId());
+        data.put("trailsId", experiment.getUserId());
+        data.put("subscriptionId", experiment.getUserId());
 
         final boolean[] condition = new boolean[1];
         // The set method sets a unique id for the document
@@ -81,6 +83,10 @@ public class DatabaseController {
         return condition[0];
     }
 
+    public static void deleteExperiment(String name){
+        Task<Void> writeResult = db.collection("Experiments").document(name).delete();
+
+    }
 
     public static Integer generateExperimentId(){
         return maxExperimentId + 1;

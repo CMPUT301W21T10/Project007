@@ -2,6 +2,7 @@ package com.example.project007;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
@@ -19,9 +21,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -31,6 +37,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     ArrayList<Trails> trails_DataList;
     AddBinoTrailFragment addBinoTrailFragment;
     AddNnCBTrailFragment addNnCBTrailFragment;
+    final String TAG = "Trails_Sample";
 
     TextView descriptionTrail;
     QrcodeFragment qrcode;
@@ -53,25 +60,22 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         /*//database for unique trails
         final FirebaseFirestore db;
         db = FirebaseFirestore.getInstance();
-        DatabaseController.setDb(db);
+        TrailsDatabaseController.setTrail_db(db);
         final CollectionReference collectionReference = db.collection("Trails");
         //database for unique trails*/
 
-        //type = experiment.getType();
-        //String title = experiment.getName();
-        //String description = experiment.getDescription();
-        //needLocation = experiment.getRequireLocation();
-        //        String type = experiment.getType();
-//        String title = experiment.getName();
-//        String description = experiment.getDescription();
-        type = "Measurement";
-        title = "Measurement One";
-        description ="Wow";
-        //needLocation = experiment.getRequireLocation();
-        needLocation = false;
 
-
+        //receive data from experiment
+        Intent intent = getIntent();
+        experiment = (Experiment) intent.getSerializableExtra("com.example.project007.INSTANCE");
+        position = intent.getIntExtra("com.example.project007.POSITION", -1);
+        type = experiment.getType();
+        title = experiment.getName();
+        description = experiment.getDescription();
+        needLocation = experiment.isRequireLocation();
         descriptionTrail.setText(description);
+        //receive data from experiment
+
 
         //toolbar content may vary with the input type
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -82,10 +86,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         //toolbar content may vary with the input type
 
-
-        Intent intent = getIntent();
-        experiment = (Experiment) intent.getSerializableExtra("com.example.project007.INSTANCE");
-        position = intent.getIntExtra("com.example.project007.POSITION", -1);
 
         final FloatingActionButton addButton = findViewById(R.id.experimentBtn);
         trail_List = findViewById(R.id.trail_list);
@@ -106,6 +106,53 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         //https://stackoverflow.com/questions/41350269/my-listview-is-showing-the-object-and-not-the-contents-of-each-object/41350519
         //answered by stephen Ruda Dec 27 '16 at 18:35
 
+
+        //fire store uploading
+
+        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                // Clear the old list
+                if (error!=null){
+                    Log.d(TAG,"Error:"+error.getMessage());
+                }
+                else {
+                    trails_DataList.clear();
+                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                        Log.d(TAG, String.valueOf(doc.getData().get("Trail_title")));
+                        String trail_title = (String) doc.getData().get("Trail_title");
+                        String date = (String) doc.getData().get("Date");
+                        String type = (String) doc.getData().get("Type");
+                        String time = (String) doc.getData().get("Time");
+                        //uncertain value
+                        String success = (String) doc.getData().get("Success");
+                        String failure = (String) doc.getData().get("Failure");
+                        String variesData = (String) doc.getData().get("VariesData");
+                        Location location = (Location) doc.getData().get("Location");
+                        //uncertain value
+
+                        String idString = doc.getId();
+                        Integer ID = Integer.parseInt(idString);
+                        if (success == null){//case for non-binomial trails
+                            if (location != null){
+                                trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID, location));
+                            }else{
+                                trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID));
+                            }
+                        }else if(variesData == null){//case for binomial trails
+                            if (location != null){
+                                trails_DataList.add(new Trails(trail_title, date, type, time, success, failure, ID, location));
+                            }else{
+                                trails_DataList.add(new Trails(trail_title, date, type, time, success, failure, ID));
+                            }
+                        }
+                    }
+                    TrailsDatabaseController.setMaxTrailId(trails_DataList.size());
+                    trail_Adapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
+                }
+            }
+        });
+        //fire store uploading
 
         //add button is where we specify the different experiment trails
         //currently use fixed variable for debugging
@@ -156,8 +203,15 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 //Delete event
-                trails_DataList.remove(position);
+                Trails newtrail = trail_Adapter.getItem(position);
                 trail_Adapter.notifyDataSetChanged();
+                boolean deleteResult = TrailsDatabaseController.delete_Trails("Trails", newtrail);
+                if (deleteResult){
+                    Toast.makeText(getApplicationContext(), "Delete Succeed", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Delete Failed", Toast.LENGTH_SHORT).show();
+                }
                 return false;
             }
         });
@@ -170,11 +224,24 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     public void sending_data(Trails trails) {
         trail_Adapter.add(trails);
         Toast.makeText(getApplicationContext(),"New Trail:" + trails.getTrail_title() + " added success!",Toast.LENGTH_SHORT).show();
+        boolean addResult = TrailsDatabaseController.modify_Trails("Trails", trails);
+            if (addResult){
+                Toast.makeText(getApplicationContext(), "Add Succeed", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getApplicationContext(), "Add Failed", Toast.LENGTH_SHORT).show();
+            }
     }
     @Override
     public void editing_data(Trails trails) {
         trail_Adapter.notifyDataSetChanged();
         Toast.makeText(getApplicationContext(),"Trail:" + trails.getTrail_title() + " edited success!",Toast.LENGTH_SHORT).show();
+        boolean addResult = TrailsDatabaseController.modify_Trails("Trails", trails);
+        if (addResult){
+            Toast.makeText(getApplicationContext(), "Add Succeed", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "Add Failed", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -225,6 +292,11 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 qrcode.setArguments(bundle);
 
             }
+
+        }else if (id == R.id.HelpOpt){
+            //tips for user
+            Toast.makeText(getApplicationContext(),"Welcome! Please note: Long Click item for deleting Short Click item for editting",Toast.LENGTH_SHORT).show();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
