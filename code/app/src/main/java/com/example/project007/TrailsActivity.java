@@ -74,7 +74,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         type = "Binomial";
         title = "SB!";
         description = "Guess what?";
-        needLocation = false;
+        needLocation = true;
         descriptionTrail.setText(description);
 
 
