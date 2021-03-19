@@ -25,13 +25,13 @@
         </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity" />
+        <activity android:name=".LoginActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCe9XKgYb4pwBLwgp_HzKvWJ5PCD_GzQOY"/>
               
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".AfterLoginActivity" />
         <activity android:name=".RegActivity" />
     </application>
