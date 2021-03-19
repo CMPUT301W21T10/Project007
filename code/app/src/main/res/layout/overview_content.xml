@@ -15,8 +15,8 @@
 
     <ImageView
         android:id="@+id/experiment_image"
-        android:maxWidth="15dp"
-        android:maxHeight="15dp"
+        android:maxWidth="30dp"
+        android:maxHeight="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
