@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.project007.CustomList;
+import com.example.project007.ExperimentAdapter;
 import com.example.project007.DatabaseController;
 import com.example.project007.Experiment;
 import com.example.project007.ModifyExperimentFragment;
@@ -45,8 +45,8 @@ public class HomeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         experimentDataList = new ArrayList<>();
-        experimentDataList.add(new Experiment("name","description","date","type",1)); // Adding the cities and provinces from FireStore
-        experimentAdapter = new CustomList(this.getContext(), experimentDataList);
+
+        experimentAdapter = new ExperimentAdapter(this.getContext(), experimentDataList);
 
 
         getChildFragmentManager()
@@ -117,10 +117,13 @@ public class HomeFragment extends Fragment {
                         String description = (String) doc.getData().get("Description");
                         String date = (String) doc.getData().get("Date");
                         String type = (String) doc.getData().get("Type");
+                        Integer[] trailsId = (Integer[]) doc.getData().get("trailsId");
+                        String[] subscriptionId = (String[]) doc.getData().get("subscriptionId");
+
                         String idString = doc.getId();
                         Integer id = Integer.parseInt(idString);
 
-                        experimentDataList.add(new Experiment(name, description, date, type, id)); // Adding the cities and provinces from FireStore
+                        experimentDataList.add(new Experiment(name, description, date, type, id, trailsId,subscriptionId)); // Adding the cities and provinces from FireStore
                     }
                     DatabaseController.setMaxExperimentId(experimentDataList.size());
 
