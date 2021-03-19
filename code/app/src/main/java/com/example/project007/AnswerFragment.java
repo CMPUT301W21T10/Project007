@@ -3,27 +3,32 @@ package com.example.project007;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
 public class AnswerFragment extends Fragment {
 
     ListView answerList;
-    ArrayAdapter<String> answerAdapter;
-    ArrayList<Question> questionDataList;
+    ArrayAdapter<Answer> answerAdapter;
+
     String question;
-    ArrayList<String> answerDataList;
+    ArrayList<Answer> answerDataList;
     Button addAnswerButton;
     EditText addAnswerEditText;
     FirebaseFirestore db;
@@ -32,8 +37,6 @@ public class AnswerFragment extends Fragment {
     public AnswerFragment() {
         // Required empty public constructor
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,8 +48,9 @@ public class AnswerFragment extends Fragment {
         addAnswerButton = v.findViewById(R.id.add_answer_button);
 
         answerList = v.findViewById(R.id.answer_list);
-        question = getArguments().getString("Question Content");
-        answerDataList = new ArrayList<String>();
+        String question_Id = getArguments().getString("Question Id");
+        String answer_Id = getArguments().getString("Answer_Id");
+        answerDataList = new ArrayList<>();
         answerAdapter = new answerCustomList(getActivity(), answerDataList);
 
         answerList.setAdapter(answerAdapter);
@@ -56,13 +60,41 @@ public class AnswerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String answerName = addAnswerEditText.getText().toString();
-                answerDataList.add(answerName);
-                addAnswerEditText.setText("");
+
+                if(answerName.length()>0) {
+                    Answer answer = new Answer(Integer.parseInt(answer_Id), answerName, Integer.parseInt(question_Id));
+                    answerAdapter.add(answer);
+                    boolean addAnswer = AnswerDatabaseController.add_Answer("Answers", answer);
+                    if (addAnswer){
+                        Toast.makeText(getActivity(), "Add Succeed", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(getActivity(), "Add Failed", Toast.LENGTH_SHORT).show();
+                    }
+                    addAnswerEditText.setText("");
+
+                }
 
             }
         });
 
-        getActivity().onBackPressed();
+        answerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                //Delete event
+                Answer answer = answerAdapter.getItem(position);
+                answerAdapter.notifyDataSetChanged();
+                boolean deleteAnswer = AnswerDatabaseController.delete_Answer("Answers", answer);
+                if (deleteAnswer){
+                    Toast.makeText(getActivity(), "Delete Succeed", Toast.LENGTH_SHORT).show();
+                    answerAdapter.remove(answer);
+                }
+                else{
+                    Toast.makeText(getActivity(), "Delete Failed", Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+        });
 
         return v;
     }

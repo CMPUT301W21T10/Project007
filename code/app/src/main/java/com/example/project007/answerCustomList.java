@@ -12,12 +12,12 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-public class answerCustomList extends ArrayAdapter<String> {
+public class answerCustomList extends ArrayAdapter<Answer> {
 
-    private ArrayList<String> answers;
+    private ArrayList<Answer> answers;
     private Context context;
 
-    public answerCustomList(Context context, ArrayList<String> answers){
+    public answerCustomList(Context context, ArrayList<Answer> answers){
         super(context,0, answers);
         this.answers = answers;
         this.context = context;
@@ -33,10 +33,10 @@ public class answerCustomList extends ArrayAdapter<String> {
             view = LayoutInflater.from(context).inflate(R.layout.content_question, parent, false);
         }
 
-        String answer = answers.get(position);
+        Answer answer = answers.get(position);
         TextView answerName = view.findViewById(R.id.question_text);
 
-        answerName.setText(answer);
+        answerName.setText(answer.getAnswer());
 
         return view;
     }

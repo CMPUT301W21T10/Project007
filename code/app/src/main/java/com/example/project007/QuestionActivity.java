@@ -1,28 +1,35 @@
 package com.example.project007;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class QuestionActivity extends AppCompatActivity {
 
     ListView questionList;
     ArrayAdapter<Question> questionAdapter;
     ArrayList<Question> questionDataList;
-    ArrayList<String> answerDataList;
+    Integer id =  null;
+    Integer answer_id = null;
 
 
     @Override
@@ -31,6 +38,7 @@ public class QuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_question);
 
         Button addQuestionButton;
+        final String TAG = "Sample";
         final EditText addQuestionEditText;
         FirebaseFirestore db;
 
@@ -39,21 +47,34 @@ public class QuestionActivity extends AppCompatActivity {
 
         questionList = findViewById(R.id.question_list);
         questionDataList = new ArrayList<Question>();
-        answerDataList = new ArrayList<String>();
+
         questionAdapter = new questionCustomList(this, questionDataList);
+
 
         questionList.setAdapter(questionAdapter);
         db = FirebaseFirestore.getInstance();
 
-        //final CollectionReference collectionReference = db.collection("Cities");
+        //final CollectionReference collectionReference = db.collection("Questions");
 
         addQuestionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 final String questionName = addQuestionEditText.getText().toString();
-                questionDataList.add(new Question(questionName, answerDataList));
-                addQuestionEditText.setText("");
+
+                if(questionName.length()>0) {
+                    Question question = new Question(id, questionName, answer_id);
+                    questionAdapter.add(question);
+                    boolean addQuestion = QuestionDatabaseController.add_Question("Questions", question);
+                    if (addQuestion){
+                        Toast.makeText(getApplicationContext(), "Add Succeed", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Add Failed", Toast.LENGTH_SHORT).show();
+                    }
+                    addQuestionEditText.setText("");
+
+                }
 
             }
         });
@@ -67,9 +88,33 @@ public class QuestionActivity extends AppCompatActivity {
                 FragmentManager fm = getSupportFragmentManager();
                 AnswerFragment fragment = new AnswerFragment();
                 fm.beginTransaction().replace(R.id.question_activity, fragment).commit();
-                Bundle b = new Bundle();
-                b.putSerializable("Question Content", question);
-                fragment.setArguments(b);
+                Bundle b1 = new Bundle();
+                Bundle b2 = new Bundle();
+                Bundle b3 = new Bundle();
+                b1.putString("Question Content", question.getQuestion());
+                b2.putString("Question Id", question.getId().toString());
+                b3.putString("Answer Id", question.getAnswer_id().toString());
+                fragment.setArguments(b1);
+                fragment.setArguments(b2);
+                fragment.setArguments(b3);
+            }
+        });
+
+        questionList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                //Delete event
+                Question question = questionAdapter.getItem(position);
+                questionAdapter.notifyDataSetChanged();
+                boolean deleteQuestion = QuestionDatabaseController.delete_Question("Questions", question);
+                if (deleteQuestion){
+                    Toast.makeText(getApplicationContext(), "Delete Succeed", Toast.LENGTH_SHORT).show();
+                    questionAdapter.remove(question);
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Delete Failed", Toast.LENGTH_SHORT).show();
+                }
+                return false;
             }
         });
 

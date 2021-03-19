@@ -6,11 +6,19 @@ import java.util.ArrayList;
 public class Question implements Serializable {
 
     private String question;
-    private ArrayList<String> answer;
+    private Integer id;
+    private Integer answer_id;
 
-    Question(String question, ArrayList answer) {
+
+    Question(Integer id, String question, Integer answer_id) {
         this.question = question;
-        this.answer = answer;
+        if (id != null){
+            this.id = id;
+        }
+        else{
+            this.id = QuestionDatabaseController.generateQuestionId();
+        }
+        this.answer_id = answer_id;
     }
 
     public String getQuestion() {
@@ -21,11 +29,19 @@ public class Question implements Serializable {
         this.question = question;
     }
 
-    public ArrayList<String> getAnswer() {
-        return answer;
+    public Integer getId() {
+        return id;
     }
 
-    public void setAnswer(ArrayList answer) {
-        this.answer = answer;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getAnswer_id() {
+        return answer_id;
+    }
+
+    public void setAnswer_id(Integer answer_id) {
+        this.answer_id = answer_id;
     }
 }
