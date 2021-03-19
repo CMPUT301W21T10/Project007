@@ -3,6 +3,8 @@ package com.example.project007;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +27,7 @@ public class AnswerFragment extends Fragment {
     String question;
     ArrayList<String> answerDataList;
     Button addAnswerButton;
+    Button backButton;
     EditText addAnswerEditText;
     FirebaseFirestore db;
 
@@ -46,7 +49,7 @@ public class AnswerFragment extends Fragment {
 
         answerList = v.findViewById(R.id.answer_list);
         question = getArguments().getString("Question Content");
-        answerDataList = new ArrayList<String>();
+        answerDataList = new ArrayList<>();
         answerAdapter = new answerCustomList(getActivity(), answerDataList);
 
         answerList.setAdapter(answerAdapter);
@@ -56,13 +59,12 @@ public class AnswerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String answerName = addAnswerEditText.getText().toString();
-                answerDataList.add(answerName);
+                answerAdapter.add(answerName);
+
                 addAnswerEditText.setText("");
 
             }
         });
-
-        getActivity().onBackPressed();
 
         return v;
     }

@@ -51,9 +51,11 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                final String questionName = addQuestionEditText.getText().toString();
-                questionDataList.add(new Question(questionName, answerDataList));
-                addQuestionEditText.setText("");
+                if(addQuestionEditText.getTextSize()!=0) {
+                    final String questionName = addQuestionEditText.getText().toString();
+                    questionAdapter.add(new Question(questionName, answerDataList));
+                    addQuestionEditText.setText("");
+                }
 
             }
         });

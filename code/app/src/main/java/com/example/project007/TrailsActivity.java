@@ -22,6 +22,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     ListView trail_List;
     ArrayAdapter<Trails> trail_Adapter;
     ArrayList<Trails> trails_DataList;
+    ArrayList<Question> questionDataList;
     AddBinoTrailFragment addBinoTrailFragment;
     AddMesuTrailFragment addMesuTrailFragment;
     AddNnCBTrailFragment addNnCBTrailFragment;
@@ -169,6 +170,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.questionsOpt) {
+            openQuestionActivity();
             return true;
         }else if (id == R.id.viewResult) {
             if(trails_DataList.size()==0){
@@ -186,6 +188,11 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void openQuestionActivity() {
+        Intent intent = new Intent(this, QuestionActivity.class);
+        startActivity(intent);
     }
 }
 

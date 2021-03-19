@@ -22,7 +22,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Add Question Here" />
+        android:hint="Add Question Here" />
 
     <Button
         android:id="@+id/add_question_button"
