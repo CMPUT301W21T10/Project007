@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,7 +32,7 @@ public class Result extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-    public static Pair QuarAndMed(double[] x) {
+    public Pair QuarAndMed(double[] x) {
         // 转成BigDecimal类型，避免失去精度
         BigDecimal[] datas = new BigDecimal[x.length];
         for (int i = 0; i < x.length; i++) {
@@ -44,10 +45,12 @@ public class Result extends Fragment {
         Pair<BigDecimal,BigDecimal> pair = new Pair<>(q1,q2);
         int index = 0; // 记录下标
         // n代表项数，因为下标是从0开始所以这里理解为：len = n+1
+
         if (len % 2 == 0) { // 偶数
             index = new BigDecimal(len).divide(new BigDecimal("4")).intValue();
             q1 = datas[index - 1].multiply(new BigDecimal("0.25")).add(datas[index].multiply(new BigDecimal("0.75")));
             q2 = datas[len / 2].add(datas[len / 2 - 1]).divide(new BigDecimal("2"));
+
         } else { // 奇数
             q1 = datas[new BigDecimal(len).multiply(new BigDecimal("0.25")).intValue()];
             q2 = datas[new BigDecimal(len).multiply(new BigDecimal("0.5")).intValue()];
@@ -87,15 +90,19 @@ public class Result extends Fragment {
         TextView Mean = view.findViewById(R.id.mean);
         TextView Stdev = view.findViewById(R.id.stdev);
 
-        Quartile.setText("1");
-        Median.setText("1");
-        Mean.setText("1");
-        Stdev.setText("1");
-//        Pair pair = QuarAndMed(d);
-//        Quartile.setText(pair.first.toString());
-//        Median.setText(pair.second.toString());
-//        Mean.setText(Double.toString(avg(d)));
-//        Stdev.setText(Double.toString(StandardDiviation(d)));
+        //Quartile.setText("1");
+
+        Pair pair = QuarAndMed(d);
+        if (pair == null){
+            Quartile.setText(pair.first.toString());
+            Median.setText(pair.second.toString());
+        }
+
+        Mean.setText(Double.toString(avg(d)));
+        Stdev.setText(Double.toString(StandardDiviation(d)));
+        //Median.setText("1");
+        //Mean.setText("1");
+        //Stdev.setText("1");
 
         return view;
     }
