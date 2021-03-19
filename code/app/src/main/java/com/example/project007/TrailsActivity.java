@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,11 +16,15 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -35,6 +40,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     final String TAG = "Trails_Sample";
 
     TextView descriptionTrail;
+    QrcodeFragment qrcode;
     ResultFragment resultFragment;
 
     private Experiment experiment;
@@ -51,12 +57,12 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trails_activity_main);
         descriptionTrail = findViewById(R.id.descriptionforTrail);
-        //database for unique trails
+        /*//database for unique trails
         final FirebaseFirestore db;
         db = FirebaseFirestore.getInstance();
         TrailsDatabaseController.setTrail_db(db);
         final CollectionReference collectionReference = db.collection("Trails");
-        //database for unique trails
+        //database for unique trails*/
 
 
         //receive data from experiment
@@ -69,8 +75,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         needLocation = experiment.isRequireLocation();
         descriptionTrail.setText(description);
         //receive data from experiment
-
-        //fix variable for debugging
 
 
         //toolbar content may vary with the input type
@@ -270,8 +274,25 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 bundle.putSerializable("result",trails_DataList);
                 resultFragment.setArguments(bundle);}
             return true;
-        }else if (id == R.id.QROpt) {
-            return true;
+        }else if (id == R.id.ScanQROpt) { // this is where you put generate the qr
+            startActivity(new Intent(TrailsActivity.this, ScanActivity.class));
+
+        }else if (id == R.id.QROpt){  // this is where you put the scan yi scan
+            if(trails_DataList.size()==0){
+                Toast toast = Toast.makeText(getApplicationContext(),"There's no trails for this experiment!",Toast.LENGTH_SHORT);
+                toast.show();
+            }else {
+                qrcode = new QrcodeFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();   // 开启一个事务
+                transaction.replace(R.id.data_container, qrcode);
+                transaction.commit();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("result",trails_DataList);
+                qrcode.setArguments(bundle);
+
+            }
+
         }else if (id == R.id.HelpOpt){
             //tips for user
             Toast.makeText(getApplicationContext(),"Welcome! Please note: Long Click item for deleting Short Click item for editting",Toast.LENGTH_SHORT).show();
@@ -295,5 +316,8 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     public String getTitleName(){
         return title;
     }
+
+
+
 }
 

@@ -22,6 +22,7 @@
         android:id="@+id/ScanQROpt"
         android:orderInCategory="100"
         android:title="Scan QRCode"
+
         app:showAsAction="never" />
     <item
         android:id="@+id/HelpOpt"
