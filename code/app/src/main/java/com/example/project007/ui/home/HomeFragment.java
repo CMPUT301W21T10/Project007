@@ -31,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
@@ -112,12 +113,10 @@ public class HomeFragment extends Fragment {
                         String region = (String) doc.getData().get("region");
                         String idString = doc.getId();
                         Integer id = Integer.parseInt(idString);
-
                         experimentDataList.add(new Experiment(name, description, date, type, id,
                                 trailsId,subscriptionId, requireLocation,condition,minimumTrails,region));
                     }
                     DatabaseController.setMaxExperimentId(experimentDataList.size());
-
                     experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
                 }
             }
