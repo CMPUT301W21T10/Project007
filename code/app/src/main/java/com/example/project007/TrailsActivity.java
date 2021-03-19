@@ -270,6 +270,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.questionsOpt) {
+
             return true;
         }else if (id == R.id.viewResult) {
             if(trails_DataList.size()==0){
