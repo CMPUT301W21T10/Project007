@@ -55,7 +55,7 @@ public class Trails implements Serializable {
         this.ID = ID;
     }
 
-    //for Three other Trails w.o location
+    //for Three other Trails w/ location
     public Trails(String trail_title, String date, String type, String time, String variesData, Integer ID, Location location) {
         this.trail_title = trail_title;
         this.date = date;

@@ -51,6 +51,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         final CollectionReference collectionReference = db.collection("Trails");
         //database for unique trails
 
+
         //receive data from experiment
         Intent intent = getIntent();
         experiment = (Experiment) intent.getSerializableExtra("com.example.project007.INSTANCE");
@@ -59,9 +60,9 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         title = experiment.getName();
         description = experiment.getDescription();
         needLocation = experiment.isRequireLocation();
+        descriptionTrail.setText(description);
         //receive data from experiment
 
-        descriptionTrail.setText(description);
 
 
 
@@ -196,6 +197,10 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 resultFragment.setArguments(bundle);}
             return true;
         }else if (id == R.id.QROpt) {
+            return true;
+        }else if (id == R.id.HelpOpt){
+            //tips for user
+            Toast.makeText(getApplicationContext(),"Welcome! Please note: Long Click item for deleting Short Click item for editting",Toast.LENGTH_SHORT).show();
             return true;
         }
 
