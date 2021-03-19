@@ -10,23 +10,60 @@ public class Trails implements Serializable {
     private String success;
     private String failure;
     private String VariesData;
+    private Integer ID;
+    private Location location;
 
-    //for Binomial Trails
-    public Trails(String trail_title, String date, String type, String time, String success, String failure) {
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    //for Binomial Trails w.o location
+    public Trails(String trail_title, String date, String type, String time, String success, String failure, Integer ID) {
         this.trail_title = trail_title;
         this.date = date;
         this.type = type;
         this.time = time;
         this.success = success;
         this.failure = failure;
+        this.ID = ID;
+        VariesData = String.valueOf(Integer.parseInt(success)-Integer.parseInt(failure));
     }
-    //for Three other Trails
-    public Trails(String trail_title, String date, String type, String time, String variesData) {
+
+    //for Binomial Trails w/ location
+    public Trails(String trail_title, String date, String type, String time, String success, String failure, Integer ID, Location location) {
         this.trail_title = trail_title;
         this.date = date;
         this.type = type;
         this.time = time;
-        VariesData = variesData;
+        this.success = success;
+        this.failure = failure;
+        this.ID = ID;
+        this.location = location;
+    }
+
+    //for Three other Trails w.o location
+    public Trails(String trail_title, String date, String type, String time, String variesData, Integer ID) {
+        this.trail_title = trail_title;
+        this.date = date;
+        this.type = type;
+        this.time = time;
+        this.VariesData = variesData;
+        this.ID = ID;
+    }
+
+    //for Three other Trails w.o location
+    public Trails(String trail_title, String date, String type, String time, String variesData, Integer ID, Location location) {
+        this.trail_title = trail_title;
+        this.date = date;
+        this.type = type;
+        this.time = time;
+        this.VariesData = variesData;
+        this.ID = ID;
+        this.location = location;
     }
 
     public String getTrail_title() {
@@ -83,5 +120,13 @@ public class Trails implements Serializable {
 
     public void setVariesData(String variesData) {
         VariesData = variesData;
+    }
+
+    public Integer getID() {
+        return ID;
+    }
+
+    public void setID(Integer ID) {
+        this.ID = ID;
     }
 }

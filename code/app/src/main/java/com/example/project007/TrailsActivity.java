@@ -7,11 +7,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -22,13 +28,49 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     AddBinoTrailFragment addBinoTrailFragment;
     AddMesuTrailFragment addMesuTrailFragment;
     AddNnCBTrailFragment addNnCBTrailFragment;
+
+    TextView descriptionTrail;
+    Result result;
+
     private Experiment experiment;
     private Integer position;
+    boolean needLocation;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trails_activity_main);
+        descriptionTrail = findViewById(R.id.descriptionforTrail);
+        //database for unique trails
+        final FirebaseFirestore db;
+        db = FirebaseFirestore.getInstance();
+        DatabaseController.setDb(db);
+        final CollectionReference collectionReference = db.collection("Trails");
+        //database for unique trails
+
+        //String type = "";
+        //String type = experiment.getType();
+        //String title = experiment.getName();
+        //String description = experiment.getDescription();
+        //needLocation = experiment.getRequireLocation();
+        needLocation = true;
+        String description ="SB!";
+        descriptionTrail.setText(description);
+        String title = "Measurement One";
+
+        String type = "Measurement";
+
+        //toolbar content may vary with the input type
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        TextView textView = (TextView)toolbar.findViewById(R.id.toolbarTextView);
+        textView.setText(title);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        //toolbar content may vary with the input type
+
 
         Intent intent = getIntent();
         experiment = (Experiment) intent.getSerializableExtra("com.example.project007.INSTANCE");
@@ -38,8 +80,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         trail_List = findViewById(R.id.trail_list);
 
 
-        //String type = "";
-        String type = experiment.getType();
 
         trails_DataList = new ArrayList<>();
 
@@ -136,10 +176,12 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     @Override
     public void sending_data(Trails trails) {
         trail_Adapter.add(trails);
+        Toast.makeText(getApplicationContext(),"New Trail:" + trails.getTrail_title() + "added success!",Toast.LENGTH_SHORT).show();
     }
     @Override
     public void editing_data(Trails trails) {
         trail_Adapter.notifyDataSetChanged();
+        Toast.makeText(getApplicationContext(),"Trail:" + trails.getTrail_title() + "edited success!",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -162,6 +204,15 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         if (id == R.id.questionsOpt) {
             return true;
         }else if (id == R.id.viewResult) {
+            if(trails_DataList.size()==0){
+                Toast toast = Toast.makeText(getApplicationContext(),"There's no trails for this experiment!",Toast.LENGTH_SHORT);
+                toast.show();
+            }else{
+                result = new Result();
+                getSupportFragmentManager().beginTransaction().replace(R.id.data_container, result).addToBackStack(null).commit();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("result",trails_DataList);
+                result.setArguments(bundle);}
             return true;
         }else if (id == R.id.QROpt) {
             return true;
