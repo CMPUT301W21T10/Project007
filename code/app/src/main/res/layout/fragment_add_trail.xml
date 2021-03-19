@@ -134,7 +134,7 @@
     <FrameLayout
         android:id="@+id/map_container"
         android:layout_width="match_parent"
-        android:layout_height="341dp">
+        android:layout_height="350dp">
 
     </FrameLayout>
 
@@ -142,12 +142,24 @@
         android:id="@+id/map_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/custombutton"
         android:text="Choose Location" />
+
+    <FrameLayout
+        android:id="@+id/space_container"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="1dp">
+
+    </FrameLayout>
 
     <Button
         android:id="@+id/ok_pressed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/custombutton"
         android:text="OK"/>
 
 
