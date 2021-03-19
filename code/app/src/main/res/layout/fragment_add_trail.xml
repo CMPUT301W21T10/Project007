@@ -128,7 +128,7 @@
     <FrameLayout
         android:id="@+id/map_container"
         android:layout_width="match_parent"
-        android:layout_height="386dp">
+        android:layout_height="379dp">
 
     </FrameLayout>
 

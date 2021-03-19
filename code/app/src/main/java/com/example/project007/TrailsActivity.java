@@ -59,7 +59,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         descriptionTrail.setText(description);
         String title = "Measurement One";
 
-        type = "NonNegative";
+        type = "Measurement";
 
         //toolbar content may vary with the input type
         Toolbar toolbar = findViewById(R.id.toolbar);
