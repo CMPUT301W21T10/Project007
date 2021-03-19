@@ -12,6 +12,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#ba160c</color>
+    <color name="yellow">#FFFF00</color> <!--黄色 -->
 
 
 </resources>
