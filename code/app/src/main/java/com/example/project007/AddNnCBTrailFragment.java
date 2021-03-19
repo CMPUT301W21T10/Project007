@@ -204,10 +204,11 @@ public class AddNnCBTrailFragment extends Fragment {
                     String time_info = time_generate.getText().toString();
                     String NnCBData_info = NnCBData.getText().toString();
                     //temp written as this
-                    if (needLocation){
-                        Trails trails = new Trails(title_info, date_info, type, time_info, NnCBData_info, ID, location);
+                    if (!needLocation){
+                        Trails trails = new Trails(title_info, date_info, type, time_info, NnCBData_info, ID);
                     }
-                    Trails trails = new Trails(title_info, date_info, type, time_info, NnCBData_info, ID);
+                    Trails trails = new Trails(title_info, date_info, type, time_info, NnCBData_info, ID, location);
+
                     //error prone
                     if (checkText(trails)){
                         listener.sending_data(trails);

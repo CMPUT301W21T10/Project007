@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_fff"
     tools:context=".MainActivity">
 
 
@@ -11,25 +12,42 @@
         android:id="@+id/descriptionforTrail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="54dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="578dp"
-        android:gravity="center_horizontal"
-        android:hint="Description"
         android:textSize="50dp"
+        android:hint="Description"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.153">
+        app:layout_constraintTop_toTopOf="parent">
 
     </TextView>
+
+    <ListView
+        android:id="@+id/trail_list"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:layout_marginTop="114dp"
+        android:layout_marginBottom="2dp"
+        android:divider="@color/black"
+        style="@style/dividedListStyle"
+        android:choiceMode="singleChoice"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@android:layout/simple_list_item_1">
+
+    </ListView>
+
 
 
     <FrameLayout
         android:id="@+id/data_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -42,27 +60,12 @@
 
     </FrameLayout>
 
-    <ListView
-        android:id="@+id/trail_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="124dp"
-        android:layout_marginBottom="1dp"
-        android:choiceMode="singleChoice"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@android:layout/simple_list_item_1">
-
-    </ListView>
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/experimentBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:theme="@style/Theme.Project007"
         android:layout_marginStart="321dp"
         android:layout_marginTop="548dp"
         android:layout_marginEnd="16dp"

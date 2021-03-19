@@ -19,9 +19,9 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class ResultFragment extends Fragment {
-    private String type;
-    private String description;
-    private String title;
+    public String type;
+    public String description;
+    public String title;
 
 
     static ResultFragment newInstance(Trails trails){
@@ -105,10 +105,6 @@ public class ResultFragment extends Fragment {
         @SuppressLint("DefaultLocale") String p4 = String.format("%.2f",Med(list));
         @SuppressLint("DefaultLocale") String p5 = String.format("%.2f",avg(d));
         @SuppressLint("DefaultLocale") String p6 = String.format("%.2f",StandardDiviation(d));
-        TrailsActivity activity = (TrailsActivity) getActivity();
-        type = activity.getTrailsType();
-     //   description = activity.getDescription();
-      //  title = activity.getTitleName();
         l.add(p4);
         l.add(p5);
         l.add(p6);
@@ -121,6 +117,10 @@ public class ResultFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ArrayList<Trails> argument = (ArrayList<Trails>) getArguments().get("result");
+        TrailsActivity activity = (TrailsActivity) getActivity();
+        type = activity.getTrailsType();
+        description = activity.getDescription();
+        title = activity.getTitleName();
 
         View view =inflater.inflate(R.layout.fragment_result, container, false);
         TextView Quartile1 = view.findViewById(R.id.quartile1);
