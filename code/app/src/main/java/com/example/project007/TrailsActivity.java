@@ -50,14 +50,16 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         final CollectionReference collectionReference = db.collection("Trails");
         //database for unique trails*/
 
-        //type = experiment.getType();
-        //String title = experiment.getName();
-        //String description = experiment.getDescription();
-        //needLocation = experiment.getRequireLocation();
+        Intent intent = getIntent();
+        experiment = (Experiment) intent.getSerializableExtra("com.example.project007.INSTANCE");
+        position = intent.getIntExtra("com.example.project007.POSITION", -1);
+
+        type = experiment.getType();
+        String title = experiment.getName();
+        String description = experiment.getDescription();
+        needLocation = experiment.isRequireLocation();
         needLocation = false;
-        String description ="SB!";
         descriptionTrail.setText(description);
-        String title = "Measurement One";
 
         type = "Measurement";
 
@@ -70,10 +72,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         //toolbar content may vary with the input type
 
-
-        Intent intent = getIntent();
-        experiment = (Experiment) intent.getSerializableExtra("com.example.project007.INSTANCE");
-        position = intent.getIntExtra("com.example.project007.POSITION", -1);
 
         final FloatingActionButton addButton = findViewById(R.id.experimentBtn);
         trail_List = findViewById(R.id.trail_list);

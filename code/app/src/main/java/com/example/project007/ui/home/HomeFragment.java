@@ -109,7 +109,7 @@ public class HomeFragment extends Fragment {
                         String[] subscriptionId = (String[]) doc.getData().get("subscriptionId");
                         boolean requireLocation = Boolean.parseBoolean((String) doc.getData().get("requireLocation"));
                         boolean condition = Boolean.parseBoolean((String) doc.getData().get("condition"));
-                        Integer minimumTrails = Integer.parseInt((String) doc.getData().get("minimumTrails"));
+                        Integer minimumTrails = ((Long) doc.getData().get("minimumTrails")).intValue();
                         String region = (String) doc.getData().get("region");
                         String idString = doc.getId();
                         Integer id = Integer.parseInt(idString);

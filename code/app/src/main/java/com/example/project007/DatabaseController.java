@@ -19,7 +19,7 @@ import static android.content.ContentValues.TAG;
 public class DatabaseController {
     @SuppressLint("StaticFieldLeak")
     private static FirebaseFirestore db;
-    private static String UserId = "1";
+    private static String UserId;
     private static Integer maxExperimentId;
 
     public static Integer getMaxExperimentId() {
@@ -49,18 +49,18 @@ public class DatabaseController {
     public static boolean modify_experiment(String collection, Experiment experiment){
         // Retrieving the city name and the province name from the EditText fields
         CollectionReference collectionReference =  db.collection(collection);
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, Object> data = new HashMap<>();
 
         String idString = experiment.getId().toString();
         data.put("Name", experiment.getName());
         data.put("Description", experiment.getDescription());
         data.put("Date", experiment.getDate());
         data.put("Type", experiment.getType());
-        data.put("trailsId", experiment.getUserId());
-        data.put("subscriptionId", experiment.getUserId());
+        data.put("trailsId", experiment.getTrails());
+        data.put("subscriptionId", experiment.getSubscriptionId());
         data.put("requireLocation", String.valueOf(experiment.isRequireLocation()));
         data.put("condition", String.valueOf(experiment.isCondition()));
-        data.put("minimumTrails", String.valueOf(experiment.getMinimumTrails()));
+        data.put("minimumTrails", experiment.getMinimumTrails());
         data.put("region", experiment.getRegion());
 
         final boolean[] condition = new boolean[1];
