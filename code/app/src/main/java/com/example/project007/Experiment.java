@@ -13,19 +13,28 @@ public class Experiment implements Serializable {
     private final Integer id;
     private final String userId;
     private Integer[] trailsId;
+    private String[] subscriptionId;
+    private boolean requireLocation;
 
-    public Experiment(String name, String description, String date, String type, @Nullable Integer id) {
+    public Experiment(String name, String description, String date, String type, @Nullable Integer id,@Nullable Integer[] trailsId, @Nullable String[] subscriptionId) {
         this.name = name;
         this.description = description;
         this.date = date;
         this.type = type;
+        this.userId = DatabaseController.getUserId();
+
         if (id != null){
             this.id = id;
         }
         else{
             this.id = DatabaseController.generateExperimentId();
         }
-        this.userId = DatabaseController.getUserId();
+        if (trailsId != null){
+            this.trailsId = trailsId;
+        }
+        if (subscriptionId != null){
+            this.subscriptionId = subscriptionId;
+        }
     }
 
     public String getUserId() {
@@ -76,5 +85,19 @@ public class Experiment implements Serializable {
         this.trailsId = trailsId;
     }
 
+    public String[] getSubscriptionId() {
+        return subscriptionId;
+    }
 
+    public void setSubscriptionId(String[] subscriptionId) {
+        this.subscriptionId = subscriptionId;
+    }
+
+    public boolean isRequireLocation() {
+        return requireLocation;
+    }
+
+    public void setRequireLocation(boolean requireLocation) {
+        this.requireLocation = requireLocation;
+    }
 }
