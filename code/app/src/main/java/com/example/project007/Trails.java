@@ -35,7 +35,6 @@ public class Trails implements Serializable {
         else{
             this.ID = TrailsDatabaseController.generateTrailsId();
         }
-        VariesData = String.valueOf(Integer.parseInt(success)-Integer.parseInt(failure));
     }
 
     //for Binomial Trails w/ location

@@ -135,17 +135,19 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
 
                         String idString = doc.getId();
                         Integer ID = Integer.parseInt(idString);
-                        if (success == null){//case for non-binomial trails
-                            if (location != null){
-                                trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID, location));
-                            }else{
-                                trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID));
-                            }
-                        }else if(variesData == null){//case for binomial trails
-                            if (location != null){
-                                trails_DataList.add(new Trails(trail_title, date, type, time, success, failure, ID, location));
-                            }else{
-                                trails_DataList.add(new Trails(trail_title, date, type, time, success, failure, ID));
+                        if (experiment.getTrailsId() != null && experiment.getTrailsId().contains(idString)){
+                            if (success == null){//case for non-binomial trails
+                                if (location != null){
+                                    trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID, location));
+                                }else{
+                                    trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID));
+                                }
+                            }else if(variesData == null){//case for binomial trails
+                                if (location != null){
+                                    trails_DataList.add(new Trails(trail_title, date, type, time, success, failure, ID, location));
+                                }else{
+                                    trails_DataList.add(new Trails(trail_title, date, type, time, success, failure, ID));
+                                }
                             }
                         }
                     }
@@ -227,12 +229,16 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         trail_Adapter.add(trails);
         Toast.makeText(getApplicationContext(),"New Trail:" + trails.getTrail_title() + " added success!",Toast.LENGTH_SHORT).show();
         boolean addResult = TrailsDatabaseController.modify_Trails("Trails", trails);
-            if (addResult){
-                Toast.makeText(getApplicationContext(), "Add Succeed", Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(getApplicationContext(), "Add Failed", Toast.LENGTH_SHORT).show();
-            }
+        ArrayList<String> valueList = experiment.getTrails();
+        valueList.add(trails.getID().toString());
+        DatabaseController.setExperimentTrails(experiment.getId().toString(), valueList );
+        if (addResult){
+            Toast.makeText(getApplicationContext(), "Add Succeed", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getApplicationContext(), "Add Failed", Toast.LENGTH_SHORT).show();
+        }
     }
+
     @Override
     public void editing_data(Trails trails) {
         trail_Adapter.notifyDataSetChanged();

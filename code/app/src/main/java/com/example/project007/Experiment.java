@@ -14,8 +14,8 @@ public class Experiment implements Serializable {
     private String type;
     private final Integer id;
     private final String userId;
-    private ArrayList<String> trails;
-    private ArrayList<String> subscriptionId;
+    private ArrayList<String> trails = new ArrayList<String>();
+    private ArrayList<String> subscriptionId = new ArrayList<String>();
     private boolean requireLocation;
     private boolean condition;
     private Integer minimumTrails;
