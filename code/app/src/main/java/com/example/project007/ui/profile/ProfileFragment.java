@@ -288,8 +288,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
-
         popupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         inflate.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         location = new int[2];

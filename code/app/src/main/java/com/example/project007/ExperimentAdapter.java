@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -64,11 +65,16 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
         TextView experimentName = view.findViewById(R.id.name_view);
         TextView experimentDescription = view.findViewById(R.id.description_view);
         Button delButton = view.findViewById(R.id.del_button);
+        ImageView image = view.findViewById(R.id.experiment_image);
 
         experimentName.setText(experiment.getName());
         experimentDescription.setText(experiment.getDescription());
-
-
+        switch (experiment.getType()){
+            case "Binomial": image.setImageResource(R.drawable.b); break;
+            case "Measurement": image.setImageResource(R.drawable.m); break;
+            case "Count": image.setImageResource(R.drawable.c); break;
+            case "IntCount": image.setImageResource(R.drawable.n); break;
+        }
         view.setOnTouchListener(new View.OnTouchListener() {
 
             @SuppressLint("ClickableViewAccessibility")
@@ -87,7 +93,7 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
                 }
 
                 if (delButton != null) {
-                    if (Math.abs(downX - upX) > 300) {  //2次坐标的绝对值如果大于35，就认为是左右滑动
+                    if (Math.abs(- downX + upX) > 300) {  //2次坐标的绝对值如果大于35，就认为是左右滑动
                         delButton.setVisibility(View.VISIBLE);  //显示删除button
                         globalButton = delButton;  //赋值给全局button，一会儿用
                         globalView = v; //得到itemview，在上面加动画

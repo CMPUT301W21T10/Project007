@@ -10,24 +10,26 @@
     android:layout_height="wrap_content"
     android:background="@drawable/content"
 
-    android:paddingLeft="2dp"
-    android:orientation="horizontal">
+    android:paddingStart="2dp"
+    android:orientation="horizontal"
+    tools:ignore="RtlSymmetry">
 
     <ImageView
         android:id="@+id/experiment_image"
-        android:maxWidth="30dp"
-        android:maxHeight="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:maxWidth="20dp"
+        android:maxHeight="20dp"
         android:layout_margin="10dp"
         android:layout_gravity="center"
-        app:srcCompat="@drawable/ic_baseline_view_agenda_24"
-        />
+        android:scaleType="centerInside"
+        android:layout_width="60dip"
+        android:layout_height="60dip" />
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
+
         android:layout_margin="10dp">
 
 
@@ -56,17 +58,28 @@
 
         </TextView>
 
-        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/edit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/yellow"
+        android:gravity="center"
+        android:layout_gravity="top|end"
+        android:textColor="@color/white"
+        android:text="@string/delete"
+        android:textAlignment="center"
+        android:visibility="invisible"
+        tools:ignore="RtlCompat" />
 
     <Button
         android:id="@+id/del_button"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
         android:background="@color/red"
         android:gravity="center"
-        android:layout_gravity="end"
+        android:layout_gravity="top|end"
         android:textColor="@color/white"
         android:text="@string/delete"
         android:textAlignment="center"

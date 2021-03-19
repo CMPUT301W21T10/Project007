@@ -1,5 +1,7 @@
 package com.example.project007;
 
+import android.graphics.drawable.Drawable;
+
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
@@ -15,8 +17,13 @@ public class Experiment implements Serializable {
     private Integer[] trails;
     private String[] subscriptionId;
     private boolean requireLocation;
+    private boolean condition;
+    private Integer minimumTrails;
+    private String region;
 
-    public Experiment(String name, String description, String date, String type, @Nullable Integer id,@Nullable Integer[] trails, @Nullable String[] subscriptionId) {
+    public Experiment(String name, String description, String date, String type,
+                      @Nullable Integer id,@Nullable Integer[] trails, @Nullable String[] subscriptionId,
+                      boolean requireLocation, boolean condition) {
         this.name = name;
         this.description = description;
         this.date = date;
@@ -35,6 +42,8 @@ public class Experiment implements Serializable {
         if (subscriptionId != null){
             this.subscriptionId = subscriptionId;
         }
+        this.requireLocation = requireLocation;
+        this.condition = condition;
     }
 
     public String getUserId() {
@@ -59,6 +68,14 @@ public class Experiment implements Serializable {
 
     public String getDate() {
         return date;
+    }
+
+    public Integer[] getTrails() {
+        return trails;
+    }
+
+    public void setTrails(Integer[] trails) {
+        this.trails = trails;
     }
 
     public void setDate(String date) {
@@ -101,5 +118,11 @@ public class Experiment implements Serializable {
         this.requireLocation = requireLocation;
     }
 
+    public boolean isCondition() {
+        return condition;
+    }
 
+    public void setCondition(boolean condition) {
+        this.condition = condition;
+    }
 }

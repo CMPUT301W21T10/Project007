@@ -71,18 +71,6 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        //FirebaseApp.initializeApp(this.getContext());
-
-        /*
-        final TextView textView = root.findViewById(R.id.trytry);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
-
-        // init adapter
 
         experimentList = root.findViewById(R.id.experiment_list);
         experimentList.setAdapter(experimentAdapter);
@@ -119,11 +107,14 @@ public class HomeFragment extends Fragment {
                         String type = (String) doc.getData().get("Type");
                         Integer[] trailsId = (Integer[]) doc.getData().get("trailsId");
                         String[] subscriptionId = (String[]) doc.getData().get("subscriptionId");
+                        boolean requireLocation = Boolean.parseBoolean((String) doc.getData().get("requireLocation"));
+                        boolean condition = Boolean.parseBoolean((String) doc.getData().get("condition"));
 
                         String idString = doc.getId();
                         Integer id = Integer.parseInt(idString);
 
-                        experimentDataList.add(new Experiment(name, description, date, type, id, trailsId,subscriptionId)); // Adding the cities and provinces from FireStore
+                        experimentDataList.add(new Experiment(name, description, date, type, id,
+                                trailsId,subscriptionId, requireLocation,condition));
                     }
                     DatabaseController.setMaxExperimentId(experimentDataList.size());
 

@@ -9,8 +9,15 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,16 +27,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Map;
 
-public class ModifyExperimentFragment extends DialogFragment {
+public class ModifyExperimentFragment extends DialogFragment{
 
 
     private EditText experimentName;
     private EditText experimentDescription;
     private EditText experimentDate;
-    private EditText experimentType;
-
+    private String type = "none";
     public Experiment currentExperiment = null;
+    private final String[] types = {"Binomial", "Measurement", "Count","IntCount"};
+    private boolean requireLocation;
 
     // get an instance means to modify it
     public ModifyExperimentFragment(Experiment currentExperiment) {
@@ -49,12 +58,15 @@ public class ModifyExperimentFragment extends DialogFragment {
         experimentName = view.findViewById(R.id.editTextName);
         experimentDescription = view.findViewById(R.id.editTextDescription);
         experimentDate = view.findViewById(R.id.editTextDate);
-        experimentType = view.findViewById(R.id.editTextType);
+        Spinner typeSpinner = view.findViewById(R.id.typeChooser);
+        CheckBox location = view.findViewById(R.id.checkBox);
+
         // set saved information if it's modifying
         if (currentExperiment != null){
             experimentName.setText(currentExperiment.getName());
             experimentDescription.setText(currentExperiment.getDescription());
             experimentDate.setText(currentExperiment.getDate());
+            location.setChecked(currentExperiment.isRequireLocation());
         }
 
         // datePicker part
@@ -80,6 +92,32 @@ public class ModifyExperimentFragment extends DialogFragment {
             }
         });
 
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(),
+                R.array.experimentType, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        typeSpinner.setAdapter(adapter);
+        ImageView image = view.findViewById(R.id.instance_image);
+
+        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                type = types[position];
+                switch (type){
+                    case "Binomial": image.setImageResource(R.drawable.b); break;
+                    case "Measurement": image.setImageResource(R.drawable.m); break;
+                    case "Count": image.setImageResource(R.drawable.c); break;
+                    case "IntCount": image.setImageResource(R.drawable.n); break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //experimentType.setText("NONE");
+            }
+        });
+
         // dialog part, show UI commit information
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
@@ -92,10 +130,13 @@ public class ModifyExperimentFragment extends DialogFragment {
                         String name = experimentName.getText().toString();
                         String description = experimentDescription.getText().toString();
                         String date = experimentDate.getText().toString();
-                        String type = experimentType.getText().toString();
+                        requireLocation = location.isChecked();
+
                         Bundle result = new Bundle();
-                        result.putSerializable("com.example.project007.modifiedExperiment", new Experiment(name,description,date,type,null,null,null) );
+                        result.putSerializable("com.example.project007.modifiedExperiment",
+                                new Experiment(name,description,date,type,null,null,null,requireLocation,true) );
                         getParentFragmentManager().setFragmentResult("homeRequest", result);
                     }}).create();
     }
+
 }
