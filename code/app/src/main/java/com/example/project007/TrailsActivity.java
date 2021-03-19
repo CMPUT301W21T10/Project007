@@ -170,14 +170,14 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 }
             });
 
-            trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /*trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Trails newtrail = trail_Adapter.getItem(position);
                     AddBinoTrailFragment fragment = AddBinoTrailFragment.newInstance(newtrail);
                     getSupportFragmentManager().beginTransaction().replace(R.id.data_container, fragment).addToBackStack(null).commit();
                 }
-            });
+            });*/
 
         }else{
             addButton.setOnClickListener(new View.OnClickListener() {
@@ -188,14 +188,14 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                     getSupportFragmentManager().beginTransaction().replace(R.id.data_container, addNnCBTrailFragment).addToBackStack(null).commit();
                 }
             });
-            trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /*trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Trails newtrail = trail_Adapter.getItem(position);
                     AddNnCBTrailFragment NcCb_fragment = AddNnCBTrailFragment.newInstance(newtrail);
                     getSupportFragmentManager().beginTransaction().replace(R.id.data_container, NcCb_fragment).addToBackStack(null).commit();
                 }
-            });
+            });*/
         }
 
 
