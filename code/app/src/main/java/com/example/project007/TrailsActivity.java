@@ -43,23 +43,23 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trails_activity_main);
         descriptionTrail = findViewById(R.id.descriptionforTrail);
-        //database for unique trails
+        /*//database for unique trails
         final FirebaseFirestore db;
         db = FirebaseFirestore.getInstance();
         DatabaseController.setDb(db);
         final CollectionReference collectionReference = db.collection("Trails");
-        //database for unique trails
+        //database for unique trails*/
 
-        String type = experiment.getType();
-        String title = experiment.getName();
-        String description = experiment.getDescription();
+        //type = experiment.getType();
+        //String title = experiment.getName();
+        //String description = experiment.getDescription();
         //needLocation = experiment.getRequireLocation();
         needLocation = false;
-        //String description ="SB!";
+        String description ="SB!";
         descriptionTrail.setText(description);
-        //String title = "Measurement One";
+        String title = "Measurement One";
 
-        //type = "NonNegative";
+        type = "NonNegative";
 
         //toolbar content may vary with the input type
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -195,7 +195,9 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 bundle.putSerializable("result",trails_DataList);
                 result.setArguments(bundle);}
             return true;
-        }else if (id == R.id.QROpt) {
+        }else if (id == R.id.QROpt) { // this is where you put generate the qr
+            return true;
+        }else if (id == R.id.ScanQROpt){  // this is where you put the scan yi scan
             return true;
         }
 
