@@ -25,7 +25,8 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
     private Animation animation;  //删除时候的动画
     private float downX;  //点下时候获取的x坐标
     private float upX;   //手指离开时候的x坐标
-    private Button globalButton; //用于执行删除的button
+    private Button globalDelButton; //用于执行删除的button
+
     private View globalView;
 
     public ExperimentAdapter(Context context, ArrayList<Experiment> experiments) {
@@ -65,6 +66,7 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
         TextView experimentName = view.findViewById(R.id.name_view);
         TextView experimentDescription = view.findViewById(R.id.description_view);
         Button delButton = view.findViewById(R.id.del_button);
+
         ImageView image = view.findViewById(R.id.experiment_image);
 
         experimentName.setText(experiment.getName());
@@ -83,9 +85,7 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:  //手指按下
                         downX = event.getX(); //获取手指x坐标
-                        if (globalButton != null) {
-                            globalButton.setVisibility(View.GONE);  //影藏显示出来的button
-                        }
+                        if (globalDelButton != null)
                         break;
                     case MotionEvent.ACTION_UP:  //手指离开
                         upX = event.getX(); //获取x坐标值
@@ -95,7 +95,7 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
                 if (delButton != null) {
                     if (Math.abs(- downX + upX) > 300) {  //2次坐标的绝对值如果大于35，就认为是左右滑动
                         delButton.setVisibility(View.VISIBLE);  //显示删除button
-                        globalButton = delButton;  //赋值给全局button，一会儿用
+                        globalDelButton = delButton;  //赋值给全局button，一会儿用
                         globalView = v; //得到itemview，在上面加动画
                         return true; //终止事件
                     }
@@ -110,13 +110,14 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
             @Override
             public void onClick(View v) {
 
-                if (globalButton != null) {
-                    globalButton.setVisibility(View.GONE);  //点击删除按钮后，影藏按钮
+                if (globalDelButton != null) {
+                    globalDelButton.setVisibility(View.GONE);  //点击删除按钮后，影藏按钮
                     deleteItem(globalView, position);   //删除数据，加动画
                 }
 
             }
         });
+
 
         return view;
 

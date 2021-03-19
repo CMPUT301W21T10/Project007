@@ -81,12 +81,11 @@ public class HomeFragment extends Fragment {
         final CollectionReference collectionReference = db.collection("Experiments");
 
         // Listener of add new instance button
-        final FloatingActionButton addCityButton = root.findViewById(R.id.add_experiment_button);
-        addCityButton.setOnClickListener(new View.OnClickListener() {
+        final FloatingActionButton addExperimentButton = root.findViewById(R.id.add_experiment_button);
+        addExperimentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new ModifyExperimentFragment().show(getChildFragmentManager(), "ADD_EXPERIMENT");
-
             }
         });
 
