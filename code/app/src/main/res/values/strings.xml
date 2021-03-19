@@ -26,5 +26,6 @@
     <string name="delete">Delete</string>
 
     <string name="choose_type_hint">Type: </string>
+    <string name="add_minimumTrails_hint">Enter your Minimum Trails number </string>
 
 </resources>

@@ -119,7 +119,7 @@
             android:id="@+id/minimumTrails"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/add_region_hint"
+            android:hint="@string/add_minimumTrails_hint"
             android:layout_weight="1" />
 
     </LinearLayout>

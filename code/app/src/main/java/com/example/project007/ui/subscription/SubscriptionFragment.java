@@ -1,10 +1,12 @@
 package com.example.project007.ui.subscription;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ import com.example.project007.DatabaseController;
 import com.example.project007.Experiment;
 import com.example.project007.ExperimentAdapter;
 import com.example.project007.R;
+import com.example.project007.TrailsActivity;
 import com.example.project007.ui.home.HomeViewModel;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -45,23 +48,6 @@ public class SubscriptionFragment extends Fragment {
         experimentDataList = new ArrayList<>();
 
         experimentAdapter = new ExperimentAdapter(this.getContext(), experimentDataList);
-
-
-        getChildFragmentManager()
-                .setFragmentResultListener("homeRequest", this, new FragmentResultListener() {
-                    @Override
-                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
-                        // Do something with the result
-                        Experiment experiment = (Experiment) bundle.getSerializable("com.example.project007.modifiedExperiment");
-                        boolean addResult = DatabaseController.modify_experiment("Experiments", experiment);
-                        if (addResult){
-                            Toast.makeText(getActivity(), "Add Succeed", Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            Toast.makeText(getActivity(), "Add Failed", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -102,11 +88,9 @@ public class SubscriptionFragment extends Fragment {
                         Integer id = Integer.parseInt(idString);
 
                         if (subscriptionId != null){
-                            for (String s : subscriptionId) {
-                                if (s.equals(DatabaseController.getUserId())) {
-                                    experimentDataList.add(new Experiment(name, description, date, type, id,
-                                            trailsId, subscriptionId, requireLocation, condition, minimumTrails, region));
-                                }
+                            if (subscriptionId.contains(DatabaseController.getUserId())){
+                                experimentDataList.add(new Experiment(name, description, date, type, id,
+                                        trailsId, subscriptionId, requireLocation, condition, minimumTrails, region));
                             }
                         }
 
@@ -116,6 +100,18 @@ public class SubscriptionFragment extends Fragment {
             }
         });
 
+        // listener to access detail of an element
+        // package an experiment and position info in intent
+        experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), TrailsActivity.class);
+                Experiment instanceExperiment = experimentDataList.get(position);
+                intent.putExtra("com.example.project007.INSTANCE", instanceExperiment);
+                intent.putExtra("com.example.project007.POSITION", position);
+                startActivity(intent);
+            }
+        });
         return root;
     }
 }
