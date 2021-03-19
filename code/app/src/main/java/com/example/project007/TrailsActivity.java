@@ -22,7 +22,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     ListView trail_List;
     ArrayAdapter<Trails> trail_Adapter;
     ArrayList<Trails> trails_DataList;
-    ArrayList<Question> questionDataList;
     AddBinoTrailFragment addBinoTrailFragment;
     AddMesuTrailFragment addMesuTrailFragment;
     AddNnCBTrailFragment addNnCBTrailFragment;
