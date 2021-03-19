@@ -105,8 +105,8 @@ public class HomeFragment extends Fragment {
                         String description = (String) doc.getData().get("Description");
                         String date = (String) doc.getData().get("Date");
                         String type = (String) doc.getData().get("Type");
-                        Integer[] trailsId = (Integer[]) doc.getData().get("trailsId");
-                        String[] subscriptionId = (String[]) doc.getData().get("subscriptionId");
+                        ArrayList<String> trailsId = (ArrayList<String>) doc.getData().get("trailsId");
+                        ArrayList<String> subscriptionId = (ArrayList<String>) doc.getData().get("subscriptionId");
                         boolean requireLocation = Boolean.parseBoolean((String) doc.getData().get("requireLocation"));
                         boolean condition = Boolean.parseBoolean((String) doc.getData().get("condition"));
                         Integer minimumTrails = ((Long) doc.getData().get("minimumTrails")).intValue();

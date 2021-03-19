@@ -69,16 +69,8 @@ public class SubscriptionFragment extends Fragment {
         subscriptionViewModel =
                 new ViewModelProvider(this).get(SubscriptionViewModel.class);
         View root = inflater.inflate(R.layout.fragment_subscription, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        subscriptionViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
 
-
-        experimentList = root.findViewById(R.id.experiment_list);
+        experimentList = root.findViewById(R.id.subscript_list);
         experimentList.setAdapter(experimentAdapter);
 
         final FirebaseFirestore db;
@@ -100,19 +92,24 @@ public class SubscriptionFragment extends Fragment {
                         String description = (String) doc.getData().get("Description");
                         String date = (String) doc.getData().get("Date");
                         String type = (String) doc.getData().get("Type");
-                        Integer[] trailsId = (Integer[]) doc.getData().get("trailsId");
-                        String[] subscriptionId = (String[]) doc.getData().get("subscriptionId");
+                        ArrayList<String> trailsId = (ArrayList<String>) doc.getData().get("trailsId");
+                        ArrayList<String> subscriptionId = (ArrayList<String>) doc.getData().get("subscriptionId");
                         boolean requireLocation = Boolean.parseBoolean((String) doc.getData().get("requireLocation"));
                         boolean condition = Boolean.parseBoolean((String) doc.getData().get("condition"));
                         Integer minimumTrails = ((Long) doc.getData().get("minimumTrails")).intValue();
                         String region = (String) doc.getData().get("region");
                         String idString = doc.getId();
                         Integer id = Integer.parseInt(idString);
-                       // if (subscriptionId.contains(DatabaseController.getUserId())){
 
-                      //  }
-                        experimentDataList.add(new Experiment(name, description, date, type, id,
-                                trailsId,subscriptionId, requireLocation,condition,minimumTrails,region));
+                        if (subscriptionId != null){
+                            for (String s : subscriptionId) {
+                                if (s.equals(DatabaseController.getUserId())) {
+                                    experimentDataList.add(new Experiment(name, description, date, type, id,
+                                            trailsId, subscriptionId, requireLocation, condition, minimumTrails, region));
+                                }
+                            }
+                        }
+
                     }
                     experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
                 }
