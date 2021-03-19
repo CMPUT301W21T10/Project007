@@ -31,12 +31,15 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     AddNnCBTrailFragment addNnCBTrailFragment;
 
     TextView descriptionTrail;
-    Result result;
     QrcodeFragment qrcode;
+    ResultFragment resultFragment;
+
     private Experiment experiment;
     private Integer position;
     boolean needLocation;
     String type;
+    String description;
+    String title;
 
 
 
@@ -56,12 +59,17 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         //String title = experiment.getName();
         //String description = experiment.getDescription();
         //needLocation = experiment.getRequireLocation();
+        //        String type = experiment.getType();
+//        String title = experiment.getName();
+//        String description = experiment.getDescription();
+        type = "Measurement";
+        title = "Measurement One";
+        description ="Wow";
+        //needLocation = experiment.getRequireLocation();
         needLocation = false;
-        String description ="SB!";
-        descriptionTrail.setText(description);
-        String title = "Measurement One";
 
-        type = "NonNegative";
+
+        descriptionTrail.setText(description);
 
         //toolbar content may vary with the input type
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -191,11 +199,11 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 Toast toast = Toast.makeText(getApplicationContext(),"There's no trails for this experiment!",Toast.LENGTH_SHORT);
                 toast.show();
             }else{
-                result = new Result();
-                getSupportFragmentManager().beginTransaction().replace(R.id.data_container, result).addToBackStack(null).commit();
+                resultFragment = new ResultFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.data_container, resultFragment).addToBackStack(null).commit();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("result",trails_DataList);
-                result.setArguments(bundle);}
+                resultFragment.setArguments(bundle);}
             return true;
         }else if (id == R.id.ScanQROpt) { // this is where you put generate the qr
             return true;
@@ -226,6 +234,12 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
 
     public String getTrailsType() {
         return type;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public String getTitleName(){
+        return title;
     }
 }
 

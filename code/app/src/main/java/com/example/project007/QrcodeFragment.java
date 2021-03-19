@@ -2,6 +2,7 @@ package com.example.project007;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.google.zxing.BarcodeFormat;
@@ -18,6 +20,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,15 +65,22 @@ public class QrcodeFragment extends Fragment {
         return null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_qrcode, container, false);
         ImageView imageView = view.findViewById(R.id.image_zxing);
-        String word="hello";
-        imageView.setImageBitmap(generateBitmap(word,250,250));
+        ArrayList<Trails> argument = (ArrayList<Trails>) getArguments().get("result");
+        ResultFragment resultFragment =new ResultFragment();
+        ArrayList<String> l;
+        l=resultFragment.CreateList(argument);
+        String result = "\nQuartiles:"+l.get(0)+" "+l.get(1)+" "+l.get(2)+"\nMedian"+l.get(3)+"\nAverage"+l.get(4)+"/nStandardDiviation"+l.get(5);
+//        "Type: "+ l.get(6)+"\ndescription: "+l.get(7)+"\nTitle:"+l.get(8)+"
+        imageView.setImageBitmap(generateBitmap(result,250,250));
         return view;
 
     }
+
 
 }
