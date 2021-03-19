@@ -39,7 +39,7 @@ public class LoginTest {
         solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
         solo.clearEditText((EditText) solo.getView(R.id.reg_email));
         solo.enterText((EditText) solo.getView(R.id.reg_email),"1");
-        solo.clickOnButton("Sign In");
+        solo.clickOnText("Sign In");
         solo.assertCurrentActivity("Wong Activity", MainActivity.class);
     }
     /**
@@ -49,7 +49,7 @@ public class LoginTest {
     @Test
     public void checkToSignup() {
         solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
-        solo.clickOnText("Sign Up");
+        solo.clickOnText("SignUp");
         solo.assertCurrentActivity("Wong Activity", RegActivity.class);
     }
 
@@ -62,7 +62,7 @@ public class LoginTest {
         solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
         solo.clearEditText((EditText) solo.getView(R.id.reg_email));
         solo.enterText((EditText) solo.getView(R.id.reg_email),"10000");
-        solo.clickOnButton("Sign In");
+        solo.clickOnText("Sign In");
         solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
     }
     @After

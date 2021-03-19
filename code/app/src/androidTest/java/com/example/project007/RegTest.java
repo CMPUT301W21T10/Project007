@@ -39,8 +39,8 @@ public class RegTest {
         solo.enterText((EditText) solo.getView(R.id.reg_name),"Alex Xu");
         solo.enterText((EditText) solo.getView(R.id.reg_email),"1295724@gmail.com");
         solo.enterText((EditText) solo.getView(R.id.reg_phone),"6478463215");
-        solo.clickOnButton("Sign Up");
-        solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
+        solo.clickOnText("SignUp");
+        solo.assertCurrentActivity("Wong Activity", RegActivity.class);
     }
 
     @After
