@@ -63,20 +63,14 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         Intent intent = getIntent();
         experiment = (Experiment) intent.getSerializableExtra("com.example.project007.INSTANCE");
         position = intent.getIntExtra("com.example.project007.POSITION", -1);
-        //type = experiment.getType();
-        //title = experiment.getName();
-        //description = experiment.getDescription();
-        //needLocation = experiment.isRequireLocation();
-        //descriptionTrail.setText(description);
+        type = experiment.getType();
+        title = experiment.getName();
+        description = experiment.getDescription();
+        needLocation = experiment.isRequireLocation();
+        descriptionTrail.setText(description);
         //receive data from experiment
 
         //fix variable for debugging
-        type = "Binomial";
-        title = "SB!";
-        description = "Guess what?";
-        needLocation = true;
-        descriptionTrail.setText(description);
-
 
 
         //toolbar content may vary with the input type
