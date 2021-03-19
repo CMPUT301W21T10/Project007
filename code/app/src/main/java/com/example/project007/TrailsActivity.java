@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -186,11 +188,18 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             if(trails_DataList.size()==0){
                 Toast toast = Toast.makeText(getApplicationContext(),"There's no trails for this experiment!",Toast.LENGTH_SHORT);
                 toast.show();
+            }else {
+                qrcode = new Qrcode();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();   // 开启一个事务
+                transaction.replace(R.id.image_zxing, qrcode);
+                transaction.commit();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("result",trails_DataList);
+                qrcode.setArguments(bundle);
             }
-//            else{
-//
-//            }
-        }
+
+    }
 
         return super.onOptionsItemSelected(item);
     }
