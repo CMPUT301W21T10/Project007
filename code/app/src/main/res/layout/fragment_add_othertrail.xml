@@ -16,6 +16,13 @@
     answered by Hesam May 21 '13 at 5:04
     -->
 
+    <FrameLayout
+        android:id="@+id/empty_container"
+        android:layout_width="match_parent"
+        android:layout_height="58dp">
+
+    </FrameLayout>
+
     <EditText
         android:id="@+id/trail_Title_editText"
         android:layout_width="match_parent"
@@ -121,7 +128,7 @@
     <FrameLayout
         android:id="@+id/map_container"
         android:layout_width="match_parent"
-        android:layout_height="386dp">
+        android:layout_height="353dp">
 
     </FrameLayout>
 
