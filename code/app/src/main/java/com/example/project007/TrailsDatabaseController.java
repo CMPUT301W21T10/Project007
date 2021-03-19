@@ -12,6 +12,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
@@ -124,6 +125,30 @@ public class TrailsDatabaseController {
                 });
         return condition[0];
     }
+
+    /*public static boolean edit_Trails(String collection, Trails trails){
+        CollectionReference collectionReference =  Trail_db.collection(collection);
+        String idString = trails.getID().toString();
+        final boolean[] condition = new boolean[1];
+        collectionReference
+                .document(idString)
+                .update((Map<String, Object>) trails)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Data has been deleted successfully!");
+                        condition[0] = true;
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "Data could not be deleted!" + e.toString());
+                        condition[0] = false;
+                    }
+                });
+        return condition[0];
+    }*/
 
 
     public static void deleteExperiment(String name){
