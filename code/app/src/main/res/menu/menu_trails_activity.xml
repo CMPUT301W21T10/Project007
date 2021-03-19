@@ -23,4 +23,9 @@
         android:orderInCategory="100"
         android:title="Scan QRCode"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/HelpOpt"
+        android:orderInCategory="100"
+        android:title="Help/Tips"
+        app:showAsAction="never" />
 </menu>

@@ -103,7 +103,6 @@ public class AddBinoTrailFragment extends Fragment{
                 .setFragmentResultListener("showLocation", this, new FragmentResultListener() {
                     @Override
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
-                        // Do something with the result
                         location = (Location) bundle.getSerializable("Location");
                     }
                 });
@@ -129,7 +128,6 @@ public class AddBinoTrailFragment extends Fragment{
         TrailsActivity activity = (TrailsActivity) getActivity();
         needLocation = activity.WhetherTrailsLoc();
 
-
         Button mapButton = view.findViewById(R.id.map_button);
 
         if (!needLocation){
@@ -149,15 +147,14 @@ public class AddBinoTrailFragment extends Fragment{
             @Override
             public void onClick(View v) {
 
-
-                //Location location =(Location)getArguments().getSerializable("location");
                 if (location!=null){
                     latitude.setText(String.valueOf(location.getLatitude()));
                     longitude.setText(String.valueOf(location.getLongitude()));
 
+
                     Toast.makeText(getActivity(),"location selected!",Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(getActivity(),"NO location selected!",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"NO location selected!",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -207,10 +204,12 @@ public class AddBinoTrailFragment extends Fragment{
                     String success_info = success.getText().toString();
                     String fail_info = fail.getText().toString();
                     String type_info = "Binomial";
-                    if (needLocation){
-                        Trails trails = new Trails(title_info, date_info, type_info, time_info, success_info, fail_info, ID, location);
+
+
+                    if (!needLocation){
+                        Trails trails = new Trails(title_info, date_info, type_info, time_info, success_info, fail_info, ID);
                     }
-                    Trails trails = new Trails(title_info, date_info, type_info, time_info, success_info, fail_info, ID);
+                    Trails trails = new Trails(title_info, date_info, type_info, time_info, success_info, fail_info, ID, location);
                     //error prone
                     if (checkText(trails)){
                         listener.sending_data(trails);

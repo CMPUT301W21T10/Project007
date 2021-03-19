@@ -38,7 +38,6 @@ public class TrailList_Bino extends ArrayAdapter<Trails> {
         TextView success = view.findViewById(R.id.success_text);
         TextView fail = view.findViewById(R.id.fail_text);
         TextView location = view.findViewById(R.id.Location_text);
-        //TextView variesData = view.findViewById(R.id.result_text);
 
         if (displayLoc!=null){
             String LocString = String.valueOf(displayLoc.getLatitude()) + ":" + String.valueOf(displayLoc.getLongitude());
@@ -50,7 +49,6 @@ public class TrailList_Bino extends ArrayAdapter<Trails> {
         success.setText(trail.getSuccess());
         fail.setText(trail.getFailure());
 
-        //variesData.setText(trail.getVariesData());
 
         return view;
     }
