@@ -17,9 +17,9 @@ import static android.content.ContentValues.TAG;
 public class QuestionDatabaseController {
 
     @SuppressLint("StaticFieldLeak")
-    private static FirebaseFirestore db;
+    private static FirebaseFirestore db = DatabaseController.getDb();
     private static String UserId;
-    private static Integer maxQuestionId;
+    private static Integer maxQuestionId = 1;
 
     public static Integer getMaxQuestionId() {
         return maxQuestionId;
@@ -48,11 +48,16 @@ public class QuestionDatabaseController {
     public static boolean add_Question(String collection, Question question){
         // Retrieving the city name and the province name from the EditText fields
         CollectionReference collectionReference =  db.collection(collection);
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, Object> data = new HashMap<>();
 
         String idString = question.getId().toString();
         data.put("Question", question.getQuestion());
-        data.put("Answer_Id", question.getAnswer_id().toString());
+        if (question.getAnswer_id() != null){
+            data.put("Answer_Id", question.getAnswer_id().toString());
+        }
+        else{
+            data.put("Answer_Id",null);
+        }
 
         final boolean[] condition = new boolean[1];
         collectionReference

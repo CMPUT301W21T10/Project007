@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.project007.CustomList;
+import com.example.project007.ExperimentAdapter;
 import com.example.project007.DatabaseController;
 import com.example.project007.Experiment;
 import com.example.project007.ModifyExperimentFragment;
@@ -31,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
@@ -45,8 +46,8 @@ public class HomeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         experimentDataList = new ArrayList<>();
-        experimentDataList.add(new Experiment("name","description","date","type",1)); // Adding the cities and provinces from FireStore
-        experimentAdapter = new CustomList(this.getContext(), experimentDataList);
+
+        experimentAdapter = new ExperimentAdapter(this.getContext(), experimentDataList);
 
 
         getChildFragmentManager()
@@ -71,18 +72,6 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        //FirebaseApp.initializeApp(this.getContext());
-
-        /*
-        final TextView textView = root.findViewById(R.id.trytry);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
-
-        // init adapter
 
         experimentList = root.findViewById(R.id.experiment_list);
         experimentList.setAdapter(experimentAdapter);
@@ -93,12 +82,11 @@ public class HomeFragment extends Fragment {
         final CollectionReference collectionReference = db.collection("Experiments");
 
         // Listener of add new instance button
-        final FloatingActionButton addCityButton = root.findViewById(R.id.add_experiment_button);
-        addCityButton.setOnClickListener(new View.OnClickListener() {
+        final FloatingActionButton addExperimentButton = root.findViewById(R.id.add_experiment_button);
+        addExperimentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new ModifyExperimentFragment().show(getChildFragmentManager(), "ADD_EXPERIMENT");
-
             }
         });
 
@@ -117,13 +105,18 @@ public class HomeFragment extends Fragment {
                         String description = (String) doc.getData().get("Description");
                         String date = (String) doc.getData().get("Date");
                         String type = (String) doc.getData().get("Type");
+                        ArrayList<String> trailsId = (ArrayList<String>) doc.getData().get("trailsId");
+                        ArrayList<String> subscriptionId = (ArrayList<String>) doc.getData().get("subscriptionId");
+                        boolean requireLocation = Boolean.parseBoolean((String) doc.getData().get("requireLocation"));
+                        boolean condition = Boolean.parseBoolean((String) doc.getData().get("condition"));
+                        Integer minimumTrails = ((Long) doc.getData().get("minimumTrails")).intValue();
+                        String region = (String) doc.getData().get("region");
                         String idString = doc.getId();
                         Integer id = Integer.parseInt(idString);
-
-                        experimentDataList.add(new Experiment(name, description, date, type, id)); // Adding the cities and provinces from FireStore
+                        experimentDataList.add(new Experiment(name, description, date, type, id,
+                                trailsId,subscriptionId, requireLocation,condition,minimumTrails,region));
                     }
                     DatabaseController.setMaxExperimentId(experimentDataList.size());
-
                     experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
                 }
             }

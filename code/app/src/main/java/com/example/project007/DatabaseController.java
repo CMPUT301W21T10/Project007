@@ -8,9 +8,13 @@ import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firestore.v1.WriteResult;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static android.content.ContentValues.TAG;
@@ -48,14 +52,19 @@ public class DatabaseController {
     public static boolean modify_experiment(String collection, Experiment experiment){
         // Retrieving the city name and the province name from the EditText fields
         CollectionReference collectionReference =  db.collection(collection);
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, Object> data = new HashMap<>();
 
         String idString = experiment.getId().toString();
         data.put("Name", experiment.getName());
         data.put("Description", experiment.getDescription());
         data.put("Date", experiment.getDate());
         data.put("Type", experiment.getType());
-        data.put("User", experiment.getUserId());
+        data.put("trailsId", experiment.getTrails());
+        data.put("subscriptionId", experiment.getSubscriptionId());
+        data.put("requireLocation", String.valueOf(experiment.isRequireLocation()));
+        data.put("condition", String.valueOf(experiment.isCondition()));
+        data.put("minimumTrails", experiment.getMinimumTrails());
+        data.put("region", experiment.getRegion());
 
         final boolean[] condition = new boolean[1];
         // The set method sets a unique id for the document
@@ -81,8 +90,19 @@ public class DatabaseController {
         return condition[0];
     }
 
+    public static void deleteExperiment(String name){
+        Task<Void> writeResult = db.collection("Experiments").document(name).delete();
+
+    }
 
     public static Integer generateExperimentId(){
         return maxExperimentId + 1;
+    }
+
+    public static boolean setExperimentTrails(String id, ArrayList<String> valueList){
+        DocumentReference docRef = db.collection("Experiments").document(id);
+        docRef.update("trailsId", valueList);
+
+        return true;
     }
 }

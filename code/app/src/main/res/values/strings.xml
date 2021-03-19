@@ -4,8 +4,10 @@
     <string name="title_subscription">Subscription</string>
     <string name="title_profile">Profile</string>
     <string name="add_name_hint">Enter your experiment name.</string>
+    <string name="add_region_hint">Enter your experiment region.</string>
+
     <string name="add_description_hint">Enter your experiment description</string>
-    <string name="add_date_hint">Enter your experiment date</string>
+    <string name="add_date_hint">Choose your experiment date</string>
     <string name="name">Experiment name</string>
     <string name="description">Experiment description</string>
     <string name="date">Experiment date</string>
@@ -21,5 +23,9 @@
     <string name="trail">Trail#</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="id">Experiment id</string>
+    <string name="delete">Delete</string>
+
+    <string name="choose_type_hint">Type: </string>
+    <string name="add_minimumTrails_hint">Enter your Minimum Trails number </string>
 
 </resources>
