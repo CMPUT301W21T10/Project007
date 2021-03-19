@@ -85,7 +85,7 @@ public class Result extends Fragment {
         double[] d = list.stream().mapToDouble(i->i).toArray();
 
         View view =inflater.inflate(R.layout.fragment_result, container, false);
-        TextView Quartile = view.findViewById(R.id.quartile);
+//        TextView Quartile = view.findViewById(R.id.quartile);
         TextView Median = view.findViewById(R.id.median);
         TextView Mean = view.findViewById(R.id.mean);
         TextView Stdev = view.findViewById(R.id.stdev);
@@ -94,7 +94,7 @@ public class Result extends Fragment {
 
         Pair pair = QuarAndMed(d);
         if (pair == null){
-            Quartile.setText(pair.first.toString());
+        //    Quartile.setText(pair.first.toString());
             Median.setText(pair.second.toString());
         }
 

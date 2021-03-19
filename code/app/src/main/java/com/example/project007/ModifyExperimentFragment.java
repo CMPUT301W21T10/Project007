@@ -35,11 +35,16 @@ public class ModifyExperimentFragment extends DialogFragment{
     private EditText experimentName;
     private EditText experimentDescription;
     private EditText experimentDate;
+    private EditText experimentRegion;
+    private EditText experimentMinimumTrails;
+
+
     private String type = "none";
     public Experiment currentExperiment = null;
     private final String[] types = {"Binomial", "Measurement", "Count","IntCount"};
     private boolean requireLocation;
-
+    private Integer minimumTrails;
+    private String region;
     // get an instance means to modify it
     public ModifyExperimentFragment(Experiment currentExperiment) {
         this.currentExperiment = currentExperiment;
@@ -60,6 +65,8 @@ public class ModifyExperimentFragment extends DialogFragment{
         experimentDate = view.findViewById(R.id.editTextDate);
         Spinner typeSpinner = view.findViewById(R.id.typeChooser);
         CheckBox location = view.findViewById(R.id.checkBox);
+        experimentRegion = view.findViewById(R.id.regionEditText);
+        experimentMinimumTrails = view.findViewById(R.id.minimumTrails);
 
         // set saved information if it's modifying
         if (currentExperiment != null){
@@ -67,6 +74,8 @@ public class ModifyExperimentFragment extends DialogFragment{
             experimentDescription.setText(currentExperiment.getDescription());
             experimentDate.setText(currentExperiment.getDate());
             location.setChecked(currentExperiment.isRequireLocation());
+            experimentRegion.setText(currentExperiment.getRegion());
+            experimentMinimumTrails.setText(currentExperiment.getMinimumTrails());
         }
 
         // datePicker part
@@ -131,10 +140,13 @@ public class ModifyExperimentFragment extends DialogFragment{
                         String description = experimentDescription.getText().toString();
                         String date = experimentDate.getText().toString();
                         requireLocation = location.isChecked();
+                        minimumTrails = Integer.parseInt(experimentMinimumTrails.getText().toString());
+                        region = experimentRegion.getText().toString();
 
                         Bundle result = new Bundle();
                         result.putSerializable("com.example.project007.modifiedExperiment",
-                                new Experiment(name,description,date,type,null,null,null,requireLocation,true) );
+                                new Experiment(name,description,date,type,null,null,
+                                        null,requireLocation,true,minimumTrails,region) );
                         getParentFragmentManager().setFragmentResult("homeRequest", result);
                     }}).create();
     }

@@ -108,12 +108,13 @@ public class HomeFragment extends Fragment {
                         String[] subscriptionId = (String[]) doc.getData().get("subscriptionId");
                         boolean requireLocation = Boolean.parseBoolean((String) doc.getData().get("requireLocation"));
                         boolean condition = Boolean.parseBoolean((String) doc.getData().get("condition"));
-
+                        Integer minimumTrails = Integer.parseInt((String) doc.getData().get("minimumTrails"));
+                        String region = (String) doc.getData().get("region");
                         String idString = doc.getId();
                         Integer id = Integer.parseInt(idString);
 
                         experimentDataList.add(new Experiment(name, description, date, type, id,
-                                trailsId,subscriptionId, requireLocation,condition));
+                                trailsId,subscriptionId, requireLocation,condition,minimumTrails,region));
                     }
                     DatabaseController.setMaxExperimentId(experimentDataList.size());
 

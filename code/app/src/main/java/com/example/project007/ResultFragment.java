@@ -107,8 +107,8 @@ public class ResultFragment extends Fragment {
         @SuppressLint("DefaultLocale") String p6 = String.format("%.2f",StandardDiviation(d));
         TrailsActivity activity = (TrailsActivity) getActivity();
         type = activity.getTrailsType();
-        description = activity.getDescription();
-        title = activity.getTitleName();
+     //   description = activity.getDescription();
+      //  title = activity.getTitleName();
         l.add(p4);
         l.add(p5);
         l.add(p6);

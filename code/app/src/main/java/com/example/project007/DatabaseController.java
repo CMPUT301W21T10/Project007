@@ -60,6 +60,8 @@ public class DatabaseController {
         data.put("subscriptionId", experiment.getUserId());
         data.put("requireLocation", String.valueOf(experiment.isRequireLocation()));
         data.put("condition", String.valueOf(experiment.isCondition()));
+        data.put("minimumTrails", String.valueOf(experiment.getMinimumTrails()));
+        data.put("region", experiment.getRegion());
 
         final boolean[] condition = new boolean[1];
         // The set method sets a unique id for the document
