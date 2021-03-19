@@ -69,13 +69,20 @@ public class QrcodeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        String type;
+        String description;
+        String title;
+        TrailsActivity activity = (TrailsActivity) getActivity();
+        type = activity.getTrailsType();
+        description = activity.getDescription();
+        title = activity.getTitleName();
         View view =inflater.inflate(R.layout.fragment_qrcode, container, false);
         ImageView imageView = view.findViewById(R.id.image_zxing);
         ArrayList<Trails> argument = (ArrayList<Trails>) getArguments().get("result");
         ResultFragment resultFragment =new ResultFragment();
         ArrayList<String> l;
         l=resultFragment.CreateList(argument);
-        String result = "\nQuartiles:"+l.get(0)+" "+l.get(1)+" "+l.get(2)+"\nMedian"+l.get(3)+"\nAverage"+l.get(4)+"/nStandardDiviation"+l.get(5);
+        String result = "Type: "+ type+"\ndescription: "+description+"\nTitle:"+title+"\nQuartiles:"+l.get(0)+" "+l.get(1)+" "+l.get(2)+"\nMedian"+l.get(3)+"\nAverage"+l.get(4)+"/nStandardDiviation"+l.get(5);
 //        "Type: "+ l.get(6)+"\ndescription: "+l.get(7)+"\nTitle:"+l.get(8)+"
         imageView.setImageBitmap(generateBitmap(result,250,250));
         return view;
