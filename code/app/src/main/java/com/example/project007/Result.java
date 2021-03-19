@@ -89,13 +89,13 @@ public class Result extends Fragment {
 
         Quartile.setText("1");
         Median.setText("1");
-        Mean.setText("1");
-        Stdev.setText("1");
+//        Mean.setText("1");
+//        Stdev.setText("1");
 //        Pair pair = QuarAndMed(d);
 //        Quartile.setText(pair.first.toString());
 //        Median.setText(pair.second.toString());
-//        Mean.setText(Double.toString(avg(d)));
-//        Stdev.setText(Double.toString(StandardDiviation(d)));
+        Mean.setText(Double.toString(avg(d)));
+        Stdev.setText(Double.toString(StandardDiviation(d)));
 
         return view;
     }
