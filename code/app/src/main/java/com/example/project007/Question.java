@@ -1,13 +1,14 @@
 package com.example.project007;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Question implements Serializable {
 
     private String question;
-    private String answer;
+    private ArrayList<String> answer;
 
-    Question(String question, String answer) {
+    Question(String question, ArrayList answer) {
         this.question = question;
         this.answer = answer;
     }
@@ -20,11 +21,11 @@ public class Question implements Serializable {
         this.question = question;
     }
 
-    public String getAnswer() {
+    public ArrayList<String> getAnswer() {
         return answer;
     }
 
-    public void setAnswer(String answer) {
+    public void setAnswer(ArrayList answer) {
         this.answer = answer;
     }
 }
