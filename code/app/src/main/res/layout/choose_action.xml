@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".ui.ActionFragment">
+    tools:context=".ui.home.ActionFragment"
+    android:padding="20dp">
 
 <Button
         android:id="@+id/button"
@@ -12,7 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_gravity="center|center"
-
+        android:textColor="@color/color_fff"
+        android:background="@color/edit"
+        android:layout_marginBottom="5dp"
         android:text="Edit" />
     <Button
         android:id="@+id/button2"
@@ -20,7 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_gravity="center|center"
-
+        android:textColor="@color/color_fff"
+        android:background="@color/delete"
+        android:layout_marginBottom="5dp"
         android:text="Delete" />
 
 
@@ -31,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_gravity="center|center"
-
+        android:textColor="@color/color_fff"
+        android:background="@color/end"
         android:text="End" />
 </LinearLayout>
