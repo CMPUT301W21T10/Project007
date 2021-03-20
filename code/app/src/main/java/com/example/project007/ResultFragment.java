@@ -120,10 +120,6 @@ public class ResultFragment extends Fragment{
     @RequiresApi(api = Build.VERSION_CODES.N)
     public ArrayList<String> CreateList(ArrayList<Trails> argument){
         ArrayList<Double> list = new ArrayList<>();
-        TrailsActivity activity = (TrailsActivity) getActivity();
-        type = activity.getTrailsType();
-        description = activity.getDescription();
-        title = activity.getTitleName();
         if (type.equals("Binomial")){
             for(Trails t : argument){
                 list.add(Double.parseDouble(t.getSuccess())/(Double.parseDouble(t.getSuccess())+Double.parseDouble(t.getFailure())));
@@ -470,6 +466,11 @@ public class ResultFragment extends Fragment{
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ArrayList<Trails> argument = (ArrayList<Trails>) getArguments().get("result");
+        ArrayList<Double> list = new ArrayList<>();
+        TrailsActivity activity = (TrailsActivity) getActivity();
+        type = activity.getTrailsType();
+        description = activity.getDescription();
+        title = activity.getTitleName();
         numberOfPoints = argument.size();
         argument = sortTime(argument);
         view =inflater.inflate(R.layout.fragment_result, container, false);
