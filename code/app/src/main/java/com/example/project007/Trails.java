@@ -30,7 +30,7 @@ public class Trails implements Serializable {
         this.success = success;
         this.failure = failure;
         this.ID = ID;
-        VariesData = String.valueOf(Integer.parseInt(success)-Integer.parseInt(failure));
+        VariesData = String.valueOf(Integer.parseInt(success) - Integer.parseInt(failure));
     }
 
     //for Binomial Trails w/ location
@@ -130,3 +130,5 @@ public class Trails implements Serializable {
         this.ID = ID;
     }
 }
+
+

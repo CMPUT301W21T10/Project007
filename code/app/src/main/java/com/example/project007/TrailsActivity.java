@@ -198,7 +198,9 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 getSupportFragmentManager().beginTransaction().replace(R.id.data_container, resultFragment).addToBackStack(null).commit();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("result",trails_DataList);
-                resultFragment.setArguments(bundle);}
+                resultFragment.setArguments(bundle);
+            }
+//            startActivity(new Intent(TrailsActivity.this,Test.class));
             return true;
         }else if (id == R.id.QROpt) {
             return true;
