@@ -73,6 +73,23 @@ public class HomeFragment extends Fragment {
                 });
 
         getChildFragmentManager()
+                .setFragmentResultListener("homeEditRequest", this, new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
+                        // Do something with the result
+                        Experiment experiment = (Experiment) bundle.getSerializable("com.example.project007.modifiedExperiment");
+
+                        boolean addResult = DatabaseController.modify_experiment("Experiments", experiment);
+                        if (addResult){
+                            Toast.makeText(getActivity(), "Add Succeed", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(getActivity(), "Add Failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+        getChildFragmentManager()
                 .setFragmentResultListener("actionRequest", this, new FragmentResultListener() {
                     @Override
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
@@ -88,7 +105,7 @@ public class HomeFragment extends Fragment {
 
                         switch (action){
                             case "edit":
-                                new ModifyExperimentFragment(experimentDataList.get(savedPosition)).show(getChildFragmentManager(), "ADD_EXPERIMENT");
+                                new ModifyExperimentFragment(experimentDataList.get(savedPosition)).show(getChildFragmentManager(), "EDIT_EXPERIMENT");
                                 Toast.makeText(getActivity(), "edit Succeed", Toast.LENGTH_SHORT).show();
                                 break;
 
