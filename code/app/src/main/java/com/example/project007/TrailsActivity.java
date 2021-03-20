@@ -90,9 +90,11 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
 
 
         final FloatingActionButton addButton = findViewById(R.id.experimentBtn);
+        if (!experiment.isCondition()){
+            addButton.setVisibility(View.INVISIBLE);
+        }
+
         trail_List = findViewById(R.id.trail_list);
-
-
 
         trails_DataList = new ArrayList<>();
 

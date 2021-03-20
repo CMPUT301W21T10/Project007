@@ -1,5 +1,7 @@
 package com.example.project007.ui.home;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
@@ -21,6 +24,8 @@ import com.example.project007.ExperimentAdapter;
 import com.example.project007.DatabaseController;
 import com.example.project007.Experiment;
 import com.example.project007.ModifyExperimentFragment;
+import com.example.project007.Question;
+import com.example.project007.QuestionDatabaseController;
 import com.example.project007.R;
 import com.example.project007.TrailsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -41,6 +46,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<Experiment> experimentDataList;
     final String TAG = "Sample";
     private HomeViewModel homeViewModel;
+    private Integer savedPosition;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +69,55 @@ public class HomeFragment extends Fragment {
                         else{
                             Toast.makeText(getActivity(), "Add Failed", Toast.LENGTH_SHORT).show();
                         }
+                    }
+                });
+
+        getChildFragmentManager()
+                .setFragmentResultListener("actionRequest", this, new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
+                        // Do something with the result
+                        Fragment prev = getChildFragmentManager().findFragmentByTag("requireAction");
+                        if (prev != null) {
+                            DialogFragment df = (DialogFragment) prev;
+                            df.dismiss();
+                        }
+
+                        String action = bundle.getString("action");
+                        Experiment instance = experimentDataList.get(savedPosition);
+
+                        switch (action){
+                            case "edit":
+                                new ModifyExperimentFragment(experimentDataList.get(savedPosition)).show(getChildFragmentManager(), "ADD_EXPERIMENT");
+                                Toast.makeText(getActivity(), "edit Succeed", Toast.LENGTH_SHORT).show();
+                                break;
+
+                            case "delete":
+                                DatabaseController.deleteExperiment(String.valueOf(instance.getId()));
+                                //experimentDataList.remove(savedPosition);  //把数据源里面相应数据删除
+                                //experimentAdapter.notifyDataSetChanged();
+                                Toast.makeText(getActivity(), "delete Succeed", Toast.LENGTH_SHORT).show();
+                                break;
+
+                            case "end":
+                                if (instance.isCondition()){
+                                    Integer minimum = instance.getMinimumTrails();
+
+                                    if (instance.getTrailsId().size() >= minimum){
+                                        instance.setCondition(false);
+                                        Toast.makeText(getActivity(), "end Succeed", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else{
+                                        Toast.makeText(getActivity(), "do not satisfy minimum trails", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                else{
+                                    Toast.makeText(getActivity(), "Already end", Toast.LENGTH_SHORT).show();
+                                }
+                                break;
+                        }
+
+
                     }
                 });
     }
@@ -135,6 +190,15 @@ public class HomeFragment extends Fragment {
                 intent.putExtra("com.example.project007.INSTANCE", instanceExperiment);
                 intent.putExtra("com.example.project007.POSITION", position);
                 startActivity(intent);
+            }
+        });
+
+        experimentList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                savedPosition = position;
+                new ActionFragment().show(getChildFragmentManager(), "requireAction");
+                return true;
             }
         });
 
