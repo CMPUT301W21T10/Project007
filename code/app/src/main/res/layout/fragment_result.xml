@@ -186,12 +186,13 @@
     <lecho.lib.hellocharts.view.LineChartView
         android:id="@+id/chart"
         android:layout_width="fill_parent"
-        android:layout_height="300dp"
-        android:layout_below="@+id/chartLbl"/>
+        android:layout_height="175dp"
+        android:layout_below="@+id/chartLbl" />
+
     <lecho.lib.hellocharts.view.ColumnChartView
         android:id="@+id/column_chart"
         android:layout_width="fill_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="301dp" />
 
 
 
