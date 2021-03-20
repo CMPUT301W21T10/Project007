@@ -52,9 +52,10 @@ public class DatabaseController {
     public static boolean modify_experiment(String collection, Experiment experiment){
         // Retrieving the city name and the province name from the EditText fields
         CollectionReference collectionReference =  db.collection(collection);
-        HashMap<String, Object> data = new HashMap<>();
-
         String idString = experiment.getId().toString();
+
+
+        HashMap<String, Object> data = new HashMap<>();
         data.put("Name", experiment.getName());
         data.put("Description", experiment.getDescription());
         data.put("Date", experiment.getDate());
@@ -70,7 +71,7 @@ public class DatabaseController {
         // The set method sets a unique id for the document
         collectionReference
                 .document(idString)
-                .set(data)
+                .set(experiment)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

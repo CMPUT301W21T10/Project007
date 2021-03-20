@@ -25,7 +25,10 @@ import com.example.project007.ExperimentAdapter;
 import com.example.project007.R;
 import com.example.project007.TrailsActivity;
 import com.example.project007.ui.home.HomeViewModel;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -73,12 +76,13 @@ public class SubscriptionFragment extends Fragment {
                 else {
                     experimentDataList.clear();
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+
                         Log.d(TAG, String.valueOf(doc.getData().get("Name")));
                         String name = (String) doc.getData().get("Name");
                         String description = (String) doc.getData().get("Description");
                         String date = (String) doc.getData().get("Date");
                         String type = (String) doc.getData().get("Type");
-                        ArrayList<String> trailsId = (ArrayList<String>) doc.getData().get("trailsId");
+                        ArrayList<String> trailsId =  (ArrayList<String>) doc.getData().get("trailsId");
                         ArrayList<String> subscriptionId = (ArrayList<String>) doc.getData().get("subscriptionId");
                         boolean requireLocation = Boolean.parseBoolean((String) doc.getData().get("requireLocation"));
                         boolean condition = Boolean.parseBoolean((String) doc.getData().get("condition"));
@@ -87,11 +91,9 @@ public class SubscriptionFragment extends Fragment {
                         String idString = doc.getId();
                         Integer id = Integer.parseInt(idString);
 
-                        if (subscriptionId != null){
-                            if (subscriptionId.contains(DatabaseController.getUserId())){
+                        if (subscriptionId != null && subscriptionId.contains(DatabaseController.getUserId())){
                                 experimentDataList.add(new Experiment(name, description, date, type, id,
                                         trailsId, subscriptionId, requireLocation, condition, minimumTrails, region));
-                            }
                         }
 
                     }

@@ -160,7 +160,7 @@ public class ModifyExperimentFragment extends DialogFragment{
                         result.putSerializable("com.example.project007.modifiedExperiment",
                                 new Experiment(name,description,date,type,id,trailsId,
                                         subscriptionId,requireLocation,condition,minimumTrails,region) );
-                        getParentFragmentManager().setFragmentResult("homeEditRequest", result);
+                        getParentFragmentManager().setFragmentResult("homeRequest", result);
                     }}).create();
     }
 
