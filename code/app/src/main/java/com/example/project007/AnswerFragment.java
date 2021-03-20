@@ -92,7 +92,7 @@ public class AnswerFragment extends Fragment {
                 else{
                     Toast.makeText(getActivity(), "Delete Failed", Toast.LENGTH_SHORT).show();
                 }
-                return false;
+                return true;
             }
         });
 

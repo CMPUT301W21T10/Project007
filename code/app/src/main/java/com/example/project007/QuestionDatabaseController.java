@@ -17,7 +17,7 @@ import static android.content.ContentValues.TAG;
 public class QuestionDatabaseController {
 
     @SuppressLint("StaticFieldLeak")
-    private static FirebaseFirestore db = DatabaseController.getDb();
+    private static FirebaseFirestore db = QuestionDatabaseController.getDb();
     private static String UserId;
     private static Integer maxQuestionId = 1;
 
