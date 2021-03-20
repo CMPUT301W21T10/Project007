@@ -49,7 +49,7 @@ public class AnswerFragment extends Fragment {
 
         answerList = v.findViewById(R.id.answer_list);
         String question_Id = getArguments().getString("Question Id");
-        String answer_Id = getArguments().getString("Answer_Id");
+        String answer_Id = getArguments().getString("Answer Id");
         answerDataList = new ArrayList<>();
         answerAdapter = new answerCustomList(getActivity(), answerDataList);
 

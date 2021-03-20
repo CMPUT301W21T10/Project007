@@ -39,12 +39,19 @@ public class ModifyExperimentFragment extends DialogFragment{
     private EditText experimentMinimumTrails;
 
 
-    private String type = "none";
+    private String type = "None";
     public Experiment currentExperiment = null;
     private final String[] types = {"Binomial", "Measurement", "Count","IntCount"};
-    private boolean requireLocation;
+    private boolean requireLocation = false;
     private Integer minimumTrails;
     private String region;
+    private Integer id = null;
+    private ArrayList<String> trailsId = null;
+    private ArrayList<String> subscriptionId = null;
+    private boolean condition = true;
+
+
+
     // get an instance means to modify it
     public ModifyExperimentFragment(Experiment currentExperiment) {
         this.currentExperiment = currentExperiment;
@@ -55,6 +62,7 @@ public class ModifyExperimentFragment extends DialogFragment{
     }
 
     // create dialog
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -75,7 +83,12 @@ public class ModifyExperimentFragment extends DialogFragment{
             experimentDate.setText(currentExperiment.getDate());
             location.setChecked(currentExperiment.isRequireLocation());
             experimentRegion.setText(currentExperiment.getRegion());
-            experimentMinimumTrails.setText(currentExperiment.getMinimumTrails());
+            experimentMinimumTrails.setText(currentExperiment.getMinimumTrails().toString());
+
+            id = currentExperiment.getId();
+            trailsId = currentExperiment.getTrailsId();
+            subscriptionId = currentExperiment.getSubscriptionId();
+            condition = currentExperiment.isCondition();
         }
 
         // datePicker part
@@ -145,8 +158,8 @@ public class ModifyExperimentFragment extends DialogFragment{
 
                         Bundle result = new Bundle();
                         result.putSerializable("com.example.project007.modifiedExperiment",
-                                new Experiment(name,description,date,type,null,null,
-                                        null,requireLocation,true,minimumTrails,region) );
+                                new Experiment(name,description,date,type,id,trailsId,
+                                        subscriptionId,requireLocation,condition,minimumTrails,region) );
                         getParentFragmentManager().setFragmentResult("homeRequest", result);
                     }}).create();
     }

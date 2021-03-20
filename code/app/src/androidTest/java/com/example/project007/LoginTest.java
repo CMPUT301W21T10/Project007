@@ -30,18 +30,7 @@ public class LoginTest {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(),rule.getActivity());
     }
 
-    /**
-     *Tset from login activity to main activity
-     * Enter username and click login button
-     */
-    @Test
-    public void checkToHome() {
-        solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
-        solo.clearEditText((EditText) solo.getView(R.id.reg_email));
-        solo.enterText((EditText) solo.getView(R.id.reg_email),"1");
-        solo.clickOnText("Sign In");
-        solo.assertCurrentActivity("Wong Activity", MainActivity.class);
-    }
+
     /**
      *Test for singup activity
      * click sign up button
@@ -59,12 +48,29 @@ public class LoginTest {
      */
     @Test
     public void checkWrongUser(){
-        solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
+        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
         solo.clearEditText((EditText) solo.getView(R.id.reg_email));
         solo.enterText((EditText) solo.getView(R.id.reg_email),"10000");
         solo.clickOnText("Sign In");
-        solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
+        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
     }
+
+    /**
+     *Tset from login activity to main activity
+     * Enter username and click login button
+     */
+    @Test
+    public void checkToHome() {
+        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
+        solo.clearEditText((EditText) solo.getView(R.id.reg_email));
+        solo.enterText((EditText) solo.getView(R.id.reg_email),"1");
+        solo.clickOnText("Sign In");
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+
+    }
+
+
+
     @After
     public void tearDown(){
         solo.finishOpenedActivities();

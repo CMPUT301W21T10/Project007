@@ -85,18 +85,20 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Question question = questionAdapter.getItem(position);
-
+                if(question != null) {
+                    Toast.makeText(getApplicationContext(), "Select1 Succeed", Toast.LENGTH_SHORT).show();
+                }
                 AnswerFragment fragment = new AnswerFragment();
-                Bundle b1 = new Bundle();
+                //Bundle b1 = new Bundle();
                 Bundle b2 = new Bundle();
                 Bundle b3 = new Bundle();
-                b1.putString("Question Content", question.getQuestion());
+                //b1.putString("Question Content", question.getQuestion());
                 b2.putString("Question Id", question.getId().toString());
                 b3.putString("Answer Id", question.getAnswer_id().toString());
-                fragment.setArguments(b1);
+                //fragment.setArguments(b1);
                 fragment.setArguments(b2);
                 fragment.setArguments(b3);
-                findViewById(R.id.container_answer).setVisibility(View.VISIBLE);
+                //findViewById(R.id.container_answer).setVisibility(View.VISIBLE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.container_answer, fragment).addToBackStack(null).commit();
 
             }
@@ -107,6 +109,9 @@ public class QuestionActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 //Delete event
                 Question question = questionAdapter.getItem(position);
+                if(question != null) {
+                    Toast.makeText(getApplicationContext(), "Select2 Succeed", Toast.LENGTH_SHORT).show();
+                }
                 questionAdapter.notifyDataSetChanged();
                 boolean deleteQuestion = QuestionDatabaseController.delete_Question("Questions", question);
                 if (deleteQuestion){
@@ -116,7 +121,7 @@ public class QuestionActivity extends AppCompatActivity {
                 else{
                     Toast.makeText(getApplicationContext(), "Delete Failed", Toast.LENGTH_SHORT).show();
                 }
-                return false;
+                return true;
             }
         });
 
