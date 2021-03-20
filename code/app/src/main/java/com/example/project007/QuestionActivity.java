@@ -121,7 +121,7 @@ public class QuestionActivity extends AppCompatActivity {
                 else{
                     Toast.makeText(getApplicationContext(), "Delete Failed", Toast.LENGTH_SHORT).show();
                 }
-                return false;
+                return true;
             }
         });
 
