@@ -104,19 +104,18 @@ public class QuestionActivity extends AppCompatActivity {
             }
         });
 
+        //Delete event
         questionList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //Delete event
+
                 Question question = questionAdapter.getItem(position);
-                if(question != null) {
-                    Toast.makeText(getApplicationContext(), "Select2 Succeed", Toast.LENGTH_SHORT).show();
-                }
-                questionAdapter.notifyDataSetChanged();
+
                 boolean deleteQuestion = QuestionDatabaseController.delete_Question("Questions", question);
                 if (deleteQuestion){
                     Toast.makeText(getApplicationContext(), "Delete Succeed", Toast.LENGTH_SHORT).show();
                     questionAdapter.remove(question);
+                    questionAdapter.notifyDataSetChanged();
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Delete Failed", Toast.LENGTH_SHORT).show();
