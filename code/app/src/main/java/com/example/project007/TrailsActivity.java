@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
@@ -36,7 +38,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
 
     TextView descriptionTrail;
     ResultFragment resultFragment;
-
+    QrcodeFragment qrcode;
     private Experiment experiment;
     private Integer position;
     boolean needLocation;
@@ -285,8 +287,24 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 bundle.putSerializable("result",trails_DataList);
                 resultFragment.setArguments(bundle);}
             return true;
-        }else if (id == R.id.QROpt) {
-            return true;
+        }else if (id == R.id.ScanQROpt) { // this is where you put generate the qr
+            startActivity(new Intent(TrailsActivity.this, ScanActivity.class));
+
+        }else if (id == R.id.QROpt){  // this is where you put the scan yi scan
+            if(trails_DataList.size()==0){
+                Toast toast = Toast.makeText(getApplicationContext(),"There's no trails for this experiment!",Toast.LENGTH_SHORT);
+                toast.show();
+            }else {
+                qrcode = new QrcodeFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();   // 开启一个事务
+                transaction.replace(R.id.data_container, qrcode);
+                transaction.commit();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("result",trails_DataList);
+                qrcode.setArguments(bundle);
+
+            }
         }else if (id == R.id.HelpOpt){
             //tips for user
             Toast.makeText(getApplicationContext(),"Welcome! Please note: Long Click item for deleting Short Click item for editting",Toast.LENGTH_SHORT).show();
