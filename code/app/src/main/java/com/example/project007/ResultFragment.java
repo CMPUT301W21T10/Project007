@@ -118,8 +118,11 @@ public class ResultFragment extends Fragment{
         return Math.sqrt(dVar/x.length);
     }
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public ArrayList<String> CreateList(ArrayList<Trails> argument){
+    public ArrayList<String> CreateList(ArrayList<Trails> argument,TrailsActivity activity){
         ArrayList<Double> list = new ArrayList<>();
+        type = activity.getTrailsType();
+        description = activity.getDescription();
+        title = activity.getTitleName();
         if (type.equals("Binomial")){
             for(Trails t : argument){
                 list.add(Double.parseDouble(t.getSuccess())/(Double.parseDouble(t.getSuccess())+Double.parseDouble(t.getFailure())));
@@ -466,11 +469,6 @@ public class ResultFragment extends Fragment{
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ArrayList<Trails> argument = (ArrayList<Trails>) getArguments().get("result");
-        ArrayList<Double> list = new ArrayList<>();
-        TrailsActivity activity = (TrailsActivity) getActivity();
-        type = activity.getTrailsType();
-        description = activity.getDescription();
-        title = activity.getTitleName();
         numberOfPoints = argument.size();
         argument = sortTime(argument);
         view =inflater.inflate(R.layout.fragment_result, container, false);
@@ -484,7 +482,8 @@ public class ResultFragment extends Fragment{
         TextView Description = view.findViewById(R.id.description);
         TextView Title = view.findViewById(R.id.title);
 
-        ArrayList<String> l = CreateList(argument);
+        TrailsActivity activity = (TrailsActivity) getActivity();
+        ArrayList<String> l = CreateList(argument,activity);
 
         Quartile1.setText(l.get(0));
         Quartile2.setText(l.get(1));
