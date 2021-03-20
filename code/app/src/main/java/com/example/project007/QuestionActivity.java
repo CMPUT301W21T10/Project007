@@ -85,9 +85,11 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Question question = questionAdapter.getItem(position);
-
+                if(question != null) {
+                    Toast.makeText(getApplicationContext(), "Select1 Succeed", Toast.LENGTH_SHORT).show();
+                }
                 AnswerFragment fragment = new AnswerFragment();
-                Bundle b1 = new Bundle();
+                //Bundle b1 = new Bundle();
                 Bundle b2 = new Bundle();
                 Bundle b3 = new Bundle();
                 //b1.putString("Question Content", question.getQuestion());
@@ -107,6 +109,9 @@ public class QuestionActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 //Delete event
                 Question question = questionAdapter.getItem(position);
+                if(question != null) {
+                    Toast.makeText(getApplicationContext(), "Select2 Succeed", Toast.LENGTH_SHORT).show();
+                }
                 questionAdapter.notifyDataSetChanged();
                 boolean deleteQuestion = QuestionDatabaseController.delete_Question("Questions", question);
                 if (deleteQuestion){
