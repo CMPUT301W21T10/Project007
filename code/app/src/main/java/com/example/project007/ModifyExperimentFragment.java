@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,7 +39,7 @@ public class ModifyExperimentFragment extends DialogFragment{
     private EditText experimentDate;
     private EditText experimentRegion;
     private EditText experimentMinimumTrails;
-
+    CheckBox location;
 
     private String type = "None";
     public Experiment currentExperiment = null;
@@ -72,7 +74,7 @@ public class ModifyExperimentFragment extends DialogFragment{
         experimentDescription = view.findViewById(R.id.editTextDescription);
         experimentDate = view.findViewById(R.id.editTextDate);
         Spinner typeSpinner = view.findViewById(R.id.typeChooser);
-        CheckBox location = view.findViewById(R.id.checkBox);
+        location = view.findViewById(R.id.checkBox);
         experimentRegion = view.findViewById(R.id.regionEditText);
         experimentMinimumTrails = view.findViewById(R.id.minimumTrails);
 
@@ -142,26 +144,41 @@ public class ModifyExperimentFragment extends DialogFragment{
 
         // dialog part, show UI commit information
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        return builder
-                .setView(view)
+        AlertDialog dialog = builder.setView(view)
                 .setTitle("Add/Edit Experiment")
                 .setNegativeButton("Cancel", null)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String name = experimentName.getText().toString();
-                        String description = experimentDescription.getText().toString();
-                        String date = experimentDate.getText().toString();
-                        requireLocation = location.isChecked();
-                        minimumTrails = Integer.parseInt(experimentMinimumTrails.getText().toString());
-                        region = experimentRegion.getText().toString();
+                .setPositiveButton("OK", null).create();
 
-                        Bundle result = new Bundle();
-                        result.putSerializable("com.example.project007.modifiedExperiment",
-                                new Experiment(name,description,date,type,id,trailsId,
-                                        subscriptionId,requireLocation,condition,minimumTrails,region) );
-                        getParentFragmentManager().setFragmentResult("homeRequest", result);
-                    }}).create();
+        return dialog;
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        AlertDialog alertDialog = (AlertDialog) getDialog();
+        Button okButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean success = false;
+                String name="",description="",date="";
+                try{
+                    name = experimentName.getText().toString();
+                    description = experimentDescription.getText().toString();
+                    date = experimentDate.getText().toString();
+                    requireLocation = location.isChecked();
+                    minimumTrails = Integer.parseInt(experimentMinimumTrails.getText().toString());
+                    region = experimentRegion.getText().toString();
+                    success = true;
+                }catch(Exception e){Toast.makeText(getActivity(), "Invalid input", Toast.LENGTH_SHORT).show();}
+                if (success){
+                    Bundle result = new Bundle();
+                    result.putSerializable("com.example.project007.modifiedExperiment",
+                            new Experiment(name,description,date,type,id,trailsId,
+                                    subscriptionId,requireLocation,condition,minimumTrails,region) );
+                    getParentFragmentManager().setFragmentResult("homeRequest", result);
+                    alertDialog.dismiss();
+                }
+            }
+        });
+    }
 }
