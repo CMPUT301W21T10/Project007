@@ -33,6 +33,7 @@
         <activity android:name=".TrailsActivity" />
         <activity android:name=".AfterLoginActivity" />
         <activity android:name=".RegActivity" />
+        <activity android:name=".ScanActivity"/>
     </application>
 
 </manifest>
