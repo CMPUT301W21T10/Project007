@@ -2,11 +2,12 @@ package com.example.project007;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
+
 import androidx.fragment.app.FragmentManager;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,8 +30,9 @@ public class QuestionActivity extends AppCompatActivity {
     ListView questionList;
     ArrayAdapter<Question> questionAdapter;
     ArrayList<Question> questionDataList;
-    Integer id =  null;
+    Integer id =  1;
     ArrayList<Integer> answer_id = new ArrayList<Integer>();
+    //FirebaseFirestore db;
 
 
     @Override
@@ -41,7 +43,6 @@ public class QuestionActivity extends AppCompatActivity {
         Button addQuestionButton;
         final String TAG = "Sample";
         final EditText addQuestionEditText;
-        FirebaseFirestore db;
 
         addQuestionButton = findViewById(R.id.add_question_button);
         addQuestionEditText = findViewById(R.id.add_question_text);
@@ -53,7 +54,7 @@ public class QuestionActivity extends AppCompatActivity {
 
 
         questionList.setAdapter(questionAdapter);
-        db = FirebaseFirestore.getInstance();
+        //db = FirebaseFirestore.getInstance();
 
         //final CollectionReference collectionReference = db.collection("Questions");
 
@@ -69,6 +70,7 @@ public class QuestionActivity extends AppCompatActivity {
                     boolean addQuestion = QuestionDatabaseController.add_Question("Questions", question);
                     if (addQuestion){
                         Toast.makeText(getApplicationContext(), "Add Succeed", Toast.LENGTH_SHORT).show();
+                        QuestionDatabaseController.setMaxQuestionId(questionDataList.size());
                     }
                     else{
                         Toast.makeText(getApplicationContext(), "Add Failed", Toast.LENGTH_SHORT).show();
@@ -85,9 +87,6 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Question question = questionAdapter.getItem(position);
-                if(question != null) {
-                    Toast.makeText(getApplicationContext(), "Select1 Succeed", Toast.LENGTH_SHORT).show();
-                }
                 AnswerFragment fragment = new AnswerFragment();
                 //Bundle b1 = new Bundle();
                 Bundle b2 = new Bundle();
@@ -115,12 +114,13 @@ public class QuestionActivity extends AppCompatActivity {
                 if (deleteQuestion){
                     Toast.makeText(getApplicationContext(), "Delete Succeed", Toast.LENGTH_SHORT).show();
                     questionAdapter.remove(question);
+                    QuestionDatabaseController.setMaxQuestionId(questionDataList.size());
                     questionAdapter.notifyDataSetChanged();
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Delete Failed", Toast.LENGTH_SHORT).show();
                 }
-                return true;
+                return false;
             }
         });
 
