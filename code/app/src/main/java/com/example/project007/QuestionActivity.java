@@ -96,7 +96,7 @@ public class QuestionActivity extends AppCompatActivity {
                 fragment.setArguments(b1);
                 fragment.setArguments(b2);
                 fragment.setArguments(b3);
-                findViewById(R.id.container_answer).setVisibility(View.VISIBLE);
+                //findViewById(R.id.container_answer).setVisibility(View.VISIBLE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.container_answer, fragment).addToBackStack(null).commit();
 
             }
