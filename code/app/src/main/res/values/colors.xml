@@ -12,6 +12,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#ba160c</color>
+    <color name="yellow">#FFFF00</color>
 
+    <color name="edit">#ff9933</color>
+    <color name="delete">#ff0000</color>
+    <color name="end">#663333</color>
 
 </resources>

@@ -4,33 +4,29 @@ import android.annotation.SuppressLint;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firestore.v1.WriteResult;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import static android.content.ContentValues.TAG;
 
-public class DatabaseController {
-    @SuppressLint("StaticFieldLeak")
-    private static FirebaseFirestore db;
-    private static String UserId;
-    private static Integer maxExperimentId;
+public class AnswerDatabaseController {
 
-    public static Integer getMaxExperimentId() {
-        return maxExperimentId;
+    @SuppressLint("StaticFieldLeak")
+    private static FirebaseFirestore db = AnswerDatabaseController.getDb();
+    private static String UserId;
+    private static Integer maxAnswerId = 1;
+
+    public static Integer getMaxAnswerId() {
+        return maxAnswerId;
     }
 
-    public static void setMaxExperimentId(Integer maxExperimentId) {
-        DatabaseController.maxExperimentId = maxExperimentId;
+    public static void setMaxAnswerId(Integer maxAnswerId) {
+        AnswerDatabaseController.maxAnswerId = maxAnswerId;
     }
 
     public static String getUserId() {
@@ -46,32 +42,23 @@ public class DatabaseController {
     }
 
     public static void setDb(FirebaseFirestore db) {
-        DatabaseController.db = db;
+        AnswerDatabaseController.db = db;
     }
 
-    public static boolean modify_experiment(String collection, Experiment experiment){
+    public static boolean add_Answer(String collection, Answer answer){
         // Retrieving the city name and the province name from the EditText fields
         CollectionReference collectionReference =  db.collection(collection);
-        String idString = experiment.getId().toString();
+        HashMap<String, String> data = new HashMap<>();
 
-
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("Name", experiment.getName());
-        data.put("Description", experiment.getDescription());
-        data.put("Date", experiment.getDate());
-        data.put("Type", experiment.getType());
-        data.put("trailsId", experiment.getTrails());
-        data.put("subscriptionId", experiment.getSubscriptionId());
-        data.put("requireLocation", String.valueOf(experiment.isRequireLocation()));
-        data.put("condition", String.valueOf(experiment.isCondition()));
-        data.put("minimumTrails", experiment.getMinimumTrails());
-        data.put("region", experiment.getRegion());
+        String idString = answer.getId().toString();
+        data.put("Answer", answer.getAnswer());
+        data.put("Question_Id", answer.getQuestion_id().toString());
 
         final boolean[] condition = new boolean[1];
         // The set method sets a unique id for the document
         collectionReference
                 .document(idString)
-                .set(experiment)
+                .set(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -91,19 +78,32 @@ public class DatabaseController {
         return condition[0];
     }
 
-    public static void deleteExperiment(String name){
-        Task<Void> writeResult = db.collection("Experiments").document(name).delete();
-
+    public static boolean delete_Answer(String collection, Answer answer){
+        CollectionReference collectionReference =  db.collection(collection);
+        String idString = answer.getId().toString();
+        final boolean[] condition = new boolean[1];
+        collectionReference
+                .document(idString)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Data has been deleted successfully!");
+                        condition[0] = true;
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "Data could not be deleted!" + e.toString());
+                        condition[0] = false;
+                    }
+                });
+        return condition[0];
     }
 
-    public static Integer generateExperimentId(){
-        return maxExperimentId + 1;
-    }
 
-    public static boolean setExperimentTrails(String id, ArrayList<String> valueList){
-        DocumentReference docRef = db.collection("Experiments").document(id);
-        docRef.update("trailsId", valueList);
-
-        return true;
+    public static Integer generateAnswerId(){
+        return maxAnswerId + 1;
     }
 }
