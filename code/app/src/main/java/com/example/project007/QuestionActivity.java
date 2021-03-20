@@ -90,10 +90,10 @@ public class QuestionActivity extends AppCompatActivity {
                 Bundle b1 = new Bundle();
                 Bundle b2 = new Bundle();
                 Bundle b3 = new Bundle();
-                b1.putString("Question Content", question.getQuestion());
+                //b1.putString("Question Content", question.getQuestion());
                 b2.putString("Question Id", question.getId().toString());
                 b3.putString("Answer Id", question.getAnswer_id().toString());
-                fragment.setArguments(b1);
+                //fragment.setArguments(b1);
                 fragment.setArguments(b2);
                 fragment.setArguments(b3);
                 //findViewById(R.id.container_answer).setVisibility(View.VISIBLE);
