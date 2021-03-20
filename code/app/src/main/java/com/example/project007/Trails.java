@@ -29,8 +29,12 @@ public class Trails implements Serializable {
         this.time = time;
         this.success = success;
         this.failure = failure;
-        this.ID = ID;
-        VariesData = String.valueOf(Integer.parseInt(success) - Integer.parseInt(failure));
+        if (ID != null){
+            this.ID = ID;
+        }
+        else{
+            this.ID = TrailsDatabaseController.generateTrailsId();
+        }
     }
 
     //for Binomial Trails w/ location
@@ -41,7 +45,12 @@ public class Trails implements Serializable {
         this.time = time;
         this.success = success;
         this.failure = failure;
-        this.ID = ID;
+        if (ID != null){
+            this.ID = ID;
+        }
+        else{
+            this.ID = TrailsDatabaseController.generateTrailsId();
+        }
         this.location = location;
     }
 
@@ -52,17 +61,27 @@ public class Trails implements Serializable {
         this.type = type;
         this.time = time;
         this.VariesData = variesData;
-        this.ID = ID;
+        if (ID != null){
+            this.ID = ID;
+        }
+        else{
+            this.ID = TrailsDatabaseController.generateTrailsId();
+        }
     }
 
-    //for Three other Trails w.o location
+    //for Three other Trails w/ location
     public Trails(String trail_title, String date, String type, String time, String variesData, Integer ID, Location location) {
         this.trail_title = trail_title;
         this.date = date;
         this.type = type;
         this.time = time;
         this.VariesData = variesData;
-        this.ID = ID;
+        if (ID != null){
+            this.ID = ID;
+        }
+        else{
+            this.ID = TrailsDatabaseController.generateTrailsId();
+        }
         this.location = location;
     }
 
@@ -130,5 +149,3 @@ public class Trails implements Serializable {
         this.ID = ID;
     }
 }
-
-

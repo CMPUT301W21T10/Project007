@@ -4,58 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@color/color_fff"
+    tools:context=".TrailsActivity">
 
 
     <TextView
         android:id="@+id/descriptionforTrail"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="54dp"
-        android:layout_marginBottom="578dp"
-        android:textSize="50dp"
-        android:hint="Description"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@color/white"
         android:gravity="center_horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:hint="Description"
+        android:textSize="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/appBar">
 
     </TextView>
 
     <ListView
         android:id="@+id/trail_list"
         android:layout_width="match_parent"
-        android:layout_height="577dp"
-        android:layout_marginTop="134dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
+        android:divider="@color/black"
+        style="@style/dividedListStyle"
         android:choiceMode="singleChoice"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionforTrail"
         tools:listitem="@android:layout/simple_list_item_1">
 
     </ListView>
 
-    <!--    <Button
-        android:id="@+id/experimentBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="650dp"
-        android:layout_marginBottom="15dp"
-        android:text="Add Trails?"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />-->
 
 
     <FrameLayout
         android:id="@+id/data_container"
         android:layout_width="match_parent"
-        android:layout_height="670dp"
+        android:layout_height="match_parent"
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -73,6 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:theme="@style/Theme.Project007"
         android:layout_marginStart="321dp"
         android:layout_marginTop="548dp"
         android:layout_marginEnd="16dp"
@@ -88,7 +78,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:id="@+id/appBar"
         android:layout_marginTop="0dp"
         android:theme="@style/Theme.Design.NoActionBar"
         app:layout_constraintEnd_toEndOf="parent"

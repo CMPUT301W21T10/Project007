@@ -90,7 +90,7 @@
             android:id="@+id/reg_btn"
             android:layout_marginBottom="20dp"
             android:gravity="center"
-            android:text="Sign Up"
+            android:text="SignUp"
             android:textSize="20sp"
             android:textColor="#fff"
             android:layout_marginTop="50dp"
