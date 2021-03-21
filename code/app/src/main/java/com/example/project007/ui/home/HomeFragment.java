@@ -30,6 +30,7 @@ import com.example.project007.R;
 import com.example.project007.TrailsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -93,7 +94,7 @@ public class HomeFragment extends Fragment {
                                 break;
 
                             case "delete":
-                                DatabaseController.deleteExperiment(String.valueOf(instance.getId()));
+                                DatabaseController.deleteExperiment(instance);
                                 //experimentDataList.remove(savedPosition);  //把数据源里面相应数据删除
                                 //experimentAdapter.notifyDataSetChanged();
                                 Toast.makeText(getActivity(), "delete Succeed", Toast.LENGTH_SHORT).show();
@@ -155,6 +156,7 @@ public class HomeFragment extends Fragment {
                 else {
                     experimentDataList.clear();
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                        /*
                         Log.d(TAG, String.valueOf(doc.getData().get("Name")));
                         String name = (String) doc.getData().get("Name");
                         String description = (String) doc.getData().get("Description");
@@ -162,14 +164,23 @@ public class HomeFragment extends Fragment {
                         String type = (String) doc.getData().get("Type");
                         ArrayList<String> trailsId = (ArrayList<String>) doc.getData().get("trailsId");
                         ArrayList<String> subscriptionId = (ArrayList<String>) doc.getData().get("subscriptionId");
-                        boolean requireLocation = Boolean.parseBoolean((String) doc.getData().get("requireLocation"));
-                        boolean condition = Boolean.parseBoolean((String) doc.getData().get("condition"));
+                        boolean requireLocation = (boolean) doc.getData().get("requireLocation");
+                        boolean condition = (boolean) doc.getData().get("condition");
                         Integer minimumTrails = ((Long) doc.getData().get("minimumTrails")).intValue();
                         String region = (String) doc.getData().get("region");
                         String idString = doc.getId();
                         Integer id = Integer.parseInt(idString);
-                        experimentDataList.add(new Experiment(name, description, date, type, id,
-                                trailsId,subscriptionId, requireLocation,condition,minimumTrails,region));
+
+                        */
+                        Experiment oneExperiment = null;
+                        if (doc.exists()) {
+                            // convert document to POJO
+                            oneExperiment = doc.toObject(Experiment.class);
+                            System.out.println(oneExperiment);
+                            experimentDataList.add(oneExperiment);
+                        } else {
+                            System.out.println("No such document!");
+                        }
                     }
                     DatabaseController.setMaxExperimentId(experimentDataList.size());
                     experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched

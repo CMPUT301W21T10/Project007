@@ -12,17 +12,20 @@ public class Experiment implements Serializable {
     private String description;
     private String date;
     private String type;
-    private final Integer id;
-    private final String userId;
-    private ArrayList<String> trails = new ArrayList<String>();
+    private Integer id;
+    private String userId;
+    private ArrayList<String> trailsId = new ArrayList<String>();
     private ArrayList<String> subscriptionId = new ArrayList<String>();
     private boolean requireLocation;
     private boolean condition;
     private Integer minimumTrails;
     private String region;
 
+    public Experiment() {
+    }
+
     public Experiment(String name, String description, String date, String type,
-                      @Nullable Integer id,@Nullable ArrayList<String> trails, @Nullable ArrayList<String> subscriptionId,
+                      @Nullable Integer id, @Nullable ArrayList<String> trails, @Nullable ArrayList<String> subscriptionId,
                       boolean requireLocation, boolean condition, Integer minimumTrails, String region) {
         this.name = name;
         this.description = description;
@@ -37,7 +40,7 @@ public class Experiment implements Serializable {
             this.id = DatabaseController.generateExperimentId();
         }
         if (trails != null){
-            this.trails = trails;
+            this.trailsId = trails;
         }
         if (subscriptionId != null){
             this.subscriptionId = subscriptionId;
@@ -73,11 +76,11 @@ public class Experiment implements Serializable {
     }
 
     public ArrayList<String> getTrails() {
-        return trails;
+        return trailsId;
     }
 
     public void setTrails(ArrayList<String> trails) {
-        this.trails = trails;
+        this.trailsId = trails;
     }
 
     public void setDate(String date) {
@@ -97,11 +100,11 @@ public class Experiment implements Serializable {
     }
 
     public ArrayList<String> getTrailsId() {
-        return trails;
+        return trailsId;
     }
 
     public void setTrailsId(ArrayList<String> trails) {
-        this.trails = trails;
+        this.trailsId = trails;
     }
 
     public ArrayList<String> getSubscriptionId() {
