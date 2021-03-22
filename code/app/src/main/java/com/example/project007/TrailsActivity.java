@@ -231,7 +231,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     @Override
     public void sending_data(Trails trails) {
         trail_Adapter.add(trails);
-        Toast.makeText(getApplicationContext(),"New Trail:" + trails.getTrail_title() + " added success!",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),"New Trail:" + trails.getTrail_title() + " added success!",Toast.LENGTH_SHORT).show();
         boolean addResult = TrailsDatabaseController.modify_Trails("Trails", trails);
         ArrayList<String> valueList = experiment.getTrails();
         valueList.add(trails.getID().toString());

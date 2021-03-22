@@ -54,7 +54,7 @@ public class DatabaseController {
         CollectionReference collectionReference =  db.collection(collection);
         String idString = experiment.getId().toString();
 
-
+    /*
         HashMap<String, Object> data = new HashMap<>();
         data.put("Name", experiment.getName());
         data.put("Description", experiment.getDescription());
@@ -62,11 +62,11 @@ public class DatabaseController {
         data.put("Type", experiment.getType());
         data.put("trailsId", experiment.getTrails());
         data.put("subscriptionId", experiment.getSubscriptionId());
-        data.put("requireLocation", String.valueOf(experiment.isRequireLocation()));
-        data.put("condition", String.valueOf(experiment.isCondition()));
+        data.put("requireLocation", experiment.isRequireLocation());
+        data.put("condition", experiment.isCondition());
         data.put("minimumTrails", experiment.getMinimumTrails());
         data.put("region", experiment.getRegion());
-
+*/
         final boolean[] condition = new boolean[1];
         // The set method sets a unique id for the document
         collectionReference
@@ -91,8 +91,12 @@ public class DatabaseController {
         return condition[0];
     }
 
-    public static void deleteExperiment(String name){
-        Task<Void> writeResult = db.collection("Experiments").document(name).delete();
+    public static void deleteExperiment(Experiment instance){
+        ArrayList<String> ids = instance.getTrailsId();
+        for (int i = 0;i<ids.size();i++){
+            db.collection("Trails").document(String.valueOf(ids.get(i))).delete();
+        }
+        Task<Void> writeResult = db.collection("Experiments").document(String.valueOf(instance.getId())).delete();
 
     }
 

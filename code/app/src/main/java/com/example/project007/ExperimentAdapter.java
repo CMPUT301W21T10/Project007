@@ -138,7 +138,7 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
             @Override
             public void onAnimationEnd(Animation animation) { //动画执行完毕
                 Experiment instance = experiments.get(position);
-                DatabaseController.deleteExperiment(String.valueOf(instance.getId()));
+                DatabaseController.deleteExperiment(instance);
                 experiments.remove(position);  //把数据源里面相应数据删除
                 notifyDataSetChanged();
             }
