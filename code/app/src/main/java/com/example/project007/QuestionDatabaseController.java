@@ -17,16 +17,16 @@ import static android.content.ContentValues.TAG;
 public class QuestionDatabaseController {
 
     @SuppressLint("StaticFieldLeak")
-    private static FirebaseFirestore db = QuestionDatabaseController.getDb();
-    private static String UserId;
-    private static Integer maxQuestionId = 1;
+    private static FirebaseFirestore question_db;
+    private static String UserId = "1";
+    private static Integer maxQuestionId;
 
-    public static Integer getMaxQuestionId() {
-        return maxQuestionId;
+    public static FirebaseFirestore getQuestion_db() {
+        return question_db;
     }
 
-    public static void setMaxQuestionId(Integer maxQuestionId) {
-        QuestionDatabaseController.maxQuestionId = maxQuestionId;
+    public static void setQuestion_db(FirebaseFirestore question_db) {
+        QuestionDatabaseController.question_db = question_db;
     }
 
     public static String getUserId() {
@@ -37,26 +37,24 @@ public class QuestionDatabaseController {
         UserId = userId;
     }
 
-    public static FirebaseFirestore getDb() {
-        return db;
+    public static Integer getMaxQuestionId() {
+        return maxQuestionId;
     }
 
-    public static void setDb(FirebaseFirestore db) {
-        QuestionDatabaseController.db = db;
+    public static void setMaxQuestionId(Integer maxQuestionId) {
+        QuestionDatabaseController.maxQuestionId = maxQuestionId;
     }
 
     public static boolean add_Question(String collection, Question question){
-        // Retrieving the city name and the province name from the EditText fields
-        CollectionReference collectionReference =  db.collection(collection);
+        CollectionReference collectionReference =  question_db.collection(collection);
         HashMap<String, Object> data = new HashMap<>();
 
         String idString = question.getId().toString();
         data.put("Question", question.getQuestion());
         if (question.getAnswer_id() != null){
-            data.put("Answer_Id", question.getAnswer_id().toString());
-        }
-        else{
-            data.put("Answer_Id",null);
+            data.put("Answer_Id", question.getAnswer_id());
+        }else{
+            data.put("Answer_Id", null);
         }
 
         final boolean[] condition = new boolean[1];
@@ -83,7 +81,7 @@ public class QuestionDatabaseController {
     }
 
     public static boolean delete_Question(String collection, Question question){
-        CollectionReference collectionReference =  db.collection(collection);
+        CollectionReference collectionReference =  question_db.collection(collection);
         String idString = question.getId().toString();
         final boolean[] condition = new boolean[1];
         collectionReference

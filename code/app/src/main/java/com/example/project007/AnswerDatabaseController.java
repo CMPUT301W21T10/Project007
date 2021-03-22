@@ -17,9 +17,9 @@ import static android.content.ContentValues.TAG;
 public class AnswerDatabaseController {
 
     @SuppressLint("StaticFieldLeak")
-    private static FirebaseFirestore db = AnswerDatabaseController.getDb();
-    private static String UserId;
-    private static Integer maxAnswerId = 1;
+    private static FirebaseFirestore db; // answer db
+    private static String UserId = "1";
+    private static Integer maxAnswerId;
 
     public static Integer getMaxAnswerId() {
         return maxAnswerId;
@@ -53,6 +53,7 @@ public class AnswerDatabaseController {
         String idString = answer.getId().toString();
         data.put("Answer", answer.getAnswer());
         data.put("Question_Id", answer.getQuestion_id().toString());
+        //make sure receive the question id
 
         final boolean[] condition = new boolean[1];
         // The set method sets a unique id for the document

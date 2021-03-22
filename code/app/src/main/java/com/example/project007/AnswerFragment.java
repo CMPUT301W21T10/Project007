@@ -46,22 +46,30 @@ public class AnswerFragment extends Fragment {
 
         addAnswerEditText = v.findViewById(R.id.add_answer_text);
         addAnswerButton = v.findViewById(R.id.add_answer_button);
-
         answerList = v.findViewById(R.id.answer_list);
-        String question_Id = getArguments().getString("Question Id");
-        String answer_Id = getArguments().getString("Answer Id");
+        /*String question_Id = getArguments().getString("Question Id");
+        String answer_Id = getArguments().getString("Answer Id");*/
+        String question_Id = "1";
+        String answer_Id = "1";
+
         answerDataList = new ArrayList<>();
         answerAdapter = new answerCustomList(getActivity(), answerDataList);
 
         answerList.setAdapter(answerAdapter);
         db = FirebaseFirestore.getInstance();
 
+
         addAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String answerName = addAnswerEditText.getText().toString();
-
-                if(answerName.length()>0) {
+                Toast.makeText(getActivity(), "answer is " + answerName, Toast.LENGTH_SHORT).show();
+                Answer answer = new Answer(Integer.parseInt(answer_Id), answerName, Integer.parseInt(question_Id));
+                answerAdapter.add(answer);
+                //answerAdapter.notifyDataSetChanged();
+                addAnswerEditText.setText("");
+                //addAnswerEditText.setText("");
+                /*if(answerName.length()>0) {
                     Answer answer = new Answer(Integer.parseInt(answer_Id), answerName, Integer.parseInt(question_Id));
                     answerAdapter.add(answer);
                     boolean addAnswer = AnswerDatabaseController.add_Answer("Answers", answer);
@@ -73,7 +81,7 @@ public class AnswerFragment extends Fragment {
                     }
                     addAnswerEditText.setText("");
 
-                }
+                }*/
 
             }
         });
@@ -83,7 +91,8 @@ public class AnswerFragment extends Fragment {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 //Delete event
                 Answer answer = answerAdapter.getItem(position);
-                answerAdapter.notifyDataSetChanged();
+                answerAdapter.remove(answer);
+                answerAdapter.notifyDataSetChanged();/*
                 boolean deleteAnswer = AnswerDatabaseController.delete_Answer("Answers", answer);
                 if (deleteAnswer){
                     Toast.makeText(getActivity(), "Delete Succeed", Toast.LENGTH_SHORT).show();
@@ -91,7 +100,7 @@ public class AnswerFragment extends Fragment {
                 }
                 else{
                     Toast.makeText(getActivity(), "Delete Failed", Toast.LENGTH_SHORT).show();
-                }
+                }*/
                 return true;
             }
         });

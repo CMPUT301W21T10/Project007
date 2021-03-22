@@ -7,17 +7,16 @@ public class Question implements Serializable {
 
     private String question;
     private Integer id;
-    private ArrayList<Integer> answer_id;
+    private ArrayList<String> answer_id;
 
 
-    Question(Integer id, String question, ArrayList<Integer> answer_id) {
-        this.question = question;
+    Question(Integer id, String question, ArrayList<String> answer_id) {
         if (id != null){
             this.id = id;
-        }
-        else{
+        }else{
             this.id = QuestionDatabaseController.generateQuestionId();
         }
+        this.question = question;
         this.answer_id = answer_id;
     }
 
@@ -37,11 +36,11 @@ public class Question implements Serializable {
         this.id = id;
     }
 
-    public ArrayList<Integer> getAnswer_id() {
+    public ArrayList<String> getAnswer_id() {
         return answer_id;
     }
 
-    public void setAnswer_id(ArrayList<Integer> answer_id) {
+    public void setAnswer_id(ArrayList<String> answer_id) {
         this.answer_id = answer_id;
     }
 }
