@@ -182,13 +182,25 @@
             android:text="Stdev"
             android:textSize="20dp" />
     </LinearLayout>
-
+    <TextView
+        android:id="@+id/linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Linear Chart"
+        android:textSize="20dp" />
     <lecho.lib.hellocharts.view.LineChartView
         android:id="@+id/chart"
         android:layout_width="fill_parent"
         android:layout_height="334dp"
         android:layout_below="@+id/chartLbl" />
-
+    <TextView
+        android:id="@+id/histogram"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Histogram"
+        android:textSize="20dp" />
     <lecho.lib.hellocharts.view.ColumnChartView
         android:id="@+id/column_chart"
         android:layout_width="fill_parent"
