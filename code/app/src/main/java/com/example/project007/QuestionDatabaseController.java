@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static android.content.ContentValues.TAG;
@@ -54,7 +55,7 @@ public class QuestionDatabaseController {
         if (question.getAnswer_id() != null){
             data.put("Answer_Id", question.getAnswer_id());
         }else{
-            data.put("Answer_Id", null);
+            data.put("Answer_Id",new ArrayList<String>());
         }
 
         final boolean[] condition = new boolean[1];
