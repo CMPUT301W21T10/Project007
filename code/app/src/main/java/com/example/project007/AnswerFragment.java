@@ -53,6 +53,7 @@ public class AnswerFragment extends Fragment {
         answerList.setAdapter(answerAdapter);
         //db = FirebaseFirestore.getInstance();
 
+        //Add new Answer
         addAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +77,7 @@ public class AnswerFragment extends Fragment {
             }
         });
 
+        //Delete Event
         answerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {

@@ -28,8 +28,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value=""/>
 
-        <activity android:name=".QuestionActivity" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".QuestionActivity" />
         <activity android:name=".TrailsActivity" />
         <activity android:name=".AfterLoginActivity" />
         <activity android:name=".RegActivity" />

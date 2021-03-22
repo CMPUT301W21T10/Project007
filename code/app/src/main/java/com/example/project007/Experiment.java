@@ -15,6 +15,7 @@ public class Experiment implements Serializable {
     private final Integer id;
     private final String userId;
     private ArrayList<String> trails = new ArrayList<String>();
+    private ArrayList<String> questions = new ArrayList<String>();
     private ArrayList<String> subscriptionId = new ArrayList<String>();
     private boolean requireLocation;
     private boolean condition;
@@ -23,7 +24,7 @@ public class Experiment implements Serializable {
 
     public Experiment(String name, String description, String date, String type,
                       @Nullable Integer id,@Nullable ArrayList<String> trails, @Nullable ArrayList<String> subscriptionId,
-                      boolean requireLocation, boolean condition, Integer minimumTrails, String region) {
+                      @Nullable ArrayList<String> questions, boolean requireLocation, boolean condition, Integer minimumTrails, String region) {
         this.name = name;
         this.description = description;
         this.date = date;
@@ -41,6 +42,9 @@ public class Experiment implements Serializable {
         }
         if (subscriptionId != null){
             this.subscriptionId = subscriptionId;
+        }
+        if (questions != null) {
+            this.questions = questions;
         }
         this.requireLocation = requireLocation;
         this.condition = condition;
@@ -142,5 +146,13 @@ public class Experiment implements Serializable {
 
     public void setRegion(String region) {
         this.region = region;
+    }
+
+    public ArrayList<String> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(ArrayList<String> questions) {
+        this.questions = questions;
     }
 }
