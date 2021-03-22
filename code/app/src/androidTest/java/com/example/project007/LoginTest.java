@@ -105,7 +105,6 @@ public class LoginTest {
         String message = (String) textView.getText().toString(); // Get item from first position
         assertEquals("Description", message);
 
-
     }
 
     @After

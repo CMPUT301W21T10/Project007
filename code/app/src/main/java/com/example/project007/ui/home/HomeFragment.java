@@ -156,22 +156,7 @@ public class HomeFragment extends Fragment {
                 else {
                     experimentDataList.clear();
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                        /*
-                        Log.d(TAG, String.valueOf(doc.getData().get("Name")));
-                        String name = (String) doc.getData().get("Name");
-                        String description = (String) doc.getData().get("Description");
-                        String date = (String) doc.getData().get("Date");
-                        String type = (String) doc.getData().get("Type");
-                        ArrayList<String> trailsId = (ArrayList<String>) doc.getData().get("trailsId");
-                        ArrayList<String> subscriptionId = (ArrayList<String>) doc.getData().get("subscriptionId");
-                        boolean requireLocation = (boolean) doc.getData().get("requireLocation");
-                        boolean condition = (boolean) doc.getData().get("condition");
-                        Integer minimumTrails = ((Long) doc.getData().get("minimumTrails")).intValue();
-                        String region = (String) doc.getData().get("region");
-                        String idString = doc.getId();
-                        Integer id = Integer.parseInt(idString);
 
-                        */
                         Experiment oneExperiment = null;
                         if (doc.exists()) {
                             // convert document to POJO
@@ -187,8 +172,6 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-
-
 
 
         // listener to access detail of an element
