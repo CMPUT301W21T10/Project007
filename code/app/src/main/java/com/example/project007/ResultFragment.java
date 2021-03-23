@@ -35,9 +35,12 @@ import lecho.lib.hellocharts.util.ChartUtils;
 import lecho.lib.hellocharts.view.ColumnChartView;
 import lecho.lib.hellocharts.view.LineChartView;
 
-import static android.graphics.Insets.add;
-import static com.example.project007.R2.id.add;
-
+/**
+ * This class show the result of the trails, which includes six numbers and two plots.
+ * The six numbers are the three quartile numbers and median and mean.
+ * The two plots are the histogram and the linear chart run with the time.
+ * @return view
+ */
 
 public class ResultFragment extends Fragment{
     private String type;
@@ -68,15 +71,10 @@ public class ResultFragment extends Fragment{
     private ColumnChartData data;             //存放柱状图数据的对象
     private List<AxisValue> mAxisXValues = new ArrayList<AxisValue>();
 
-    /**
-     * This class return a view which contains six data and two plots.
-     * The six data are three quartiles and mean and median and stdev.
-     * The two plots are linear charts and the histogram
-     * @return view
-     */
 
 
     //   四种数据的计算
+
     private double[] Quartiles(double[] val) {
         double[] ans = new double[3];
 
@@ -123,14 +121,14 @@ public class ResultFragment extends Fragment{
         }
         return Math.sqrt(dVar/x.length);
     }
-    @RequiresApi(api = Build.VERSION_CODES.N)
     /**
-     * This method return a list which contains six datas.
-     * The six data are three quartiles and mean and median and stdev.
+     * This method create a list to record the data of result.
+     * The data includes six numbers,which are the three quartile numbers and median and mean.
      * @param{ArrayList<Trails>}argument
      * @param{TrailsActivity}activity
      * @return list
      */
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public ArrayList<String> CreateList(ArrayList<Trails> argument,TrailsActivity activity){
         ArrayList<Double> list = new ArrayList<>();
         type = activity.getTrailsType();
@@ -470,9 +468,9 @@ public class ResultFragment extends Fragment{
         return arr;
     }
     /**
-     * This method return a view which contains six datas and two plots.
-     * The six data are three quartiles and mean and median and stdev.
-     * The two plots are linear charts and the histogram
+     * This method create a view to show the results and the plots.
+     * The six numbers are the three quartile numbers and median and mean.
+     * The two plots are the histogram and the linear chart run with the time.
      * @param{LayoutInflater}inflater
      * @param{ViewGroup}container
      * @param{Bundle}savedInstanceState
