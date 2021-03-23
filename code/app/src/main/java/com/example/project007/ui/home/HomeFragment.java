@@ -40,6 +40,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * This is HomeFragment
+ * This class performances main interaction and show experiments
+ * connect with TrailsActivity, ActionFragment, and ModifyExperimentFragment
+ */
+
 public class HomeFragment extends Fragment {
 
     private ListView experimentList;
@@ -95,9 +101,8 @@ public class HomeFragment extends Fragment {
 
                             case "delete":
                                 DatabaseController.deleteExperiment(instance);
-                                //experimentDataList.remove(savedPosition);  //把数据源里面相应数据删除
-                                //experimentAdapter.notifyDataSetChanged();
                                 Toast.makeText(getActivity(), "delete Succeed", Toast.LENGTH_SHORT).show();
+
                                 break;
 
                             case "end":
@@ -190,8 +195,16 @@ public class HomeFragment extends Fragment {
         experimentList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                savedPosition = position;
-                new ActionFragment().show(getChildFragmentManager(), "requireAction");
+                Experiment instance = experimentDataList.get(position);
+
+                if (DatabaseController.getUserId().equals(instance.getUserId())) {
+                    savedPosition = position;
+                    new ActionFragment().show(getChildFragmentManager(), "requireAction");
+                }
+                else {
+                    Toast.makeText(getActivity(), "You are not the owner", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
                 return true;
             }
         });

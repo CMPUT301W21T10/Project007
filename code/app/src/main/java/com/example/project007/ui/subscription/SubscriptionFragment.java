@@ -37,6 +37,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+/**
+ * This is SubscriptionFragment
+ * This class shows subscriptions list
+ * connect with TrailsActivity, ActionFragment, and ModifyExperimentFragment
+ */
 public class SubscriptionFragment extends Fragment {
 
     private SubscriptionViewModel subscriptionViewModel;

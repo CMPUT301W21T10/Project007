@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -12,13 +11,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firestore.v1.WriteResult;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static android.content.ContentValues.TAG;
 
+/**
+ * Connect to the Database
+ * perform add, delete, modify Experiment
+ */
 public class DatabaseController {
     @SuppressLint("StaticFieldLeak")
     private static FirebaseFirestore db;
@@ -104,10 +105,9 @@ public class DatabaseController {
         return maxExperimentId + 1;
     }
 
-    public static boolean setExperimentTrails(String id, ArrayList<String> valueList){
+    public static void setExperimentTrails(String id, ArrayList<String> valueList){
         DocumentReference docRef = db.collection("Experiments").document(id);
         docRef.update("trailsId", valueList);
 
-        return true;
     }
 }

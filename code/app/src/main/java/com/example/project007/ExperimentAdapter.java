@@ -18,6 +18,10 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ * This is ExperimentAdapter
+ * Adapter for experiment List
+ */
 public class ExperimentAdapter extends ArrayAdapter<Experiment> {
 
     private final ArrayList<Experiment> experiments;

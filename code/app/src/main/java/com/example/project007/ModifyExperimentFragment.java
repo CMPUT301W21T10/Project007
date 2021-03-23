@@ -31,8 +31,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
 
+/**
+ * This is ModifyExperimentFragment
+ * Use to add or modify Experiment
+ */
 public class ModifyExperimentFragment extends DialogFragment{
-
 
     private EditText experimentName;
     private EditText experimentDescription;

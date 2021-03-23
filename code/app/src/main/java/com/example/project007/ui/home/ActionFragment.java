@@ -25,7 +25,11 @@ import com.example.project007.Experiment;
 import com.example.project007.R;
 
 import java.util.Calendar;
-
+/**
+ * This is ActionFragment
+ * This class performances three button click
+ * Only use from HomeFragment
+ */
 public class ActionFragment extends DialogFragment {
 
     Button edit;
