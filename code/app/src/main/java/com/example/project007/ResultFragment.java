@@ -68,10 +68,16 @@ public class ResultFragment extends Fragment{
     private ColumnChartData data;             //存放柱状图数据的对象
     private List<AxisValue> mAxisXValues = new ArrayList<AxisValue>();
 
+    /**
+     * This class return a view which contains six data and two plots.
+     * The six data are three quartiles and mean and median and stdev.
+     * The two plots are linear charts and the histogram
+     * @return view
+     */
 
 
     //   四种数据的计算
-    public double[] Quartiles(double[] val) {
+    private double[] Quartiles(double[] val) {
         double[] ans = new double[3];
 
         for (int quartileType = 1; quartileType < 4; quartileType++) {
@@ -89,7 +95,7 @@ public class ResultFragment extends Fragment{
         }
         return ans;
     }
-    public static double Med(ArrayList<Double> total){
+    private static double Med(ArrayList<Double> total){
         double j = 0;
         //集合排序
         Collections.sort(total);
@@ -102,14 +108,14 @@ public class ResultFragment extends Fragment{
         }
         return j;
     }
-    public static double avg(double[] x) {
+    private static double avg(double[] x) {
         double sum = 0;//用来保存数组内所有数值的和
         for (double v : x) {
             sum += v;//遍历每一个数组相，将每一个数组相的值加到sum上
         }
         return sum / x.length;
     }
-    public static double StandardDiviation(double[] x) {
+    private static double StandardDiviation(double[] x) {
         double dAve=avg(x);
         double dVar=0;
         for (double v : x) {//求方差
@@ -118,6 +124,13 @@ public class ResultFragment extends Fragment{
         return Math.sqrt(dVar/x.length);
     }
     @RequiresApi(api = Build.VERSION_CODES.N)
+    /**
+     * This method return a list which contains six datas.
+     * The six data are three quartiles and mean and median and stdev.
+     * @param{ArrayList<Trails>}argument
+     * @param{TrailsActivity}activity
+     * @return list
+     */
     public ArrayList<String> CreateList(ArrayList<Trails> argument,TrailsActivity activity){
         ArrayList<Double> list = new ArrayList<>();
         type = activity.getTrailsType();
@@ -167,7 +180,7 @@ public class ResultFragment extends Fragment{
 //    准备数据绘制线性图
     //提取ArrayList<Trails>的variesData并转化成double[]
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public double[] getList(ArrayList<Trails> argument,String name){
+    private double[] getList(ArrayList<Trails> argument,String name){
         ArrayList<Double> list = new ArrayList<>();
         int l = 0;
         if(name.equals("Binomial")){
@@ -191,7 +204,7 @@ public class ResultFragment extends Fragment{
         return list.stream().mapToDouble(i->i).toArray();
     }
     //y轴获取最大值
-    public static double getMaxValue(double[] arr) {
+    private static double getMaxValue(double[] arr) {
         double max = arr[0];
         for(int i=0;i<arr.length;i++) {
             if(arr[i]>max)
@@ -307,14 +320,14 @@ public class ResultFragment extends Fragment{
     }
 
 //绘制直方图 准备数据
-    public float getNumberOfSuccess(ArrayList<Trails> argument){
+    private float getNumberOfSuccess(ArrayList<Trails> argument){
         float i = 0;
         for(Trails t : argument){
             i = i + Float.parseFloat(t.getSuccess());
         }
         return i;
     }
-    public float getNumberOfFailure(ArrayList<Trails> argument){
+    private float getNumberOfFailure(ArrayList<Trails> argument){
         float i = 0;
         for(Trails t : argument){
             i = i + Float.parseFloat(t.getFailure());
@@ -323,7 +336,7 @@ public class ResultFragment extends Fragment{
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public double[] getNum(ArrayList<Trails> argument){
+    private double[] getNum(ArrayList<Trails> argument){
         ArrayList<Double> list = new ArrayList<>();
         for (Trails t : argument) {
             list.add(Double.parseDouble(t.getVariesData()));
@@ -331,7 +344,7 @@ public class ResultFragment extends Fragment{
         return list.stream().mapToDouble(i->i).toArray();
     }
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public ArrayList<Double> getXaxis(ArrayList<Trails> argument){
+    private ArrayList<Double> getXaxis(ArrayList<Trails> argument){
         double[] d = getNum(argument);
         double max = getMaxValue(d);
         ArrayList<Double> list = new ArrayList<>();
@@ -343,7 +356,7 @@ public class ResultFragment extends Fragment{
         return list;
     }
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public ArrayList<Float> getYaxis(ArrayList<Trails> argument){
+    private ArrayList<Float> getYaxis(ArrayList<Trails> argument){
         ArrayList<Double> list = getXaxis(argument);
         ArrayList<Float> l = new ArrayList<>();
         float[]item={0,0,0,0,0};
@@ -366,7 +379,7 @@ public class ResultFragment extends Fragment{
         }
         return l;
     }
-    public float getMax(ArrayList<Float> arr){
+    private float getMax(ArrayList<Float> arr){
         float max = arr.get(0);
         for(int i=0;i<arr.size();i++) {
             if(arr.get(i)>max)
@@ -451,12 +464,20 @@ public class ResultFragment extends Fragment{
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public ArrayList<Trails> sortTime(ArrayList<Trails> arr){
+    private ArrayList<Trails> sortTime(ArrayList<Trails> arr){
         arr.sort((p1, p2) -> p1.getTime().compareTo(p2.getTime()));
 
         return arr;
     }
-
+    /**
+     * This method return a view which contains six datas and two plots.
+     * The six data are three quartiles and mean and median and stdev.
+     * The two plots are linear charts and the histogram
+     * @param{LayoutInflater}inflater
+     * @param{ViewGroup}container
+     * @param{Bundle}savedInstanceState
+     * @return view
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
