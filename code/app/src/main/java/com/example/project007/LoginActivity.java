@@ -3,7 +3,6 @@ package com.example.project007;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -12,8 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -77,15 +74,18 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
+                        boolean logged = false;
                         while (iterator.hasNext()){
                             DataSnapshot next = iterator.next();
                             if (next.getKey().equals(regEmail.getText().toString())){
-                                startActivity(new Intent(LoginActivity.this,MainActivity.class).putExtra("uid",next.getKey()));
-                                return;
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class).putExtra("uid",next.getKey()));
+                                logged = true;
+                                finish();
                             }
                         }
-                        Toast.makeText(LoginActivity.this, " Uid err!",
-                                Toast.LENGTH_SHORT).show();
+                        if (!logged){
+                            Toast.makeText(LoginActivity.this, " Uid err!",Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override

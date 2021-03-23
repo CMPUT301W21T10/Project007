@@ -10,8 +10,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firestore.v1.WriteResult;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static android.content.ContentValues.TAG;
@@ -19,38 +22,62 @@ import static android.content.ContentValues.TAG;
 public class DatabaseController {
     @SuppressLint("StaticFieldLeak")
     private static FirebaseFirestore db;
+    private static String UserId;
+    private static Integer maxExperimentId;
 
-    public static void setDatabaseController(FirebaseFirestore givenDB) {
-        db = givenDB;
+    public static Integer getMaxExperimentId() {
+        return maxExperimentId;
     }
 
-    public static boolean delete_document(String value, String collection){
-        if (value.length()>0) {
-            Task<Void> writeResult = db.collection(collection).document(value).delete();
-        }
-        return true;
+    public static void setMaxExperimentId(Integer maxExperimentId) {
+        DatabaseController.maxExperimentId = maxExperimentId;
     }
 
-    public static boolean add_one(String collection,@Nullable Experiment experiment){
+    public static String getUserId() {
+        return UserId;
+    }
+
+    public static void setUserId(String userId) {
+        UserId = userId;
+    }
+
+    public static FirebaseFirestore getDb() {
+        return db;
+    }
+
+    public static void setDb(FirebaseFirestore db) {
+        DatabaseController.db = db;
+    }
+
+    public static boolean modify_experiment(String collection, Experiment experiment){
         // Retrieving the city name and the province name from the EditText fields
         CollectionReference collectionReference =  db.collection(collection);
-        HashMap<String, String> data = new HashMap<>();
-
         String idString = experiment.getId().toString();
+
+    /*
+        HashMap<String, Object> data = new HashMap<>();
         data.put("Name", experiment.getName());
         data.put("Description", experiment.getDescription());
         data.put("Date", experiment.getDate());
         data.put("Type", experiment.getType());
-
+        data.put("trailsId", experiment.getTrails());
+        data.put("subscriptionId", experiment.getSubscriptionId());
+        data.put("requireLocation", experiment.isRequireLocation());
+        data.put("condition", experiment.isCondition());
+        data.put("minimumTrails", experiment.getMinimumTrails());
+        data.put("region", experiment.getRegion());
+*/
+        final boolean[] condition = new boolean[1];
         // The set method sets a unique id for the document
         collectionReference
                 .document(idString)
-                .set(data)
+                .set(experiment)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         // These are a method which gets executed when the task is succeeded
                         Log.d(TAG, "Data has been added successfully!");
+                        condition[0] = true;
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -58,13 +85,29 @@ public class DatabaseController {
                     public void onFailure(@NonNull Exception e) {
                         // These are a method which gets executed if there’s any problem
                         Log.d(TAG, "Data could not be added!" + e.toString());
+                        condition[0] = false;
                     }
                 });
-
-        return true;
+        return condition[0];
     }
 
-    public static Integer generateId(){
-        return 1;
+    public static void deleteExperiment(Experiment instance){
+        ArrayList<String> ids = instance.getTrailsId();
+        for (int i = 0;i<ids.size();i++){
+            db.collection("Trails").document(String.valueOf(ids.get(i))).delete();
+        }
+        Task<Void> writeResult = db.collection("Experiments").document(String.valueOf(instance.getId())).delete();
+
+    }
+
+    public static Integer generateExperimentId(){
+        return maxExperimentId + 1;
+    }
+
+    public static boolean setExperimentTrails(String id, ArrayList<String> valueList){
+        DocumentReference docRef = db.collection("Experiments").document(id);
+        docRef.update("trailsId", valueList);
+
+        return true;
     }
 }

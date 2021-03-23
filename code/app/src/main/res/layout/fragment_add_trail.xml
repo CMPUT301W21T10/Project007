@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+>
+
+    <!--https://stackoverflow.com/questions/16575177/fragment-is-transparent-and-shows-activity-below/16595086
+    answered by Goofyahead Feb 17 '14 at 17:50-->
+
+    <!--
+    https://stackoverflow.com/questions/3285412/whats-the-best-way-to-limit-text-length-of-edittext-in-android
+    answered by Austin Hanson Jul 19'10 at 21:57
+    https://stackoverflow.com/questions/12537819/how-to-make-edittext-box-height-expand/12537844
+    answered by Hesam May 21 '13 at 5:04
+    -->
+    <FrameLayout
+        android:id="@+id/empty_container"
+        android:layout_width="match_parent"
+        android:layout_height="58dp">
+
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/trail_Title_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Trail Title?"
+        android:inputType="textMultiLine|textCapSentences"
+        android:lines="5"
+        android:maxLength="40"
+        android:maxLines="10"
+        android:minLines="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/date_editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Click here to select date"
+            android:inputType="textPersonName"
+            android:maxLength="25" />
+
+        <EditText
+            android:id="@+id/time_editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:maxLength="10" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/SuccessText"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:hint="Number Success" />
+
+        <EditText
+            android:id="@+id/failText"
+            android:layout_width="191dp"
+            android:layout_height="wrap_content"
+            android:hint="Number Fail" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/latitude"
+            android:layout_width="124dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:maxLength="25"
+            android:text="Latitude is: "
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/latitude_editText"
+            android:layout_width="267dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="center_horizontal"
+            android:maxLength="25"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/longitude"
+            android:layout_width="124dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:maxLength="25"
+            android:text="longitude is: "
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/longitude_editText"
+            android:layout_width="267dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:maxLength="25"
+            android:gravity="center_horizontal"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+
+    <!--    <com.google.android.gms.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="500dp" />-->
+
+    <FrameLayout
+        android:id="@+id/map_container"
+        android:layout_width="match_parent"
+        android:layout_height="330dp">
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/map_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/custombutton"
+        android:text="Choose Location" />
+
+    <FrameLayout
+        android:id="@+id/space_container"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="1dp">
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/ok_pressed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/custombutton"
+        android:text="OK"/>
+
+
+
+    <!--<FrameLayout
+        android:id="@+id/data_container"
+        android:layout_width="match_parent"
+        android:layout_height="540dp">
+
+
+    </FrameLayout>-->
+
+
+
+
+
+</LinearLayout>
