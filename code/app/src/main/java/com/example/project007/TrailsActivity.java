@@ -73,6 +73,11 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         //receive data from experiment
 
         //fix variable for debugging
+        type = experiment.getType();
+        title = experiment.getName();
+        description = experiment.getDescription();
+        needLocation = experiment.isRequireLocation();
+
 
         final FloatingActionButton addButton = findViewById(R.id.experimentBtn);
         if (!experiment.isCondition()){
