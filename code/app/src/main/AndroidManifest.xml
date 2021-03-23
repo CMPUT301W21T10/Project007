@@ -16,7 +16,8 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity 
             android:name=".LoginActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
@@ -28,10 +29,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value=""/>
 
-        <activity android:name=".QuestionActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".TrailsActivity" />
         <activity android:name=".AfterLoginActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".QuestionActivity" />
+        <activity android:name=".TrailsActivity" />
         <activity android:name=".RegActivity" />
         <activity android:name=".ScanActivity"/>
     </application>
