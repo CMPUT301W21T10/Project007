@@ -46,6 +46,11 @@ public class TrailsDatabaseController {
         Trail_db = trail_db;
     }
 
+    /**
+     * This returns a boolean and create a new table for storing trails in DB
+     * @return
+     * Return Boolean shows adding result
+     */
     public static boolean modify_Trails(String collection, Trails trails){
         // Retrieving the city name and the province name from the EditText fields
         CollectionReference collectionReference =  Trail_db.collection(collection);
@@ -107,6 +112,11 @@ public class TrailsDatabaseController {
                 });
         return condition[0];
     }
+    /**
+     * This returns a boolean and delete a trail  in DB
+     * @return
+     * Return Boolean shows deleting result
+     */
     public static boolean delete_Trails(String collection, Trails trails){
         CollectionReference collectionReference =  Trail_db.collection(collection);
         String idString = trails.getID().toString();
@@ -155,11 +165,20 @@ public class TrailsDatabaseController {
         return condition[0];
     }*/
 
-
+    /**
+     * This function is design to delete a connection between experiment and trails when deleting experiments
+     * @return
+     * Return Void
+     */
     public static void deleteExperiment(String name){
         Task<Void> writeResult = Trail_db.collection("Trails").document(name).delete();
     }
 
+    /**
+     * This function is design to Generate new id for trails
+     * @return
+     * Return Integer
+     */
     public static Integer generateTrailsId(){
         return maxTrailId + 1;
     }

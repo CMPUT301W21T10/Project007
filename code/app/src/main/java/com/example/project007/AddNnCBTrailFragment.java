@@ -43,7 +43,11 @@ public class AddNnCBTrailFragment extends Fragment {
         void editing_data(Trails trails);
     }
 
-
+    /**
+     * This returns a new Instance of fragment
+     * @return
+     * Return Fragment
+     */
     static AddNnCBTrailFragment newInstance(Trails trails){
         Bundle args = new Bundle();
         args.putSerializable("result", trails);
@@ -51,7 +55,11 @@ public class AddNnCBTrailFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
+    /**
+     * This returns Boolean for checking text
+     * @return
+     * Return Boolean value
+     */
     public boolean checkText (Trails trails){
         //https://stackoverflow.com/questions/18259644/how-to-check-if-a-string-matches-a-specific-format
         //answered by arshajii  Aug 15 '13 at 18:55

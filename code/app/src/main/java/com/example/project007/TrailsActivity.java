@@ -356,16 +356,39 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     }
 
     //sending data from activity to frags
+
+    /**
+     * This returns Boolean for needing location
+     * @return
+     * Return Boolean value
+     */
     public boolean WhetherTrailsLoc() {
         return needLocation;
     }
 
+    /**
+     * This returns String for type
+     * @return
+     * Return String type value
+     */
     public String getTrailsType() {
         return type;
     }
+
+    /**
+     * This returns String for Trails description
+     * @return
+     * Return String value description
+     */
     public String getDescription() {
         return description;
     }
+
+    /**
+     * This returns String for Title name of trails
+     * @return
+     * Return String type value
+     */
     public String getTitleName(){
         return title;
     }
