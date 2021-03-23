@@ -65,19 +65,19 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         Intent intent = getIntent();
         experiment = (Experiment) intent.getSerializableExtra("com.example.project007.INSTANCE");
         position = intent.getIntExtra("com.example.project007.POSITION", -1);
-        //type = experiment.getType();
-        //title = experiment.getName();
-        //description = experiment.getDescription();
-        //needLocation = experiment.isRequireLocation();
-        //descriptionTrail.setText(description);
+        type = experiment.getType();
+        title = experiment.getName();
+        description = experiment.getDescription();
+        needLocation = experiment.isRequireLocation();
+        descriptionTrail.setText(description);
         //receive data from experiment
 
         //fix variable for debugging
-        type = "Binomial";
+        /*type = "Binomial";
         title = "SB!";
         description = "Guess what?";
         needLocation = false;
-        descriptionTrail.setText(description);
+        descriptionTrail.setText(description);*/
 
 
 
@@ -231,7 +231,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     @Override
     public void sending_data(Trails trails) {
         trail_Adapter.add(trails);
-        //Toast.makeText(getApplicationContext(),"New Trail:" + trails.getTrail_title() + " added success!",Toast.LENGTH_SHORT).show();
         boolean addResult = TrailsDatabaseController.modify_Trails("Trails", trails);
         ArrayList<String> valueList = experiment.getTrails();
         valueList.add(trails.getID().toString());
