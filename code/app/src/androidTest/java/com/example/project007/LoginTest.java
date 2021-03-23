@@ -94,16 +94,31 @@ public class LoginTest {
         solo.enterText((EditText) solo.getView(R.id.editTextName), "Name");
         solo.enterText((EditText) solo.getView(R.id.editTextDescription), "Description");
         solo.clickOnText("OK");
+        solo.goBack();
 
         ListView currentListView = (ListView) solo.getView("experiment_list");
         View convertView =  currentListView.getChildAt(0);
         solo.clickOnView(convertView);
 
         solo.assertCurrentActivity("Wrong Activity", TrailsActivity.class);
+        solo.goBack();
 
-        final TextView textView = (TextView) solo.getView("descriptionforTrail"); // Get the listview
+        solo.clickLongOnView(convertView);
+
+        solo.clickOnView((Button) solo.getView(R.id.button));
+
+        solo.clearEditText((EditText) solo.getView(R.id.editTextName)); //Clear the EditText
+        solo.enterText((EditText) solo.getView(R.id.editTextName), "newName");
+        solo.clickOnText("OK");
+
+        solo.clickOnView(convertView);
+
+        solo.assertCurrentActivity("Wrong Activity", TrailsActivity.class);
+
+        final TextView textView = (TextView) solo.getView("name_view"); // Get the listview
         String message = (String) textView.getText().toString(); // Get item from first position
-        assertEquals("Description", message);
+
+        assertEquals("newName", message);
 
         //Testing Trails frags
         solo.clickOnView((FloatingActionButton) solo.getView(R.id.experimentBtn));

@@ -44,6 +44,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * This is ProfileFragment
+ * This class shows Profile and interaction about profile
+ * connect with AfterLoginActivity
+ */
 public class ProfileFragment extends Fragment {
     Integer userId;
 
