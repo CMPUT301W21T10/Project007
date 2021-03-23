@@ -2,6 +2,7 @@ package com.example.project007;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -114,7 +115,8 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         }
         else{
             process.setVisibility(View.VISIBLE);
-            process.setBackgroundColor(R.color.clearRed);
+            process.getBackground().setColorFilter(getResources().getColor(R.color.clearRed), PorterDuff.Mode.SRC_ATOP);
+            process.setText("End");
         }
 
         if(experiment.getUserId().equals(DatabaseController.getUserId())){
