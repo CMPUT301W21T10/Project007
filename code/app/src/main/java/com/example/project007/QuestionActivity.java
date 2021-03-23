@@ -36,7 +36,7 @@ public class QuestionActivity extends AppCompatActivity {
     ListView questionList;
     ArrayAdapter<Question> questionAdapter;
     ArrayList<Question> questionDataList;
-    Integer id;
+    //Integer id;
     ArrayList<String> answer_id = new ArrayList<String>();
     Question question;
 
