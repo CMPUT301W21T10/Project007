@@ -9,9 +9,7 @@ public class Question implements Serializable {
     private Integer id;
     private ArrayList<String> answer_id;
 
-    Question(){
-        //empty constructor for upload
-    }
+
 
 
     Question(Integer id, String question, ArrayList<String> answer_id) {

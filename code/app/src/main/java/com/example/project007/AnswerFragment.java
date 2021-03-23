@@ -91,11 +91,13 @@ public class AnswerFragment extends Fragment {
                         String answer = (String) doc.getData().get("Answer");
                         String idString = doc.getId();
                         Integer ID = Integer.parseInt(idString);
-                        answerDataList.add(new Answer(answer, ID));
+                        if (question.getAnswer_id() != null && question.getAnswer_id().contains(idString)){////id duplicate => error
+                            answerDataList.add(new Answer(answer, ID));
+                        }
                     }
                     answerAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
+                    AnswerDatabaseController.setMaxAnswerId(answerDataList.size());
                 }
-                AnswerDatabaseController.setMaxAnswerId(answerDataList.size());
             }
         });
         //fire store uploading
@@ -104,10 +106,13 @@ public class AnswerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String answerName = addAnswerEditText.getText().toString();
-                //Toast.makeText(getActivity(), "answer name is: " + answerName, Toast.LENGTH_SHORT).show();
                 if(answerName.length()>0) {
                     Answer answer = new Answer(answerName, AnswerDatabaseController.generateAnswerId());
-                    //Toast.makeText(getActivity(), answer.getAnswer(), Toast.LENGTH_SHORT).show();
+                    //lock on answer
+                    ArrayList<String> valueList = question.getAnswer_id();
+                    valueList.add(question.getId().toString());
+                    QuestionDatabaseController.setQuestionanswer(question.getId().toString(), valueList );
+                    //lock on answer
                     boolean addAnswer = AnswerDatabaseController.add_Answer("Answers", answer);
                     if (addAnswer){
                         Toast.makeText(getActivity(), "Add Succeed", Toast.LENGTH_SHORT).show();
@@ -116,9 +121,7 @@ public class AnswerFragment extends Fragment {
                         Toast.makeText(getActivity(), "Add Failed", Toast.LENGTH_SHORT).show();
                     }
                     addAnswerEditText.setText("");
-
                 }
-
             }
         });
 

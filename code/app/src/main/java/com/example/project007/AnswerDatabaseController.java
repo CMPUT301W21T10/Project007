@@ -20,7 +20,7 @@ public class AnswerDatabaseController {
     @SuppressLint("StaticFieldLeak")
     private static FirebaseFirestore db; // answer db
     private static String UserId = "1";
-    private static Integer maxAnswerId = 0;
+    private static Integer maxAnswerId;
 
     public static Integer getMaxAnswerId() {
         return maxAnswerId;

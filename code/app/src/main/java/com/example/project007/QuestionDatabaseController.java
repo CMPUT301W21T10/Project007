@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -108,5 +109,11 @@ public class QuestionDatabaseController {
 
     public static Integer generateQuestionId(){
         return maxQuestionId + 1;
+    }
+
+    public static boolean setQuestionanswer(String id, ArrayList<String> valueList){
+        DocumentReference docRef = question_db.collection("Question").document(id);
+        docRef.update("Answer_Id", valueList);
+        return true;
     }
 }
