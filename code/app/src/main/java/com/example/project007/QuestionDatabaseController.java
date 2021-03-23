@@ -21,7 +21,7 @@ public class QuestionDatabaseController {
     @SuppressLint("StaticFieldLeak")
     private static FirebaseFirestore question_db;
     private static String UserId = "1";
-    private static Integer maxQuestionId;
+    private static Integer maxQuestionId=0;
 
     public static FirebaseFirestore getQuestion_db() {
         return question_db;

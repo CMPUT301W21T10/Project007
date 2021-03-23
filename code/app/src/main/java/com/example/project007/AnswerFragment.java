@@ -48,6 +48,13 @@ public class AnswerFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     * Inflate the layout for this fragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,21 +70,27 @@ public class AnswerFragment extends Fragment {
         answerAdapter = new answerCustomList(getActivity(), answerDataList);
         answerList.setAdapter(answerAdapter);
 
-        //db initialize
+        /**
+         * db initialize
+         */
         final String TAG = "Sample";
         db = FirebaseFirestore.getInstance();
         AnswerDatabaseController.setDb(db);
         final CollectionReference collectionReference = db.collection("Answers");
         //db initialize
 
-        //receive data from activity
+        /**
+         * receive data from activity
+         */
         QuestionActivity activity = (QuestionActivity) getActivity();
         question = activity.SendQuestion();
         question_detail = question.getQuestion();
         questionView.setText(question_detail);
         //receive data from activity
 
-        //fire store uploading
+        /**
+         * fire store uploading
+         */
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
@@ -102,6 +115,9 @@ public class AnswerFragment extends Fragment {
         });
         //fire store uploading
 
+        /**
+         * delete answer by long click answer
+         */
         addAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,6 +141,9 @@ public class AnswerFragment extends Fragment {
             }
         });
 
+        /**
+         * delete answer by long click answer
+         */
         answerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {

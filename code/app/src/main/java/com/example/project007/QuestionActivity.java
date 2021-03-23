@@ -67,8 +67,9 @@ public class QuestionActivity extends AppCompatActivity {
 
         questionList.setAdapter(questionAdapter);
 
-        //fire store uploading
-
+        /**
+         * fire store uploading
+         */
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
@@ -96,7 +97,9 @@ public class QuestionActivity extends AppCompatActivity {
         //fire store uploading
 
 
-        //Calling add frag
+        /**
+         * Calling add frag
+         */
 
         addQuestionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,7 +144,9 @@ public class QuestionActivity extends AppCompatActivity {
             }
         });*/
 
-        //click question to view answers
+        /**
+         * click question to view answers
+         */
         questionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -152,7 +157,9 @@ public class QuestionActivity extends AppCompatActivity {
             }
         });
 
-        //Delete event
+        /**
+         * Delete event by long click question
+         */
         questionList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -172,7 +179,11 @@ public class QuestionActivity extends AppCompatActivity {
 
 
     }
-    //sending value from activity to frag
+
+    /**
+     * sending value from activity to frag
+     * @return
+     */
     public Question SendQuestion(){
         return question;
     }
