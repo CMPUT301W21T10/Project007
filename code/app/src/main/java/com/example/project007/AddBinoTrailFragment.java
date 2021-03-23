@@ -26,7 +26,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class AddBinoTrailFragment extends Fragment{
-    private EditText date_generate;
+    private TextView date_generate;
     private EditText title;
     private EditText success;
     private EditText fail;
