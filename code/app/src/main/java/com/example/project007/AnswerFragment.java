@@ -59,7 +59,6 @@ public class AnswerFragment extends Fragment {
         answerList = v.findViewById(R.id.answer_list);
         questionView = v.findViewById(R.id.Question_view);
 
-
         answerDataList = new ArrayList<>();
         answerAdapter = new answerCustomList(getActivity(), answerDataList);
         answerList.setAdapter(answerAdapter);
@@ -76,6 +75,7 @@ public class AnswerFragment extends Fragment {
         question = activity.SendQuestion();
         question_detail = question.getQuestion();
         questionView.setText(question_detail);
+        //receive data from activity
 
         //fire store uploading
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -89,16 +89,13 @@ public class AnswerFragment extends Fragment {
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                         Log.d(TAG, String.valueOf(doc.getData().get("Answers")));
                         String answer = (String) doc.getData().get("Answers");
-
                         String idString = doc.getId();
                         Integer ID = Integer.parseInt(idString);
-
                         answerDataList.add(new Answer(answer, ID));
-
                     }
                     answerAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
                 }
-                QuestionDatabaseController.setMaxQuestionId(answerDataList.size());
+                AnswerDatabaseController.setMaxAnswerId(answerDataList.size());
             }
         });
         //fire store uploading
@@ -107,6 +104,7 @@ public class AnswerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String answerName = addAnswerEditText.getText().toString();
+                //Toast.makeText(getActivity(), "answer name is: " + answerName, Toast.LENGTH_SHORT).show();
                 if(answerName.length()>0) {
                     Answer answer = new Answer(answerName, AnswerDatabaseController.generateAnswerId());
                     //Toast.makeText(getActivity(), answer.getAnswer(), Toast.LENGTH_SHORT).show();
