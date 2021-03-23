@@ -2,6 +2,7 @@ package com.example.project007;
 
 import android.annotation.SuppressLint;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -50,7 +51,10 @@ public class AnswerDatabaseController {
         HashMap<String, String> data = new HashMap<>();
 
         String idString = answer.getId().toString();
+
         data.put("Answer", answer.getAnswer());
+
+
 
         final boolean[] condition = new boolean[1];
         // The set method sets a unique id for the document

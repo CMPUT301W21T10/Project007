@@ -87,8 +87,8 @@ public class AnswerFragment extends Fragment {
                 }else{
                     answerDataList.clear();
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                        Log.d(TAG, String.valueOf(doc.getData().get("Answers")));
-                        String answer = (String) doc.getData().get("Answers");
+                        Log.d(TAG, String.valueOf(doc.getData().get("Answer")));
+                        String answer = (String) doc.getData().get("Answer");
                         String idString = doc.getId();
                         Integer ID = Integer.parseInt(idString);
                         answerDataList.add(new Answer(answer, ID));
