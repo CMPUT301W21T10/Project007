@@ -34,19 +34,6 @@
         android:hint="@string/add_description_hint"
         android:inputType="textPersonName" />
 
-
-    <EditText
-        android:id="@+id/editTextDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add_date_hint"
-        android:textSize="20sp"
-        android:autofillHints="true"
-        android:editable="false"
-        android:layout_weight="0.1"
-
-        tools:ignore="Deprecated" />
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -123,5 +110,17 @@
             android:layout_weight="1" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/editTextDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_date_hint"
+        android:textSize="20sp"
+        android:autofillHints="true"
+        android:editable="false"
+        android:layout_weight="0.1"
+
+        tools:ignore="Deprecated" />
 
 </LinearLayout>

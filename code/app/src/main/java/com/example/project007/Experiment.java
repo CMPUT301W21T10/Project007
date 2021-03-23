@@ -75,14 +75,6 @@ public class Experiment implements Serializable {
         return date;
     }
 
-    public ArrayList<String> getTrails() {
-        return trailsId;
-    }
-
-    public void setTrails(ArrayList<String> trails) {
-        this.trailsId = trails;
-    }
-
     public void setDate(String date) {
         this.date = date;
     }

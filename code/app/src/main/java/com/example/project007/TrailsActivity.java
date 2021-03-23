@@ -1,5 +1,6 @@
 package com.example.project007;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +28,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFragment.FragmentInteractionListener, AddNnCBTrailFragment.FragmentInteractionListener {
@@ -43,16 +47,16 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     private Integer position;
     boolean needLocation;
     String type;
+
     String description;
     String title;
 
-
-
+    @SuppressLint({"SetTextI18n", "ResourceAsColor"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trails_activity_main);
-        descriptionTrail = findViewById(R.id.descriptionforTrail);
+       // descriptionTrail = findViewById(R.id.descriptionforTrail);
         //database for unique trails
         final FirebaseFirestore db;
         db = FirebaseFirestore.getInstance();
@@ -65,26 +69,57 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         Intent intent = getIntent();
         experiment = (Experiment) intent.getSerializableExtra("com.example.project007.INSTANCE");
         position = intent.getIntExtra("com.example.project007.POSITION", -1);
-        type = experiment.getType();
-        title = experiment.getName();
-        description = experiment.getDescription();
-        needLocation = experiment.isRequireLocation();
-        descriptionTrail.setText(description);
+
         //receive data from experiment
 
+        //fix variable for debugging
+        type = experiment.getType();
+        needLocation = experiment.isRequireLocation();
+        description = experiment.getDescription();
+        title = experiment.getName();
+        TextView nameView = findViewById(R.id.name_view);
 
+        TextView process = findViewById(R.id.process);
+        //TextView end = findViewById(R.id.end);
+        TextView locationView = findViewById(R.id.location);
+        TextView owner = findViewById(R.id.owner);
 
+        TextView descriptionView = findViewById(R.id.description);
+        TextView region = findViewById(R.id.region);
+        TextView minimumTrails = findViewById(R.id.minimumTrails);
+        TextView dateView = findViewById(R.id.date);
 
+        TextView typeView = findViewById(R.id.type);
+        ImageView imageView = findViewById(R.id.experiment_image);
 
-        //toolbar content may vary with the input type
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        nameView.setText(experiment.getName());
+        typeView.setText(type);
+        descriptionView.setText(experiment.getDescription());
+        region.setText(experiment.getRegion());
+        minimumTrails.setText(experiment.getMinimumTrails().toString());
+        dateView.setText(experiment.getDate());
 
-        TextView textView = (TextView)toolbar.findViewById(R.id.toolbarTextView);
-        textView.setText(title);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        //toolbar content may vary with the input type
+        switch (type){
+            case "Binomial": imageView.setImageResource(R.drawable.b); break;
+            case "Measurement": imageView.setImageResource(R.drawable.m); break;
+            case "Count": imageView.setImageResource(R.drawable.c); break;
+            case "IntCount": imageView.setImageResource(R.drawable.n); break;
+        }
+        
+        if(needLocation){
+            locationView.setVisibility(View.VISIBLE);
+        }
+        if(experiment.isCondition()){
+            process.setVisibility(View.VISIBLE);
+        }
+        else{
+            process.setVisibility(View.VISIBLE);
+            process.setBackgroundColor(R.color.clearRed);
+        }
 
+        if(experiment.getUserId().equals(DatabaseController.getUserId())){
+            owner.setVisibility(View.VISIBLE);
+        }
 
         final FloatingActionButton addButton = findViewById(R.id.experimentBtn);
         if (!experiment.isCondition()){
@@ -111,6 +146,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         //fire store uploading
 
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @SuppressLint("ShowToast")
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
                 // Clear the old list
@@ -132,6 +168,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         String longitude = (String)  doc.getData().get("longitude");
                         String latitude = (String)  doc.getData().get("latitude");
                         Location location;
+
                         if (longitude != null & latitude != null){
                             location = new Location( Double.parseDouble(longitude), Double.parseDouble(latitude));//error prone
                         }else{
@@ -141,7 +178,8 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
 
                         String idString = doc.getId();
                         Integer ID = Integer.parseInt(idString);
-                        if (experiment.getTrailsId() != null && experiment.getTrailsId().contains(idString)){
+
+                        if (experiment.getTrailsId().contains(idString)){
                             if (success == null){//case for non-binomial trails
                                 if (location != null){
                                     trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID, location));
@@ -234,7 +272,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     public void sending_data(Trails trails) {
         trail_Adapter.add(trails);
         boolean addResult = TrailsDatabaseController.modify_Trails("Trails", trails);
-        ArrayList<String> valueList = experiment.getTrails();
+        ArrayList<String> valueList = experiment.getTrailsId();
         valueList.add(trails.getID().toString());
         DatabaseController.setExperimentTrails(experiment.getId().toString(), valueList );
         if (addResult){

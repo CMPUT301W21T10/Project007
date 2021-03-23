@@ -82,7 +82,10 @@ public class SubscriptionFragment extends Fragment {
                             // convert document to POJO
                             oneExperiment = doc.toObject(Experiment.class);
                             System.out.println(oneExperiment);
-                            experimentDataList.add(oneExperiment);
+
+                            if (oneExperiment.getTrailsId().contains(DatabaseController.getUserId())){
+                                experimentDataList.add(oneExperiment);
+                            }
                         } else {
                             System.out.println("No such document!");
                         }
