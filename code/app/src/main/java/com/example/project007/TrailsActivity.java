@@ -72,12 +72,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         descriptionTrail.setText(description);
         //receive data from experiment
 
-        //fix variable for debugging
-        /*type = "Binomial";
-        title = "SB!";
-        description = "Guess what?";
-        needLocation = false;
-        descriptionTrail.setText(description);*/
+        
 
 
 
