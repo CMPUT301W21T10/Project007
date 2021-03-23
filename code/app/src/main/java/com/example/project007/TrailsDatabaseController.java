@@ -72,9 +72,14 @@ public class TrailsDatabaseController {
             data.put("VariesData", null);
         }
         if (trails.getLocation()!=null){
-            data.put("Location", trails.getLocation().toString());
+            Double longitude = trails.getLocation().getLongitude();
+            Double latitude = trails.getLocation().getLatitude();
+            data.put("longitude", longitude.toString());
+            data.put("latitude", latitude.toString());
         }else{
-            data.put("Location", null);
+            //data.put("Location", null);
+            data.put("longitude", null);
+            data.put("latitude", null);
         }
 
 
