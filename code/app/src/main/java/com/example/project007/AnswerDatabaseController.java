@@ -46,14 +46,11 @@ public class AnswerDatabaseController {
     }
 
     public static boolean add_Answer(String collection, Answer answer){
-        // Retrieving the city name and the province name from the EditText fields
         CollectionReference collectionReference =  db.collection(collection);
         HashMap<String, String> data = new HashMap<>();
 
         String idString = answer.getId().toString();
         data.put("Answer", answer.getAnswer());
-        //data.put("Question_Id", answer.getQuestion_id().toString());
-        //?need question id?
 
         final boolean[] condition = new boolean[1];
         // The set method sets a unique id for the document

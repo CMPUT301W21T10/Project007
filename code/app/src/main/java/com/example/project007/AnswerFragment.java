@@ -58,10 +58,7 @@ public class AnswerFragment extends Fragment {
         addAnswerButton = v.findViewById(R.id.add_answer_button);
         answerList = v.findViewById(R.id.answer_list);
         questionView = v.findViewById(R.id.Question_view);
-        /*String question_Id = getArguments().getString("Question Id");
-        String answer_Id = getArguments().getString("Answer Id");*/
-        String question_Id = "1";
-        String answer_Id = "1";
+
 
         answerDataList = new ArrayList<>();
         answerAdapter = new answerCustomList(getActivity(), answerDataList);
@@ -92,18 +89,12 @@ public class AnswerFragment extends Fragment {
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                         Log.d(TAG, String.valueOf(doc.getData().get("Answers")));
                         String answer = (String) doc.getData().get("Answers");
-                        /*String Question = (String) doc.getData().get("Question");
-                        ArrayList<String> Answer_id = (ArrayList<String>)doc.getData().get("Answer_Id");*/
 
                         String idString = doc.getId();
                         Integer ID = Integer.parseInt(idString);
 
                         answerDataList.add(new Answer(answer, ID));
 
-
-                       /*if (experiment.getTrailsId() != null && experiment.getTrailsId().contains(idString)){
-
-                       }*/
                     }
                     answerAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
                 }
@@ -116,14 +107,9 @@ public class AnswerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String answerName = addAnswerEditText.getText().toString();
-                //Toast.makeText(getActivity(), "answer is " + answerName, Toast.LENGTH_SHORT).show();
-                //Answer answer = new Answer(Integer.parseInt(answer_Id), answerName, Integer.parseInt(question_Id));
-                //answerAdapter.add(answer);
-                //answerAdapter.notifyDataSetChanged();
-                addAnswerEditText.setText("");
-                //addAnswerEditText.setText("");
                 if(answerName.length()>0) {
                     Answer answer = new Answer(answerName, AnswerDatabaseController.generateAnswerId());
+                    //Toast.makeText(getActivity(), answer.getAnswer(), Toast.LENGTH_SHORT).show();
                     boolean addAnswer = AnswerDatabaseController.add_Answer("Answers", answer);
                     if (addAnswer){
                         Toast.makeText(getActivity(), "Add Succeed", Toast.LENGTH_SHORT).show();
