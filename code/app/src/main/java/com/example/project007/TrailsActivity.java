@@ -51,7 +51,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     String description;
     String title;
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "ResourceAsColor"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +80,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         TextView nameView = findViewById(R.id.name_view);
 
         TextView process = findViewById(R.id.process);
-        TextView end = findViewById(R.id.end);
+        //TextView end = findViewById(R.id.end);
         TextView locationView = findViewById(R.id.location);
         TextView owner = findViewById(R.id.owner);
 
@@ -113,7 +113,8 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             process.setVisibility(View.VISIBLE);
         }
         else{
-            end.setVisibility(View.VISIBLE);
+            process.setVisibility(View.VISIBLE);
+            process.setBackgroundColor(R.color.clearRed);
         }
 
         if(experiment.getUserId().equals(DatabaseController.getUserId())){
@@ -175,7 +176,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
 
                         String idString = doc.getId();
                         Integer ID = Integer.parseInt(idString);
-                        if (experiment.getTrailsId() != null && experiment.getTrailsId().contains(idString)){
+                        if (experiment.getTrailsId().contains(idString)){
                             if (success == null){//case for non-binomial trails
                                 if (location != null){
                                     trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID, location));
