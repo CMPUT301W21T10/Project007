@@ -379,15 +379,6 @@ public class ResultFragment extends Fragment{
         columnChartView = view.findViewById(R.id.column_chart);
     }
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void resetviewport(ArrayList<Float> argument) {
-        // Reset viewport height range to (0,100)
-        final Viewport v = new Viewport(columnChartView.getMaximumViewport());
-        v.bottom = 0;
-        v.top = getMax(argument)+2;
-        columnChartView.setMaximumViewport(v);
-        columnChartView.setCurrentViewport(v);
-    }
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void initdata(ArrayList<Trails> argument,String name) {
         generateDefaultData(argument,name);
     }
@@ -406,7 +397,6 @@ public class ResultFragment extends Fragment{
             ArrayList<Float> l = new ArrayList<>();
             l.add(getNumberOfSuccess(argument));
             l.add(getNumberOfFailure(argument));
-            resetviewport(l);
             for (int i = 0; i < numColumns; ++i) {
                 values = new ArrayList<SubcolumnValue>();
                 for (int j = 0; j < numSubcolumns; ++j) {
@@ -422,7 +412,6 @@ public class ResultFragment extends Fragment{
             int numColumns = 5;
             ArrayList<Float> lu = getYaxis(argument);
             ArrayList<Double> lm = getXaxis(argument);
-            resetviewport(lu);
             for (int i = 0; i < numColumns; ++i) {
                 values = new ArrayList<>();
                 for (int j = 0; j < numSubcolumns; ++j) {
@@ -446,6 +435,9 @@ public class ResultFragment extends Fragment{
             if (hasAxesNames) {
                 axisX.setName("Range");
                 axisY.setName("Quantity");
+                axisX.setValues(mAxisXValues);
+                axisX.setTextColor(Color.BLACK);//设置x轴字体的颜色
+                axisY.setTextColor(Color.BLACK);//设置y轴字体的颜色
             }
             data.setAxisXBottom(axisX);
             data.setAxisYLeft(axisY);

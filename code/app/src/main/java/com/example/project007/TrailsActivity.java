@@ -299,7 +299,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 qrcode = new QrcodeFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();   // 开启一个事务
-                transaction.replace(R.id.data_container, qrcode);
+                transaction.replace(R.id.data_container2, qrcode);
                 transaction.commit();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("result",trails_DataList);
