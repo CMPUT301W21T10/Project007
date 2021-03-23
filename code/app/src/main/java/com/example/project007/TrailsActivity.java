@@ -1,5 +1,6 @@
 package com.example.project007;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,11 +47,11 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     private Integer position;
     boolean needLocation;
     String type;
+
     String description;
     String title;
 
-
-
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,18 +73,52 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         //receive data from experiment
 
         //fix variable for debugging
-        title = experiment.getName();
-        description = experiment.getDescription();
         type = experiment.getType();
         needLocation = experiment.isRequireLocation();
-
+        description = experiment.getDescription();
+        title = experiment.getName();
         TextView nameView = findViewById(R.id.name_view);
-        TextView descriptionView = findViewById(R.id.description_view);
+
+        TextView process = findViewById(R.id.process);
+        TextView end = findViewById(R.id.end);
+        TextView locationView = findViewById(R.id.location);
+        TextView owner = findViewById(R.id.owner);
+
+        TextView descriptionView = findViewById(R.id.description);
+        TextView region = findViewById(R.id.region);
+        TextView minimumTrails = findViewById(R.id.minimumTrails);
+        TextView dateView = findViewById(R.id.date);
+
         TextView typeView = findViewById(R.id.type);
         ImageView imageView = findViewById(R.id.experiment_image);
 
-        nameView
+        nameView.setText(experiment.getName());
         typeView.setText(type);
+        descriptionView.setText(experiment.getDescription());
+        region.setText(experiment.getRegion());
+        minimumTrails.setText(experiment.getMinimumTrails().toString());
+        dateView.setText(experiment.getDate());
+
+        switch (type){
+            case "Binomial": imageView.setImageResource(R.drawable.b); break;
+            case "Measurement": imageView.setImageResource(R.drawable.m); break;
+            case "Count": imageView.setImageResource(R.drawable.c); break;
+            case "IntCount": imageView.setImageResource(R.drawable.n); break;
+        }
+        
+        if(needLocation){
+            locationView.setVisibility(View.VISIBLE);
+        }
+        if(experiment.isCondition()){
+            process.setVisibility(View.VISIBLE);
+        }
+        else{
+            end.setVisibility(View.VISIBLE);
+        }
+
+        if(experiment.getUserId().equals(DatabaseController.getUserId())){
+            owner.setVisibility(View.VISIBLE);
+        }
 
         final FloatingActionButton addButton = findViewById(R.id.experimentBtn);
         if (!experiment.isCondition()){
