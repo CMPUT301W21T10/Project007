@@ -122,7 +122,14 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         String success = (String) doc.getData().get("Success");
                         String failure = (String) doc.getData().get("Failure");
                         String variesData = (String) doc.getData().get("VariesData");
-                        Location location = (Location) doc.getData().get("Location");
+                        String longitude = (String)  doc.getData().get("longitude");
+                        String latitude = (String)  doc.getData().get("latitude");
+                        Location location;
+                        if (longitude != null & latitude != null){
+                            location = new Location( Double.parseDouble(longitude), Double.parseDouble(latitude));//error prone
+                        }else{
+                            location = null;
+                        }
                         //uncertain value
 
                         String idString = doc.getId();
@@ -219,7 +226,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     @Override
     public void sending_data(Trails trails) {
         trail_Adapter.add(trails);
-        //Toast.makeText(getApplicationContext(),"New Trail:" + trails.getTrail_title() + " added success!",Toast.LENGTH_SHORT).show();
         boolean addResult = TrailsDatabaseController.modify_Trails("Trails", trails);
         ArrayList<String> valueList = experiment.getTrails();
         valueList.add(trails.getID().toString());
@@ -288,7 +294,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 qrcode = new QrcodeFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();   // 开启一个事务
-                transaction.replace(R.id.data_container, qrcode);
+                transaction.replace(R.id.data_container2, qrcode);
                 transaction.commit();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("result",trails_DataList);
