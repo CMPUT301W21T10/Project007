@@ -38,6 +38,7 @@ public class QuestionActivity extends AppCompatActivity {
     ArrayList<Question> questionDataList;
     Integer id;
     ArrayList<String> answer_id = new ArrayList<String>();
+    Question question;
 
 
     @Override
@@ -85,6 +86,7 @@ public class QuestionActivity extends AppCompatActivity {
                         Integer ID = Integer.parseInt(idString);
 
                         questionDataList.add(new Question(ID, Question, Answer_id));
+
 
                        /*if (experiment.getTrailsId() != null && experiment.getTrailsId().contains(idString)){
 
@@ -147,7 +149,7 @@ public class QuestionActivity extends AppCompatActivity {
         questionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Question question = questionAdapter.getItem(position);
+                question = questionAdapter.getItem(position);
                 /*if(question != null) {
                     Toast.makeText(getApplicationContext(), "Select1 Succeed", Toast.LENGTH_SHORT).show();
                 }*/
@@ -186,8 +188,14 @@ public class QuestionActivity extends AppCompatActivity {
         });
 
 
-
     }
-
+    //sending value from activity to frag
+    public Question SendQuestion(){
+        return question;
+    }
+    public Question SendQuestionId(){
+        return question;
+    }
+    //sending value from activity to frag
 
 }
