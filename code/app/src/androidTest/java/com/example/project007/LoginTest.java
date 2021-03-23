@@ -120,6 +120,27 @@ public class LoginTest {
 
         assertEquals("newName", message);
 
+        //Testing Trails frags
+        solo.clickOnView((FloatingActionButton) solo.getView(R.id.experimentBtn));
+        solo.waitForView(R.id.ok_pressed);//now in the fragment
+        solo.goBack();
+        solo.assertCurrentActivity("Wrong Activity", TrailsActivity.class);
+
+        //Testing Results
+        solo.clickOnView(solo.getView(R.id.viewResult));
+        solo.goBack();
+        solo.assertCurrentActivity("Wrong Activity", TrailsActivity.class);
+
+        //Testing QR
+        solo.clickOnView(solo.getView(R.id.QROpt));
+        solo.goBack();
+        solo.assertCurrentActivity("Wrong Activity", TrailsActivity.class);
+
+        //Testing QR scan
+        solo.clickOnView(solo.getView(R.id.ScanQROpt));
+        solo.goBack();
+        solo.assertCurrentActivity("Wrong Activity", TrailsActivity.class);
+
     }
 
     @After
