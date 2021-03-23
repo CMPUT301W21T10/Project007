@@ -158,7 +158,6 @@ public class TrailsDatabaseController {
 
     public static void deleteExperiment(String name){
         Task<Void> writeResult = Trail_db.collection("Trails").document(name).delete();
-
     }
 
     public static Integer generateTrailsId(){

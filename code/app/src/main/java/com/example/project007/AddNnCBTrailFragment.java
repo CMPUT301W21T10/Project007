@@ -24,7 +24,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class AddNnCBTrailFragment extends Fragment {
-    private EditText date_generate;
+    private TextView date_generate;
     private EditText title;
     private EditText NnCBData;
     private EditText time_generate;
