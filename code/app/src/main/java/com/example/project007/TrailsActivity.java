@@ -52,7 +52,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trails_activity_main);
-        descriptionTrail = findViewById(R.id.descriptionforTrail);
+       // descriptionTrail = findViewById(R.id.descriptionforTrail);
         //database for unique trails
         final FirebaseFirestore db;
         db = FirebaseFirestore.getInstance();
@@ -78,17 +78,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         description = "Guess what?";
         needLocation = false;
         descriptionTrail.setText(description);
-
-
-
-        //toolbar content may vary with the input type
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        TextView textView = (TextView)toolbar.findViewById(R.id.toolbarTextView);
-        textView.setText(title);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        //toolbar content may vary with the input type
 
 
         final FloatingActionButton addButton = findViewById(R.id.experimentBtn);
