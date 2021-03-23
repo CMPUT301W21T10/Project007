@@ -2,6 +2,7 @@ package com.example.project007;
 
 import android.annotation.SuppressLint;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -9,7 +10,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import androidx.fragment.app.Fragment;
 
 import java.util.HashMap;
 
@@ -18,9 +18,9 @@ import static android.content.ContentValues.TAG;
 public class AnswerDatabaseController {
 
     @SuppressLint("StaticFieldLeak")
-    private static FirebaseFirestore db = DatabaseController.getDb();
-    private static String UserId;
-    private static Integer maxAnswerId = 1;
+    private static FirebaseFirestore db; // answer db
+    private static String UserId = "1";
+    private static Integer maxAnswerId;
 
     public static Integer getMaxAnswerId() {
         return maxAnswerId;
@@ -47,13 +47,14 @@ public class AnswerDatabaseController {
     }
 
     public static boolean add_Answer(String collection, Answer answer){
-        // Retrieving the city name and the province name from the EditText fields
         CollectionReference collectionReference =  db.collection(collection);
         HashMap<String, String> data = new HashMap<>();
 
         String idString = answer.getId().toString();
+
         data.put("Answer", answer.getAnswer());
-        data.put("Question_Id", answer.getQuestion_id().toString());
+
+
 
         final boolean[] condition = new boolean[1];
         // The set method sets a unique id for the document

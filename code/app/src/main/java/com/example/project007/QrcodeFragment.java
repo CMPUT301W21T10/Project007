@@ -81,7 +81,7 @@ public class QrcodeFragment extends Fragment {
         ArrayList<Trails> argument = (ArrayList<Trails>) getArguments().get("result");
         ResultFragment resultFragment =new ResultFragment();
         ArrayList<String> l;
-        l=resultFragment.CreateList(argument);
+        l=resultFragment.CreateList(argument,activity);
         String result = "\nType: "+ type+"\ndescription: "+description+"\nTitle:"+title+"\nQuartiles:"+l.get(0)+"｜"+l.get(1)+"｜"+l.get(2)+"\nMedian"+l.get(3)+"\nAverage"+l.get(4)+"/nStandardDiviation"+l.get(5);
 //        "Type: "+ l.get(6)+"\ndescription: "+l.get(7)+"\nTitle:"+l.get(8)+"
         imageView.setImageBitmap(generateBitmap(result,250,250));

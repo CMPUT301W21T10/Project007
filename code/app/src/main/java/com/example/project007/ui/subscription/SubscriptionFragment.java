@@ -77,23 +77,14 @@ public class SubscriptionFragment extends Fragment {
                     experimentDataList.clear();
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
 
-                        Log.d(TAG, String.valueOf(doc.getData().get("Name")));
-                        String name = (String) doc.getData().get("Name");
-                        String description = (String) doc.getData().get("Description");
-                        String date = (String) doc.getData().get("Date");
-                        String type = (String) doc.getData().get("Type");
-                        ArrayList<String> trailsId =  (ArrayList<String>) doc.getData().get("trailsId");
-                        ArrayList<String> subscriptionId = (ArrayList<String>) doc.getData().get("subscriptionId");
-                        boolean requireLocation = Boolean.parseBoolean((String) doc.getData().get("requireLocation"));
-                        boolean condition = Boolean.parseBoolean((String) doc.getData().get("condition"));
-                        Integer minimumTrails = ((Long) doc.getData().get("minimumTrails")).intValue();
-                        String region = (String) doc.getData().get("region");
-                        String idString = doc.getId();
-                        Integer id = Integer.parseInt(idString);
-
-                        if (subscriptionId != null && subscriptionId.contains(DatabaseController.getUserId())){
-                                experimentDataList.add(new Experiment(name, description, date, type, id,
-                                        trailsId, subscriptionId, requireLocation, condition, minimumTrails, region));
+                        Experiment oneExperiment = null;
+                        if (doc.exists()) {
+                            // convert document to POJO
+                            oneExperiment = doc.toObject(Experiment.class);
+                            System.out.println(oneExperiment);
+                            experimentDataList.add(oneExperiment);
+                        } else {
+                            System.out.println("No such document!");
                         }
 
                     }
