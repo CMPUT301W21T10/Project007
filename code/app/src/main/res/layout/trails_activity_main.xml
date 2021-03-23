@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_fff"
-    tools:context=".TrailsActivity">
+    tools:context=".TrailsActivity"
+    >
 
 
     <LinearLayout
@@ -14,30 +15,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/content"
-
-        android:paddingStart="2dp"
-        android:orientation="vertical"
-        tools:ignore="RtlSymmetry">
+        android:id="@+id/info"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/title_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/content"
-
             android:paddingStart="2dp"
             android:orientation="horizontal"
             tools:ignore="RtlSymmetry">
 
             <ImageView
                 android:id="@+id/experiment_image"
-                android:maxWidth="20dp"
-                android:maxHeight="20dp"
+                android:maxWidth="40dp"
+                android:maxHeight="40dp"
                 android:layout_margin="10dp"
                 android:layout_gravity="center"
                 android:scaleType="centerInside"
-                android:layout_width="60dip"
-                android:layout_height="60dip" />
+                android:layout_width="100dip"
+                android:layout_height="100dip" />
+
+            <LinearLayout
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/content"
+                android:paddingStart="2dp"
+                android:orientation="vertical">
             <TextView
                 android:id="@+id/name_view"
                 android:layout_width="match_parent"
@@ -48,17 +54,70 @@
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textStyle="bold">
-
             </TextView>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="2dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Processing"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:background="@drawable/button"
+                        android:backgroundTint="@color/green"
+                        android:layout_marginEnd="5dp"
+                        android:visibility="invisible"/>
+
+
+                    <TextView
+                        android:text="End"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:background="@drawable/button"
+                        android:backgroundTint="@color/clearRed"
+                        android:layout_marginEnd="5dp"
+                        android:visibility="invisible"
+                        />
+
+                    <TextView
+                        android:text="Location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:background="@drawable/button"
+                        android:backgroundTint="@color/blue"
+                        android:layout_marginEnd="5dp"
+                        android:visibility="invisible"/>
+
+                    <TextView
+                        android:text="Owner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:background="@drawable/button"
+                        android:backgroundTint="@color/owner"
+                        android:layout_marginEnd="5dp"
+                        android:visibility="invisible"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+
         </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="2dp"
-            android:orientation="horizontal"
-            tools:ignore="RtlSymmetry">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -80,19 +139,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="2dp"
-            android:orientation="horizontal"
-            tools:ignore="RtlSymmetry">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Condition: "
+                android:text="Region: "
                 android:textSize="20sp"
                 android:textStyle="bold"/>
 
 
             <TextView
-                android:id="@+id/condition"
+                android:id="@+id/region"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"/>
@@ -103,8 +161,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="2dp"
-            android:orientation="horizontal"
-            tools:ignore="RtlSymmetry">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -116,40 +173,9 @@
 
             <TextView
                 android:id="@+id/date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="2dp"
-            android:orientation="horizontal"
-            tools:ignore="RtlSymmetry">
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Condition: "
-                android:textSize="20sp"
-                android:textStyle="bold"/>
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:textSize="20sp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="2dp"
-            android:orientation="horizontal"
-            tools:ignore="RtlSymmetry">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -161,11 +187,33 @@
 
             <TextView
                 android:id="@+id/type"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"/>
 
         </LinearLayout>
+
+        <!--LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="2dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type: "
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"/>
+
+        </LinearLayout!-->
     </LinearLayout>
 
     <ListView
@@ -173,34 +221,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
-        android:divider="@color/black"
         style="@style/dividedListStyle"
         android:choiceMode="singleChoice"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionforTrail"
+        app:layout_constraintTop_toBottomOf="@id/info"
         tools:listitem="@android:layout/simple_list_item_1">
 
     </ListView>
 
-
-
-    <FrameLayout
-        android:id="@+id/data_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="3dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
-
-
-    </ScrollView>
     <FrameLayout
         android:id="@+id/data_container2"
         android:layout_width="match_parent"
@@ -235,37 +264,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
 
-
-
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/appBar"
-        android:layout_marginTop="0dp"
-        android:theme="@style/Theme.Design.NoActionBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.Design.NoActionBar">
-
-            <TextView
-                android:id="@+id/toolbarTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:gravity="left"
-                android:textAppearance="@android:style/TextAppearance.WindowTitle"
-                android:textSize="30dp"
-                android:visibility="visible" />
-        </androidx.appcompat.widget.Toolbar>
-
-    </com.google.android.material.appbar.AppBarLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

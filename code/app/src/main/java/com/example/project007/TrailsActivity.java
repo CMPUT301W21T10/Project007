@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -65,19 +68,22 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         Intent intent = getIntent();
         experiment = (Experiment) intent.getSerializableExtra("com.example.project007.INSTANCE");
         position = intent.getIntExtra("com.example.project007.POSITION", -1);
-        //type = experiment.getType();
-        //title = experiment.getName();
-        //description = experiment.getDescription();
-        //needLocation = experiment.isRequireLocation();
-        //descriptionTrail.setText(description);
+
         //receive data from experiment
 
         //fix variable for debugging
-        type = experiment.getType();
         title = experiment.getName();
         description = experiment.getDescription();
+        type = experiment.getType();
         needLocation = experiment.isRequireLocation();
 
+        TextView nameView = findViewById(R.id.name_view);
+        TextView descriptionView = findViewById(R.id.description_view);
+        TextView typeView = findViewById(R.id.type);
+        ImageView imageView = findViewById(R.id.experiment_image);
+
+        nameView
+        typeView.setText(type);
 
         final FloatingActionButton addButton = findViewById(R.id.experimentBtn);
         if (!experiment.isCondition()){
