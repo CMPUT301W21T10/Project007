@@ -72,7 +72,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         descriptionTrail.setText(description);
         //receive data from experiment
 
-        
+
 
 
 
@@ -129,7 +129,14 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         String success = (String) doc.getData().get("Success");
                         String failure = (String) doc.getData().get("Failure");
                         String variesData = (String) doc.getData().get("VariesData");
-                        Location location = (Location) doc.getData().get("Location");
+                        String longitude = (String)  doc.getData().get("longitude");
+                        String latitude = (String)  doc.getData().get("latitude");
+                        Location location;
+                        if (longitude != null & latitude != null){
+                            location = new Location( Double.parseDouble(longitude), Double.parseDouble(latitude));//error prone
+                        }else{
+                            location = null;
+                        }
                         //uncertain value
 
                         String idString = doc.getId();
