@@ -36,7 +36,7 @@ public class ModifyExperimentFragment extends DialogFragment{
 
     private EditText experimentName;
     private EditText experimentDescription;
-    private EditText experimentDate;
+    private TextView experimentDate;
     private EditText experimentRegion;
     private EditText experimentMinimumTrails;
     CheckBox location;
