@@ -47,6 +47,11 @@ public class QuestionDatabaseController {
         QuestionDatabaseController.maxQuestionId = maxQuestionId;
     }
 
+    /**
+     * This returns a boolean and create a new table for storing Question in DB
+     * @return
+     * Return Boolean shows adding result
+     */
     public static boolean add_Question(String collection, Question question){
         CollectionReference collectionReference =  question_db.collection(collection);
         HashMap<String, Object> data = new HashMap<>();
@@ -81,7 +86,11 @@ public class QuestionDatabaseController {
                 });
         return condition[0];
     }
-
+    /**
+     * This returns a boolean and delete a Question in DB
+     * @return
+     * Return Boolean shows deleting result
+     */
     public static boolean delete_Question(String collection, Question question){
         CollectionReference collectionReference =  question_db.collection(collection);
         String idString = question.getId().toString();
@@ -107,10 +116,20 @@ public class QuestionDatabaseController {
     }
 
 
+    /**
+     * This function is design to Generate new id for Question
+     * @return
+     * Return Integer
+     */
     public static Integer generateQuestionId(){
         return maxQuestionId + 1;
     }
 
+    /**
+     * This function is design to delete a connection between Question and Answers when deleting Questions
+     * @return
+     * Return Void
+     */
     public static boolean setQuestionanswer(String id, ArrayList<String> valueList){
         DocumentReference docRef = question_db.collection("Question").document(id);
         docRef.update("Answer_Id", valueList);
