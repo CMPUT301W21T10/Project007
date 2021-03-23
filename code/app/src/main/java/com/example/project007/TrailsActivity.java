@@ -146,6 +146,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         //fire store uploading
 
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @SuppressLint("ShowToast")
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
                 // Clear the old list
@@ -167,6 +168,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         String longitude = (String)  doc.getData().get("longitude");
                         String latitude = (String)  doc.getData().get("latitude");
                         Location location;
+
                         if (longitude != null & latitude != null){
                             location = new Location( Double.parseDouble(longitude), Double.parseDouble(latitude));//error prone
                         }else{
@@ -176,6 +178,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
 
                         String idString = doc.getId();
                         Integer ID = Integer.parseInt(idString);
+
                         if (experiment.getTrailsId().contains(idString)){
                             if (success == null){//case for non-binomial trails
                                 if (location != null){
@@ -269,7 +272,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     public void sending_data(Trails trails) {
         trail_Adapter.add(trails);
         boolean addResult = TrailsDatabaseController.modify_Trails("Trails", trails);
-        ArrayList<String> valueList = experiment.getTrails();
+        ArrayList<String> valueList = experiment.getTrailsId();
         valueList.add(trails.getID().toString());
         DatabaseController.setExperimentTrails(experiment.getId().toString(), valueList );
         if (addResult){
