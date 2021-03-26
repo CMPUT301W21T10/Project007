@@ -55,19 +55,6 @@ public class DatabaseController {
         CollectionReference collectionReference =  db.collection(collection);
         String idString = experiment.getId().toString();
 
-    /*
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("Name", experiment.getName());
-        data.put("Description", experiment.getDescription());
-        data.put("Date", experiment.getDate());
-        data.put("Type", experiment.getType());
-        data.put("trailsId", experiment.getTrails());
-        data.put("subscriptionId", experiment.getSubscriptionId());
-        data.put("requireLocation", experiment.isRequireLocation());
-        data.put("condition", experiment.isCondition());
-        data.put("minimumTrails", experiment.getMinimumTrails());
-        data.put("region", experiment.getRegion());
-*/
         final boolean[] condition = new boolean[1];
         // The set method sets a unique id for the document
         collectionReference
