@@ -93,9 +93,9 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         TextView typeView = findViewById(R.id.type);
         ImageView imageView = findViewById(R.id.experiment_image);
 
-        nameView.setText(experiment.getName());
+        nameView.setText(title);
         typeView.setText(type);
-        descriptionView.setText(experiment.getDescription());
+        descriptionView.setText(description);
         region.setText(experiment.getRegion());
         minimumTrails.setText(experiment.getMinimumTrails().toString());
         dateView.setText(experiment.getDate());
@@ -220,18 +220,18 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                     //initialize fragment
                     addBinoTrailFragment = new AddBinoTrailFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.data_container, addBinoTrailFragment).addToBackStack(null).commit();
-                    //addButton.hide();
+                    //addButton.setVisibility(View.INVISIBLE);
                 }
             });
 
-            /*trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Trails newtrail = trail_Adapter.getItem(position);
                     AddBinoTrailFragment fragment = AddBinoTrailFragment.newInstance(newtrail);
                     getSupportFragmentManager().beginTransaction().replace(R.id.data_container, fragment).addToBackStack(null).commit();
                 }
-            });*/
+            });
 
         }else{
             addButton.setOnClickListener(new View.OnClickListener() {
@@ -242,14 +242,14 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                     getSupportFragmentManager().beginTransaction().replace(R.id.data_container, addNnCBTrailFragment).addToBackStack(null).commit();
                 }
             });
-            /*trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Trails newtrail = trail_Adapter.getItem(position);
                     AddNnCBTrailFragment NcCb_fragment = AddNnCBTrailFragment.newInstance(newtrail);
                     getSupportFragmentManager().beginTransaction().replace(R.id.data_container, NcCb_fragment).addToBackStack(null).commit();
                 }
-            });*/
+            });
         }
 
 
@@ -291,17 +291,19 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     }
 
     @Override
-    public void editing_data(Trails trails) {
+    public void editing_data(Trails trails) {//still malfunctioning...
         trail_Adapter.notifyDataSetChanged();
-        Toast.makeText(getApplicationContext(),"Trail:" + trails.getTrail_title() + " edited success!",Toast.LENGTH_SHORT).show();
-        boolean addResult = TrailsDatabaseController.modify_Trails("Trails", trails);
-        if (addResult){
-            Toast.makeText(getApplicationContext(), "Add Succeed", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(getApplicationContext(), "Add Failed", Toast.LENGTH_SHORT).show();
+        boolean editResult = TrailsDatabaseController.modify_Trails("Trails", trails);
+        ArrayList<String> valueList = experiment.getTrailsId();
+        DatabaseController.setExperimentTrails(experiment.getId().toString(), valueList );
+        if (editResult){
+            Toast.makeText(getApplicationContext(), "Edit Succeed", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getApplicationContext(), "Edit Failed", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -61,6 +61,7 @@ public class TrailsDatabaseController {
         data.put("Date", trails.getDate());
         data.put("Type", trails.getType());
         data.put("Time", trails.getTime());
+        data.put("id", trails.getID().toString());
         if (trails.getSuccess()!=null){
             data.put("Success", trails.getSuccess());
         }else{
@@ -82,7 +83,6 @@ public class TrailsDatabaseController {
             data.put("longitude", longitude.toString());
             data.put("latitude", latitude.toString());
         }else{
-            //data.put("Location", null);
             data.put("longitude", null);
             data.put("latitude", null);
         }
@@ -141,29 +141,6 @@ public class TrailsDatabaseController {
         return condition[0];
     }
 
-    /*public static boolean edit_Trails(String collection, Trails trails){
-        CollectionReference collectionReference =  Trail_db.collection(collection);
-        String idString = trails.getID().toString();
-        final boolean[] condition = new boolean[1];
-        collectionReference
-                .document(idString)
-                .update((Map<String, Object>) trails)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "Data has been deleted successfully!");
-                        condition[0] = true;
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "Data could not be deleted!" + e.toString());
-                        condition[0] = false;
-                    }
-                });
-        return condition[0];
-    }*/
 
     /**
      * This function is design to delete a connection between experiment and trails when deleting experiments

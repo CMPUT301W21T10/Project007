@@ -28,7 +28,7 @@ public class AddNnCBTrailFragment extends Fragment {
     private EditText title;
     private EditText NnCBData;
     private EditText time_generate;
-    private Integer ID;
+    private Integer ID = null;
     private AddBinoTrailFragment.FragmentInteractionListener listener;
     private TextView latitude;
     private TextView longitude;
@@ -171,9 +171,13 @@ public class AddNnCBTrailFragment extends Fragment {
         //get local date and time and put it into the edittext
         SimpleDateFormat timeF = new SimpleDateFormat("HH:mm", Locale.getDefault());
         String time = timeF.format(Calendar.getInstance().getTime());
+        SimpleDateFormat dateF = new SimpleDateFormat("yyyy-M-d", Locale.getDefault());
+        String date = dateF.format(Calendar.getInstance().getTime());
         //https://stackoverflow.com/questions/21917107/automatic-date-and-time-in-edittext-android
         //answered by Smile2Life Feb 20
         time_generate.setText(time);
+        date_generate.setText(date);
+
 
 
         // datePicker part
@@ -232,8 +236,10 @@ public class AddNnCBTrailFragment extends Fragment {
             date_generate.setText(argument.getDate());
             time_generate.setText(argument.getTime());
             NnCBData.setText(argument.getVariesData());
-            if (needLocation){
-                Location oldLocation = argument.getLocation();
+            Integer id = argument.getID();
+            Location oldLocation = argument.getLocation();
+            if (oldLocation != null){
+                Toast.makeText(getActivity(),"need location is "+ needLocation,Toast.LENGTH_SHORT).show();
                 latitude.setText(String.valueOf(oldLocation.getLatitude()));
                 longitude.setText(String.valueOf(oldLocation.getLongitude()));
             }else{
@@ -255,6 +261,7 @@ public class AddNnCBTrailFragment extends Fragment {
                         argument.setDate(date_info);
                         argument.setTime(time_info);
                         argument.setSuccess(NnCBData_info);
+                        argument.setID(id);
                         if (needLocation){
                             argument.setLocation(location);
                         }

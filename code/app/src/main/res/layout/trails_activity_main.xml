@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_fff"
+    android:background="@color/black"
     tools:context=".TrailsActivity"
     >
 
@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/content"
+
         android:id="@+id/info"
         android:orientation="vertical">
 
@@ -41,7 +41,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/content"
                 android:paddingStart="2dp"
                 android:orientation="vertical">
 
@@ -53,7 +52,7 @@
                 android:text="@string/name"
                 android:textSize="40sp"
                 android:singleLine="true"
-                android:textColor="@color/black"
+                android:textColor="@color/color_fff"
                 android:textStyle="bold">
             </TextView>
 
@@ -118,6 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Description: "
+                android:textColor="@color/color_fff"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
 
@@ -126,6 +126,7 @@
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/details"
                 android:textSize="20sp"/>
 
         </LinearLayout>
@@ -133,36 +134,44 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="2dp"
             android:orientation="horizontal">
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Region: "
+                android:textColor="@color/color_fff"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
-
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/region"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
+                android:layout_marginStart="40dp"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:layout_marginEnd="10dp"/>
+                android:textColor="@color/details"
+                android:textSize="20sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="right"
                 android:text="Minimum trials: "
+                android:textColor="@color/color_fff"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
-
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/minimumTrails"
-                android:layout_width="wrap_content"
+                android:layout_width="28dp"
                 android:layout_height="wrap_content"
+                android:gravity="right"
+                android:textColor="@color/details"
                 android:textSize="20sp"/>
+
+
 
         </LinearLayout>
 
@@ -178,6 +187,7 @@
                 android:text="Date: "
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:textColor="@color/color_fff"
                 android:layout_marginEnd="10dp"/>
 
 
@@ -185,21 +195,25 @@
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:layout_marginStart="50dp"
+                android:textColor="@color/details"
                 android:textSize="20sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Type: "
+                android:textColor="@color/color_fff"
+                android:layout_marginStart="10dp"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
 
 
             <TextView
                 android:id="@+id/type"
-
+                android:textColor="@color/details"
                 android:layout_width="match_parent"
+                android:gravity="right"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"/>
 
@@ -232,6 +246,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         style="@style/dividedListStyle"
         android:choiceMode="singleChoice"
         app:layout_constraintEnd_toEndOf="parent"

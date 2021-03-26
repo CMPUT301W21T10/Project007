@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.protobuf.StringValue;
 
 import java.text.SimpleDateFormat;
@@ -31,7 +32,7 @@ public class AddBinoTrailFragment extends Fragment{
     private EditText success;
     private EditText fail;
     private EditText time_generate;
-    private Integer ID;
+    private Integer ID = null;
     private FragmentInteractionListener listener;
     private TextView latitude;
     private TextView longitude;
@@ -93,6 +94,7 @@ public class AddBinoTrailFragment extends Fragment{
         }
         //https://stackoverflow.com/questions/10770055/use-toast-inside-fragment by Senimii Jul 17 '13 at 14:26
     }
+
 
 
     @Override
@@ -172,10 +174,12 @@ public class AddBinoTrailFragment extends Fragment{
         //get local date and time and put it into the edittext
         SimpleDateFormat timeF = new SimpleDateFormat("HH:mm", Locale.getDefault());
         String time = timeF.format(Calendar.getInstance().getTime());
+        SimpleDateFormat dateF = new SimpleDateFormat("yyyy-M-d", Locale.getDefault());
+        String date = dateF.format(Calendar.getInstance().getTime());
         //https://stackoverflow.com/questions/21917107/automatic-date-and-time-in-edittext-android
         //answered by Smile2Life Feb 20
         time_generate.setText(time);
-
+        date_generate.setText(date);
 
         // datePicker part
         // prevent type
@@ -237,8 +241,10 @@ public class AddBinoTrailFragment extends Fragment{
             time_generate.setText(argument.getTime());
             success.setText(argument.getSuccess());
             fail.setText(argument.getFailure());
-            if (needLocation){
-                Location oldLocation = argument.getLocation();
+            Integer id = argument.getID();
+            Location oldLocation = argument.getLocation();
+            if (oldLocation != null){
+                //Toast.makeText(getActivity(),"need location is "+ needLocation,Toast.LENGTH_SHORT).show();
                 latitude.setText(String.valueOf(oldLocation.getLatitude()));
                 longitude.setText(String.valueOf(oldLocation.getLongitude()));
             }else{
@@ -264,12 +270,12 @@ public class AddBinoTrailFragment extends Fragment{
                         argument.setTime(time_info);
                         argument.setSuccess(success_info);
                         argument.setFailure(fail_info);
+                        argument.setID(id);
                         if (needLocation){
                             argument.setLocation(location);
                         }
                         getParentFragmentManager().popBackStack();
                     }
-
                 }
             });
 

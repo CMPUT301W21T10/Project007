@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/traildetailshow"
     android:orientation="vertical">
 
     <LinearLayout
@@ -17,7 +18,8 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Trail#"
-            android:textSize="30dp" />
+            android:textColor="@color/color_fff"
+            android:textSize="40dp" />
 
     </LinearLayout>
 
@@ -32,10 +34,11 @@
             android:layout_height="match_parent"
             android:layout_marginStart="0dp"
             android:layout_marginLeft="0dp"
+            android:textColor="@color/color_fff"
             android:gravity="left"
             android:padding="10dp"
             android:text="date"
-            android:textSize="20dp" />
+            android:textSize="15dp" />
 
         <TextView
             android:id="@+id/time_text"
@@ -43,10 +46,11 @@
             android:layout_height="match_parent"
             android:layout_marginStart="0dp"
             android:layout_marginLeft="0dp"
+            android:textColor="@color/color_fff"
             android:gravity="right"
             android:padding="10dp"
             android:text="time"
-            android:textSize="20dp" />
+            android:textSize="15dp" />
 
     </LinearLayout>
 
@@ -65,11 +69,12 @@
                 android:id="@+id/success_display"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
+                android:textColor="@color/color_fff"
                 android:layout_marginStart="0dp"
                 android:layout_marginLeft="0dp"
                 android:padding="10dp"
                 android:text="Success count is "
-                android:textSize="20dp" />
+                android:textSize="15dp" />
             <TextView
                 android:id="@+id/success_text"
                 android:layout_width="match_parent"
@@ -77,9 +82,10 @@
                 android:gravity="right"
                 android:layout_marginStart="0dp"
                 android:layout_marginLeft="0dp"
+                android:textColor="@color/color_fff"
                 android:padding="10dp"
                 android:text="Success count"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -89,11 +95,12 @@
                 android:id="@+id/fail_display"
                 android:layout_width="180dp"
                 android:layout_height="match_parent"
+                android:textColor="@color/color_fff"
                 android:layout_marginStart="0dp"
                 android:layout_marginLeft="0dp"
                 android:padding="10dp"
                 android:text="Fail count is "
-                android:textSize="20dp" />
+                android:textSize="15dp" />
             <TextView
                 android:id="@+id/fail_text"
                 android:layout_width="match_parent"
@@ -101,9 +108,10 @@
                 android:gravity="right"
                 android:layout_marginStart="0dp"
                 android:layout_marginLeft="0dp"
+                android:textColor="@color/color_fff"
                 android:padding="10dp"
                 android:text="fail"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -117,9 +125,10 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="0dp"
                 android:layout_marginLeft="0dp"
+                android:textColor="@color/color_fff"
                 android:padding="10dp"
                 android:text="Location is "
-                android:textSize="20dp" />
+                android:textSize="15dp" />
             <TextView
                 android:id="@+id/Location_text"
                 android:layout_width="match_parent"
@@ -127,6 +136,7 @@
                 android:gravity="right"
                 android:layout_marginStart="0dp"
                 android:layout_marginLeft="0dp"
+                android:textColor="@color/color_fff"
                 android:padding="10dp"
                 android:text="N/A"
                 android:textSize="15dp" />
