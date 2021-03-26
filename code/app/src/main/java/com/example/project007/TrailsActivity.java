@@ -156,6 +156,13 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                     Log.d(TAG,"Error:"+error.getMessage());
                 }
                 else {
+                    int trailId = 0;
+                    for (int i = 0; i < trails_DataList.size(); i++){
+                        if (trails_DataList.get(i).getID() > trailId){
+                            trailId = trails_DataList.get(i).getID();
+                        }
+                    }
+                    TrailsDatabaseController.setMaxTrailId(trailId);
                     trails_DataList.clear();
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                         Log.d(TAG, String.valueOf(doc.getData().get("Trail_title")));
@@ -197,7 +204,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                             }
                         }
                     }
-                    TrailsDatabaseController.setMaxTrailId(trails_DataList.size());
                     trail_Adapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
                 }
             }
