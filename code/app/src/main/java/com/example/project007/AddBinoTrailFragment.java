@@ -38,6 +38,7 @@ public class AddBinoTrailFragment extends Fragment{
     private Location location;
     private boolean needLocation;
 
+
     //https://stackoverflow.com/questions/37121091/passing-data-from-activity-to-fragment-using-interface
     //Answered by Masum at May 9 '16 at 17:57
     public interface FragmentInteractionListener{
@@ -46,6 +47,11 @@ public class AddBinoTrailFragment extends Fragment{
     }
 
 
+    /**
+     * This returns a new Instance of fragment
+     * @return
+     * Return Fragment
+     */
     static AddBinoTrailFragment newInstance(Trails trails){
         Bundle args = new Bundle();
         args.putSerializable("result", trails);
@@ -54,6 +60,11 @@ public class AddBinoTrailFragment extends Fragment{
         return fragment;
     }
 
+    /**
+     * This returns Boolean for checking text
+     * @return
+     * Return Boolean value
+     */
     public boolean checkText (Trails trails){
         //https://stackoverflow.com/questions/18259644/how-to-check-if-a-string-matches-a-specific-format
         //answered by arshajii  Aug 15 '13 at 18:55

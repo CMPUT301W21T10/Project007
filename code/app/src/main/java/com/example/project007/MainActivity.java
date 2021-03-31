@@ -12,6 +12,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+/**
+ * MainActivity
+ * Switch Home, subscription, profile on main page
+ * initialize shared attribute
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override

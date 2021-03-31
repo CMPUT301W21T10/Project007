@@ -7,6 +7,10 @@ import androidx.annotation.Nullable;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * This is Experiment Class
+ * This class gives frame of a single experiment
+ */
 public class Experiment implements Serializable {
     private String name;
     private String description;

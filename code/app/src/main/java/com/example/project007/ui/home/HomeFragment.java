@@ -28,7 +28,11 @@ import com.example.project007.Question;
 import com.example.project007.QuestionDatabaseController;
 import com.example.project007.R;
 import com.example.project007.TrailsActivity;
+import com.example.project007.UserEntity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -39,6 +43,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Iterator;
+
+/**
+ * This is HomeFragment
+ * This class performances main interaction and show experiments
+ * connect with TrailsActivity, ActionFragment, and ModifyExperimentFragment
+ */
 
 public class HomeFragment extends Fragment {
 
@@ -95,9 +106,8 @@ public class HomeFragment extends Fragment {
 
                             case "delete":
                                 DatabaseController.deleteExperiment(instance);
-                                //experimentDataList.remove(savedPosition);  //把数据源里面相应数据删除
-                                //experimentAdapter.notifyDataSetChanged();
                                 Toast.makeText(getActivity(), "delete Succeed", Toast.LENGTH_SHORT).show();
+
                                 break;
 
                             case "end":
@@ -167,12 +177,19 @@ public class HomeFragment extends Fragment {
                             System.out.println("No such document!");
                         }
                     }
-                    DatabaseController.setMaxExperimentId(experimentDataList.size());
                     experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
                 }
+
+                int experimentId = 0;
+                for (int i = 0; i < experimentDataList.size(); i++){
+                    if (experimentDataList.get(i).getId() > experimentId){
+                        experimentId = experimentDataList.get(i).getId();
+                    }
+                }
+                DatabaseController.setMaxExperimentId(experimentId);
+
             }
         });
-
 
         // listener to access detail of an element
         // package an experiment and position info in intent
@@ -190,8 +207,16 @@ public class HomeFragment extends Fragment {
         experimentList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                savedPosition = position;
-                new ActionFragment().show(getChildFragmentManager(), "requireAction");
+                Experiment instance = experimentDataList.get(position);
+
+                if (DatabaseController.getUserId().equals(instance.getUserId())) {
+                    savedPosition = position;
+                    new ActionFragment().show(getChildFragmentManager(), "requireAction");
+                }
+                else {
+                    Toast.makeText(getActivity(), "You are not the owner", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
                 return true;
             }
         });

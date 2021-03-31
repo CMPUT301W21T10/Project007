@@ -46,6 +46,11 @@ public class AnswerDatabaseController {
         AnswerDatabaseController.db = db;
     }
 
+    /**
+     * This returns a boolean and create a new table for storing Answer in DB
+     * @return
+     * Return Boolean shows adding result
+     */
     public static boolean add_Answer(String collection, Answer answer){
         CollectionReference collectionReference =  db.collection(collection);
         HashMap<String, String> data = new HashMap<>();
@@ -80,6 +85,11 @@ public class AnswerDatabaseController {
         return condition[0];
     }
 
+    /**
+     * This returns a boolean and delete a Answer in DB
+     * @return
+     * Return Boolean shows deleting result
+     */
     public static boolean delete_Answer(String collection, Answer answer){
         CollectionReference collectionReference =  db.collection(collection);
         String idString = answer.getId().toString();
@@ -104,7 +114,11 @@ public class AnswerDatabaseController {
         return condition[0];
     }
 
-
+    /**
+     * This function is design to Generate new id for Answer
+     * @return
+     * Return Integer
+     */
     public static Integer generateAnswerId(){
         return maxAnswerId + 1;
     }

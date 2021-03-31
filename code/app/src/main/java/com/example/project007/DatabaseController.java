@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -12,13 +11,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firestore.v1.WriteResult;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static android.content.ContentValues.TAG;
 
+/**
+ * Connect to the Database
+ * perform add, delete, modify Experiment
+ */
 public class DatabaseController {
     @SuppressLint("StaticFieldLeak")
     private static FirebaseFirestore db;
@@ -54,19 +55,6 @@ public class DatabaseController {
         CollectionReference collectionReference =  db.collection(collection);
         String idString = experiment.getId().toString();
 
-    /*
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("Name", experiment.getName());
-        data.put("Description", experiment.getDescription());
-        data.put("Date", experiment.getDate());
-        data.put("Type", experiment.getType());
-        data.put("trailsId", experiment.getTrails());
-        data.put("subscriptionId", experiment.getSubscriptionId());
-        data.put("requireLocation", experiment.isRequireLocation());
-        data.put("condition", experiment.isCondition());
-        data.put("minimumTrails", experiment.getMinimumTrails());
-        data.put("region", experiment.getRegion());
-*/
         final boolean[] condition = new boolean[1];
         // The set method sets a unique id for the document
         collectionReference
@@ -104,10 +92,9 @@ public class DatabaseController {
         return maxExperimentId + 1;
     }
 
-    public static boolean setExperimentTrails(String id, ArrayList<String> valueList){
+    public static void setExperimentTrails(String id, ArrayList<String> valueList){
         DocumentReference docRef = db.collection("Experiments").document(id);
         docRef.update("trailsId", valueList);
 
-        return true;
     }
 }
