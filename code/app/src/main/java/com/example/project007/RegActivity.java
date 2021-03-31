@@ -1,7 +1,10 @@
 package com.example.project007;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -82,25 +85,30 @@ public class RegActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-                List<UserEntity> userEntityList = new ArrayList<>();
                 reference.child("data").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
+                        int tempInt =0;
                         while (iterator.hasNext()) {
                             DataSnapshot next = iterator.next();
-                            UserEntity userEntity = new UserEntity();
-                            userEntity.setUid(next.getKey());
-                            userEntity.setUsername(next.child("username").getValue().toString());
-                            userEntity.setPhone(next.child("phone").getValue().toString());
-                            userEntity.setEmail(next.child("email").getValue().toString());
-                            userEntityList.add(userEntity);
+                            if (next.getKey().equals(getAndroidId(RegActivity.this))){
+                                tempInt++;
+                            }
                         }
-                        if (userEntityList.size() > 0)
-                            updateUI(userEntityList.get(userEntityList.size() - 1));
-                        else
-                            updateUI(null);
-
+                        if (tempInt>0){
+                            Toast.makeText(RegActivity.this, " UID is  exist!",
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        else{
+                            reference.child("data").child(getAndroidId(RegActivity.this)+ "").child("phone").setValue(regPhone.getText().toString());
+                            reference.child("data").child(getAndroidId(RegActivity.this) + "").child("username").setValue(regName.getText().toString());
+                            reference.child("data").child(getAndroidId(RegActivity.this) + "").child("email").setValue(regEmail.getText().toString());
+                            Toast.makeText(RegActivity.this, " UID is  reg suc !",
+                                    Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
                     }
 
                     @Override
@@ -114,23 +122,10 @@ public class RegActivity extends AppCompatActivity {
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    private void updateUI(UserEntity user) {
-        // Writes name to  real-time database
-        if (user != null) {
-            reference.child("data").child((Integer.parseInt(user.getUid()) + 1) + "").child("phone").setValue(regPhone.getText().toString());
-            reference.child("data").child((Integer.parseInt(user.getUid()) + 1) + "").child("username").setValue(regName.getText().toString());
-            reference.child("data").child((Integer.parseInt(user.getUid()) + 1) + "").child("email").setValue(regEmail.getText().toString());
 
-            regUidtext.setText("sign up success! uid is "+(Integer.parseInt(user.getUid()) + 1));
-        } else {
-            reference.child("data").child(1 + "").child("phone").setValue(regPhone.getText().toString());
-            reference.child("data").child(1 + "").child("username").setValue(regName.getText().toString());
-            reference.child("data").child(1 + "").child("email").setValue(regEmail.getText().toString());
-            regUidtext.setText("sign up success! uid is "+ 1);
-        }
-        Toast.makeText(RegActivity.this, " sign up success!",
-                Toast.LENGTH_SHORT).show();
+
+    public  String getAndroidId(Context context) {
+        String ANDROID_ID = Settings.System.getString(context.getContentResolver(), Settings.System.ANDROID_ID);
+        return ANDROID_ID;
     }
-
 }
