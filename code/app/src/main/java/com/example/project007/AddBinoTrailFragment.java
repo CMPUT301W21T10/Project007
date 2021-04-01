@@ -1,8 +1,10 @@
 package com.example.project007;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -16,9 +18,20 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.protobuf.StringValue;
 
@@ -26,7 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class AddBinoTrailFragment extends Fragment{
+public class AddBinoTrailFragment extends Fragment {
     private TextView date_generate;
     private EditText title;
     private EditText success;
@@ -38,6 +51,9 @@ public class AddBinoTrailFragment extends Fragment{
     private TextView longitude;
     private Location location;
     private boolean needLocation;
+
+
+
 
 
     //https://stackoverflow.com/questions/37121091/passing-data-from-activity-to-fragment-using-interface
@@ -136,6 +152,8 @@ public class AddBinoTrailFragment extends Fragment{
         latitude = view.findViewById(R.id.latitude_editText );
         longitude = view.findViewById(R.id.longitude_editText );
         Button okButton= view.findViewById(R.id.ok_pressed );
+
+
 
         //receive data from activity
         TrailsActivity activity = (TrailsActivity) getActivity();
@@ -282,4 +300,8 @@ public class AddBinoTrailFragment extends Fragment{
         }
         return view;
     }
+
+
+
+
 }

@@ -1,9 +1,15 @@
 package com.example.project007;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,12 +21,28 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -39,7 +61,10 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     ArrayList<Trails> trails_DataList;
     AddBinoTrailFragment addBinoTrailFragment;
     AddNnCBTrailFragment addNnCBTrailFragment;
+    MapFragment mapFragment;
     final String TAG = "Trails_Sample";
+    double currentLat = 0;
+    double currentLong = 0;
 
     TextView descriptionTrail;
     ResultFragment resultFragment;
@@ -52,18 +77,38 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     String description;
     String title;
 
+    android.location.Location currrentLocation;
+    FusedLocationProviderClient fusedLocationProviderClient;
+    private static final int REQUEST_CODE = 101;
+
     @SuppressLint({"SetTextI18n", "ResourceAsColor"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trails_activity_main);
-       // descriptionTrail = findViewById(R.id.descriptionforTrail);
+        // descriptionTrail = findViewById(R.id.descriptionforTrail);
         //database for unique trails
         final FirebaseFirestore db;
         db = FirebaseFirestore.getInstance();
         TrailsDatabaseController.setTrail_db(db);
         final CollectionReference collectionReference = db.collection("Trails");
         //database for unique trails
+
+        //get device current location
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this); //require activity
+        if (ActivityCompat.checkSelfPermission(TrailsActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(TrailsActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            getCurrentLoc();
+            //Toast.makeText(getApplicationContext(), "Getting loc", Toast.LENGTH_SHORT).show();
+        }else{
+            //request permission here
+            ActivityCompat.requestPermissions(TrailsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION}
+                    , 100);
+        }
+
 
 
         //receive data from experiment
@@ -100,31 +145,38 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         minimumTrails.setText(experiment.getMinimumTrails().toString());
         dateView.setText(experiment.getDate());
 
-        switch (type){
-            case "Binomial": imageView.setImageResource(R.drawable.b); break;
-            case "Measurement": imageView.setImageResource(R.drawable.m); break;
-            case "Count": imageView.setImageResource(R.drawable.c); break;
-            case "IntCount": imageView.setImageResource(R.drawable.n); break;
+        switch (type) {
+            case "Binomial":
+                imageView.setImageResource(R.drawable.b);
+                break;
+            case "Measurement":
+                imageView.setImageResource(R.drawable.m);
+                break;
+            case "Count":
+                imageView.setImageResource(R.drawable.c);
+                break;
+            case "IntCount":
+                imageView.setImageResource(R.drawable.n);
+                break;
         }
-        
-        if(needLocation){
+
+        if (needLocation) {
             locationView.setVisibility(View.VISIBLE);
         }
-        if(experiment.isCondition()){
+        if (experiment.isCondition()) {
             process.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             process.setVisibility(View.VISIBLE);
             process.getBackground().setColorFilter(getResources().getColor(R.color.clearRed), PorterDuff.Mode.SRC_ATOP);
             process.setText("End");
         }
 
-        if(experiment.getUserId().equals(DatabaseController.getUserId())){
+        if (experiment.getUserId().equals(DatabaseController.getUserId())) {
             owner.setVisibility(View.VISIBLE);
         }
 
         final FloatingActionButton addButton = findViewById(R.id.experimentBtn);
-        if (!experiment.isCondition()){
+        if (!experiment.isCondition()) {
             addButton.setVisibility(View.INVISIBLE);
         }
 
@@ -132,12 +184,11 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
 
         trails_DataList = new ArrayList<>();
 
-        if (type.equals("Binomial")){
+        if (type.equals("Binomial")) {
             trail_Adapter = new TrailList_Bino(this, trails_DataList);
-        }else{
+        } else {
             trail_Adapter = new TrailList_OtherFrags(this, trails_DataList);
         }
-
 
 
         trail_List.setAdapter(trail_Adapter);
@@ -152,13 +203,12 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
                 // Clear the old list
-                if (error!=null){
-                    Log.d(TAG,"Error:"+error.getMessage());
-                }
-                else {
+                if (error != null) {
+                    Log.d(TAG, "Error:" + error.getMessage());
+                } else {
                     int trailId = 0;
-                    for (int i = 0; i < trails_DataList.size(); i++){
-                        if (trails_DataList.get(i).getID() > trailId){
+                    for (int i = 0; i < trails_DataList.size(); i++) {
+                        if (trails_DataList.get(i).getID() > trailId) {
                             trailId = trails_DataList.get(i).getID();
                         }
                     }
@@ -174,13 +224,13 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         String success = (String) doc.getData().get("Success");
                         String failure = (String) doc.getData().get("Failure");
                         String variesData = (String) doc.getData().get("VariesData");
-                        String longitude = (String)  doc.getData().get("longitude");
-                        String latitude = (String)  doc.getData().get("latitude");
+                        String longitude = (String) doc.getData().get("longitude");
+                        String latitude = (String) doc.getData().get("latitude");
                         Location location;
 
-                        if (longitude != null & latitude != null){
-                            location = new Location( Double.parseDouble(longitude), Double.parseDouble(latitude));//error prone
-                        }else{
+                        if (longitude != null & latitude != null) {
+                            location = new Location(Double.parseDouble(longitude), Double.parseDouble(latitude));//error prone
+                        } else {
                             location = null;
                         }
                         //uncertain value
@@ -188,17 +238,17 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         String idString = doc.getId();
                         Integer ID = Integer.parseInt(idString);
 
-                        if (experiment.getTrailsId().contains(idString)){
-                            if (success == null){//case for non-binomial trails
-                                if (location != null){
+                        if (experiment.getTrailsId().contains(idString)) {
+                            if (success == null) {//case for non-binomial trails
+                                if (location != null) {
                                     trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID, location));
-                                }else{
+                                } else {
                                     trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID));
                                 }
-                            }else if(variesData == null){//case for binomial trails
-                                if (location != null){
+                            } else if (variesData == null) {//case for binomial trails
+                                if (location != null) {
                                     trails_DataList.add(new Trails(trail_title, date, type, time, success, failure, ID, location));
-                                }else{
+                                } else {
                                     trails_DataList.add(new Trails(trail_title, date, type, time, success, failure, ID));
                                 }
                             }
@@ -213,7 +263,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         //add button is where we specify the different experiment trails
         //currently use fixed variable for debugging
         //once firestrore ready this part will get type from database
-        if (type.equals("Binomial")){
+        if (type.equals("Binomial")) {
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -233,7 +283,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 }
             });
 
-        }else{
+        } else {
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -253,7 +303,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         }
 
 
-
         //longClick action for delete data
         trail_List.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -262,10 +311,9 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 Trails newtrail = trail_Adapter.getItem(position);
                 trail_Adapter.notifyDataSetChanged();
                 boolean deleteResult = TrailsDatabaseController.delete_Trails("Trails", newtrail);
-                if (deleteResult){
+                if (deleteResult) {
                     Toast.makeText(getApplicationContext(), "Delete Succeed", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Delete Failed", Toast.LENGTH_SHORT).show();
                 }
                 return false;
@@ -274,6 +322,41 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         trail_List.setAdapter(trail_Adapter);
         //https://stackoverflow.com/questions/4834750/how-to-get-the-selected-item-from-listview
         //from xandy's answer Jan 29 '11 at 2:57*/
+    }
+
+
+    @SuppressLint("MissingPermission")//supress all permission request
+    private void getCurrentLoc() {
+        //where we use to get the current location
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<android.location.Location>() {
+                @Override
+                public void onComplete(@NonNull Task<android.location.Location> task) {
+                    android.location.Location location = task.getResult();
+                    if (location != null) {
+                        currentLat = location.getLatitude();
+                        currentLong = location.getLongitude();
+                    } else {
+                        //if it doesn't have a location we will make a request for location
+                        LocationRequest locationRequest = new LocationRequest().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY).setInterval(10000)
+                                .setFastestInterval(1000)
+                                .setNumUpdates(1);
+                        LocationCallback locationCallback = new LocationCallback() {
+                            @Override
+                            public void onLocationResult(LocationResult locationResult) {
+                                android.location.Location Alocation = locationResult.getLastLocation();
+                                currentLat = Alocation.getLatitude();
+                                currentLong = Alocation.getLongitude();
+                            }
+                        };
+                        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+                    }
+                }
+            });
+        }else{
+            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        }
     }
 
     @Override
@@ -300,6 +383,18 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             Toast.makeText(getApplicationContext(), "Edit Succeed", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(getApplicationContext(), "Edit Failed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100 && grantResults.length > 0 && (grantResults[0]) + grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+            getCurrentLoc();
+        } else {
+            Toast.makeText(getApplicationContext(), "Permission denied, Cannot access current location", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -348,7 +443,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             }else {
                 qrcode = new QrcodeFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();   // 开启一个事务
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.data_container2, qrcode);
                 transaction.commit();
                 Bundle bundle = new Bundle();
@@ -356,6 +451,14 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 qrcode.setArguments(bundle);
 
             }
+        }else if (id == R.id.LocView){
+            //view all location for this experiment
+            //extends a new frag to show this
+            /*mapFragment = new MapFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.data_container2, mapFragment).addToBackStack(null).commit();
+            return true;*/
+            Toast.makeText(getApplicationContext(), "location is :" + currentLat + ":" + currentLong, Toast.LENGTH_SHORT).show();
+            return true;
         }else if (id == R.id.HelpOpt){
             //tips for user
             Toast.makeText(getApplicationContext(),"Welcome! Please note: Long Click item for deleting Short Click item for editting",Toast.LENGTH_SHORT).show();
@@ -374,6 +477,14 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
      */
     public boolean WhetherTrailsLoc() {
         return needLocation;
+    }
+
+    public double sendCurrentLat() {
+        return currentLat;
+    }
+
+    public double sendCurrentLong() {
+        return currentLong;
     }
 
     /**
@@ -407,5 +518,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         Intent intent = new Intent(this, QuestionActivity.class);
         startActivity(intent);
     }
+
 }
 

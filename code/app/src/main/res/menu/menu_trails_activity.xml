@@ -25,6 +25,11 @@
 
         app:showAsAction="never" />
     <item
+        android:id="@+id/LocView"
+        android:orderInCategory="100"
+        android:title="View All Location?"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/HelpOpt"
         android:orderInCategory="100"
         android:title="Help/Tips"

@@ -16,12 +16,6 @@
     https://stackoverflow.com/questions/12537819/how-to-make-edittext-box-height-expand/12537844
     answered by Hesam May 21 '13 at 5:04
     -->
-    <FrameLayout
-        android:id="@+id/empty_container"
-        android:layout_width="match_parent"
-        android:layout_height="58dp">
-
-    </FrameLayout>
 
     <EditText
         android:id="@+id/trail_Title_editText"
@@ -134,7 +128,7 @@
     <FrameLayout
         android:id="@+id/map_container"
         android:layout_width="match_parent"
-        android:layout_height="330dp">
+        android:layout_height="375dp">
 
     </FrameLayout>
 
