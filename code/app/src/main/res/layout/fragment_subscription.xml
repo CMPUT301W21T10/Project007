@@ -44,7 +44,7 @@ tools:context=".ui.subscription.SubscriptionFragment">
 
         <ListView
             android:id="@+id/subscript_list"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </ListView>
     </LinearLayout>
@@ -57,7 +57,7 @@ tools:context=".ui.subscription.SubscriptionFragment">
         >
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             >
@@ -79,7 +79,7 @@ tools:context=".ui.subscription.SubscriptionFragment">
 
         <ListView
             android:id="@+id/own_list"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </ListView>
     </LinearLayout>

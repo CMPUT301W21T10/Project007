@@ -10,36 +10,35 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="5dp"
-        android:layout_marginBottom="20dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:background="@drawable/block"
         >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-
-        >
-        <ImageView
-            android:layout_margin="2dp"
-            android:layout_gravity="center"
-            android:maxWidth="15dp"
-            android:maxHeight="15dp"
-            android:scaleType="centerInside"
-            android:layout_width="60dip"
-            android:layout_height="60dip"
-            android:background="@drawable/ic_baseline_search_24"/>
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Search Result"
-            android:textSize="50sp"/>
-    </LinearLayout>
+            android:orientation="horizontal"
+
+            >
+            <ImageView
+                android:layout_margin="2dp"
+                android:layout_gravity="center"
+                android:maxWidth="15dp"
+                android:maxHeight="15dp"
+                android:scaleType="centerInside"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_baseline_search_24"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Search Result"
+                android:textSize="30sp"/>
+        </LinearLayout>
 
         <ListView
             android:id="@+id/subscript_list"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </ListView>
     </LinearLayout>
