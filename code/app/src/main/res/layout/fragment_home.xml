@@ -12,12 +12,23 @@
     android:orientation="vertical"
     tools:context=".ui.home.HomeFragment">
 
+
+
+
+    <ListView
+        android:id="@+id/experiment_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:orientation="horizontal"
         android:layout_gravity="bottom"
+        android:background="@drawable/block"
         android:id="@+id/search_bar">
         <ImageView
             android:layout_width="50dp"
@@ -38,15 +49,6 @@
             android:layout_gravity="end"
             android:text="Search"/>
     </LinearLayout>
-
-
-    <ListView
-        android:id="@+id/experiment_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </ListView>
-
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_experiment_button"
