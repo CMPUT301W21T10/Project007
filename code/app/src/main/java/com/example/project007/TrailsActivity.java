@@ -59,9 +59,11 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     ListView trail_List;
     ArrayAdapter<Trails> trail_Adapter;
     ArrayList<Trails> trails_DataList;
+    ArrayList<Location> location_DataList;
+    ArrayList<String> trailsTitle_DataList;
     AddBinoTrailFragment addBinoTrailFragment;
     AddNnCBTrailFragment addNnCBTrailFragment;
-    MapFragment mapFragment;
+    AllMapViewFragment ViewAllMapFragment;
     final String TAG = "Trails_Sample";
     double currentLat = 0;
     double currentLong = 0;
@@ -115,26 +117,21 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         Intent intent = getIntent();
         experiment = (Experiment) intent.getSerializableExtra("com.example.project007.INSTANCE");
         position = intent.getIntExtra("com.example.project007.POSITION", -1);
-
         //receive data from experiment
 
-        //fix variable for debugging
         type = experiment.getType();
         needLocation = experiment.isRequireLocation();
         description = experiment.getDescription();
         title = experiment.getName();
-        TextView nameView = findViewById(R.id.name_view);
 
+        TextView nameView = findViewById(R.id.name_view);
         TextView process = findViewById(R.id.process);
-        //TextView end = findViewById(R.id.end);
         TextView locationView = findViewById(R.id.location);
         TextView owner = findViewById(R.id.owner);
-
         TextView descriptionView = findViewById(R.id.description);
         TextView region = findViewById(R.id.region);
         TextView minimumTrails = findViewById(R.id.minimumTrails);
         TextView dateView = findViewById(R.id.date);
-
         TextView typeView = findViewById(R.id.type);
         ImageView imageView = findViewById(R.id.experiment_image);
 
@@ -183,6 +180,8 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         trail_List = findViewById(R.id.trail_list);
 
         trails_DataList = new ArrayList<>();
+        location_DataList = new ArrayList<>();
+        trailsTitle_DataList = new ArrayList<>();
 
         if (type.equals("Binomial")) {
             trail_Adapter = new TrailList_Bino(this, trails_DataList);
@@ -242,12 +241,16 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                             if (success == null) {//case for non-binomial trails
                                 if (location != null) {
                                     trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID, location));
+                                    location_DataList.add(location);
+                                    trailsTitle_DataList.add(trail_title);
                                 } else {
                                     trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID));
                                 }
                             } else if (variesData == null) {//case for binomial trails
                                 if (location != null) {
                                     trails_DataList.add(new Trails(trail_title, date, type, time, success, failure, ID, location));
+                                    location_DataList.add(location);
+                                    trailsTitle_DataList.add(trail_title);
                                 } else {
                                     trails_DataList.add(new Trails(trail_title, date, type, time, success, failure, ID));
                                 }
@@ -261,7 +264,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         //fire store uploading
 
         //add button is where we specify the different experiment trails
-        //currently use fixed variable for debugging
         //once firestrore ready this part will get type from database
         if (type.equals("Binomial")) {
             addButton.setOnClickListener(new View.OnClickListener() {
@@ -454,14 +456,14 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         }else if (id == R.id.LocView){
             //view all location for this experiment
             //extends a new frag to show this
-            /*mapFragment = new MapFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.data_container2, mapFragment).addToBackStack(null).commit();
-            return true;*/
-            Toast.makeText(getApplicationContext(), "location is :" + currentLat + ":" + currentLong, Toast.LENGTH_SHORT).show();
+            ViewAllMapFragment = new AllMapViewFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.data_container2, ViewAllMapFragment).addToBackStack(null).commit();
+            /*Toast.makeText(getApplicationContext(), "location is :" + currentLat + ":" + currentLong, Toast.LENGTH_SHORT).show();*/
             return true;
         }else if (id == R.id.HelpOpt){
             //tips for user
             Toast.makeText(getApplicationContext(),"Welcome! Please note: Long Click item for deleting Short Click item for editting",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(),trails_DataList.toString(),Toast.LENGTH_SHORT).show();
             return true;
         }
 
@@ -479,14 +481,31 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         return needLocation;
     }
 
+    /**
+     * This returns String for CurrentLatitude
+     * @return
+     * Return String type value
+     */
     public double sendCurrentLat() {
         return currentLat;
     }
 
+    /**
+     * This returns String for CurrentLongitude
+     * @return
+     * Return String type value
+     */
     public double sendCurrentLong() {
         return currentLong;
     }
 
+    public ArrayList<Location> sendLocationData(){
+        return  location_DataList;
+    }
+
+    public ArrayList<String> sendTrailsTitleData(){
+        return  trailsTitle_DataList;
+    }
     /**
      * This returns String for type
      * @return

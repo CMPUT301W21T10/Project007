@@ -38,7 +38,6 @@ public class MapFragment extends Fragment{
     double returnLongitude;
     double currentLat;
     double currentLong;
-    //GoogleMap initial_googleMap;
 
 
 
@@ -69,7 +68,9 @@ public class MapFragment extends Fragment{
                 LatLng currentLoc = new LatLng(currentLat, currentLong);
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 10));
                 googleMap.addMarker(new MarkerOptions().title("Current pos!").position(currentLoc));
+                //Toast.makeText(getActivity(),"Current location is " + currentLat + ":" + currentLong,Toast.LENGTH_SHORT).show();
                 Toast.makeText(getActivity(),"Current location selected by default!",Toast.LENGTH_SHORT).show();
+                sendFragResult(currentLong, currentLat);
                 googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     @Override
                     public void onMapClick(LatLng latLng) {
@@ -78,11 +79,7 @@ public class MapFragment extends Fragment{
                         returnLatitude = latLng.latitude;
                         returnLongitude = latLng.longitude;//return value for location class
                         markerOptions.title(latLng.latitude + " : " + latLng.longitude);
-
-                        Bundle location = new Bundle();
-                        location.putSerializable("Location", new Location(returnLongitude, returnLatitude));
-                        getParentFragmentManager().setFragmentResult("showLocation", location);
-
+                        sendFragResult(returnLongitude, returnLatitude);
                         googleMap.clear();
                         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
                         googleMap.addMarker(markerOptions);
@@ -94,6 +91,11 @@ public class MapFragment extends Fragment{
 
 
         return view;
+    }
+    public void sendFragResult (double longitude, double latitude){
+        Bundle location = new Bundle();
+        location.putSerializable("Location", new Location(longitude, latitude));
+        getParentFragmentManager().setFragmentResult("showLocation", location);
     }
 
 }

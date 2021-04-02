@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/traildetailshow"
     android:orientation="vertical">
 
     <LinearLayout
@@ -17,6 +18,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="@string/trail"
+            android:textColor="@color/color_fff"
             android:textSize="30dp" />
 
     </LinearLayout>
@@ -32,6 +34,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="0dp"
             android:layout_marginLeft="0dp"
+            android:textColor="@color/color_fff"
             android:gravity="left"
             android:padding="10dp"
             android:text="date"
@@ -43,6 +46,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="0dp"
             android:layout_marginLeft="0dp"
+            android:textColor="@color/color_fff"
             android:gravity="right"
             android:padding="10dp"
             android:text="time"
@@ -65,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
                 android:layout_marginLeft="0dp"
+                android:textColor="@color/color_fff"
                 android:padding="10dp"
                 android:text="Result is "
                 android:textSize="20dp" />
@@ -75,6 +80,7 @@
                 android:gravity="right"
                 android:layout_marginStart="0dp"
                 android:layout_marginLeft="0dp"
+                android:textColor="@color/color_fff"
                 android:padding="10dp"
                 android:text="Result"
                 android:textSize="20dp" />
@@ -92,6 +98,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="0dp"
                 android:layout_marginLeft="0dp"
+                android:textColor="@color/color_fff"
                 android:padding="10dp"
                 android:text="Location is "
                 android:textSize="20dp" />
@@ -102,6 +109,7 @@
                 android:gravity="right"
                 android:layout_marginStart="0dp"
                 android:layout_marginLeft="0dp"
+                android:textColor="@color/color_fff"
                 android:padding="10dp"
                 android:text="N/A"
                 android:textSize="15dp" />
