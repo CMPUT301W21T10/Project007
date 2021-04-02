@@ -205,14 +205,8 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 if (error != null) {
                     Log.d(TAG, "Error:" + error.getMessage());
                 } else {
-                    int trailId = 0;
-                    for (int i = 0; i < trails_DataList.size(); i++) {
-                        if (trails_DataList.get(i).getID() > trailId) {
-                            trailId = trails_DataList.get(i).getID();
-                        }
-                    }
-                    TrailsDatabaseController.setMaxTrailId(trailId);
                     trails_DataList.clear();
+                    int trailId = 0;
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                         Log.d(TAG, String.valueOf(doc.getData().get("Trail_title")));
                         String trail_title = (String) doc.getData().get("Trail_title");
@@ -236,7 +230,9 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
 
                         String idString = doc.getId();
                         Integer ID = Integer.parseInt(idString);
-
+                        if (ID > trailId) {
+                            trailId = ID;
+                        }
                         if (experiment.getTrailsId().contains(idString)) {
                             if (success == null) {//case for non-binomial trails
                                 if (location != null) {
@@ -257,6 +253,8 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                             }
                         }
                     }
+
+                    TrailsDatabaseController.setMaxTrailId(trailId);
                     trail_Adapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
                 }
             }

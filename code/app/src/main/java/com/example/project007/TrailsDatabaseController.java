@@ -19,7 +19,7 @@ import static android.content.ContentValues.TAG;
 public class TrailsDatabaseController {
     @SuppressLint("StaticFieldLeak")
     private static FirebaseFirestore Trail_db;
-    private static String UserId = "1";
+    private static String UserId;
     private static Integer maxTrailId;
 
     public static Integer getMaxTrailId() {
