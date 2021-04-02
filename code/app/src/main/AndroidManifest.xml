@@ -31,7 +31,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="" />
+            android:value="AIzaSyCe9XKgYb4pwBLwgp_HzKvWJ5PCD_GzQOY" />
 
         <activity android:name=".SearchResult"
             android:parentActivityName=".MainActivity">
@@ -40,18 +40,13 @@
                 android:value=".MainActivity" />
         </activity>
 
-        <activity android:name=".TrailsActivity"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
+        <activity android:name=".TrailsActivity"/>
 
         <activity android:name=".QuestionActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".TrailsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".TrailsActivity" />
         </activity>
 
         <activity android:name=".AfterLoginActivity" />
