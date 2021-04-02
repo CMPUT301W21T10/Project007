@@ -63,10 +63,8 @@ public class SearchResult extends AppCompatActivity {
                             // convert document to POJO
                             oneExperiment = doc.toObject(Experiment.class);
                             System.out.println(oneExperiment);
+                            experimentDataList.add(oneExperiment);
 
-                            if (oneExperiment.getSubscriptionId().contains(DatabaseController.getUserId())){
-                                experimentDataList.add(oneExperiment);
-                            }
                         } else {
                             System.out.println("No such document!");
                         }
