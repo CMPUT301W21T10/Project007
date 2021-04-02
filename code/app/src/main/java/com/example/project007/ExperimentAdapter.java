@@ -69,7 +69,6 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
 
         TextView experimentName = view.findViewById(R.id.name_view);
         TextView experimentDescription = view.findViewById(R.id.description_view);
-        Button delButton = view.findViewById(R.id.del_button);
 
         ImageView image = view.findViewById(R.id.experiment_image);
 
@@ -81,6 +80,7 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
             case "Count": image.setImageResource(R.drawable.c); break;
             case "IntCount": image.setImageResource(R.drawable.n); break;
         }
+        /*
         view.setOnTouchListener(new View.OnTouchListener() {
 
             @SuppressLint("ClickableViewAccessibility")
@@ -122,7 +122,7 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
             }
         });
 
-
+*/
         return view;
 
     }
