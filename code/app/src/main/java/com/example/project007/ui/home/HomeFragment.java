@@ -152,7 +152,12 @@ public class HomeFragment extends Fragment {
         addExperimentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new ModifyExperimentFragment().show(getChildFragmentManager(), "ADD_EXPERIMENT");
+                if (DatabaseController.getUserId()!=null){
+                    new ModifyExperimentFragment().show(getChildFragmentManager(), "ADD_EXPERIMENT");
+                }
+                else{
+                    Toast.makeText(getActivity(), "You need sign in!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

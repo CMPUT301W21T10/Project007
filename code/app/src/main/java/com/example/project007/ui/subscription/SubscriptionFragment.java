@@ -88,7 +88,7 @@ public class SubscriptionFragment extends Fragment {
                             oneExperiment = doc.toObject(Experiment.class);
                             System.out.println(oneExperiment);
 
-                            if (oneExperiment.getTrailsId().contains(DatabaseController.getUserId())){
+                            if (oneExperiment.getSubscriptionId().contains(DatabaseController.getUserId())){
                                 experimentDataList.add(oneExperiment);
                             }
                         } else {
