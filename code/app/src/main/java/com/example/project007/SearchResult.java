@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.project007.ui.subscription.SubscriptionViewModel;
 import com.google.firebase.firestore.CollectionReference;
@@ -62,17 +63,23 @@ public class SearchResult extends AppCompatActivity {
                         if (doc.exists()) {
                             // convert document to POJO
                             oneExperiment = doc.toObject(Experiment.class);
-                            System.out.println(oneExperiment);
-                            experimentDataList.add(oneExperiment);
+                            if (processData(oneExperiment)){
+                                experimentDataList.add(oneExperiment);
+                            }
 
                         } else {
                             System.out.println("No such document!");
                         }
 
                     }
-                    processData();
-                    experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
+                    if(experimentDataList.size() == 0) {
+                        Toast.makeText(SearchResult.this, "No related result.",
+                                Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
                 }
+                experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
+
             }
         });
 
@@ -91,43 +98,41 @@ public class SearchResult extends AppCompatActivity {
 
     }
 
-    private void processData(){
-        ArrayList<Experiment> result = new ArrayList<Experiment>();
-        for (int i = 0; i<experimentDataList.size(); i++){
-            Experiment experiment = experimentDataList.get(i);
-
+    public boolean processData( Experiment experiment){
 
             if (experiment.getName().contains(searchKey)){
-                result.add(experiment);
-                break;
+                return true;
+
             }
             if (experiment.getDescription().contains(searchKey)){
-                result.add(experiment);
-                break;
+                return true;
+
             }
             if (experiment.getRegion().contains(searchKey)){
-                result.add(experiment);
-                break;
+                return true;
+
             }
             if (experiment.getType().contains(searchKey)){
-                result.add(experiment);
-                break;
+                return true;
+
             }
             if (experiment.getDate().contains(searchKey)){
-                result.add(experiment);
-                break;
-            }
-            if (experiment.isCondition() && searchKey.equals("End")){
-                result.add(experiment);
-                break;
-            }
-            if (!experiment.isCondition() && searchKey.equals("Processing")){
-                result.add(experiment);
-                break;
+                return true;
+
             }
 
-        }
-        experimentDataList = result;
+            if (experiment.isCondition() && searchKey.equals("End")){
+                return true;
+
+            }
+            if (!experiment.isCondition() && searchKey.equals("Processing")){
+                return true;
+            }
+
+
+
+
+        return false;
 
     }
 }
