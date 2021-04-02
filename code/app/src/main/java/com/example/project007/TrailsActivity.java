@@ -395,7 +395,8 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         trail_Adapter.notifyDataSetChanged();
         boolean editResult = TrailsDatabaseController.modify_Trails("Trails", trails);
         ArrayList<String> valueList = experiment.getTrailsId();
-        DatabaseController.setExperimentTrails(experiment.getId().toString(), valueList );
+        ArrayList<String> subList = experiment.getSubscriptionId();
+        DatabaseController.setExperimentTrails(experiment.getId().toString(), valueList, subList);
         if (editResult){
             Toast.makeText(getApplicationContext(), "Edit Succeed", Toast.LENGTH_SHORT).show();
         }else{
