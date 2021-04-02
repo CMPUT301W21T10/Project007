@@ -1,11 +1,15 @@
 package com.example.project007.ui.home;
 
+import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -26,6 +30,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.project007.ExperimentAdapter;
 import com.example.project007.DatabaseController;
 import com.example.project007.Experiment;
+import com.example.project007.MainActivity;
 import com.example.project007.ModifyExperimentFragment;
 import com.example.project007.Question;
 import com.example.project007.QuestionDatabaseController;
@@ -48,6 +53,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * This is HomeFragment
@@ -64,13 +70,14 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private Integer savedPosition;
 
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         experimentDataList = new ArrayList<>();
 
         experimentAdapter = new ExperimentAdapter(this.getContext(), experimentDataList);
-
 
         getChildFragmentManager()
                 .setFragmentResultListener("homeRequest", this, new FragmentResultListener() {
@@ -256,4 +263,5 @@ public class HomeFragment extends Fragment {
 
         return root;
     }
+
 }
