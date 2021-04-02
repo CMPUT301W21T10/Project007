@@ -21,7 +21,7 @@ tools:context=".ui.subscription.SubscriptionFragment">
         >
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             >
@@ -50,7 +50,7 @@ tools:context=".ui.subscription.SubscriptionFragment">
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/block"
