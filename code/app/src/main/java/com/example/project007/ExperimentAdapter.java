@@ -1,7 +1,9 @@
 package com.example.project007;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -61,15 +63,24 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
         View view = convertView;
 
         // face our layout
+        try {
+            Activity activity = (Activity)context;
+            if(activity  instanceof SearchResult){
+                view = LayoutInflater.from(context).inflate(R.layout.result_content,parent,false);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         if (view == null){
             view = LayoutInflater.from(context).inflate(R.layout.overview_content,parent,false);
         }
+
         // get current element
         Experiment experiment = experiments.get(position);
 
         TextView experimentName = view.findViewById(R.id.name_view);
         TextView experimentDescription = view.findViewById(R.id.description_view);
-        Button delButton = view.findViewById(R.id.del_button);
 
         ImageView image = view.findViewById(R.id.experiment_image);
 
@@ -81,6 +92,23 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
             case "Count": image.setImageResource(R.drawable.c); break;
             case "IntCount": image.setImageResource(R.drawable.n); break;
         }
+
+        TextView experimentUser = view.findViewById(R.id.owner_view);
+        TextView experimentCondition = view.findViewById(R.id.condition_view);
+
+        if(experimentCondition != null && experiment.isCondition()){
+            experimentCondition.setText("Processing");
+        }
+        else if (experimentCondition != null){
+            experimentCondition.setText("End");
+        }
+
+        if (experimentUser != null){
+            String userId = experiment.getUserId();
+            experimentUser.setText(userId);
+        }
+
+        /*
         view.setOnTouchListener(new View.OnTouchListener() {
 
             @SuppressLint("ClickableViewAccessibility")
@@ -122,7 +150,7 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
             }
         });
 
-
+*/
         return view;
 
     }

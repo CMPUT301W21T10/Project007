@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -27,6 +30,7 @@ import com.example.project007.ModifyExperimentFragment;
 import com.example.project007.Question;
 import com.example.project007.QuestionDatabaseController;
 import com.example.project007.R;
+import com.example.project007.SearchResult;
 import com.example.project007.TrailsActivity;
 import com.example.project007.UserEntity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -152,7 +156,35 @@ public class HomeFragment extends Fragment {
         addExperimentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new ModifyExperimentFragment().show(getChildFragmentManager(), "ADD_EXPERIMENT");
+                if (DatabaseController.getUserId()!=null){
+                    new ModifyExperimentFragment().show(getChildFragmentManager(), "ADD_EXPERIMENT");
+                }
+                else{
+                    Toast.makeText(getActivity(), "You need sign in!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        final FloatingActionButton searchButton = root.findViewById(R.id.search_experiment_button);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LinearLayout searchBar = root.findViewById(R.id.search_bar);
+                searchBar.setVisibility(View.VISIBLE);
+            }
+        });
+
+        final Button confirmButton = root.findViewById(R.id.confirm_button);
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LinearLayout searchBar = root.findViewById(R.id.search_bar);
+                searchBar.setVisibility(View.INVISIBLE);
+                Intent intent = new Intent(getActivity(), SearchResult.class);
+                EditText searchKey = root.findViewById(R.id.search_key);
+                intent.putExtra("Key", searchKey.getText().toString());
+                searchKey.setText("");
+                startActivity(intent);
             }
         });
 
@@ -177,6 +209,7 @@ public class HomeFragment extends Fragment {
                             System.out.println("No such document!");
                         }
                     }
+
                     experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
                 }
 

@@ -92,9 +92,10 @@ public class DatabaseController {
         return maxExperimentId + 1;
     }
 
-    public static void setExperimentTrails(String id, ArrayList<String> valueList){
+    public static void setExperimentTrails(String id, ArrayList<String> valueList,ArrayList<String> valueList2){
         DocumentReference docRef = db.collection("Experiments").document(id);
         docRef.update("trailsId", valueList);
+        docRef.update("subscriptionId", valueList2);
 
     }
 }

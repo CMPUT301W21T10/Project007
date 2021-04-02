@@ -5,11 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/main_color"
     android:fitsSystemWindows="true"
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.home.HomeFragment">
+
+
+
 
     <ListView
         android:id="@+id/experiment_list"
@@ -18,6 +22,33 @@
 
     </ListView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:background="@drawable/block"
+        android:id="@+id/search_bar">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_baseline_search_24"/>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/search_key"
+            android:hint="Search Keyword"
+            android:layout_weight="1"
+            android:autofillHints="true"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/confirm_button"
+
+            android:layout_gravity="end"
+            android:text="Search"/>
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_experiment_button"
@@ -28,4 +59,12 @@
         android:layout_gravity="top|end"
         app:srcCompat="@android:drawable/ic_input_add" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/search_experiment_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_gravity="center|end"
+        app:srcCompat="@android:drawable/ic_search_category_default" />
 </FrameLayout>

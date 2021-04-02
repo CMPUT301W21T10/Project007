@@ -1,70 +1,47 @@
-package com.example.project007.ui.subscription;
+package com.example.project007;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
-import com.example.project007.DatabaseController;
-import com.example.project007.Experiment;
-import com.example.project007.ExperimentAdapter;
-import com.example.project007.R;
-import com.example.project007.TrailsActivity;
-import com.example.project007.ui.home.HomeViewModel;
-import com.google.android.gms.tasks.Task;
+import com.example.project007.ui.subscription.SubscriptionViewModel;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-/**
- * This is SubscriptionFragment
- * This class shows subscriptions list
- * connect with TrailsActivity, ActionFragment, and ModifyExperimentFragment
- */
-public class SubscriptionFragment extends Fragment {
+public class SearchResult extends AppCompatActivity {
 
     private SubscriptionViewModel subscriptionViewModel;
     private ListView experimentList;
     private ArrayAdapter<Experiment> experimentAdapter;
     private ArrayList<Experiment> experimentDataList;
     final String TAG = "Sample";
-
+    private String searchKey = "";
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search_result);
+
+        Intent intent = getIntent();
+        searchKey = intent.getStringExtra("Key");
+
         experimentDataList = new ArrayList<>();
-
-        experimentAdapter = new ExperimentAdapter(this.getContext(), experimentDataList);
-    }
-
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        subscriptionViewModel =
-                new ViewModelProvider(this).get(SubscriptionViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_subscription, container, false);
-
-        experimentList = root.findViewById(R.id.subscript_list);
+        experimentAdapter = new ExperimentAdapter(this, experimentDataList);
+        experimentList = findViewById(R.id.subscript_list);
         experimentList.setAdapter(experimentAdapter);
 
         final FirebaseFirestore db;
@@ -86,18 +63,23 @@ public class SubscriptionFragment extends Fragment {
                         if (doc.exists()) {
                             // convert document to POJO
                             oneExperiment = doc.toObject(Experiment.class);
-                            System.out.println(oneExperiment);
-
-                            if (oneExperiment.getSubscriptionId().contains(DatabaseController.getUserId())){
+                            if (processData(oneExperiment)){
                                 experimentDataList.add(oneExperiment);
                             }
+
                         } else {
                             System.out.println("No such document!");
                         }
 
                     }
-                    experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
+                    if(experimentDataList.size() == 0) {
+                        Toast.makeText(SearchResult.this, "No related result.",
+                                Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
                 }
+                experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
+
             }
         });
 
@@ -106,13 +88,51 @@ public class SubscriptionFragment extends Fragment {
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), TrailsActivity.class);
+                Intent intent = new Intent(SearchResult.this, TrailsActivity.class);
                 Experiment instanceExperiment = experimentDataList.get(position);
                 intent.putExtra("com.example.project007.INSTANCE", instanceExperiment);
                 intent.putExtra("com.example.project007.POSITION", position);
                 startActivity(intent);
             }
         });
-        return root;
+
+    }
+
+    public boolean processData( Experiment experiment){
+
+            if (experiment.getName().contains(searchKey)){
+                return true;
+
+            }
+            if (experiment.getDescription().contains(searchKey)){
+                return true;
+
+            }
+            if (experiment.getRegion().contains(searchKey)){
+                return true;
+
+            }
+            if (experiment.getType().contains(searchKey)){
+                return true;
+
+            }
+            if (experiment.getDate().contains(searchKey)){
+                return true;
+
+            }
+
+            if (experiment.isCondition() && searchKey.equals("End")){
+                return true;
+
+            }
+            if (!experiment.isCondition() && searchKey.equals("Processing")){
+                return true;
+            }
+
+
+
+
+        return false;
+
     }
 }

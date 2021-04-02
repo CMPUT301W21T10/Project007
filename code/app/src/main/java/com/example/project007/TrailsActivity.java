@@ -311,7 +311,18 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 //Delete event
                 Trails newtrail = trail_Adapter.getItem(position);
+                String idString = newtrail.getID().toString();
+
+                ArrayList<String> temp =  experiment.getTrailsId();
+                for (int i = 0; i < temp.size(); i++) {
+                    if (temp.get(i).equals(idString)) {
+                        temp.remove(i);
+                    }
+                }
+                DatabaseController.setExperimentTrails(experiment.getId().toString(),temp,experiment.getSubscriptionId());
+
                 trail_Adapter.notifyDataSetChanged();
+
                 boolean deleteResult = TrailsDatabaseController.delete_Trails("Trails", newtrail);
                 if (deleteResult) {
                     Toast.makeText(getApplicationContext(), "Delete Succeed", Toast.LENGTH_SHORT).show();
@@ -367,7 +378,11 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         boolean addResult = TrailsDatabaseController.modify_Trails("Trails", trails);
         ArrayList<String> valueList = experiment.getTrailsId();
         valueList.add(trails.getID().toString());
-        DatabaseController.setExperimentTrails(experiment.getId().toString(), valueList );
+        ArrayList<String> subscriptionList = experiment.getSubscriptionId();
+        if (!subscriptionList.contains(DatabaseController.getUserId())){
+            subscriptionList.add(DatabaseController.getUserId());
+        }
+        DatabaseController.setExperimentTrails(experiment.getId().toString(), valueList,subscriptionList );
         if (addResult){
             Toast.makeText(getApplicationContext(), "Add Succeed", Toast.LENGTH_SHORT).show();
         }else{
