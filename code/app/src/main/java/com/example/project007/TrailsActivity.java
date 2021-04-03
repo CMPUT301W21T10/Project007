@@ -143,7 +143,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         descriptionView.setText(description);
         region.setText(experiment.getRegion());
         minimumTrails.setText(experiment.getMinimumTrails().toString());
-        Toast.makeText(getApplicationContext(), experiment.getMinimumTrails().toString(), Toast.LENGTH_SHORT).show();
+
 
         dateView.setText(experiment.getDate());
 
