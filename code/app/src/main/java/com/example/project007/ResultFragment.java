@@ -37,9 +37,11 @@ import lecho.lib.hellocharts.view.LineChartView;
 
 /**
  * This class show the result of the trails, which includes six numbers and two plots.
- * The six numbers are the three quartile numbers and median and mean.
- * The two plots are the histogram and the linear chart run with the time.
- * @return view
+ * <p>
+ * The six numbers are the three quartile numbers and median and mean.<br>
+ * The two plots are the histogram and the linear chart run with the time.<br>
+ *     </p>
+ * @return view to show the result of the experiment.
  */
 
 public class ResultFragment extends Fragment{
@@ -48,34 +50,37 @@ public class ResultFragment extends Fragment{
     private String title;
     private View view;
 
-    private LineChartView lineChartView;        //显示线条的自定义View
-    private LineChartData lineChartData;          // 折线图封装的数据类
+    private LineChartView lineChartView;
+    private LineChartData lineChartData;
     private ColumnChartView columnCharView;
     private ColumnChartData columnChartData;
     private int numberOfLines = 1;
-    private int numberOfPoints = 10000000;    //点的数量
+    private int numberOfPoints = 10000000;
     float[][] randomNumbersTab = new float[numberOfLines][numberOfPoints];
 
-    private boolean hasAxes = true;       //是否有轴，x和y轴
-    private boolean hasAxesNames = true;   //是否有轴的名字
-    private boolean hasLines = true;       //是否有线（点和点连接的线）
-    private boolean hasPoints = true;       //是否有点（每个值的点）
-    private ValueShape shape = ValueShape.CIRCLE;    //点显示的形式，圆形，正方向，菱形
-    private boolean isFilled = false;                //是否是填充
-    private boolean hasLabels = false;               //每个点是否有名字
-    private boolean isCubic = false;                 //是否是立方的，线条是直线还是弧线
-    private boolean hasLabelForSelected = false;       //每个点是否可以选择（点击效果）
-    private boolean pointsHaveDifferentColor;           //线条的颜色变换
+    private boolean hasAxes = true;
+    private boolean hasAxesNames = true;
+    private boolean hasLines = true;
+    private boolean hasPoints = true;
+    private ValueShape shape = ValueShape.CIRCLE;
+    private boolean isFilled = false;
+    private boolean hasLabels = false;
+    private boolean isCubic = false;
+    private boolean hasLabelForSelected = false;
+    private boolean pointsHaveDifferentColor;
 
-    private ColumnChartView columnChartView;            //柱状图的自定义View
-    private ColumnChartData data;             //存放柱状图数据的对象
+    private ColumnChartView columnChartView;
+    private ColumnChartData data;
     private List<AxisValue> mAxisXValues = new ArrayList<AxisValue>();
 
 
 
-    //   四种数据的计算
-
-    private double[] Quartiles(double[] val) {
+    /**
+     * This function calculate the quartiles, which includes three numbers.
+     * @param val The double list of numbers.
+     * @return A double list which contains the three quartiles.
+     */
+    public double[] Quartiles(double[] val) {
         double[] ans = new double[3];
 
         for (int quartileType = 1; quartileType < 4; quartileType++) {
@@ -93,30 +98,39 @@ public class ResultFragment extends Fragment{
         }
         return ans;
     }
-    private static double Med(ArrayList<Double> total){
+    /**
+     * This function calculate the median.
+     * @param total A list of double type numbers.
+     * @return A double type number to show the median of the arraylist of numbers.
+     */
+    public static double Med(ArrayList<Double> total){
         double j = 0;
-        //集合排序
         Collections.sort(total);
         int size = total.size();
         if(size % 2 == 1){
             j = total.get((size-1)/2);
         }else {
-            //加0.0是为了把int转成double类型，否则除以2会算错
             j = (total.get(size/2-1) + total.get(size/2) + 0.0)/2;
         }
         return j;
     }
+    /**
+     * This function calculate the average.
+     * @param x A list of double type numbers.
+     * @return A double type number to show the average of the arraylist of numbers.
+     */
     private static double avg(double[] x) {
-        double sum = 0;//用来保存数组内所有数值的和
+        double sum = 0;
         for (double v : x) {
-            sum += v;//遍历每一个数组相，将每一个数组相的值加到sum上
+            sum += v;
         }
-        return sum / x.length;
+        double average = sum / x.length;
+        return average;
     }
     private static double StandardDiviation(double[] x) {
         double dAve=avg(x);
         double dVar=0;
-        for (double v : x) {//求方差
+        for (double v : x) {
             dVar += (v - dAve) * (v - dAve);
         }
         return Math.sqrt(dVar/x.length);
@@ -124,9 +138,9 @@ public class ResultFragment extends Fragment{
     /**
      * This method create a list to record the data of result.
      * The data includes six numbers,which are the three quartile numbers and median and mean.
-     * @param{ArrayList<Trails>}argument
-     * @param{TrailsActivity}activity
-     * @return list
+     * @param argument Trails of the experiment.
+     * @param activity From the TrailsActivity
+     * @return A list to represent the important information like quartiles, median, average, standard deviation and type, description, title of the experiement.
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public ArrayList<String> CreateList(ArrayList<Trails> argument,TrailsActivity activity){
@@ -175,8 +189,7 @@ public class ResultFragment extends Fragment{
 
 
 
-//    准备数据绘制线性图
-    //提取ArrayList<Trails>的variesData并转化成double[]
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     private double[] getList(ArrayList<Trails> argument,String name){
         ArrayList<Double> list = new ArrayList<>();
@@ -201,7 +214,7 @@ public class ResultFragment extends Fragment{
         }
         return list.stream().mapToDouble(i->i).toArray();
     }
-    //y轴获取最大值
+
     private static double getMaxValue(double[] arr) {
         double max = arr[0];
         for(int i=0;i<arr.length;i++) {
@@ -211,30 +224,20 @@ public class ResultFragment extends Fragment{
         return max;
     }
 
-//    绘制图表
     private void initView() {
-        //实例化
         lineChartView = view.findViewById(R.id.chart);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void initData(ArrayList<Trails> argument,String name) {
-        // Generate some random values.
-        generateValues(argument,name);   //设置四条线的值数据
-        generateData(name);    //设置数据
-
-        // Disable viewport recalculations, see toggleCubic() method for more info.
+        generateValues(argument,name);
+        generateData(name);
         lineChartView.setViewportCalculationEnabled(false);
-
-        lineChartView.setZoomType(ZoomType.HORIZONTAL);//设置线条可以水平方向收缩，默认是全方位缩放
-        resetViewport(argument,name);   //设置折线图的显示大小
+        lineChartView.setZoomType(ZoomType.HORIZONTAL);
+        resetViewport(argument,name);
     }
-    /**
-     * 图像显示大小
-     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void resetViewport(ArrayList<Trails> argument,String name) {
-        // Reset viewport height range to (0,100)
         final Viewport v = new Viewport(lineChartView.getMaximumViewport());
         v.bottom = 0;
         v.top = new Float(getMaxValue(getList(argument,name))+1.0);
@@ -244,12 +247,8 @@ public class ResultFragment extends Fragment{
         lineChartView.setCurrentViewport(v);
     }
 
-    /**
-     * 设置四条线条的数据
-     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void generateValues(ArrayList<Trails> argument,String name) {
-         //二维数组，线的数量和点的数量
         for (int i = 0; i < numberOfLines; ++i) {
             for (int j = 0; j < numberOfPoints; ++j) {
                 randomNumbersTab[i][j] =new Float((getList(argument,name))[j]);
@@ -257,22 +256,13 @@ public class ResultFragment extends Fragment{
         }
     }
 
-    /**
-     * 配置数据
-     */
     private void generateData(String name) {
-
-        //存放线条对象的集合
         List<Line> lines = new ArrayList<Line>();
-        //把数据设置到线条上面去
-        //线条的数量
-        TrailsActivity activity = (TrailsActivity) getActivity();
         for (int i = 0; i < numberOfLines; ++i) {
             List<PointValue> values = new ArrayList<>();
             for (int j = 0; j < numberOfPoints; ++j) {
                 values.add(new PointValue(j, randomNumbersTab[i][j]));
             }
-
             Line line = new Line(values);
             line.setColor(ChartUtils.COLORS[i]);
             line.setShape(shape);
@@ -287,15 +277,13 @@ public class ResultFragment extends Fragment{
             }
             lines.add(line);
         }
-
         lineChartData = new LineChartData(lines);
-
         if (hasAxes) {
             Axis axisX = new Axis();
             Axis axisY = new Axis().setHasLines(true);
             if (hasAxesNames) {
-                axisX.setTextColor(Color.BLACK);//设置x轴字体的颜色
-                axisY.setTextColor(Color.BLACK);//设置y轴字体的颜色
+                axisX.setTextColor(Color.BLACK);
+                axisY.setTextColor(Color.BLACK);
                 if (name.equals("Count-based")){
                     axisY.setName("quantity");
                 }else if(name.equals("Binomial")){
@@ -311,13 +299,10 @@ public class ResultFragment extends Fragment{
             lineChartData.setAxisXBottom(null);
             lineChartData.setAxisYLeft(null);
         }
-
         lineChartData.setBaseValue(Float.NEGATIVE_INFINITY);
         lineChartView.setLineChartData(lineChartData);
-
     }
 
-//绘制直方图 准备数据
     private float getNumberOfSuccess(ArrayList<Trails> argument){
         float i = 0;
         for(Trails t : argument){
@@ -325,6 +310,7 @@ public class ResultFragment extends Fragment{
         }
         return i;
     }
+
     private float getNumberOfFailure(ArrayList<Trails> argument){
         float i = 0;
         for(Trails t : argument){
@@ -341,6 +327,7 @@ public class ResultFragment extends Fragment{
         }
         return list.stream().mapToDouble(i->i).toArray();
     }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     private ArrayList<Double> getXaxis(ArrayList<Trails> argument){
         double[] d = getNum(argument);
@@ -353,6 +340,7 @@ public class ResultFragment extends Fragment{
         list.add(max);
         return list;
     }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     private ArrayList<Float> getYaxis(ArrayList<Trails> argument){
         ArrayList<Double> list = getXaxis(argument);
@@ -377,6 +365,7 @@ public class ResultFragment extends Fragment{
         }
         return l;
     }
+
     private float getMax(ArrayList<Float> arr){
         float max = arr.get(0);
         for(int i=0;i<arr.size();i++) {
@@ -385,17 +374,16 @@ public class ResultFragment extends Fragment{
         }
         return max;
     }
-    //绘制图表
+
     private void initview() {
         columnChartView = view.findViewById(R.id.column_chart);
     }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void initdata(ArrayList<Trails> argument,String name) {
         generateDefaultData(argument,name);
     }
-    /**
-     * 默认显示的数据
-     */
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void generateDefaultData(ArrayList<Trails> argument, String name) {
         // Column can have many subcolumns, here by default I use 1 subcolumn in each of 8 columns.
@@ -435,20 +423,16 @@ public class ResultFragment extends Fragment{
                 columns.add(column);
             }
         }
-
         data = new ColumnChartData(columns);
-
         if (hasAxes) {
-
-
             Axis axisX = new Axis();
             Axis axisY = new Axis().setHasLines(true);
             if (hasAxesNames) {
                 axisX.setName("Range");
                 axisY.setName("Quantity");
                 axisX.setValues(mAxisXValues);
-                axisX.setTextColor(Color.BLACK);//设置x轴字体的颜色
-                axisY.setTextColor(Color.BLACK);//设置y轴字体的颜色
+                axisX.setTextColor(Color.BLACK);
+                axisY.setTextColor(Color.BLACK);
             }
             data.setAxisXBottom(axisX);
             data.setAxisYLeft(axisY);
@@ -456,24 +440,21 @@ public class ResultFragment extends Fragment{
             data.setAxisXBottom(null);
             data.setAxisYLeft(null);
         }
-
         columnChartView.setColumnChartData(data);
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private ArrayList<Trails> sortTime(ArrayList<Trails> arr){
+    public ArrayList<Trails> sortTime(ArrayList<Trails> arr){
         arr.sort((p1, p2) -> p1.getTime().compareTo(p2.getTime()));
-
         return arr;
     }
     /**
      * This method create a view to show the results and the plots.
      * The six numbers are the three quartile numbers and median and mean.
      * The two plots are the histogram and the linear chart run with the time.
-     * @param{LayoutInflater}inflater
-     * @param{ViewGroup}container
-     * @param{Bundle}savedInstanceState
+     * @param inflater load layout
+     * @param container Gather views
+     * @param savedInstanceState Save current data to avoid data loss.
      * @return view
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
