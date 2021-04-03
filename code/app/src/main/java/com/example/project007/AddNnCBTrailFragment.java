@@ -73,12 +73,12 @@ public class AddNnCBTrailFragment extends Fragment {
 
 
         if (type.equals("Measurement")){
-            if (!NnCBData_info.equals("") || !NnCBData_info.matches("([0-9]*[.])[0-9]+")){
+            if (NnCBData_info.equals("") || !NnCBData_info.matches("([0-9]*[.])[0-9]+")){
                 Toast.makeText(getActivity(),"Input a positive float number plz!",Toast.LENGTH_SHORT).show();
                 return false;
             }
         }else if (!type.equals("Measurement")&!type.equals("Binomial")){
-            if (!NnCBData_info.equals("") ||!NnCBData_info.matches("[0-9]+")){
+            if (NnCBData_info.equals("") ||!NnCBData_info.matches("[0-9]+")){
                 Toast.makeText(getActivity(),"Input int number plz!",Toast.LENGTH_SHORT).show();
                 return false;
             }

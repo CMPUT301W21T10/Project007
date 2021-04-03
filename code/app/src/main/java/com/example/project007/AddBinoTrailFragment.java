@@ -94,10 +94,10 @@ public class AddBinoTrailFragment extends Fragment {
         Location location = trails.getLocation();
 
 
-        if (!success.matches("[0-9]+") || !success.equals("")){
+        if (!success.matches("[0-9]+") || success.equals("")){
             Toast.makeText(getActivity(),"Input success count plz!",Toast.LENGTH_SHORT).show();
             return false;
-        }else if(!fail.matches("[0-9]+")|| !fail.equals("")){
+        }else if(!fail.matches("[0-9]+")|| fail.equals("")){
             Toast.makeText(getActivity(),"Input failure count plz!",Toast.LENGTH_SHORT).show();
             return false;
         }else if (Trail_title.equals("")){
