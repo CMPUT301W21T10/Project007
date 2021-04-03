@@ -40,8 +40,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Click here to select date"
+            android:hint="Click to select date"
             android:inputType="textPersonName"
+            android:textSize="20dp"
             android:maxLength="25" />
 
         <EditText

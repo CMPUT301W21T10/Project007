@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,6 +68,8 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     final String TAG = "Trails_Sample";
     double currentLat = 0;
     double currentLong = 0;
+    boolean ignoreCheck = false;
+
 
     TextView descriptionTrail;
     ResultFragment resultFragment;
@@ -140,6 +143,8 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         descriptionView.setText(description);
         region.setText(experiment.getRegion());
         minimumTrails.setText(experiment.getMinimumTrails().toString());
+        Toast.makeText(getApplicationContext(), experiment.getMinimumTrails().toString(), Toast.LENGTH_SHORT).show();
+
         dateView.setText(experiment.getDate());
 
         switch (type) {
@@ -191,6 +196,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
 
 
         trail_List.setAdapter(trail_Adapter);
+
         //https://stackoverflow.com/questions/41350269/my-listview-is-showing-the-object-and-not-the-contents-of-each-object/41350519
         //answered by stephen Ruda Dec 27 '16 at 18:35
 
@@ -219,7 +225,10 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         String variesData = (String) doc.getData().get("VariesData");
                         String longitude = (String) doc.getData().get("longitude");
                         String latitude = (String) doc.getData().get("latitude");
+                        String ignore = (String)doc.getData().get("IgnoreCondition");
                         Location location;
+
+                        boolean ignoreCondition = Boolean.valueOf(ignore);
 
                         if (longitude != null & latitude != null) {
                             location = new Location(Double.parseDouble(longitude), Double.parseDouble(latitude));//error prone
@@ -236,19 +245,19 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         if (experiment.getTrailsId().contains(idString)) {
                             if (success == null) {//case for non-binomial trails
                                 if (location != null) {
-                                    trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID, location));
+                                    trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID, location, ignoreCondition));
                                     location_DataList.add(location);
                                     trailsTitle_DataList.add(trail_title);
                                 } else {
-                                    trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID));
+                                    trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID, ignoreCondition));
                                 }
                             } else if (variesData == null) {//case for binomial trails
                                 if (location != null) {
-                                    trails_DataList.add(new Trails(trail_title, date, type, time, success, failure, ID, location));
+                                    trails_DataList.add(new Trails(trail_title, date, type, time, success, failure, ID, location, ignoreCondition));
                                     location_DataList.add(location);
                                     trailsTitle_DataList.add(trail_title);
                                 } else {
-                                    trails_DataList.add(new Trails(trail_title, date, type, time, success, failure, ID));
+                                    trails_DataList.add(new Trails(trail_title, date, type, time, success, failure, ID, ignoreCondition));
                                 }
                             }
                         }
@@ -278,8 +287,24 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Trails newtrail = trail_Adapter.getItem(position);
+                    int pos = parent.getPositionForView(view);
+                    //Toast.makeText(getApplicationContext(),pos+"",Toast.LENGTH_SHORT).show();
+                    PopupMenu popup = new PopupMenu(TrailsActivity.this, view);
+                    popup.getMenuInflater().inflate(R.menu.pop_up_menu, popup.getMenu());
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            int id = item.getItemId();
+                            chooseIgnore(id, newtrail);
+                            trail_Adapter.notifyDataSetChanged();;
+                            return false;
+                        }
+                    });
+                    //
+                    popup.show();
+                    /*Trails newtrail = trail_Adapter.getItem(position);
                     AddBinoTrailFragment fragment = AddBinoTrailFragment.newInstance(newtrail);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.data_container, fragment).addToBackStack(null).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.data_container, fragment).addToBackStack(null).commit();*/
                 }
             });
 
@@ -295,9 +320,25 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Trails newtrail = trail_Adapter.getItem(position);
+                    /*Trails newtrail = trail_Adapter.getItem(position);
                     AddNnCBTrailFragment NcCb_fragment = AddNnCBTrailFragment.newInstance(newtrail);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.data_container, NcCb_fragment).addToBackStack(null).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.data_container, NcCb_fragment).addToBackStack(null).commit();*/
+                    Trails newtrail = trail_Adapter.getItem(position);
+                    int pos = parent.getPositionForView(view);
+                    //Toast.makeText(getApplicationContext(),pos+"",Toast.LENGTH_SHORT).show();
+                    PopupMenu popup = new PopupMenu(TrailsActivity.this, view);
+                    popup.getMenuInflater().inflate(R.menu.pop_up_menu, popup.getMenu());
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            int id = item.getItemId();
+                            chooseIgnore(id, newtrail);
+                            trail_Adapter.notifyDataSetChanged();;
+                            return false;
+                        }
+                    });
+                    //
+                    popup.show();
                 }
             });
         }
@@ -333,6 +374,20 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         trail_List.setAdapter(trail_Adapter);
         //https://stackoverflow.com/questions/4834750/how-to-get-the-selected-item-from-listview
         //from xandy's answer Jan 29 '11 at 2:57*/
+    }
+
+    private void chooseIgnore(int id, Trails newtrail) {
+        if (id == R.id.ignoreOpt){
+            Toast.makeText(getApplicationContext(),"Trail Ignored! Click again for Undo",Toast.LENGTH_SHORT).show();
+            newtrail.setIgnoreCondition(true);
+            ignoreCheck = true;
+            boolean addResult = TrailsDatabaseController.modify_Trails("Trails", newtrail);
+        }else if(id == R.id.UndoOpt){
+            Toast.makeText(getApplicationContext(),"Trail Un-Ignored!",Toast.LENGTH_SHORT).show();
+            newtrail.setIgnoreCondition(false);
+            ignoreCheck = false;
+            boolean addResult = TrailsDatabaseController.modify_Trails("Trails", newtrail);
+        }
     }
 
 
@@ -476,7 +531,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             return true;
         }else if (id == R.id.HelpOpt){
             //tips for user
-            Toast.makeText(getApplicationContext(),"Welcome! Please note: Long Click item for deleting Short Click item for editting",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Welcome! Please note: Long Click item for deleting Short Click item for editing",Toast.LENGTH_SHORT).show();
             //Toast.makeText(getApplicationContext(),trails_DataList.toString(),Toast.LENGTH_SHORT).show();
             return true;
         }

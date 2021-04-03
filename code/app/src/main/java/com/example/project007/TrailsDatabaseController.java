@@ -86,6 +86,7 @@ public class TrailsDatabaseController {
             data.put("longitude", null);
             data.put("latitude", null);
         }
+        data.put("IgnoreCondition", String.valueOf(trails.isIgnoreCondition()));
 
 
 

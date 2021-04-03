@@ -51,6 +51,7 @@ public class AddBinoTrailFragment extends Fragment {
     private TextView longitude;
     private Location location;
     private boolean needLocation;
+    private boolean ignorance;
 
 
 
@@ -93,10 +94,10 @@ public class AddBinoTrailFragment extends Fragment {
         Location location = trails.getLocation();
 
 
-        if (!success.matches("[0-9]+") & !success.equals("")){
+        if (!success.matches("[0-9]+") || !success.equals("")){
             Toast.makeText(getActivity(),"Input success count plz!",Toast.LENGTH_SHORT).show();
             return false;
-        }else if(!fail.matches("[0-9]+")& !fail.equals("")){
+        }else if(!fail.matches("[0-9]+")|| !fail.equals("")){
             Toast.makeText(getActivity(),"Input failure count plz!",Toast.LENGTH_SHORT).show();
             return false;
         }else if (Trail_title.equals("")){
@@ -184,8 +185,9 @@ public class AddBinoTrailFragment extends Fragment {
 
 
                     Toast.makeText(getActivity(),"location selected!",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity(),"NO location selected!",Toast.LENGTH_SHORT).show();
                 }
-                //Toast.makeText(getActivity(),"NO location selected!",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -240,9 +242,9 @@ public class AddBinoTrailFragment extends Fragment {
 
 
                     if (!needLocation){
-                        Trails trails = new Trails(title_info, date_info, type_info, time_info, success_info, fail_info, ID);
+                        Trails trails = new Trails(title_info, date_info, type_info, time_info, success_info, fail_info, ID, ignorance);
                     }
-                    Trails trails = new Trails(title_info, date_info, type_info, time_info, success_info, fail_info, ID, location);
+                    Trails trails = new Trails(title_info, date_info, type_info, time_info, success_info, fail_info, ID, location, ignorance);
                     //error prone
                     if (checkText(trails)){
                         listener.sending_data(trails);

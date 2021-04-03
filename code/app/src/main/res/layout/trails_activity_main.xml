@@ -142,8 +142,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Region: "
                 android:paddingStart="10dp"
+                android:text="Region: "
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -151,7 +151,6 @@
             <TextView
                 android:id="@+id/region"
                 android:layout_width="100dp"
-                android:layout_marginStart="40dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/details"
                 android:textSize="20sp" />
@@ -167,12 +166,12 @@
 
             <TextView
                 android:id="@+id/minimumTrails"
-                android:layout_width="20dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:paddingStart="20dp"
                 android:paddingEnd="10dp"
                 android:textColor="@color/details"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
 
 
@@ -187,19 +186,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date: "
                 android:paddingStart="10dp"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:text="Date: "
                 android:textColor="@color/black"
-                android:layout_marginEnd="10dp"/>
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
 
             <TextView
                 android:id="@+id/date"
-                android:layout_width="110dp"
+                android:layout_width="123dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
                 android:textColor="@color/details"
                 android:textSize="20sp" />
 

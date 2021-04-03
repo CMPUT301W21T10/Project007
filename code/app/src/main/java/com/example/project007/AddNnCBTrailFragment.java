@@ -35,6 +35,7 @@ public class AddNnCBTrailFragment extends Fragment {
     private Location location;
     private boolean needLocation;
     private String type;
+    private boolean ignorance;
 
     //https://stackoverflow.com/questions/37121091/passing-data-from-activity-to-fragment-using-interface
     //Answered by Masum at May 9 '16 at 17:57
@@ -72,12 +73,12 @@ public class AddNnCBTrailFragment extends Fragment {
 
 
         if (type.equals("Measurement")){
-            if (!NnCBData_info.matches("([0-9]*[.])[0-9]+")){
+            if (!NnCBData_info.equals("") || !NnCBData_info.matches("([0-9]*[.])[0-9]+")){
                 Toast.makeText(getActivity(),"Input a positive float number plz!",Toast.LENGTH_SHORT).show();
                 return false;
             }
         }else if (!type.equals("Measurement")&!type.equals("Binomial")){
-            if (!NnCBData_info.matches("[0-9]+") & !NnCBData_info.equals("")){
+            if (!NnCBData_info.equals("") ||!NnCBData_info.matches("[0-9]+")){
                 Toast.makeText(getActivity(),"Input int number plz!",Toast.LENGTH_SHORT).show();
                 return false;
             }
@@ -163,8 +164,9 @@ public class AddNnCBTrailFragment extends Fragment {
                     longitude.setText(String.valueOf(location.getLongitude()));
 
                     Toast.makeText(getActivity(),"location selected!",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity(),"NO location selected!",Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(getActivity(),"NO location selected!",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -217,9 +219,9 @@ public class AddNnCBTrailFragment extends Fragment {
                     String NnCBData_info = NnCBData.getText().toString();
                     //temp written as this
                     if (!needLocation){
-                        Trails trails = new Trails(title_info, date_info, type, time_info, NnCBData_info, ID);
+                        Trails trails = new Trails(title_info, date_info, type, time_info, NnCBData_info, ID, ignorance);
                     }
-                    Trails trails = new Trails(title_info, date_info, type, time_info, NnCBData_info, ID, location);
+                    Trails trails = new Trails(title_info, date_info, type, time_info, NnCBData_info, ID, location, ignorance);
 
                     //error prone
                     if (checkText(trails)){
