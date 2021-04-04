@@ -29,6 +29,7 @@ public class AddNnCBTrailFragment extends Fragment {
     private EditText NnCBData;
     private EditText time_generate;
     private Integer ID = null;
+    private String UserId = null;
     private AddBinoTrailFragment.FragmentInteractionListener listener;
     private TextView latitude;
     private TextView longitude;
@@ -219,9 +220,9 @@ public class AddNnCBTrailFragment extends Fragment {
                     String NnCBData_info = NnCBData.getText().toString();
                     //temp written as this
                     if (!needLocation){
-                        Trails trails = new Trails(title_info, date_info, type, time_info, NnCBData_info, ID, ignorance);
+                        Trails trails = new Trails(title_info, date_info, type, time_info, NnCBData_info, ID, ignorance, UserId);
                     }
-                    Trails trails = new Trails(title_info, date_info, type, time_info, NnCBData_info, ID, location, ignorance);
+                    Trails trails = new Trails(title_info, date_info, type, time_info, NnCBData_info, ID, location, ignorance, UserId);
 
                     //error prone
                     if (checkText(trails)){

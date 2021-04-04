@@ -10,11 +10,19 @@ public class Trails implements Serializable {
     private String success;
     private String failure;
     private String VariesData;
+    private String UserId;
     private Integer ID;
     private Location location;
     private boolean ignoreCondition;
 
 
+    public String getUserId() {
+        return UserId;
+    }
+
+    public void setUserId(String userId) {
+        UserId = userId;
+    }
 
     public boolean isIgnoreCondition() {
         return ignoreCondition;
@@ -33,7 +41,7 @@ public class Trails implements Serializable {
     }
 
     //for Binomial Trails w.o location
-    public Trails(String trail_title, String date, String type, String time, String success, String failure, Integer ID, boolean ignoreCondition) {
+    public Trails(String trail_title, String date, String type, String time, String success, String failure, Integer ID, boolean ignoreCondition, String UserId) {
         this.trail_title = trail_title;
         this.date = date;
         this.type = type;
@@ -47,10 +55,15 @@ public class Trails implements Serializable {
             this.ID = TrailsDatabaseController.generateTrailsId();
         }
         this.ignoreCondition = ignoreCondition;
+        if (UserId != null){
+            this.UserId = UserId;
+        }else{
+            this.UserId = DatabaseController.getUserId();
+        }
     }
 
     //for Binomial Trails w/ location
-    public Trails(String trail_title, String date, String type, String time, String success, String failure, Integer ID, Location location,  boolean ignoreCondition) {
+    public Trails(String trail_title, String date, String type, String time, String success, String failure, Integer ID, Location location,  boolean ignoreCondition, String UserId) {
         this.trail_title = trail_title;
         this.date = date;
         this.type = type;
@@ -65,10 +78,15 @@ public class Trails implements Serializable {
         }
         this.location = location;
         this.ignoreCondition = ignoreCondition;
+        if (UserId != null){
+            this.UserId = UserId;
+        }else{
+            this.UserId = DatabaseController.getUserId();
+        }
     }
 
     //for Three other Trails w.o location
-    public Trails(String trail_title, String date, String type, String time, String variesData, Integer ID, boolean ignoreCondition) {
+    public Trails(String trail_title, String date, String type, String time, String variesData, Integer ID, boolean ignoreCondition, String UserId) {
         this.trail_title = trail_title;
         this.date = date;
         this.type = type;
@@ -81,10 +99,15 @@ public class Trails implements Serializable {
             this.ID = TrailsDatabaseController.generateTrailsId();
         }
         this.ignoreCondition = ignoreCondition;
+        if (UserId != null){
+            this.UserId = UserId;
+        }else{
+            this.UserId = DatabaseController.getUserId();
+        }
     }
 
     //for Three other Trails w/ location
-    public Trails(String trail_title, String date, String type, String time, String variesData, Integer ID, Location location, boolean ignoreCondition) {
+    public Trails(String trail_title, String date, String type, String time, String variesData, Integer ID, Location location, boolean ignoreCondition, String UserId) {
         this.trail_title = trail_title;
         this.date = date;
         this.type = type;
@@ -98,6 +121,11 @@ public class Trails implements Serializable {
         }
         this.location = location;
         this.ignoreCondition = ignoreCondition;
+        if (UserId != null){
+            this.UserId = UserId;
+        }else{
+            this.UserId = DatabaseController.getUserId();
+        }
     }
 
     public String getTrail_title() {
