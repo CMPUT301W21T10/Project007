@@ -16,12 +16,7 @@
     answered by Hesam May 21 '13 at 5:04
     -->
 
-    <FrameLayout
-        android:id="@+id/empty_container"
-        android:layout_width="match_parent"
-        android:layout_height="58dp">
 
-    </FrameLayout>
 
     <EditText
         android:id="@+id/trail_Title_editText"
@@ -45,8 +40,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Click here to select date"
+            android:hint="Click to select date"
             android:inputType="textPersonName"
+            android:textSize="20dp"
             android:maxLength="25" />
 
         <EditText
@@ -128,7 +124,7 @@
     <FrameLayout
         android:id="@+id/map_container"
         android:layout_width="match_parent"
-        android:layout_height="353dp">
+        android:layout_height="375dp">
 
     </FrameLayout>
 

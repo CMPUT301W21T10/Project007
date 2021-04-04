@@ -27,8 +27,10 @@ import androidx.fragment.app.DialogFragment;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -96,6 +98,10 @@ public class ModifyExperimentFragment extends DialogFragment{
             condition = currentExperiment.isCondition();
         }
 
+        //auto set date
+        SimpleDateFormat dateF = new SimpleDateFormat("yyyy-M-d", Locale.getDefault());
+        String date = dateF.format(Calendar.getInstance().getTime());
+        experimentDate.setText(date);
         // datePicker part
         // prevent type
         experimentDate.setInputType(InputType.TYPE_NULL);

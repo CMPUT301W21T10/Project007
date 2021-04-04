@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ public class TrailList_OtherFrags extends ArrayAdapter<Trails> {
         TextView time = view.findViewById(R.id.time_text);
         TextView variesData = view.findViewById(R.id.result_text);
         TextView location = view.findViewById(R.id.Location_text);
+        ImageView ignore = view.findViewById(R.id.ignoreImg);
 
         if (displayLoc!=null){
             String LocString = String.valueOf(displayLoc.getLatitude()) + ":" + String.valueOf(displayLoc.getLongitude());
@@ -42,6 +44,14 @@ public class TrailList_OtherFrags extends ArrayAdapter<Trails> {
         date.setText(trail.getDate());
         time.setText(trail.getTime());
         variesData.setText(trail.getVariesData());
+
+        //if ignore shows the mark on that item
+        boolean ignoreConditon = trail.isIgnoreCondition();
+        if (ignoreConditon){
+            ignore.setImageResource(R.drawable.crossimages);
+        }else{
+            ignore.setImageResource(R.drawable.checkimages);
+        }
 
         return view;
     }

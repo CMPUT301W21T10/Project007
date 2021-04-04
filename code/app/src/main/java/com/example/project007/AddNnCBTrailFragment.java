@@ -28,13 +28,14 @@ public class AddNnCBTrailFragment extends Fragment {
     private EditText title;
     private EditText NnCBData;
     private EditText time_generate;
-    private Integer ID;
+    private Integer ID = null;
     private AddBinoTrailFragment.FragmentInteractionListener listener;
     private TextView latitude;
     private TextView longitude;
     private Location location;
     private boolean needLocation;
     private String type;
+    private boolean ignorance;
 
     //https://stackoverflow.com/questions/37121091/passing-data-from-activity-to-fragment-using-interface
     //Answered by Masum at May 9 '16 at 17:57
@@ -72,12 +73,12 @@ public class AddNnCBTrailFragment extends Fragment {
 
 
         if (type.equals("Measurement")){
-            if (!NnCBData_info.matches("([0-9]*[.])[0-9]+")){
+            if (NnCBData_info.equals("") || !NnCBData_info.matches("([0-9]*[.])[0-9]+")){
                 Toast.makeText(getActivity(),"Input a positive float number plz!",Toast.LENGTH_SHORT).show();
                 return false;
             }
         }else if (!type.equals("Measurement")&!type.equals("Binomial")){
-            if (!NnCBData_info.matches("[0-9]+") & !NnCBData_info.equals("")){
+            if (NnCBData_info.equals("") ||!NnCBData_info.matches("[0-9]+")){
                 Toast.makeText(getActivity(),"Input int number plz!",Toast.LENGTH_SHORT).show();
                 return false;
             }
@@ -163,17 +164,22 @@ public class AddNnCBTrailFragment extends Fragment {
                     longitude.setText(String.valueOf(location.getLongitude()));
 
                     Toast.makeText(getActivity(),"location selected!",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity(),"NO location selected!",Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(getActivity(),"NO location selected!",Toast.LENGTH_SHORT).show();
             }
         });
 
         //get local date and time and put it into the edittext
         SimpleDateFormat timeF = new SimpleDateFormat("HH:mm", Locale.getDefault());
         String time = timeF.format(Calendar.getInstance().getTime());
+        SimpleDateFormat dateF = new SimpleDateFormat("yyyy-M-d", Locale.getDefault());
+        String date = dateF.format(Calendar.getInstance().getTime());
         //https://stackoverflow.com/questions/21917107/automatic-date-and-time-in-edittext-android
         //answered by Smile2Life Feb 20
         time_generate.setText(time);
+        date_generate.setText(date);
+
 
 
         // datePicker part
@@ -213,9 +219,9 @@ public class AddNnCBTrailFragment extends Fragment {
                     String NnCBData_info = NnCBData.getText().toString();
                     //temp written as this
                     if (!needLocation){
-                        Trails trails = new Trails(title_info, date_info, type, time_info, NnCBData_info, ID);
+                        Trails trails = new Trails(title_info, date_info, type, time_info, NnCBData_info, ID, ignorance);
                     }
-                    Trails trails = new Trails(title_info, date_info, type, time_info, NnCBData_info, ID, location);
+                    Trails trails = new Trails(title_info, date_info, type, time_info, NnCBData_info, ID, location, ignorance);
 
                     //error prone
                     if (checkText(trails)){
@@ -232,8 +238,10 @@ public class AddNnCBTrailFragment extends Fragment {
             date_generate.setText(argument.getDate());
             time_generate.setText(argument.getTime());
             NnCBData.setText(argument.getVariesData());
-            if (needLocation){
-                Location oldLocation = argument.getLocation();
+            Integer id = argument.getID();
+            Location oldLocation = argument.getLocation();
+            if (oldLocation != null){
+                Toast.makeText(getActivity(),"need location is "+ needLocation,Toast.LENGTH_SHORT).show();
                 latitude.setText(String.valueOf(oldLocation.getLatitude()));
                 longitude.setText(String.valueOf(oldLocation.getLongitude()));
             }else{
@@ -255,6 +263,7 @@ public class AddNnCBTrailFragment extends Fragment {
                         argument.setDate(date_info);
                         argument.setTime(time_info);
                         argument.setSuccess(NnCBData_info);
+                        argument.setID(id);
                         if (needLocation){
                             argument.setLocation(location);
                         }

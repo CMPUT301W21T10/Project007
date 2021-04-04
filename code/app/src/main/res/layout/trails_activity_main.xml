@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_fff"
+    android:textColor="@color/white"
     tools:context=".TrailsActivity"
     >
 
@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/content"
+
         android:id="@+id/info"
         android:orientation="vertical">
 
@@ -41,7 +41,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/content"
                 android:paddingStart="2dp"
                 android:orientation="vertical">
 
@@ -71,7 +70,7 @@
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:background="@drawable/button"
-                        android:backgroundTint="@color/green"
+                        android:backgroundTint="@color/edit"
                         android:layout_marginEnd="5dp"
                         android:visibility="invisible"
                         android:layout_weight="0.1" />
@@ -83,7 +82,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="20sp"
                         android:background="@drawable/button"
-                        android:backgroundTint="@color/blue"
+                        android:backgroundTint="#FFE8D000"
                         android:layout_marginEnd="5dp"
                         android:visibility="invisible"
                         android:layout_weight="0.1"/>
@@ -118,6 +117,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Description: "
+                android:paddingStart="10dp"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
 
@@ -126,6 +127,7 @@
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/details"
                 android:textSize="20sp"/>
 
         </LinearLayout>
@@ -133,36 +135,45 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="2dp"
             android:orientation="horizontal">
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingStart="10dp"
                 android:text="Region: "
+                android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
-
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/region"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:layout_marginEnd="10dp"/>
+                android:textColor="@color/details"
+                android:textSize="20sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="right"
                 android:text="Minimum trials: "
+                android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
-
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/minimumTrails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"/>
+                android:paddingStart="20dp"
+                android:paddingEnd="10dp"
+                android:textColor="@color/details"
+                android:textSize="20sp" />
+
+
 
         </LinearLayout>
 
@@ -175,31 +186,35 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingStart="10dp"
                 android:text="Date: "
+                android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginEnd="10dp"/>
+                android:textStyle="bold" />
 
 
             <TextView
                 android:id="@+id/date"
-                android:layout_width="wrap_content"
+                android:layout_width="123dp"
                 android:layout_height="wrap_content"
-
-                android:textSize="20sp"/>
+                android:textColor="@color/details"
+                android:textSize="20sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Type: "
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
 
 
             <TextView
                 android:id="@+id/type"
-
+                android:textColor="@color/details"
                 android:layout_width="match_parent"
+                android:paddingEnd="10dp"
+                android:gravity="right"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"/>
 
@@ -227,26 +242,37 @@
         </LinearLayout!-->
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/trail_list"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        style="@style/dividedListStyle"
-        android:choiceMode="singleChoice"
+        android:layout_height="510dp"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/info"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/info"
-        tools:listitem="@android:layout/simple_list_item_1">
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    </ListView>
+        <ListView
+            android:id="@+id/trail_list"
+            style="@style/dividedListStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:choiceMode="singleChoice"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/info"
+            tools:listitem="@android:layout/simple_list_item_1"></ListView>
+    </LinearLayout>
+
+
 
     <FrameLayout
         android:id="@+id/data_container2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
