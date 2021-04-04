@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +40,7 @@ public class QuestionActivity extends AppCompatActivity {
     //Integer id;
     ArrayList<String> answer_id = new ArrayList<String>();
     Question question;
+    private Experiment experiment;
 
 
     @Override
@@ -57,13 +59,17 @@ public class QuestionActivity extends AppCompatActivity {
         final CollectionReference collectionReference = db.collection("Questions");
         //database for unique questions
 
+        //receive data from experiment
+        Intent intent = getIntent();
+        experiment = (Experiment) intent.getSerializableExtra("com.example.project007.INSTANCE");
+        //receive data from experiment
+
         addQuestionButton = findViewById(R.id.add_question_button);
         addQuestionEditText = findViewById(R.id.add_question_text);
 
         questionList = findViewById(R.id.question_list);
         questionDataList = new ArrayList<Question>();
         questionAdapter = new questionCustomList(this, questionDataList);
-
 
         questionList.setAdapter(questionAdapter);
 
@@ -82,7 +88,6 @@ public class QuestionActivity extends AppCompatActivity {
                         Log.d(TAG, String.valueOf(doc.getData().get("Question")));
                         String Question = (String) doc.getData().get("Question");
                         ArrayList<String> Answer_id = (ArrayList<String>)doc.getData().get("Answer_Id");
-
                         String idString = doc.getId();
                         Integer ID = Integer.parseInt(idString);
 
@@ -107,6 +112,11 @@ public class QuestionActivity extends AppCompatActivity {
                 final String questionName = addQuestionEditText.getText().toString();
                 if(questionName.length()>0) {
                     Question question = new Question(QuestionDatabaseController.generateQuestionId(), questionName, answer_id);
+                    //lock on question
+                    ArrayList<String> valueList = experiment.getQuestionId();
+                    valueList.add(experiment.getId().toString());
+                    DatabaseController.setExperimentQuestions(experiment.getId().toString(), valueList);
+                    //lock on answer
                     boolean addQuestion = QuestionDatabaseController.add_Question("Questions", question);
                     if (addQuestion){
                         Toast.makeText(getApplicationContext(), "Add Succeed", Toast.LENGTH_SHORT).show();
@@ -121,28 +131,7 @@ public class QuestionActivity extends AppCompatActivity {
 
         //Calling add frag
 
-        /*addQuestionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                final String questionName = addQuestionEditText.getText().toString();
-
-                if(questionName.length()>0) {
-                    Question question = new Question(id, questionName, answer_id);
-                    questionAdapter.add(question);
-                    boolean addQuestion = QuestionDatabaseController.add_Question("Questions", question);
-                    if (addQuestion){
-                        Toast.makeText(getApplicationContext(), "Add Succeed", Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                        Toast.makeText(getApplicationContext(), "Add Failed", Toast.LENGTH_SHORT).show();
-                    }
-                    addQuestionEditText.setText("");
-
-                }
-
-            }
-        });*/
 
         /**
          * click question to view answers

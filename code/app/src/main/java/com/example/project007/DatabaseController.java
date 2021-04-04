@@ -98,4 +98,9 @@ public class DatabaseController {
         docRef.update("subscriptionId", valueList2);
 
     }
+
+    public static void setExperimentQuestions(String id, ArrayList<String> valueList) {
+        DocumentReference docRef = db.collection("Experiments").document(id);
+        docRef.update("questionsId", valueList);
+    }
 }
