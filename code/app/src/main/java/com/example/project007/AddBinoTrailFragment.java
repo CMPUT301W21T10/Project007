@@ -46,6 +46,7 @@ public class AddBinoTrailFragment extends Fragment {
     private EditText fail;
     private EditText time_generate;
     private Integer ID = null;
+    private String UserId = null;
     private FragmentInteractionListener listener;
     private TextView latitude;
     private TextView longitude;
@@ -242,9 +243,9 @@ public class AddBinoTrailFragment extends Fragment {
 
 
                     if (!needLocation){
-                        Trails trails = new Trails(title_info, date_info, type_info, time_info, success_info, fail_info, ID, ignorance);
+                        Trails trails = new Trails(title_info, date_info, type_info, time_info, success_info, fail_info, ID, ignorance, UserId);
                     }
-                    Trails trails = new Trails(title_info, date_info, type_info, time_info, success_info, fail_info, ID, location, ignorance);
+                    Trails trails = new Trails(title_info, date_info, type_info, time_info, success_info, fail_info, ID, location, ignorance, UserId);
                     //error prone
                     if (checkText(trails)){
                         listener.sending_data(trails);
