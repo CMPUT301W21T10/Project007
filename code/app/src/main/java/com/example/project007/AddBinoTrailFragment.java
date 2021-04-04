@@ -1,8 +1,10 @@
 package com.example.project007;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -16,27 +18,43 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.protobuf.StringValue;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class AddBinoTrailFragment extends Fragment{
+public class AddBinoTrailFragment extends Fragment {
     private TextView date_generate;
     private EditText title;
     private EditText success;
     private EditText fail;
     private EditText time_generate;
-    private Integer ID;
+    private Integer ID = null;
     private FragmentInteractionListener listener;
     private TextView latitude;
     private TextView longitude;
     private Location location;
     private boolean needLocation;
+    private boolean ignorance;
+
+
+
 
 
     //https://stackoverflow.com/questions/37121091/passing-data-from-activity-to-fragment-using-interface
@@ -76,10 +94,10 @@ public class AddBinoTrailFragment extends Fragment{
         Location location = trails.getLocation();
 
 
-        if (!success.matches("[0-9]+") & !success.equals("")){
+        if (!success.matches("[0-9]+") || success.equals("")){
             Toast.makeText(getActivity(),"Input success count plz!",Toast.LENGTH_SHORT).show();
             return false;
-        }else if(!fail.matches("[0-9]+")& !fail.equals("")){
+        }else if(!fail.matches("[0-9]+")|| fail.equals("")){
             Toast.makeText(getActivity(),"Input failure count plz!",Toast.LENGTH_SHORT).show();
             return false;
         }else if (Trail_title.equals("")){
@@ -93,6 +111,7 @@ public class AddBinoTrailFragment extends Fragment{
         }
         //https://stackoverflow.com/questions/10770055/use-toast-inside-fragment by Senimii Jul 17 '13 at 14:26
     }
+
 
 
     @Override
@@ -135,6 +154,8 @@ public class AddBinoTrailFragment extends Fragment{
         longitude = view.findViewById(R.id.longitude_editText );
         Button okButton= view.findViewById(R.id.ok_pressed );
 
+
+
         //receive data from activity
         TrailsActivity activity = (TrailsActivity) getActivity();
         needLocation = activity.WhetherTrailsLoc();
@@ -164,18 +185,21 @@ public class AddBinoTrailFragment extends Fragment{
 
 
                     Toast.makeText(getActivity(),"location selected!",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity(),"NO location selected!",Toast.LENGTH_SHORT).show();
                 }
-                //Toast.makeText(getActivity(),"NO location selected!",Toast.LENGTH_SHORT).show();
             }
         });
 
         //get local date and time and put it into the edittext
         SimpleDateFormat timeF = new SimpleDateFormat("HH:mm", Locale.getDefault());
         String time = timeF.format(Calendar.getInstance().getTime());
+        SimpleDateFormat dateF = new SimpleDateFormat("yyyy-M-d", Locale.getDefault());
+        String date = dateF.format(Calendar.getInstance().getTime());
         //https://stackoverflow.com/questions/21917107/automatic-date-and-time-in-edittext-android
         //answered by Smile2Life Feb 20
         time_generate.setText(time);
-
+        date_generate.setText(date);
 
         // datePicker part
         // prevent type
@@ -218,9 +242,9 @@ public class AddBinoTrailFragment extends Fragment{
 
 
                     if (!needLocation){
-                        Trails trails = new Trails(title_info, date_info, type_info, time_info, success_info, fail_info, ID);
+                        Trails trails = new Trails(title_info, date_info, type_info, time_info, success_info, fail_info, ID, ignorance);
                     }
-                    Trails trails = new Trails(title_info, date_info, type_info, time_info, success_info, fail_info, ID, location);
+                    Trails trails = new Trails(title_info, date_info, type_info, time_info, success_info, fail_info, ID, location, ignorance);
                     //error prone
                     if (checkText(trails)){
                         listener.sending_data(trails);
@@ -237,8 +261,10 @@ public class AddBinoTrailFragment extends Fragment{
             time_generate.setText(argument.getTime());
             success.setText(argument.getSuccess());
             fail.setText(argument.getFailure());
-            if (needLocation){
-                Location oldLocation = argument.getLocation();
+            Integer id = argument.getID();
+            Location oldLocation = argument.getLocation();
+            if (oldLocation != null){
+                //Toast.makeText(getActivity(),"need location is "+ needLocation,Toast.LENGTH_SHORT).show();
                 latitude.setText(String.valueOf(oldLocation.getLatitude()));
                 longitude.setText(String.valueOf(oldLocation.getLongitude()));
             }else{
@@ -264,16 +290,20 @@ public class AddBinoTrailFragment extends Fragment{
                         argument.setTime(time_info);
                         argument.setSuccess(success_info);
                         argument.setFailure(fail_info);
+                        argument.setID(id);
                         if (needLocation){
                             argument.setLocation(location);
                         }
                         getParentFragmentManager().popBackStack();
                     }
-
                 }
             });
 
         }
         return view;
     }
+
+
+
+
 }
