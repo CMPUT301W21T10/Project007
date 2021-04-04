@@ -618,6 +618,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         return title;
     }
 
+
     public void openQuestionActivity() {
         Intent intent = new Intent(this, QuestionActivity.class);
         startActivity(intent);
