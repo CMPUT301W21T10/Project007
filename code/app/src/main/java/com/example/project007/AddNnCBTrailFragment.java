@@ -142,14 +142,16 @@ public class AddNnCBTrailFragment extends Fragment {
         needLocation = activity.WhetherTrailsLoc();
         type = activity.getTrailsType();
 
+        Fragment fragment = new MapFragment();
+        getChildFragmentManager().beginTransaction().replace(R.id.map_container, fragment).commit();
         if (!needLocation){
-            mapButton.setVisibility(View.INVISIBLE);
+            //mapButton.setVisibility(View.INVISIBLE);
             //if doesn't require the location
         }else{
             //initialize map content
-            Fragment fragment = new MapFragment();
-            getChildFragmentManager().beginTransaction().replace(R.id.map_container, fragment).commit();
-            Toast.makeText(getActivity(), "This trail require you to enter location data!",Toast.LENGTH_SHORT).show();
+            /*Fragment fragment = new MapFragment();
+            getChildFragmentManager().beginTransaction().replace(R.id.map_container, fragment).commit();*/
+            Toast.makeText(getActivity(), "This trail require you to enter location data!",Toast.LENGTH_LONG).show();
             //warn experimenter for location data acquire
         }
 
