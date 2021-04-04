@@ -226,6 +226,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         String longitude = (String) doc.getData().get("longitude");
                         String latitude = (String) doc.getData().get("latitude");
                         String ignore = (String)doc.getData().get("IgnoreCondition");
+                        String UserId = (String)doc.getData().get("UserId");
                         Location location;
 
                         boolean ignoreCondition = Boolean.valueOf(ignore);
@@ -245,19 +246,19 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         if (experiment.getTrailsId().contains(idString)) {
                             if (success == null) {//case for non-binomial trails
                                 if (location != null) {
-                                    trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID, location, ignoreCondition));
+                                    trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID, location, ignoreCondition, UserId));
                                     location_DataList.add(location);
                                     trailsTitle_DataList.add(trail_title);
                                 } else {
-                                    trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID, ignoreCondition));
+                                    trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID, ignoreCondition, UserId));
                                 }
                             } else if (variesData == null) {//case for binomial trails
                                 if (location != null) {
-                                    trails_DataList.add(new Trails(trail_title, date, type, time, success, failure, ID, location, ignoreCondition));
+                                    trails_DataList.add(new Trails(trail_title, date, type, time, success, failure, ID, location, ignoreCondition, UserId));
                                     location_DataList.add(location);
                                     trailsTitle_DataList.add(trail_title);
                                 } else {
-                                    trails_DataList.add(new Trails(trail_title, date, type, time, success, failure, ID, ignoreCondition));
+                                    trails_DataList.add(new Trails(trail_title, date, type, time, success, failure, ID, ignoreCondition, UserId));
                                 }
                             }
                         }
@@ -295,7 +296,9 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             int id = item.getItemId();
-                            chooseIgnore(id, newtrail);
+                            String databaseUserId = DatabaseController.getUserId();
+                            String experimentId = experiment.getUserId();
+                            chooseIgnore(id, newtrail, databaseUserId, experimentId);
                             trail_Adapter.notifyDataSetChanged();;
                             return false;
                         }
@@ -332,7 +335,11 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             int id = item.getItemId();
-                            chooseIgnore(id, newtrail);
+                            //String UserId = newtrail.getUserId();
+                            String databaseUserId = DatabaseController.getUserId();
+                            String experimentId = experiment.getUserId();
+                            //compare with experimenter id
+                            chooseIgnore(id, newtrail, databaseUserId, experimentId);
                             trail_Adapter.notifyDataSetChanged();;
                             return false;
                         }
@@ -376,17 +383,26 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         //from xandy's answer Jan 29 '11 at 2:57*/
     }
 
-    private void chooseIgnore(int id, Trails newtrail) {
+    private void chooseIgnore(int id, Trails newtrail, String remoteUserId, String localUserId) {
         if (id == R.id.ignoreOpt){
-            Toast.makeText(getApplicationContext(),"Trail Ignored! Click again for Undo",Toast.LENGTH_SHORT).show();
-            newtrail.setIgnoreCondition(true);
-            ignoreCheck = true;
-            boolean addResult = TrailsDatabaseController.modify_Trails("Trails", newtrail);
+            if (remoteUserId.matches(localUserId)){
+                Toast.makeText(getApplicationContext(),"Trail Ignored! Click again for Undo",Toast.LENGTH_SHORT).show();
+                newtrail.setIgnoreCondition(true);
+                ignoreCheck = true;
+                boolean addResult = TrailsDatabaseController.modify_Trails("Trails", newtrail);
+            }else{
+                Toast.makeText(getApplicationContext(),"Experimenter cannot Ignore Trails",Toast.LENGTH_SHORT).show();
+            }
+
         }else if(id == R.id.UndoOpt){
-            Toast.makeText(getApplicationContext(),"Trail Un-Ignored!",Toast.LENGTH_SHORT).show();
-            newtrail.setIgnoreCondition(false);
-            ignoreCheck = false;
-            boolean addResult = TrailsDatabaseController.modify_Trails("Trails", newtrail);
+            if (remoteUserId.matches(localUserId)){
+                Toast.makeText(getApplicationContext(),"Trail Un-Ignored!",Toast.LENGTH_SHORT).show();
+                newtrail.setIgnoreCondition(false);
+                ignoreCheck = false;
+                boolean addResult = TrailsDatabaseController.modify_Trails("Trails", newtrail);
+            }else{
+                Toast.makeText(getApplicationContext(),"Experimenter cannot Ignore Trails",Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

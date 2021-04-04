@@ -23,7 +23,7 @@ import static android.content.ContentValues.TAG;
 public class DatabaseController {
     @SuppressLint("StaticFieldLeak")
     private static FirebaseFirestore db;
-    private static String UserId;
+    private static String UserId;//get this in trails
     private static Integer maxExperimentId;
 
     public static Integer getMaxExperimentId() {
