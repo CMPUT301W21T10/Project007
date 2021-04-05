@@ -154,10 +154,10 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             case "Measurement":
                 imageView.setImageResource(R.drawable.m);
                 break;
-            case "Count":
+            case "Count-base":
                 imageView.setImageResource(R.drawable.c);
                 break;
-            case "IntCount":
+            case "Non-negative":
                 imageView.setImageResource(R.drawable.n);
                 break;
         }
