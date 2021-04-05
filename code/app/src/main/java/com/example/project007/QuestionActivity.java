@@ -40,7 +40,8 @@ public class QuestionActivity extends AppCompatActivity {
     //Integer id;
     ArrayList<String> answer_id = new ArrayList<String>();
     Question question;
-    private Experiment experiment;
+    String experimentId;
+    ArrayList<String> questionsId = new ArrayList<String>();
 
 
     @Override
@@ -61,7 +62,9 @@ public class QuestionActivity extends AppCompatActivity {
 
         //receive data from experiment
         Intent intent = getIntent();
-        experiment = (Experiment) intent.getSerializableExtra("com.example.project007.INSTANCE");
+        Bundle bundle = intent.getBundleExtra("experiment");
+        experimentId = bundle.getString("experimentId");
+        questionsId = bundle.getStringArrayList("questionsId");
         //receive data from experiment
 
         addQuestionButton = findViewById(R.id.add_question_button);
@@ -113,9 +116,9 @@ public class QuestionActivity extends AppCompatActivity {
                 if(questionName.length()>0) {
                     Question question = new Question(QuestionDatabaseController.generateQuestionId(), questionName, answer_id);
                     //lock on question
-                    ArrayList<String> valueList = experiment.getQuestionId();
-                    valueList.add(experiment.getId().toString());
-                    DatabaseController.setExperimentQuestions(experiment.getId().toString(), valueList);
+                    ArrayList<String> valueList = questionsId;
+                    valueList.add(experimentId);
+                    DatabaseController.setExperimentQuestions(experimentId, valueList);
                     //lock on answer
                     boolean addQuestion = QuestionDatabaseController.add_Question("Questions", question);
                     if (addQuestion){
