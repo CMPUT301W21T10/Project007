@@ -346,25 +346,32 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 //Delete event
-                Trails newtrail = trail_Adapter.getItem(position);
-                String idString = newtrail.getID().toString();
+                String databaseUserId = DatabaseController.getUserId();
+                String experimentId = experiment.getUserId();
+                if (databaseUserId.matches(experimentId)){
+                    Trails newtrail = trail_Adapter.getItem(position);
+                    String idString = newtrail.getID().toString();
 
-                ArrayList<String> temp =  experiment.getTrailsId();
-                for (int i = 0; i < temp.size(); i++) {
-                    if (temp.get(i).equals(idString)) {
-                        temp.remove(i);
+                    ArrayList<String> temp =  experiment.getTrailsId();
+                    for (int i = 0; i < temp.size(); i++) {
+                        if (temp.get(i).equals(idString)) {
+                            temp.remove(i);
+                        }
                     }
-                }
-                DatabaseController.setExperimentTrails(experiment.getId().toString(),temp,experiment.getSubscriptionId());
+                    DatabaseController.setExperimentTrails(experiment.getId().toString(),temp,experiment.getSubscriptionId());
 
-                trail_Adapter.notifyDataSetChanged();
+                    trail_Adapter.notifyDataSetChanged();
 
-                boolean deleteResult = TrailsDatabaseController.delete_Trails("Trails", newtrail);
-                if (deleteResult) {
-                    Toast.makeText(getApplicationContext(), "Delete Failed", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Delete Succeed", Toast.LENGTH_SHORT).show();
+                    boolean deleteResult = TrailsDatabaseController.delete_Trails("Trails", newtrail);
+                    if (deleteResult) {
+                        Toast.makeText(getApplicationContext(), "Delete Failed", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Delete Succeed", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(), "You don't have access to delete this trail", Toast.LENGTH_SHORT).show();
                 }
+
                 //revert logic
                 return false;
             }
