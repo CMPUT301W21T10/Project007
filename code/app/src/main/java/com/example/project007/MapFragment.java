@@ -38,6 +38,7 @@ public class MapFragment extends Fragment{
     double returnLongitude;
     double currentLat;
     double currentLong;
+    boolean needLocation;
 
 
 
@@ -62,15 +63,19 @@ public class MapFragment extends Fragment{
             public void onMapReady(GoogleMap googleMap) {
                 //receive data from activity
                 TrailsActivity activity = (TrailsActivity) getActivity();
-                currentLat = activity.sendCurrentLat();
-                currentLong = activity.sendCurrentLong();
-                //MarkerOptions marker = new MarkerOptions().position(new LatLng(currentLat, currentLong)).title("Current pos!");
-                LatLng currentLoc = new LatLng(currentLat, currentLong);
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 10));
-                googleMap.addMarker(new MarkerOptions().title("Current pos!").position(currentLoc));
-                //Toast.makeText(getActivity(),"Current location is " + currentLat + ":" + currentLong,Toast.LENGTH_SHORT).show();
-                Toast.makeText(getActivity(),"Current location selected by default!",Toast.LENGTH_SHORT).show();
-                sendFragResult(currentLong, currentLat);
+                needLocation = activity.WhetherTrailsLoc();
+                if(needLocation){
+                    currentLat = activity.sendCurrentLat();
+                    currentLong = activity.sendCurrentLong();
+                    //MarkerOptions marker = new MarkerOptions().position(new LatLng(currentLat, currentLong)).title("Current pos!");
+                    LatLng currentLoc = new LatLng(currentLat, currentLong);
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 10));
+                    googleMap.addMarker(new MarkerOptions().title("Current pos!").position(currentLoc));
+                    //Toast.makeText(getActivity(),"Current location is " + currentLat + ":" + currentLong,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Current location selected by default!",Toast.LENGTH_SHORT).show();
+                    sendFragResult(currentLong, currentLat);
+                }
+
                 googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     @Override
                     public void onMapClick(LatLng latLng) {

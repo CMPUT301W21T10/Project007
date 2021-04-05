@@ -163,13 +163,15 @@ public class AddBinoTrailFragment extends Fragment {
 
         Button mapButton = view.findViewById(R.id.map_button);
 
+        Fragment fragment = new MapFragment();
+        getChildFragmentManager().beginTransaction().replace(R.id.map_container, fragment).commit();
         if (!needLocation){
-            mapButton.setVisibility(View.INVISIBLE);
+            //mapButton.setVisibility(View.INVISIBLE);
             //if doesn't require the location
         }else{
             //initialize map content
-            Fragment fragment = new MapFragment();
-            getChildFragmentManager().beginTransaction().replace(R.id.map_container, fragment).commit();
+            /*Fragment fragment = new MapFragment();
+            getChildFragmentManager().beginTransaction().replace(R.id.map_container, fragment).commit();*/
             Toast.makeText(getActivity(), "This trail require you to enter location data!",Toast.LENGTH_SHORT).show();
             //warn experimenter for location data acquire
         }
