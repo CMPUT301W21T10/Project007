@@ -78,9 +78,9 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     private Integer position;
     boolean needLocation;
     String type;
-
     String description;
     String title;
+
 
     android.location.Location currrentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -279,7 +279,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 public void onClick(View v) {
                     //initialize fragment
                     addBinoTrailFragment = new AddBinoTrailFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.data_container, addBinoTrailFragment).addToBackStack(null).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.data_container2, addBinoTrailFragment).addToBackStack(null).commit();
                     //addButton.setVisibility(View.INVISIBLE);
                 }
             });
@@ -317,7 +317,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 public void onClick(View v) {
                     //initialize fragment
                     addNnCBTrailFragment = new AddNnCBTrailFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.data_container, addNnCBTrailFragment).addToBackStack(null).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.data_container2, addNnCBTrailFragment).addToBackStack(null).commit();
                 }
             });
             trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -547,7 +547,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             return true;
         }else if (id == R.id.HelpOpt){
             //tips for user
-            Toast.makeText(getApplicationContext(),"Welcome! Please note: Long Click item for deleting Short Click item for editing",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Welcome! Please note: Long Click item for item deleting~",Toast.LENGTH_SHORT).show();
             //Toast.makeText(getApplicationContext(),trails_DataList.toString(),Toast.LENGTH_SHORT).show();
             return true;
         }
