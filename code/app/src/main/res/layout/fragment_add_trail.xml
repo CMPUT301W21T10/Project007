@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:background="@android:color/white"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
 >
 
     <!--https://stackoverflow.com/questions/16575177/fragment-is-transparent-and-shows-activity-below/16595086
@@ -20,8 +20,12 @@
     <EditText
         android:id="@+id/trail_Title_editText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:ems="10"
+        android:textSize="16sp"
+        android:textColor="#000"
+        android:textColorHint="#707070"
+        android:background="@drawable/circle_et"
         android:hint="Trail Title?"
         android:inputType="textMultiLine|textCapSentences"
         android:lines="5"
@@ -32,11 +36,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:textColorHint="#707070"
+        android:background="@drawable/circle_et"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/date_editText"
-            android:layout_width="199dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Click to select date"
@@ -47,7 +54,11 @@
         <EditText
             android:id="@+id/time_editText"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:textColorHint="#707070"
+            android:background="@drawable/circle_et"
             android:ems="10"
             android:inputType="textPersonName"
             android:maxLength="10" />
@@ -62,13 +73,21 @@
         <EditText
             android:id="@+id/SuccessText"
             android:layout_width="200dp"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:textColorHint="#707070"
+            android:background="@drawable/circle_et"
             android:layout_height="match_parent"
             android:hint="Number Success" />
 
         <EditText
             android:id="@+id/failText"
             android:layout_width="191dp"
-            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:textColorHint="#707070"
+            android:background="@drawable/circle_et"
+            android:layout_height="50dp"
             android:hint="Number Fail" />
     </LinearLayout>
 
@@ -83,6 +102,9 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:maxLength="25"
+            android:textColor="#000"
+            android:textColorHint="#707070"
+            android:background="@drawable/circle_et"
             android:text="Latitude is: "
             android:textSize="20dp" />
 
@@ -91,6 +113,9 @@
             android:layout_width="267dp"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:textColor="#000"
+            android:textColorHint="#707070"
+            android:background="@drawable/circle_et"
             android:gravity="center_horizontal"
             android:maxLength="25"
             android:textSize="20dp" />
@@ -107,6 +132,9 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:maxLength="25"
+            android:textColor="#000"
+            android:textColorHint="#707070"
+            android:background="@drawable/circle_et"
             android:text="longitude is: "
             android:textSize="20dp" />
 
@@ -116,6 +144,9 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:maxLength="25"
+            android:textColor="#000"
+            android:textColorHint="#707070"
+            android:background="@drawable/circle_et"
             android:gravity="center_horizontal"
             android:textSize="20dp" />
     </LinearLayout>

@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -448,6 +450,19 @@ public class ResultFragment extends Fragment{
         arr.sort((p1, p2) -> p1.getTime().compareTo(p2.getTime()));
         return arr;
     }
+    //disable menu in frag
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+    }
+    //disable menu in frag
+
     /**
      * This method create a view to show the results and the plots.
      * The six numbers are the three quartile numbers and median and mean.
