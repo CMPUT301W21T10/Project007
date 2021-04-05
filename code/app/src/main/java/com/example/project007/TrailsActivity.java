@@ -620,10 +620,10 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
 
 
     public void openQuestionActivity() {
+        Bundle bundle = new Bundle();
+        Intent intent = new Intent(this, QuestionActivity.class);
         ArrayList<String> mockQuestionId = new ArrayList<String>();
         mockQuestionId.add("1");
-        Intent intent = new Intent(this, QuestionActivity.class);
-        Bundle bundle = new Bundle();
         bundle.putString("experimentId",experiment.getId().toString());
         if (experiment.getQuestionId() == null) {
             experiment.setQuestionId(mockQuestionId);
