@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -26,6 +28,18 @@ public class AllMapViewFragment extends Fragment {
     ArrayList<Location> locationArrayList;
     ArrayList<String> trailsTitleList;
 
+    //disable menu in frag
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+    }
+    //disable menu in frag
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +62,9 @@ public class AllMapViewFragment extends Fragment {
                 TrailsActivity activity = (TrailsActivity) getActivity();
                 locationArrayList = activity.sendLocationData();
                 trailsTitleList = activity.sendTrailsTitleData();
+                if(locationArrayList.size()==0){
+                    Toast.makeText(getActivity(),"Sorry, there are no location to show :(",Toast.LENGTH_SHORT).show();
+                }
                 for (int i = 0; i < locationArrayList.size(); i++){
                     Location location = locationArrayList.get(i);
                     String TrailsTitle = trailsTitleList.get(i);
