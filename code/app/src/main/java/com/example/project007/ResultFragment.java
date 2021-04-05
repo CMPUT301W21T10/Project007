@@ -41,7 +41,8 @@ import lecho.lib.hellocharts.view.LineChartView;
  * The six numbers are the three quartile numbers and median and mean.<br>
  * The two plots are the histogram and the linear chart run with the time.<br>
  *     </p>
- * @return view to show the result of the experiment.
+ * @return
+ * Return a view to show the result of the experiment.
  */
 
 public class ResultFragment extends Fragment{
@@ -78,7 +79,7 @@ public class ResultFragment extends Fragment{
     /**
      * This function calculate the quartiles, which includes three numbers.
      * @param val The double list of numbers.
-     * @return A double list which contains the three quartiles.
+     * @return Return a double list which contains the three quartiles.
      */
     public double[] Quartiles(double[] val) {
         double[] ans = new double[3];
@@ -117,7 +118,7 @@ public class ResultFragment extends Fragment{
     /**
      * This function calculate the average.
      * @param x A list of double type numbers.
-     * @return A double type number to show the average of the arraylist of numbers.
+     * @return Return a double type number to show the average of the arraylist of numbers.
      */
     private static double avg(double[] x) {
         double sum = 0;
@@ -140,7 +141,7 @@ public class ResultFragment extends Fragment{
      * The data includes six numbers,which are the three quartile numbers and median and mean.
      * @param argument Trails of the experiment.
      * @param activity From the TrailsActivity
-     * @return A list to represent the important information like quartiles, median, average, standard deviation and type, description, title of the experiement.
+     * @return Return a list to represent the important information like quartiles, median, average, standard deviation and type, description, title of the experiement.
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public ArrayList<String> CreateList(ArrayList<Trails> argument,TrailsActivity activity){
@@ -416,7 +417,7 @@ public class ResultFragment extends Fragment{
                 for (int j = 0; j < numSubcolumns; ++j) {
                     values.add(new SubcolumnValue(lu.get(i), ChartUtils.pickColor()));
                 }
-                String s = (lm.get(i)+"-"+lm.get(i+1));
+                @SuppressLint("DefaultLocale") String s = (String.format("%.2f",lm.get(i))+"-"+String.format("%.2f",lm.get(i+1)));
                 mAxisXValues.add(new AxisValue(i).setLabel(s));
                 Column column = new Column(values);
                 column.setHasLabels(hasLabels);
@@ -455,7 +456,7 @@ public class ResultFragment extends Fragment{
      * @param inflater load layout
      * @param container Gather views
      * @param savedInstanceState Save current data to avoid data loss.
-     * @return view
+     * @return Return a view, which shows the results of the experiments and the two plots.
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override

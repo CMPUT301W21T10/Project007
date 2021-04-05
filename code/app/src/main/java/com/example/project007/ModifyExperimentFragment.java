@@ -48,7 +48,7 @@ public class ModifyExperimentFragment extends DialogFragment{
 
     private String type = "None";
     public Experiment currentExperiment = null;
-    private final String[] types = {"Binomial", "Measurement", "Count","IntCount"};
+    private final String[] types = {"Count-based", "Binomial", "Non-negative","Measurement"};
     private boolean requireLocation = false;
     private Integer minimumTrails;
     private String region;
@@ -138,10 +138,10 @@ public class ModifyExperimentFragment extends DialogFragment{
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 type = types[position];
                 switch (type){
+                    case "Count-based": image.setImageResource(R.drawable.c); break;
                     case "Binomial": image.setImageResource(R.drawable.b); break;
+                    case "Non-negative": image.setImageResource(R.drawable.n); break;
                     case "Measurement": image.setImageResource(R.drawable.m); break;
-                    case "Count": image.setImageResource(R.drawable.c); break;
-                    case "IntCount": image.setImageResource(R.drawable.n); break;
                 }
             }
 
