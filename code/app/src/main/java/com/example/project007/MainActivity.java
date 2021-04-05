@@ -1,6 +1,7 @@
 package com.example.project007;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,8 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Action Search",  Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_scan:
-                Toast.makeText(this, "Action scan",  Toast.LENGTH_SHORT).show();
-                break;
+                startActivity(new Intent(MainActivity.this, ScanActivity.class));
             default:
                 break;
         }

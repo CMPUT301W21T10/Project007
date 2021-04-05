@@ -25,13 +25,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class QrcodeFragment extends Fragment {
+    public String testtype="null";
+    public String binomial_type="null";
+    public Trails trail;
 
-    static QrcodeFragment newInstance(Trails trails){
-        Bundle args = new Bundle();
-        args.putSerializable("result", trails);
-        QrcodeFragment fragment = new QrcodeFragment();
-        fragment.setArguments(args);
-        return fragment;
+    public QrcodeFragment(String testtype){
+        this.testtype=testtype;
+    }
+    public QrcodeFragment(){}
+    public QrcodeFragment(Trails trails,String testtype,String binomial_type ){
+        this.trail=trails;
+        this.testtype=testtype;
+        this.binomial_type=binomial_type;
     }
 
     /**
@@ -69,25 +74,44 @@ public class QrcodeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        String type;
-        String description;
-        String title;
-        TrailsActivity activity = (TrailsActivity) getActivity();
-        type = activity.getTrailsType();
-        description = activity.getDescription();
-        title = activity.getTitleName();
-        View view =inflater.inflate(R.layout.fragment_qrcode, container, false);
-        ImageView imageView = view.findViewById(R.id.image_zxing);
-        ArrayList<Trails> argument = (ArrayList<Trails>) getArguments().get("result");
-        ResultFragment resultFragment =new ResultFragment();
-        ArrayList<String> l;
-        l=resultFragment.CreateList(argument,activity);
-        String result = "\nType: "+ type+"\ndescription: "+description+"\nTitle:"+title+"\nQuartiles:"+l.get(0)+"｜"+l.get(1)+"｜"+l.get(2)+"\nMedian"+l.get(3)+"\nAverage"+l.get(4)+"/nStandardDiviation"+l.get(5);
-//        "Type: "+ l.get(6)+"\ndescription: "+l.get(7)+"\nTitle:"+l.get(8)+"
-        imageView.setImageBitmap(generateBitmap(result,250,250));
-        return view;
-
+        if (testtype.equals("experiment")) {
+            String type;
+            String description;
+            String title;
+            TrailsActivity activity = (TrailsActivity) getActivity();
+            type = activity.getTrailsType();
+            description = activity.getDescription();
+            title = activity.getTitleName();
+            View view = inflater.inflate(R.layout.fragment_qrcode, container, false);
+            ImageView imageView = view.findViewById(R.id.image_zxing);
+            ArrayList<Trails> argument = (ArrayList<Trails>) getArguments().get("result");
+            ResultFragment resultFragment = new ResultFragment();
+            ArrayList<String> l;
+            l = resultFragment.CreateList(argument, activity);
+            String result = "\nType: " + type + "\ndescription: " + description + "\nTitle:" + title + "\nQuartiles:" + l.get(0) + "｜" + l.get(1) + "｜" + l.get(2) + "\nMedian" + l.get(3) + "\nAverage" + l.get(4) + "/nStandardDiviation" + l.get(5);
+            //        "Type: "+ l.get(6)+"\ndescription: "+l.get(7)+"\nTitle:"+l.get(8)+"
+            imageView.setImageBitmap(generateBitmap(result, 250, 250));
+            return view;
+        } else {
+            View view = inflater.inflate(R.layout.fragment_qrcode, container, false);
+            ImageView imageView = view.findViewById(R.id.image_zxing);
+            String binotrail_result;
+            String trail_type;
+            String trail_result;
+            String ID=trail.getID().toString();
+            if (binomial_type.equals("success") || binomial_type.equals("failure")) {
+                binotrail_result = trail.getSuccess();
+                trail_type = trail.getType();
+                String result = "\nType: " + trail_type +" ID is: "+ ID+" " + binomial_type + ": " + binotrail_result;
+                imageView.setImageBitmap(generateBitmap(result, 250, 250));
+                return view;
+            } else {
+                trail_result = trail.getVariesData();
+                trail_type = trail.getType();
+                String result = "\nType: " + trail_type +" ID is: "+ ID+ " " + trail_type + ": " + trail_result;
+                imageView.setImageBitmap(generateBitmap(result, 250, 250));
+                return view;
+            }
+        }
     }
-
-
 }

@@ -3,6 +3,7 @@ package com.example.project007;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -78,6 +80,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     private Integer position;
     boolean needLocation;
     String type;
+    String binomial_type="null";
 
     String description;
     String title;
@@ -384,6 +387,9 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     }
 
     private void chooseIgnore(int id, Trails newtrail, String remoteUserId, String localUserId) {
+        final FirebaseFirestore db;
+        db = DatabaseController.getDb();
+        final CollectionReference collectionReference = db.collection("Trails");
         if (id == R.id.ignoreOpt){
             if (remoteUserId.matches(localUserId)){
                 Toast.makeText(getApplicationContext(),"Trail Ignored! Click again for Undo",Toast.LENGTH_SHORT).show();
@@ -403,7 +409,63 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             }else{
                 Toast.makeText(getApplicationContext(),"Experimenter cannot Ignore Trails",Toast.LENGTH_SHORT).show();
             }
+        }else if(id==R.id.QRcodeOpt) {
+            if (newtrail.getType().equals("Binomial")) {
+                showNormalDialog(newtrail);
+            } else {
+                qrcode = new QrcodeFragment(newtrail, "trail", binomial_type);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.data_container2, qrcode);
+                transaction.commit();
+            }
         }
+        else if(id==R.id.addBarcode){
+//            Intent intent = new Intent(this,ScanActivity.class);
+//            intent.putExtra("IsBarcode","true");
+//            startActivity(intent);
+            Toast toast = Toast.makeText(getApplicationContext(),"Under construction",Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        else if(id==R.id.deleteBarcode){
+//            Intent intent = new Intent(this,ScanActivity.class);
+//            intent.putExtra("IsBarcode","true");
+//            startActivity(intent);
+            Toast toast = Toast.makeText(getApplicationContext(),"Under construction",Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+    private void showNormalDialog(Trails newtrail){
+        /* @setMessage set message
+         */
+        final AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(TrailsActivity.this);
+        normalDialog.setTitle("Select Success or Failure type for generating qrcode.");
+        normalDialog.setPositiveButton("Success",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        binomial_type="success";
+                        qrcode=new QrcodeFragment(newtrail,"trail",binomial_type);
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                        transaction.replace(R.id.data_container2, qrcode);
+                        transaction.commit();
+                    }
+                });
+        normalDialog.setNegativeButton("Failure",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        binomial_type="failure";
+                        qrcode=new QrcodeFragment(newtrail,"trail",binomial_type);
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                        transaction.replace(R.id.data_container2, qrcode);
+                        transaction.commit();
+                    }
+                });
+        normalDialog.show();
     }
 
 
@@ -528,7 +590,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 Toast toast = Toast.makeText(getApplicationContext(),"There's no trails for this experiment!",Toast.LENGTH_SHORT);
                 toast.show();
             }else {
-                qrcode = new QrcodeFragment();
+                qrcode = new QrcodeFragment("experiment");
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.data_container2, qrcode);
