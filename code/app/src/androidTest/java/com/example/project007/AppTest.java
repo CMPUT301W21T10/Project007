@@ -65,29 +65,28 @@ public class AppTest {
         solo.clickOnView((FloatingActionButton) solo.getView(R.id.experimentBtn));
         solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail1");
         solo.enterText((EditText) solo.getView(R.id.ResultText), "10");
-        solo.getButton("OK");
+        solo.clickOnView(solo.getView(R.id.ok_pressed));
         //添加第二条count-base的trail
         solo.clickOnView((FloatingActionButton) solo.getView(R.id.experimentBtn));
         solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail2");
         solo.enterText((EditText) solo.getView(R.id.ResultText), "20");
-        solo.getButton("OK");
+        solo.clickOnView(solo.getView(R.id.ok_pressed));
         //添加第三条count-base的trail
         solo.clickOnView((FloatingActionButton) solo.getView(R.id.experimentBtn));
-        solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail2");
+        solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail3");
         solo.enterText((EditText) solo.getView(R.id.ResultText), "30");
-        solo.goBack();
-        solo.getButton("OK");
+        solo.clickOnView(solo.getView(R.id.ok_pressed));
         //测试results
-        solo.clickOnView(solo.getView(R.menu.menu_trails_activity),false);
-        solo.clickOnButton("View Result(Plots)");
+//        solo.clickOn(R.menu.menu_trails_activity);
+        solo.clickOnView(solo.getView(R.id.viewResult));
         sleep(3000);
         solo.scrollToBottom();
         sleep(3000);
         solo.goBack();
-        solo.clickOnButton("View All Location?");
+        solo.clickOnMenuItem("View All Location?");
         sleep(3000);
         solo.goBack();
-        solo.clickOnButton("Help/Tips");
+        solo.clickOnMenuItem("Help/Tips");
         solo.goBack();
 
         //添加Binomial
@@ -110,16 +109,19 @@ public class AppTest {
         solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail1");
         solo.enterText((EditText) solo.getView(R.id.SuccessText), "10");
         solo.enterText((EditText) solo.getView(R.id.failText), "10");
+        solo.clickOnView(solo.getView(R.id.ok_pressed));
         //添加第二条Binomial的trail
         solo.clickOnView((FloatingActionButton) solo.getView(R.id.experimentBtn));
-        solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail1");
+        solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail2");
         solo.enterText((EditText) solo.getView(R.id.SuccessText), "20");
         solo.enterText((EditText) solo.getView(R.id.failText), "10");
+        solo.clickOnView(solo.getView(R.id.ok_pressed));
         //添加第三条Binomial的trail
         solo.clickOnView((FloatingActionButton) solo.getView(R.id.experimentBtn));
-        solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail1");
+        solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail3");
         solo.enterText((EditText) solo.getView(R.id.SuccessText), "30");
         solo.enterText((EditText) solo.getView(R.id.failText), "10");
+        solo.clickOnView(solo.getView(R.id.ok_pressed));
         //测试results
         solo.clickOnView(solo.getView(R.menu.menu_trails_activity),false);
         solo.clickOnButton("View Result(Plots)");
@@ -147,14 +149,17 @@ public class AppTest {
         solo.clickOnView((FloatingActionButton) solo.getView(R.id.experimentBtn));
         solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail1");
         solo.enterText((EditText) solo.getView(R.id.ResultText), "10.0");
+        solo.clickOnView(solo.getView(R.id.ok_pressed));
         //添加第二条Non-negative的trail
         solo.clickOnView((FloatingActionButton) solo.getView(R.id.experimentBtn));
-        solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail1");
+        solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail2");
         solo.enterText((EditText) solo.getView(R.id.ResultText), "20");
+        solo.clickOnView(solo.getView(R.id.ok_pressed));
         //添加第三条Non-negative的trail
         solo.clickOnView((FloatingActionButton) solo.getView(R.id.experimentBtn));
-        solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail1");
+        solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail3");
         solo.enterText((EditText) solo.getView(R.id.ResultText), "30.0");
+        solo.clickOnView(solo.getView(R.id.ok_pressed));
         //测试results
         solo.clickOnView(solo.getView(R.menu.menu_trails_activity),false);
         solo.clickOnButton("View Result(Plots)");
@@ -182,14 +187,17 @@ public class AppTest {
         solo.clickOnView((FloatingActionButton) solo.getView(R.id.experimentBtn));
         solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail1");
         solo.enterText((EditText) solo.getView(R.id.ResultText), "10.0");
+        solo.clickOnView(solo.getView(R.id.ok_pressed));
         //添加第二条Measurement的trail
         solo.clickOnView((FloatingActionButton) solo.getView(R.id.experimentBtn));
-        solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail1");
+        solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail2");
         solo.enterText((EditText) solo.getView(R.id.ResultText), "20.0");
+        solo.clickOnView(solo.getView(R.id.ok_pressed));
         //添加第三条Measurement的trail
         solo.clickOnView((FloatingActionButton) solo.getView(R.id.experimentBtn));
-        solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail1");
+        solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail3");
         solo.enterText((EditText) solo.getView(R.id.ResultText), "30.0");
+        solo.clickOnView(solo.getView(R.id.ok_pressed));
         //测试results
         solo.clickOnView(solo.getView(R.menu.menu_trails_activity),false);
         solo.clickOnButton("View Result(Plots)");
@@ -200,28 +208,6 @@ public class AppTest {
 
         //测试长按的
         solo.clickLongOnView(view1);
-//
-//        //Testing Trails frags
-//        solo.clickOnView((FloatingActionButton) solo.getView(R.id.experimentBtn));
-//        solo.waitForView(R.id.ok_pressed);//now in the fragment
-//        solo.goBack();
-//        solo.assertCurrentActivity("Wrong Activity", TrailsActivity.class);
-//
-//        //Testing Results
-//        solo.clickOnView(solo.getView(R.id.viewResult));
-//        solo.goBack();
-//        solo.assertCurrentActivity("Wrong Activity", TrailsActivity.class);
-//
-//        //Testing QR
-//        solo.clickOnView(solo.getView(R.id.QROpt));
-//        solo.goBack();
-//        solo.assertCurrentActivity("Wrong Activity", TrailsActivity.class);
-//
-//        //Testing QR scan
-//        solo.clickOnView(solo.getView(R.id.ScanQROpt));
-//        solo.goBack();
-//        solo.assertCurrentActivity("Wrong Activity", TrailsActivity.class);
-//
     }
 
     @After
