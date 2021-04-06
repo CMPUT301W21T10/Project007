@@ -190,8 +190,12 @@ public class ResultFragment extends Fragment{
         return l;
     }
 
-
-
+    private double getRateOfSuccess(Trails t) {
+        double s = Double.parseDouble(t.getSuccess());
+        double f = Double.parseDouble(t.getFailure());
+        double m = s / (s + f);
+        return m;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private double[] getList(ArrayList<Trails> argument,String name){
@@ -199,7 +203,7 @@ public class ResultFragment extends Fragment{
         int l = 0;
         if(name.equals("Binomial")){
             for(Trails t : argument){
-                list.add(Double.parseDouble(t.getSuccess()));
+                list.add(getRateOfSuccess(t));
             }
         }else if(name.equals("Count-based")){
             for(Trails t : argument){
@@ -243,7 +247,7 @@ public class ResultFragment extends Fragment{
     private void resetViewport(ArrayList<Trails> argument,String name) {
         final Viewport v = new Viewport(lineChartView.getMaximumViewport());
         v.bottom = 0;
-        v.top = new Float(getMaxValue(getList(argument,name))+1.0);
+        v.top = new Float(getMaxValue(getList(argument,name))+0.2);
         v.left=0;
         v.right = numberOfPoints - 1;
         lineChartView.setMaximumViewport(v);
@@ -290,7 +294,7 @@ public class ResultFragment extends Fragment{
                 if (name.equals("Count-based")){
                     axisY.setName("quantity");
                 }else if(name.equals("Binomial")){
-                    axisY.setName("Number of Success");
+                    axisY.setName("Rate of Success");
                 }else {
                     axisY.setName("Mean");
                 }
@@ -321,6 +325,7 @@ public class ResultFragment extends Fragment{
         }
         return i;
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private double[] getNum(ArrayList<Trails> argument){
