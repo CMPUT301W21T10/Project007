@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:background="@color/main_color"
+    android:background="@drawable/button"
     android:orientation="vertical">
 
     <com.journeyapps.barcodescanner.DecoratedBarcodeView

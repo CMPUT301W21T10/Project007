@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:background="#FAF8ED"
     tools:context=".ui.home.ActionFragment"
     android:padding="20dp">
 

@@ -4,7 +4,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:fitsSystemWindows="true"
-
+android:background="@drawable/back"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
@@ -17,7 +17,7 @@ tools:context=".ui.subscription.SubscriptionFragment">
         android:padding="5dp"
         android:layout_marginBottom="20dp"
 
-        android:background="@drawable/block"
+        android:background="#63EAF7FF"
         >
 
         <LinearLayout
@@ -38,8 +38,9 @@ tools:context=".ui.subscription.SubscriptionFragment">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Subscription"
-                android:textSize="50sp"/>
+                android:text="  Subscription"
+                android:fontFamily="serif"
+                android:textSize="45sp"/>
         </LinearLayout>
 
         <ListView
@@ -53,7 +54,7 @@ tools:context=".ui.subscription.SubscriptionFragment">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/block"
+        android:background="#63EAF7FF"
         >
 
         <LinearLayout
@@ -73,8 +74,9 @@ tools:context=".ui.subscription.SubscriptionFragment">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Own"
-                android:textSize="50sp"/>
+                android:text="  Own"
+                android:fontFamily="serif"
+                android:textSize="45sp"/>
         </LinearLayout>
 
         <ListView
