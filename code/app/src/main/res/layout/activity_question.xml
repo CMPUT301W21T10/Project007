@@ -12,11 +12,7 @@
     <ListView
         android:id="@+id/question_list"
         android:layout_width="match_parent"
-        android:layout_height="620dp"
-        android:layout_marginBottom="115dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -26,41 +22,18 @@
         android:id="@+id/add_question_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="620dp"
-        android:layout_marginBottom="64dp"
-        android:ems="10"
         android:hint="Add Question Here"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/question_list"/>
+        app:layout_constraintBottom_toTopOf="@+id/add_question_button"/>
 
     <Button
         android:id="@+id/add_question_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="670dp"
-        android:layout_marginBottom="17dp"
-        android:text="Add Questions?"
+        android:text="Add Questions"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_question_text"/>
+        app:layout_constraintStart_toStartOf="parent"/>
 
-    <!--    this part has layout error if you want to change the button location plz note two button may lay on each other-->
-
-    <FrameLayout
-        android:id="@+id/container_answer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:elevation="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <!--https://stackoverflow.com/questions/16575177/fragment-is-transparent-and-shows-activity-below
-     answered by OmiD_D May 19 '20 at 8:04-->
 </androidx.constraintlayout.widget.ConstraintLayout>

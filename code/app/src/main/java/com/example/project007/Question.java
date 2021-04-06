@@ -10,14 +10,10 @@ public class Question implements Serializable {
     private ArrayList<String> answer_id;
 
 
-
+    Question(){ }
 
     Question(Integer id, String question, ArrayList<String> answer_id) {
-        if (id != null){
-            this.id = id;
-        }else{
-            this.id = QuestionDatabaseController.generateQuestionId();
-        }
+        this.id = id;
         this.question = question;
         this.answer_id = answer_id;
     }

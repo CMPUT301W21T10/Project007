@@ -20,8 +20,8 @@ public class QuestionDatabaseController {
 
     @SuppressLint("StaticFieldLeak")
     private static FirebaseFirestore question_db;
-    private static String UserId = "1";
-    private static Integer maxQuestionId=0;
+    private static String UserId;
+    private static Integer maxQuestionId = 0;
 
     public static FirebaseFirestore getQuestion_db() {
         return question_db;
@@ -58,6 +58,8 @@ public class QuestionDatabaseController {
 
         String idString = question.getId().toString();
         data.put("Question", question.getQuestion());
+        data.put("id", question.getId());
+
         if (question.getAnswer_id() != null){
             data.put("Answer_Id", question.getAnswer_id());
         }else{
