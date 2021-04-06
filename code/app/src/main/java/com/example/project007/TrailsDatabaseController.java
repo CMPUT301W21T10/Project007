@@ -63,6 +63,7 @@ public class TrailsDatabaseController {
         data.put("Time", trails.getTime());
         data.put("id", trails.getID().toString());
         data.put("UserId", trails.getUserId());
+        data.put(trails.getUserId(),null);
         if (trails.getSuccess()!=null){
             data.put("Success", trails.getSuccess());
         }else{
