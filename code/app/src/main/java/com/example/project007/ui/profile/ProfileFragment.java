@@ -207,6 +207,7 @@ public class ProfileFragment extends Fragment {
                                 userEntity.setUid(next.getKey());
                                 userEntity.setUsername(next.child("username").getValue().toString());
                                 temp.add(userEntity);
+
                             }
                         }
 

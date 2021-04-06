@@ -18,6 +18,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 /**
@@ -102,8 +108,22 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
 
         if (experimentUser != null){
             String userId = experiment.getUserId();
-            String userName = DatabaseController.getUserName(userId);
-            experimentUser.setText(userName);
+            experimentUser.setText("anonymity");
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+            reference.child("data").child(userId).child("username").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // How to return this value?
+                    if(dataSnapshot != null) {
+                        System.out.println(dataSnapshot.getValue(String.class));
+                        experimentUser.setText(dataSnapshot.getValue(String.class));
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {}
+            });
+
         }
 
         /*
