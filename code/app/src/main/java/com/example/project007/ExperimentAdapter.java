@@ -28,10 +28,7 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
 
     private final ArrayList<Experiment> experiments;
     private final Context context;
-    private Animation animation;  //删除时候的动画
-    private float downX;  //点下时候获取的x坐标
-    private float upX;   //手指离开时候的x坐标
-    private Button globalDelButton; //用于执行删除的button
+    private Animation animation;
 
     private View globalView;
 
@@ -39,7 +36,7 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
         super(context,0,experiments);
         this.experiments = experiments;
         this.context = context;
-        animation= AnimationUtils.loadAnimation(context, R.anim.push_out);  //用xml获取一个动画
+        animation= AnimationUtils.loadAnimation(context, R.anim.push_out);
 
     }
 
@@ -125,26 +122,26 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
                 }
 
                 if (delButton != null) {
-                    if (Math.abs(- downX + upX) > 300) {  //2次坐标的绝对值如果大于35，就认为是左右滑动
-                        delButton.setVisibility(View.VISIBLE);  //显示删除button
-                        globalDelButton = delButton;  //赋值给全局button，一会儿用
-                        globalView = v; //得到itemview，在上面加动画
-                        return true; //终止事件
+                    if (Math.abs(- downX + upX) > 300) {
+                        delButton.setVisibility(View.VISIBLE);
+                        globalDelButton = delButton;
+                        globalView = v;
+                        return true;
                     }
-                    return false;  //释放事件，使onitemClick可以执行
+                    return false;
                 }
                 return false;
             }
         });
 
-        delButton.setOnClickListener(new View.OnClickListener() {  //为button绑定事件
+        delButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
                 if (globalDelButton != null) {
-                    globalDelButton.setVisibility(View.GONE);  //点击删除按钮后，影藏按钮
-                    deleteItem(globalView, position);   //删除数据，加动画
+                    globalDelButton.setVisibility(View.GONE);
+                    deleteItem(globalView, position);
                 }
 
             }
@@ -157,7 +154,7 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
 
     public void deleteItem(View view,final int position)
     {
-        view.startAnimation(animation);  //给view设置动画
+        view.startAnimation(animation);
         animation.setAnimationListener(new Animation.AnimationListener() {
 
             @Override
@@ -168,10 +165,10 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
             }
 
             @Override
-            public void onAnimationEnd(Animation animation) { //动画执行完毕
+            public void onAnimationEnd(Animation animation) {
                 Experiment instance = experiments.get(position);
                 DatabaseController.deleteExperiment(instance);
-                experiments.remove(position);  //把数据源里面相应数据删除
+                experiments.remove(position);
                 notifyDataSetChanged();
             }
         });

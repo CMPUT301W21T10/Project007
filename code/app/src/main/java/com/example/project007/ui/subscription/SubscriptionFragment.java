@@ -74,6 +74,7 @@ public class SubscriptionFragment extends Fragment {
         experimentList.setAdapter(experimentAdapter);
 
         experimentList2 = root.findViewById(R.id.own_list);
+        experimentList2.setAdapter(experimentAdapter2);
 
         final FirebaseFirestore db;
         db = DatabaseController.getDb();
@@ -107,6 +108,7 @@ public class SubscriptionFragment extends Fragment {
 
                     }
                     experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
+                    experimentAdapter2.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
                 }
             }
         });
@@ -114,6 +116,17 @@ public class SubscriptionFragment extends Fragment {
         // listener to access detail of an element
         // package an experiment and position info in intent
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), TrailsActivity.class);
+                Experiment instanceExperiment = experimentDataList.get(position);
+                intent.putExtra("com.example.project007.INSTANCE", instanceExperiment);
+                intent.putExtra("com.example.project007.POSITION", position);
+                startActivity(intent);
+            }
+        });
+
+        experimentList2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), TrailsActivity.class);
