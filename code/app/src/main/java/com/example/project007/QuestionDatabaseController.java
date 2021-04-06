@@ -57,7 +57,7 @@ public class QuestionDatabaseController {
         HashMap<String, Object> data = new HashMap<>();
 
         String idString = question.getId().toString();
-        data.put("Question", question.getQuestion());
+        data.put("question", question.getQuestion());
         data.put("id", question.getId());
 
         if (question.getAnswer_id() != null){
