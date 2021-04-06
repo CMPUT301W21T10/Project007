@@ -61,7 +61,7 @@ public class QuestionDatabaseController {
         if (question.getAnswer_id() != null){
             data.put("Answer_Id", question.getAnswer_id());
         }else{
-            data.put("Answer_Id",new ArrayList<String>());
+            data.put("Answer_Id", null);
         }
 
         final boolean[] condition = new boolean[1];
@@ -131,7 +131,7 @@ public class QuestionDatabaseController {
      * Return Void
      */
     public static boolean setQuestionanswer(String id, ArrayList<String> valueList){
-        DocumentReference docRef = question_db.collection("Question").document(id);
+        DocumentReference docRef = question_db.collection("Questions").document(id);
         docRef.update("Answer_Id", valueList);
         return true;
     }

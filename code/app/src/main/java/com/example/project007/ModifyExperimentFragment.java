@@ -54,6 +54,7 @@ public class ModifyExperimentFragment extends DialogFragment{
     private String region;
     private Integer id = null;
     private ArrayList<String> trailsId = null;
+    private ArrayList<String> questionId = null;
     private ArrayList<String> subscriptionId = null;
     private boolean condition = true;
     private boolean publishCondition = false;
@@ -98,6 +99,7 @@ public class ModifyExperimentFragment extends DialogFragment{
             subscriptionId = currentExperiment.getSubscriptionId();
             condition = currentExperiment.isCondition();
             publishCondition = currentExperiment.isPublishCondition();
+            questionId = currentExperiment.getQuestionId();
         }
 
         //auto set date
@@ -185,7 +187,7 @@ public class ModifyExperimentFragment extends DialogFragment{
                     Bundle result = new Bundle();
                     result.putSerializable("com.example.project007.modifiedExperiment",
                             new Experiment(name,description,date,type,id,trailsId,
-                                    subscriptionId,requireLocation,condition,minimumTrails,region,publishCondition) );
+                                    subscriptionId,requireLocation,condition,minimumTrails,region,publishCondition,questionId) );
                     getParentFragmentManager().setFragmentResult("homeRequest", result);
                     alertDialog.dismiss();
                 }

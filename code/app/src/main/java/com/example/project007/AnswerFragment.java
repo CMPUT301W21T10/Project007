@@ -116,7 +116,7 @@ public class AnswerFragment extends Fragment {
         //fire store uploading
 
         /**
-         * delete answer by long click answer
+         * add answer by click the button
          */
         addAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override

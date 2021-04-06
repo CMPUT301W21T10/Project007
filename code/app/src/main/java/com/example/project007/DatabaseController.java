@@ -172,4 +172,10 @@ public class DatabaseController {
         return userName[0];
         */
 
+
+    public static void setExperimentQuestions(String id, ArrayList<String> valueList) {
+        DocumentReference docRef = db.collection("Experiments").document(id);
+        docRef.update("questionsId", valueList);
+    }
+
 }
