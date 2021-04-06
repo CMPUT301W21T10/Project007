@@ -166,10 +166,10 @@ public class QuestionActivity extends AppCompatActivity {
                     //lock on answer
                     boolean addQuestion = QuestionDatabaseController.add_Question("Questions", question);
                     if (addQuestion){
-                        Toast.makeText(getApplicationContext(), "Add Succeed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Add Failed", Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        Toast.makeText(getApplicationContext(), "Add Failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Add Succeed", Toast.LENGTH_SHORT).show();
                     }
                     addQuestionEditText.setText("");
                 }
@@ -199,25 +199,32 @@ public class QuestionActivity extends AppCompatActivity {
         questionList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                String databaseUserId = DatabaseController.getUserId();
+                String experimentId = experiment.getUserId();
+                if (databaseUserId.matches(experimentId)){
+                    Question question = questionAdapter.getItem(position);
+                    String idString = question.getId().toString();
 
-                Question question = questionAdapter.getItem(position);
-                String idString = question.getId().toString();
-
-                ArrayList<String> temp =  experiment.getTrailsId();
-                for (int i = 0; i < temp.size(); i++) {
-                    if (temp.get(i).equals(idString)) {
-                        temp.remove(i);
+                    ArrayList<String> temp =  experiment.getTrailsId();
+                    for (int i = 0; i < temp.size(); i++) {
+                        if (temp.get(i).equals(idString)) {
+                            temp.remove(i);
+                        }
                     }
+                    DatabaseController.setExperimentQuestions(experiment.getId().toString(), temp);
+                    boolean deleteQuestion = QuestionDatabaseController.delete_Question("Questions", question);
+                    questionAdapter.notifyDataSetChanged();
+                    if (deleteQuestion){
+                        Toast.makeText(getApplicationContext(), "Delete Failed", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Delete Succeed", Toast.LENGTH_SHORT).show();
+                    }
+                    Toast.makeText(getApplicationContext(), "Access granted！", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Oops, you have no access to delete this question", Toast.LENGTH_SHORT).show();
                 }
-                DatabaseController.setExperimentQuestions(experiment.getId().toString(), temp);
-                boolean deleteQuestion = QuestionDatabaseController.delete_Question("Questions", question);
-                questionAdapter.notifyDataSetChanged();
-                if (deleteQuestion){
-                    Toast.makeText(getApplicationContext(), "Delete Succeed", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "Delete Failed", Toast.LENGTH_SHORT).show();
-                }
+
                 return true;
             }
         });
