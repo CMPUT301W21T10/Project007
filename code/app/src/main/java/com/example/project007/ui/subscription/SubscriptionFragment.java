@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.Observer;
@@ -22,8 +23,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.project007.DatabaseController;
 import com.example.project007.Experiment;
 import com.example.project007.ExperimentAdapter;
+import com.example.project007.ModifyExperimentFragment;
 import com.example.project007.R;
 import com.example.project007.TrailsActivity;
+import com.example.project007.ui.home.ActionFragment;
 import com.example.project007.ui.home.HomeViewModel;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -53,6 +56,7 @@ public class SubscriptionFragment extends Fragment {
     private ArrayList<Experiment> experimentDataList;
     private ArrayList<Experiment> experimentDataList2;
     final String TAG = "Sample";
+    private Integer savedPosition;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +66,59 @@ public class SubscriptionFragment extends Fragment {
 
         experimentAdapter = new ExperimentAdapter(this.getContext(), experimentDataList);
         experimentAdapter2 = new ExperimentAdapter(this.getContext(), experimentDataList2);
+
+
+        getChildFragmentManager()
+                .setFragmentResultListener("actionRequest", this, new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
+                        // Do something with the result
+                        Fragment prev = getChildFragmentManager().findFragmentByTag("requireAction");
+                        if (prev != null) {
+                            DialogFragment df = (DialogFragment) prev;
+                            df.dismiss();
+                        }
+
+                        String action = bundle.getString("action");
+                        Experiment instance = experimentDataList2.get(savedPosition);
+
+                        switch (action){
+                            case "publish":
+                                instance.setPublishCondition(!instance.isPublishCondition());
+                                break;
+
+                            case "edit":
+                                new ModifyExperimentFragment(experimentDataList2.get(savedPosition)).show(getChildFragmentManager(), "EDIT_EXPERIMENT");
+                                Toast.makeText(getActivity(), "edit Succeed", Toast.LENGTH_SHORT).show();
+                                break;
+
+                            case "delete":
+                                DatabaseController.deleteExperiment(instance);
+                                Toast.makeText(getActivity(), "delete Succeed", Toast.LENGTH_SHORT).show();
+
+                                break;
+
+                            case "end":
+                                if (instance.isCondition()){
+                                    Integer minimum = instance.getMinimumTrails();
+
+                                    if (instance.getTrailsId().size() >= minimum){
+                                        instance.setCondition(false);
+                                        Toast.makeText(getActivity(), "end Succeed", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else{
+                                        Toast.makeText(getActivity(), "do not satisfy minimum trails", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                else{
+                                    Toast.makeText(getActivity(), "Already end", Toast.LENGTH_SHORT).show();
+                                }
+                                break;
+                        }
+
+
+                    }
+                });
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -136,6 +193,29 @@ public class SubscriptionFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        experimentList2.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Experiment instance = experimentDataList.get(position);
+
+                if (DatabaseController.getUserId().equals(instance.getUserId())) {
+                    savedPosition = position;
+                    DatabaseController.setPublish(instance.isPublishCondition());
+                    new ActionFragment().show(getChildFragmentManager(), "requireAction");
+                }
+                else {
+                    Toast.makeText(getActivity(), "You are not the owner", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                return true;
+            }
+        });
+
+
         return root;
     }
+
+
 }

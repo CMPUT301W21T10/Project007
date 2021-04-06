@@ -32,7 +32,15 @@ public class DatabaseController {
     private static FirebaseFirestore db;
     private static String UserId;//get this in trails
     private static Integer maxExperimentId;
+    private static boolean publish = true;
 
+    public static boolean isPublish() {
+        return publish;
+    }
+
+    public static void setPublish(boolean publish) {
+        DatabaseController.publish = publish;
+    }
 
     public static Integer getMaxExperimentId() {
         return maxExperimentId;
@@ -110,9 +118,27 @@ public class DatabaseController {
 
     public static String getUserName(String uid){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        final String[] userName = {"anonymity"};
+        String[] userName = {""};
 
-        /*
+        reference.child("data").child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userName[0]=snapshot.child("username").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return userName[0];
+    }
+
+
+       /*
+
+
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -127,7 +153,7 @@ public class DatabaseController {
             }
         };
         reference.addValueEventListener(postListener);
-    */
+
         reference.child("data").child(uid).child("username").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -142,6 +168,8 @@ public class DatabaseController {
             }
         });
 
+
         return userName[0];
-    }
+        */
+
 }

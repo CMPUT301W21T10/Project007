@@ -111,6 +111,10 @@ public class HomeFragment extends Fragment {
                         Experiment instance = experimentDataList.get(savedPosition);
 
                         switch (action){
+                            case "publish":
+                                instance.setPublishCondition(!instance.isPublishCondition());
+                                break;
+
                             case "edit":
                                 new ModifyExperimentFragment(experimentDataList.get(savedPosition)).show(getChildFragmentManager(), "EDIT_EXPERIMENT");
                                 Toast.makeText(getActivity(), "edit Succeed", Toast.LENGTH_SHORT).show();
@@ -212,7 +216,10 @@ public class HomeFragment extends Fragment {
                             // convert document to POJO
                             oneExperiment = doc.toObject(Experiment.class);
                             System.out.println(oneExperiment);
-                            experimentDataList.add(oneExperiment);
+
+                            if (oneExperiment.isPublishCondition()){
+                                experimentDataList.add(oneExperiment);
+                            }
                         } else {
                             System.out.println("No such document!");
                         }
@@ -248,10 +255,12 @@ public class HomeFragment extends Fragment {
         experimentList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Experiment instance = experimentDataList.get(position);
 
                 if (DatabaseController.getUserId().equals(instance.getUserId())) {
                     savedPosition = position;
+                    DatabaseController.setPublish(instance.isPublishCondition());
                     new ActionFragment().show(getChildFragmentManager(), "requireAction");
                 }
                 else {

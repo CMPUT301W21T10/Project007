@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.project007.DatabaseController;
 import com.example.project007.Experiment;
 import com.example.project007.R;
 
@@ -35,17 +36,35 @@ public class ActionFragment extends DialogFragment {
     Button edit;
     Button delete;
     Button end;
+    Button publish;
 
     // create dialog
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         // set basic show up information
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.choose_action, null);
+        publish = view.findViewById(R.id.button4);
         edit = view.findViewById(R.id.button);
         delete = view.findViewById(R.id.button2);
         end = view.findViewById(R.id.button3);
 
+        if (!DatabaseController.isPublish()){
+            publish.setText("Publish");
+        }
+        else{
+            publish.setText("UnPublish");
+        }
+
+        publish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle result = new Bundle();
+                result.putString("action", "publish");
+                getParentFragmentManager().setFragmentResult("actionRequest", result);
+            }
+        });
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
