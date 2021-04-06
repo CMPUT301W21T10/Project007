@@ -119,7 +119,7 @@ public class DatabaseController {
 
     public static void setExperimentQuestions(String id, ArrayList<String> valueList) {
         DocumentReference docRef = db.collection("Experiments").document(id);
-        docRef.update("questionsId", valueList);
+        docRef.update("questionId", valueList);
     }
 
 }

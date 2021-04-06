@@ -12,7 +12,7 @@
     <ListView
         android:id="@+id/question_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -36,8 +36,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!--    this part has layout error if you want to change the button location plz note two button may lay on each other-->
-
     <FrameLayout
         android:id="@+id/container_answer"
         android:layout_width="match_parent"
@@ -47,6 +45,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <!--https://stackoverflow.com/questions/16575177/fragment-is-transparent-and-shows-activity-below
-     answered by OmiD_D May 19 '20 at 8:04-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

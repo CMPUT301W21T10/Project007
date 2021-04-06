@@ -33,7 +33,7 @@ public class Experiment implements Serializable {
 
     public Experiment(String name, String description, String date, String type,
                       @Nullable Integer id, @Nullable ArrayList<String> trails, @Nullable ArrayList<String> subscriptionId,
-                      boolean requireLocation, boolean condition, Integer minimumTrails, String region, boolean publishCondition, @Nullable ArrayList<String> questionsId) {
+                      boolean requireLocation, boolean condition, Integer minimumTrails, String region, boolean publishCondition, @Nullable ArrayList<String> questionId) {
         this.name = name;
         this.description = description;
         this.date = date;
@@ -49,8 +49,8 @@ public class Experiment implements Serializable {
         if (trails != null){
             this.trailsId = trails;
         }
-        if (questionsId != null){
-            this.questionId = questionsId;
+        if (questionId != null){
+            this.questionId = questionId;
         }
         if (subscriptionId != null){
             this.subscriptionId = subscriptionId;

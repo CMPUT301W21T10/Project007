@@ -83,9 +83,11 @@ public class AnswerFragment extends Fragment {
          * receive data from activity
          */
         QuestionActivity activity = (QuestionActivity) getActivity();
-        question = activity.SendQuestion();
-        question_detail = question.getQuestion();
-        questionView.setText(question_detail);
+        if (activity != null){
+            question = activity.SendQuestion();
+            question_detail = question.getQuestion();
+            questionView.setText(question_detail);
+        }
         //receive data from activity
 
         /**
@@ -99,20 +101,71 @@ public class AnswerFragment extends Fragment {
                     Log.d(TAG,"Error:"+error.getMessage());
                 }else{
                     answerDataList.clear();
+                    int answerId = 0;
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                         Log.d(TAG, String.valueOf(doc.getData().get("Answer")));
                         String answer = (String) doc.getData().get("Answer");
                         String idString = doc.getId();
                         Integer ID = Integer.parseInt(idString);
-                        if (question.getAnswer_id() != null && question.getAnswer_id().contains(idString)){////id duplicate => error
-                            answerDataList.add(new Answer(answer, ID));
+                        if (ID > answerId) {
+                            answerId = ID;
                         }
+
+                       /* answerDataList.add(new Answer(answer, ID));
+                        Toast.makeText(getActivity(), "I am here" + question.getAnswer_id(), Toast.LENGTH_SHORT).show();*/
+
+                        if (question.getAnswer_id().contains(idString)) {
+                            if (answer != null){
+                                //Toast.makeText(getActivity(), answer, Toast.LENGTH_SHORT).show();
+                                answerDataList.add(new Answer(answer, ID));
+                        /*if (question.getAnswer_id() != null && question.getAnswer_id().contains(idString)){////id duplicate => error
+                            Toast.makeText(getActivity(), "I am here", Toast.LENGTH_SHORT).show();
+                            answerDataList.add(new Answer(answer, ID));
+                        }*/
+                            }
+                        }
+
                     }
                     answerAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
-                    AnswerDatabaseController.setMaxAnswerId(answerDataList.size());
+                    AnswerDatabaseController.setMaxAnswerId(answerId);
                 }
             }
         });
+
+/*        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                // Clear the old list
+                if (error!=null){
+                    Log.d(TAG,"Error:"+error.getMessage());
+                }
+                else {
+                    answerDataList.clear();
+                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+
+                        Answer oneAnswer = null;
+                        if (doc.exists()) {
+                            // convert document to POJO
+                            oneAnswer = doc.toObject(Answer.class);
+                            //System.out.println(oneExperiment);
+                            answerDataList.add(oneAnswer);
+                        } else {
+                            System.out.println("No such document!");
+                        }
+                    }
+
+                    answerAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
+                }
+
+                int answerId = 0;
+                for (int i = 0; i < answerDataList.size(); i++){
+                    if ( answerDataList.get(i).getId() > answerId){
+                        answerId = answerDataList.get(i).getId();
+                    }
+                }
+                AnswerDatabaseController.setMaxAnswerId(answerDataList.size());
+            }
+        });*/
         //fire store uploading
 
         /**
@@ -124,18 +177,19 @@ public class AnswerFragment extends Fragment {
                 String answerName = addAnswerEditText.getText().toString();
                 if(answerName.length()>0) {
                     Answer answer = new Answer(answerName, AnswerDatabaseController.generateAnswerId());
+                    boolean addAnswer = AnswerDatabaseController.add_Answer("Answers", answer);
                     //lock on answer
                     ArrayList<String> valueList = question.getAnswer_id();
-                    valueList.add(question.getId().toString());
-                    QuestionDatabaseController.setQuestionanswer(question.getId().toString(), valueList );
+                    valueList.add(answer.getId().toString());
+                    QuestionDatabaseController.setQuestionanswer(question.getId().toString(), valueList);
                     //lock on answer
-                    boolean addAnswer = AnswerDatabaseController.add_Answer("Answers", answer);
                     if (addAnswer){
-                        Toast.makeText(getActivity(), "Add Succeed", Toast.LENGTH_SHORT).show();
-                    }
-                    else{
                         Toast.makeText(getActivity(), "Add Failed", Toast.LENGTH_SHORT).show();
                     }
+                    else{
+                        Toast.makeText(getActivity(), "Add Succeed", Toast.LENGTH_SHORT).show();
+                    }
+                    //revert logic
                     addAnswerEditText.setText("");
                 }
             }
@@ -149,15 +203,26 @@ public class AnswerFragment extends Fragment {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 //Delete event
                 Answer answer = answerAdapter.getItem(position);
+                String idString = answer.getId().toString();
+
+                ArrayList<String> temp =  question.getAnswer_id();
+                for (int i = 0; i < temp.size(); i++) {
+                    if (temp.get(i).equals(idString)) {
+                        temp.remove(i);
+                    }
+                }
+                QuestionDatabaseController.setQuestionanswer(question.getId().toString(),temp);
+
                 answerAdapter.notifyDataSetChanged();
                 boolean deleteAnswer = AnswerDatabaseController.delete_Answer("Answers", answer);
                 if (deleteAnswer){
-                    Toast.makeText(getActivity(), "Delete Succeed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Delete Failed", Toast.LENGTH_SHORT).show();
                     answerAdapter.remove(answer);
                 }
                 else{
-                    Toast.makeText(getActivity(), "Delete Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Delete Succeed", Toast.LENGTH_SHORT).show();
                 }
+                //revert logic
                 return true;
             }
         });
