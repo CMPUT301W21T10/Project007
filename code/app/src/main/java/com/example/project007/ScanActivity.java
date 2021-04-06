@@ -146,18 +146,20 @@ public class ScanActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
+                                Map<String, Object> value = null;
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     Log.d(TAG, document.getId() + " => " + document.getData());
                                     if(document.getData().size()>0){
-                                    textView.setText("Result：\n" +document.getData());}
-                                    else {textView.setText("Result：\n" +result);}
-                                }
-                            } else {
+                                        value=document.getData(); } }
+                                if (value == null){textView.setText("Result：\n" +result);}else {
+                                textView.setText("Result：\n" +value);}}
+                            else {
                                 Log.d(TAG, "Error getting documents: ", task.getException());
                                 textView.setText("Result：\n" +result);
                             }
                         }
                     });
+
                 }
             }
         }
