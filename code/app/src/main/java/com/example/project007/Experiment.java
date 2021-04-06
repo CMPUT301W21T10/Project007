@@ -19,18 +19,21 @@ public class Experiment implements Serializable {
     private Integer id;
     private String userId;
     private ArrayList<String> trailsId = new ArrayList<String>();
+    //added questionsId
+    private ArrayList<String> questionId = new ArrayList<String>();
     private ArrayList<String> subscriptionId = new ArrayList<String>();
     private boolean requireLocation;
     private boolean condition;
     private Integer minimumTrails;
     private String region;
+    private boolean publishCondition;
 
     public Experiment() {
     }
 
     public Experiment(String name, String description, String date, String type,
                       @Nullable Integer id, @Nullable ArrayList<String> trails, @Nullable ArrayList<String> subscriptionId,
-                      boolean requireLocation, boolean condition, Integer minimumTrails, String region) {
+                      boolean requireLocation, boolean condition, Integer minimumTrails, String region, boolean publishCondition, @Nullable ArrayList<String> questionId) {
         this.name = name;
         this.description = description;
         this.date = date;
@@ -46,6 +49,9 @@ public class Experiment implements Serializable {
         if (trails != null){
             this.trailsId = trails;
         }
+        if (questionId != null){
+            this.questionId = questionId;
+        }
         if (subscriptionId != null){
             this.subscriptionId = subscriptionId;
         }
@@ -53,6 +59,7 @@ public class Experiment implements Serializable {
         this.condition = condition;
         this.minimumTrails = minimumTrails;
         this.region = region;
+        this.publishCondition = publishCondition;
     }
 
     public String getUserId() {
@@ -103,6 +110,14 @@ public class Experiment implements Serializable {
         this.trailsId = trails;
     }
 
+    public ArrayList<String> getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(ArrayList<String> questionId) {
+        this.questionId = questionId;
+    }
+
     public ArrayList<String> getSubscriptionId() {
         return subscriptionId;
     }
@@ -141,5 +156,13 @@ public class Experiment implements Serializable {
 
     public void setRegion(String region) {
         this.region = region;
+    }
+
+    public boolean isPublishCondition() {
+        return publishCondition;
+    }
+
+    public void setPublishCondition(boolean publishCondition) {
+        this.publishCondition = publishCondition;
     }
 }

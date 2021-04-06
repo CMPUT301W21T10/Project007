@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,14 +12,18 @@
         android:id="@+id/Question_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="50dp">
+        android:textSize="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     </TextView>
 
     <ListView
         android:id="@+id/answer_list"
         android:layout_width="match_parent"
-        android:layout_height="545dp">
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Question_view">
 
     </ListView>
 
@@ -27,16 +31,16 @@
         android:id="@+id/add_answer_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
         android:hint="Add Answer Here"
         android:inputType="textPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/answer_list"/>
+        app:layout_constraintBottom_toTopOf="@+id/add_answer_button"/>
 
     <Button
         android:id="@+id/add_answer_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add Answers?"
-        app:layout_constraintTop_toBottomOf="@+id/add_answer_text"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
