@@ -111,6 +111,18 @@ public class HomeFragment extends Fragment {
                         Experiment instance = experimentDataList.get(savedPosition);
 
                         switch (action){
+                            case "publish":
+                                if (DatabaseController.isPublish()){
+                                    instance.setPublishCondition(false);
+                                    Toast.makeText(getActivity(), "UnPublish Succeed", Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    instance.setPublishCondition(true);
+                                    Toast.makeText(getActivity(), "Publish Succeed", Toast.LENGTH_SHORT).show();
+                                }
+                                DatabaseController.modify_experiment("Experiments",instance);
+                                break;
+
                             case "edit":
                                 new ModifyExperimentFragment(experimentDataList.get(savedPosition)).show(getChildFragmentManager(), "EDIT_EXPERIMENT");
                                 Toast.makeText(getActivity(), "edit Succeed", Toast.LENGTH_SHORT).show();
@@ -129,6 +141,7 @@ public class HomeFragment extends Fragment {
                                     if (instance.getTrailsId().size() >= minimum){
                                         instance.setCondition(false);
                                         Toast.makeText(getActivity(), "end Succeed", Toast.LENGTH_SHORT).show();
+                                        DatabaseController.modify_experiment("Experiments",instance);
                                     }
                                     else{
                                         Toast.makeText(getActivity(), "do not satisfy minimum trails", Toast.LENGTH_SHORT).show();
@@ -139,6 +152,7 @@ public class HomeFragment extends Fragment {
                                 }
                                 break;
                         }
+
 
 
                     }
@@ -212,7 +226,10 @@ public class HomeFragment extends Fragment {
                             // convert document to POJO
                             oneExperiment = doc.toObject(Experiment.class);
                             System.out.println(oneExperiment);
-                            experimentDataList.add(oneExperiment);
+
+                            if (oneExperiment.isPublishCondition()){
+                                experimentDataList.add(oneExperiment);
+                            }
                         } else {
                             System.out.println("No such document!");
                         }
@@ -248,10 +265,12 @@ public class HomeFragment extends Fragment {
         experimentList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Experiment instance = experimentDataList.get(position);
 
                 if (DatabaseController.getUserId().equals(instance.getUserId())) {
                     savedPosition = position;
+                    DatabaseController.setPublish(instance.isPublishCondition());
                     new ActionFragment().show(getChildFragmentManager(), "requireAction");
                 }
                 else {

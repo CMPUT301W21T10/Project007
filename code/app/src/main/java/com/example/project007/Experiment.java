@@ -24,13 +24,14 @@ public class Experiment implements Serializable {
     private boolean condition;
     private Integer minimumTrails;
     private String region;
+    private boolean publishCondition;
 
     public Experiment() {
     }
 
     public Experiment(String name, String description, String date, String type,
                       @Nullable Integer id, @Nullable ArrayList<String> trails, @Nullable ArrayList<String> subscriptionId,
-                      boolean requireLocation, boolean condition, Integer minimumTrails, String region) {
+                      boolean requireLocation, boolean condition, Integer minimumTrails, String region, boolean publishCondition) {
         this.name = name;
         this.description = description;
         this.date = date;
@@ -53,6 +54,7 @@ public class Experiment implements Serializable {
         this.condition = condition;
         this.minimumTrails = minimumTrails;
         this.region = region;
+        this.publishCondition = publishCondition;
     }
 
     public String getUserId() {
@@ -141,5 +143,13 @@ public class Experiment implements Serializable {
 
     public void setRegion(String region) {
         this.region = region;
+    }
+
+    public boolean isPublishCondition() {
+        return publishCondition;
+    }
+
+    public void setPublishCondition(boolean publishCondition) {
+        this.publishCondition = publishCondition;
     }
 }

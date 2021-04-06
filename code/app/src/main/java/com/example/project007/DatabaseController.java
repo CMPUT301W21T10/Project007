@@ -5,14 +5,21 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static android.content.ContentValues.TAG;
 
@@ -25,6 +32,15 @@ public class DatabaseController {
     private static FirebaseFirestore db;
     private static String UserId;//get this in trails
     private static Integer maxExperimentId;
+    private static boolean publish = true;
+
+    public static boolean isPublish() {
+        return publish;
+    }
+
+    public static void setPublish(boolean publish) {
+        DatabaseController.publish = publish;
+    }
 
     public static Integer getMaxExperimentId() {
         return maxExperimentId;
@@ -32,6 +48,7 @@ public class DatabaseController {
 
     public static void setMaxExperimentId(Integer maxExperimentId) {
         DatabaseController.maxExperimentId = maxExperimentId;
+
     }
 
     public static String getUserId() {
@@ -98,4 +115,61 @@ public class DatabaseController {
         docRef.update("subscriptionId", valueList2);
 
     }
+
+    public static String getUserName(String uid){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        String[] userName = {""};
+
+        reference.child("data").child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userName[0]=snapshot.child("username").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return userName[0];
+    }
+
+
+       /*
+
+
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                UserEntity user = dataSnapshot.getValue(UserEntity.class);
+                userName[0] = user.getUsername();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        reference.addValueEventListener(postListener);
+
+        reference.child("data").child(uid).child("username").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    userName[0] = String.valueOf(task.getResult().getValue());
+                    Log.e("firebase", "Error getting data", task.getException());
+
+                }
+            }
+        });
+
+
+        return userName[0];
+        */
+
 }
