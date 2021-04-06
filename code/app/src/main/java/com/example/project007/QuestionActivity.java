@@ -37,11 +37,11 @@ public class QuestionActivity extends AppCompatActivity {
     ListView questionList;
     ArrayAdapter<Question> questionAdapter;
     ArrayList<Question> questionDataList;
-    //Integer id;
     ArrayList<String> answer_id = new ArrayList<String>();
     Question question;
-    String experimentId;
+    //String experimentId;
     ArrayList<String> questionsId = new ArrayList<String>();
+    Experiment experiment;
 
 
     @Override
@@ -61,10 +61,12 @@ public class QuestionActivity extends AppCompatActivity {
         //database for unique questions
 
         //receive data from experiment
-        Intent intent = getIntent();
+        /*Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("experiment");
         experimentId = bundle.getString("experimentId");
-        questionsId = bundle.getStringArrayList("questionsId");
+        questionsId = bundle.getStringArrayList("questionsId");*/
+        Intent intent = getIntent();
+        experiment = (Experiment) intent.getSerializableExtra("ExperimentFromTrail");
         //receive data from experiment
 
         addQuestionButton = findViewById(R.id.add_question_button);
@@ -113,29 +115,37 @@ public class QuestionActivity extends AppCompatActivity {
                 }
                 else {
                     questionDataList.clear();
+                    int questionId = 0;
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
 
+                        String idString = doc.getId();
+                        Integer ID = Integer.parseInt(idString);
+                        if (ID > questionId) {
+                            questionId = ID;
+                        }
                         Question oneQuestion = null;
-                        if (doc.exists()) {
-                            // convert document to POJO
-                            oneQuestion = doc.toObject(Question.class);
-                            //System.out.println(oneExperiment);
-                            questionDataList.add(oneQuestion);
-                        } else {
-                            System.out.println("No such document!");
+                        if (experiment.getQuestionId().contains(idString)) {
+                            if (doc.exists()) {
+                                // convert document to POJO
+                                oneQuestion = doc.toObject(Question.class);
+                                //System.out.println(oneExperiment);
+                                questionDataList.add(oneQuestion);
+                            } else {
+                                System.out.println("No such document!");
+                            }
                         }
                     }
-
+                    QuestionDatabaseController.setMaxQuestionId(questionId);
                     questionAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
                 }
 
-                int questionId = 0;
+                /*int questionId = 0;
                 for (int i = 0; i < questionDataList.size(); i++){
                     if ( questionDataList.get(i).getId() > questionId){
                         questionId = questionDataList.get(i).getId();
                     }
-                }
-                QuestionDatabaseController.setMaxQuestionId(questionId);
+                }*/
+
             }
         });
 
@@ -150,10 +160,9 @@ public class QuestionActivity extends AppCompatActivity {
                 final String questionName = addQuestionEditText.getText().toString();
                 if(questionName.length()>0) {
                     Question question = new Question(QuestionDatabaseController.generateQuestionId(), questionName, answer_id);
-                    //lock on question
-                    ArrayList<String> valueList = questionsId;
-                    valueList.add(experimentId);
-                    DatabaseController.setExperimentQuestions(experimentId, valueList);
+                    ArrayList<String> valueList = experiment.getQuestionId();
+                    valueList.add(question.getId().toString());
+                    DatabaseController.setExperimentQuestions(experiment.getId().toString(), valueList);
                     //lock on answer
                     boolean addQuestion = QuestionDatabaseController.add_Question("Questions", question);
                     if (addQuestion){
@@ -179,7 +188,7 @@ public class QuestionActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 question = questionAdapter.getItem(position);
                 AnswerFragment fragment = new AnswerFragment();
-                //getSupportFragmentManager().beginTransaction().replace(R.id.container_answer, fragment).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_answer, fragment).addToBackStack(null).commit();
 
             }
         });
@@ -192,6 +201,15 @@ public class QuestionActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Question question = questionAdapter.getItem(position);
+                String idString = question.getId().toString();
+
+                ArrayList<String> temp =  experiment.getTrailsId();
+                for (int i = 0; i < temp.size(); i++) {
+                    if (temp.get(i).equals(idString)) {
+                        temp.remove(i);
+                    }
+                }
+                DatabaseController.setExperimentQuestions(experiment.getId().toString(), temp);
                 boolean deleteQuestion = QuestionDatabaseController.delete_Question("Questions", question);
                 questionAdapter.notifyDataSetChanged();
                 if (deleteQuestion){

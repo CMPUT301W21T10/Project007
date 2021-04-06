@@ -7,15 +7,21 @@ public class Question implements Serializable {
 
     private String question;
     private Integer id;
-    private ArrayList<String> answer_id;
+    private ArrayList<String> answer_id = new ArrayList<String>();
 
 
     Question(){ }
 
     Question(Integer id, String question, ArrayList<String> answer_id) {
-        this.id = id;
+        if(id == null){
+            this.id = id;
+        }else{
+            this.id = QuestionDatabaseController.generateQuestionId();
+        }
         this.question = question;
-        this.answer_id = answer_id;
+        if (answer_id != null){
+            this.answer_id = answer_id;
+        }
     }
 
     public String getQuestion() {

@@ -705,7 +705,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
 
 
     public void openQuestionActivity() {
-        Bundle bundle = new Bundle();
+        /*Bundle bundle = new Bundle();
         Intent intent = new Intent(this, QuestionActivity.class);
         ArrayList<String> mockQuestionId = new ArrayList<String>();
         mockQuestionId.add("1");
@@ -715,6 +715,10 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         }
         bundle.putStringArrayList("questionsId",experiment.getQuestionId());
         intent.putExtra("experiment", bundle);
+        startActivity(intent);*/
+        Intent intent = new Intent(this, QuestionActivity.class);
+        //Experiment instanceExperiment = experiment;
+        intent.putExtra("ExperimentFromTrail", experiment);
         startActivity(intent);
     }
 
