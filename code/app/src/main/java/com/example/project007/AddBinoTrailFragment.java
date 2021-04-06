@@ -168,7 +168,6 @@ public class AddBinoTrailFragment extends Fragment {
         //receive data from activity
         TrailsActivity activity = (TrailsActivity) getActivity();
         needLocation = activity.WhetherTrailsLoc();
-
         Button mapButton = view.findViewById(R.id.map_button);
 
         Fragment fragment = new MapFragment();

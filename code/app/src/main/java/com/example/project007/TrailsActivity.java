@@ -3,6 +3,7 @@ package com.example.project007;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
@@ -12,6 +13,7 @@ import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,8 +26,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -35,26 +37,22 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFragment.FragmentInteractionListener, AddNnCBTrailFragment.FragmentInteractionListener {
     ListView trail_List;
@@ -78,6 +76,8 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     private Integer position;
     boolean needLocation;
     String type;
+    String binomial_type="null";
+
     String description;
     String title;
 
@@ -176,11 +176,10 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         if (experiment.getUserId().equals(DatabaseController.getUserId())) {
             owner.setVisibility(View.VISIBLE);
         }
+        //set flag to hide menu option
 
-        final FloatingActionButton addButton = findViewById(R.id.experimentBtn);
-        if (!experiment.isCondition()) {
-            addButton.setVisibility(View.INVISIBLE);
-        }
+        /*final FloatingActionButton addButton = findViewById(R.id.experimentBtn);*/
+
 
         trail_List = findViewById(R.id.trail_list);
 
@@ -274,7 +273,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         //add button is where we specify the different experiment trails
         //once firestrore ready this part will get type from database
         if (type.equals("Binomial")) {
-            addButton.setOnClickListener(new View.OnClickListener() {
+            /*addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //initialize fragment
@@ -282,7 +281,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                     getSupportFragmentManager().beginTransaction().replace(R.id.data_container2, addBinoTrailFragment).addToBackStack(null).commit();
                     //addButton.setVisibility(View.INVISIBLE);
                 }
-            });
+            });*/
 
             trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -312,14 +311,14 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             });
 
         } else {
-            addButton.setOnClickListener(new View.OnClickListener() {
+            /*addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //initialize fragment
                     addNnCBTrailFragment = new AddNnCBTrailFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.data_container2, addNnCBTrailFragment).addToBackStack(null).commit();
                 }
-            });
+            });*/
             trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -351,30 +350,39 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         }
 
 
+
         //longClick action for delete data
         trail_List.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 //Delete event
-                Trails newtrail = trail_Adapter.getItem(position);
-                String idString = newtrail.getID().toString();
+                String databaseUserId = DatabaseController.getUserId();
+                String experimentId = experiment.getUserId();
+                if (databaseUserId.matches(experimentId)){
+                    Trails newtrail = trail_Adapter.getItem(position);
+                    String idString = newtrail.getID().toString();
 
-                ArrayList<String> temp =  experiment.getTrailsId();
-                for (int i = 0; i < temp.size(); i++) {
-                    if (temp.get(i).equals(idString)) {
-                        temp.remove(i);
+                    ArrayList<String> temp =  experiment.getTrailsId();
+                    for (int i = 0; i < temp.size(); i++) {
+                        if (temp.get(i).equals(idString)) {
+                            temp.remove(i);
+                        }
                     }
-                }
-                DatabaseController.setExperimentTrails(experiment.getId().toString(),temp,experiment.getSubscriptionId());
+                    DatabaseController.setExperimentTrails(experiment.getId().toString(),temp,experiment.getSubscriptionId());
 
-                trail_Adapter.notifyDataSetChanged();
+                    trail_Adapter.notifyDataSetChanged();
 
-                boolean deleteResult = TrailsDatabaseController.delete_Trails("Trails", newtrail);
-                if (deleteResult) {
-                    Toast.makeText(getApplicationContext(), "Delete Succeed", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Delete Failed", Toast.LENGTH_SHORT).show();
+                    boolean deleteResult = TrailsDatabaseController.delete_Trails("Trails", newtrail);
+                    if (deleteResult) {
+                        Toast.makeText(getApplicationContext(), "Delete Failed", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Delete Succeed", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(), "You don't have access to delete this trail", Toast.LENGTH_SHORT).show();
                 }
+
+                //revert logic
                 return false;
             }
         });
@@ -383,7 +391,10 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         //from xandy's answer Jan 29 '11 at 2:57*/
     }
 
+
     private void chooseIgnore(int id, Trails newtrail, String remoteUserId, String localUserId) {
+        final FirebaseFirestore db;
+        db = DatabaseController.getDb();
         if (id == R.id.ignoreOpt){
             if (remoteUserId.matches(localUserId)){
                 Toast.makeText(getApplicationContext(),"Trail Ignored! Click again for Undo",Toast.LENGTH_SHORT).show();
@@ -403,7 +414,66 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             }else{
                 Toast.makeText(getApplicationContext(),"Experimenter cannot Ignore Trails",Toast.LENGTH_SHORT).show();
             }
+        }else if(id==R.id.QRcodeOpt) {
+            if (newtrail.getType().equals("Binomial")) {
+                showNormalDialog(newtrail);
+            } else {
+                qrcode = new QrcodeFragment(newtrail, "trail", binomial_type);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.data_container2, qrcode);
+                transaction.commit();
+            }
         }
+        else if(id==R.id.addBarcode){
+            Intent intent = new Intent(TrailsActivity.this,ReadBarCodeActivity.class);
+            intent.putExtra("IsBarcode","true");
+            intent.putExtra("ID",newtrail.getUserId());
+            intent.putExtra("trail_id",newtrail.getID().toString());
+            startActivity(intent);
+        }
+        else if(id==R.id.deleteBarcode){
+            final DocumentReference DocumentReference = db.collection("Trails").document(newtrail.getID().toString());
+            Map<String,Object> updates = new HashMap<>();
+            updates.put(newtrail.getUserId(), FieldValue.delete());
+            DocumentReference.update(updates);
+            Toast toast = Toast.makeText(getApplicationContext(),"Successfully clear barcode.",Toast.LENGTH_SHORT);
+            toast.show();
+
+
+        }
+    }
+    private void showNormalDialog(Trails newtrail){
+        /* @setMessage set message
+         */
+        final AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(TrailsActivity.this);
+        normalDialog.setTitle("Select Success or Failure type for generating qrcode.");
+        normalDialog.setPositiveButton("Success",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        binomial_type="success";
+                        qrcode=new QrcodeFragment(newtrail,"trail",binomial_type);
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                        transaction.replace(R.id.data_container2, qrcode);
+                        transaction.commit();
+                    }
+                });
+        normalDialog.setNegativeButton("Failure",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        binomial_type="failure";
+                        qrcode=new QrcodeFragment(newtrail,"trail",binomial_type);
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                        transaction.replace(R.id.data_container2, qrcode);
+                        transaction.commit();
+                    }
+                });
+        normalDialog.show();
     }
 
 
@@ -453,10 +523,11 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         }
         DatabaseController.setExperimentTrails(experiment.getId().toString(), valueList,subscriptionList );
         if (addResult){
-            Toast.makeText(getApplicationContext(), "Add Succeed", Toast.LENGTH_SHORT).show();
-        }else{
             Toast.makeText(getApplicationContext(), "Add Failed", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getApplicationContext(), "Add Succeed", Toast.LENGTH_SHORT).show();
         }
+        //revert logic
     }
 
     @Override
@@ -485,7 +556,14 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         }
     }
 
-
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (!experiment.isCondition()) {
+            menu.findItem(R.id.action_add).setVisible(false);
+        }
+        super.onPrepareOptionsMenu(menu);
+        return true;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -493,6 +571,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         getMenuInflater().inflate(R.menu.menu_trails_activity, menu);
         return true;
     }
+
 
     //YO!!! This is where you implement those fragments under the if
 
@@ -520,15 +599,12 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             }
 //            startActivity(new Intent(TrailsActivity.this,Test.class));
             return true;
-        }else if (id == R.id.ScanQROpt) { // this is where you put generate the qr
-            startActivity(new Intent(TrailsActivity.this, ScanActivity.class));
-
         }else if (id == R.id.QROpt){  // this is where you put the scan yi scan
             if(trails_DataList.size()==0){
                 Toast toast = Toast.makeText(getApplicationContext(),"There's no trails for this experiment!",Toast.LENGTH_SHORT);
                 toast.show();
             }else {
-                qrcode = new QrcodeFragment();
+                qrcode = new QrcodeFragment("experiment");
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.data_container2, qrcode);
@@ -550,6 +626,15 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             Toast.makeText(getApplicationContext(),"Welcome! Please note: Long Click item for item deleting~",Toast.LENGTH_SHORT).show();
             //Toast.makeText(getApplicationContext(),trails_DataList.toString(),Toast.LENGTH_SHORT).show();
             return true;
+        }else if(id == R.id.action_add){
+            if (type.equals("Binomial")) {
+                addBinoTrailFragment = new AddBinoTrailFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.data_container2, addBinoTrailFragment).addToBackStack(null).commit();
+            }else{
+                addNnCBTrailFragment = new AddNnCBTrailFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.data_container2, addNnCBTrailFragment).addToBackStack(null).commit();
+            }
+
         }
 
         return super.onOptionsItemSelected(item);

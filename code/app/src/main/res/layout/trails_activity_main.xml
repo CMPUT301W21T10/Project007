@@ -243,6 +243,7 @@
         android:layout_height="510dp"
         android:orientation="horizontal"
         android:paddingTop="10dp"
+        android:paddingBottom="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/info"
         app:layout_constraintStart_toStartOf="parent"
@@ -253,7 +254,7 @@
             style="@style/dividedListStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
+            android:layout_marginBottom="0dp"
             android:choiceMode="singleChoice"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
@@ -295,7 +296,7 @@
 
     </FrameLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/experimentBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -312,7 +313,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@android:drawable/ic_input_add" />-->
 
 
     <ScrollView
