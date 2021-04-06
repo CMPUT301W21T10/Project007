@@ -12,7 +12,7 @@
         android:padding="5dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/block"
+        android:background="color/blue"
         >
         <LinearLayout
             android:layout_width="match_parent"
