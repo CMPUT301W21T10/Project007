@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -70,6 +72,18 @@ public class QrcodeFragment extends Fragment {
         return null;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Nullable
     @Override
@@ -102,13 +116,13 @@ public class QrcodeFragment extends Fragment {
             if (binomial_type.equals("success") || binomial_type.equals("failure")) {
                 binotrail_result = trail.getSuccess();
                 trail_type = trail.getType();
-                String result = "\nType: " + trail_type +" ID is: "+ ID+" " + binomial_type + ": " + binotrail_result;
+                String result = "\nType: " + trail_type +" ID is: "+ ID+" "+binomial_type+" "+"<--binomial_type";
                 imageView.setImageBitmap(generateBitmap(result, 250, 250));
                 return view;
             } else {
                 trail_result = trail.getVariesData();
                 trail_type = trail.getType();
-                String result = "\nType: " + trail_type +" ID is: "+ ID+ " " + trail_type + ": " + trail_result;
+                String result = "\nType: " + trail_type +" ID is: "+ ID+" "+"\n";
                 imageView.setImageBitmap(generateBitmap(result, 250, 250));
                 return view;
             }

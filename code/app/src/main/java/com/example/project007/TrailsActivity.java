@@ -44,11 +44,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -57,6 +60,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFragment.FragmentInteractionListener, AddNnCBTrailFragment.FragmentInteractionListener {
     ListView trail_List;
@@ -389,7 +394,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     private void chooseIgnore(int id, Trails newtrail, String remoteUserId, String localUserId) {
         final FirebaseFirestore db;
         db = DatabaseController.getDb();
-        final CollectionReference collectionReference = db.collection("Trails");
         if (id == R.id.ignoreOpt){
             if (remoteUserId.matches(localUserId)){
                 Toast.makeText(getApplicationContext(),"Trail Ignored! Click again for Undo",Toast.LENGTH_SHORT).show();
@@ -421,18 +425,21 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             }
         }
         else if(id==R.id.addBarcode){
-//            Intent intent = new Intent(this,ScanActivity.class);
-//            intent.putExtra("IsBarcode","true");
-//            startActivity(intent);
-            Toast toast = Toast.makeText(getApplicationContext(),"Under construction",Toast.LENGTH_SHORT);
-            toast.show();
+            Intent intent = new Intent(TrailsActivity.this,ReadBarCodeActivity.class);
+            intent.putExtra("IsBarcode","true");
+            intent.putExtra("ID",newtrail.getUserId());
+            intent.putExtra("trail_id",newtrail.getID().toString());
+            startActivity(intent);
         }
         else if(id==R.id.deleteBarcode){
-//            Intent intent = new Intent(this,ScanActivity.class);
-//            intent.putExtra("IsBarcode","true");
-//            startActivity(intent);
-            Toast toast = Toast.makeText(getApplicationContext(),"Under construction",Toast.LENGTH_SHORT);
+            final DocumentReference DocumentReference = db.collection("Trails").document(newtrail.getID().toString());
+            Map<String,Object> updates = new HashMap<>();
+            updates.put(newtrail.getUserId(), FieldValue.delete());
+            DocumentReference.update(updates);
+            Toast toast = Toast.makeText(getApplicationContext(),"Successfully clear barcode.",Toast.LENGTH_SHORT);
             toast.show();
+
+
         }
     }
     private void showNormalDialog(Trails newtrail){
@@ -582,9 +589,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             }
 //            startActivity(new Intent(TrailsActivity.this,Test.class));
             return true;
-        }else if (id == R.id.ScanQROpt) { // this is where you put generate the qr
-            startActivity(new Intent(TrailsActivity.this, ScanActivity.class));
-
         }else if (id == R.id.QROpt){  // this is where you put the scan yi scan
             if(trails_DataList.size()==0){
                 Toast toast = Toast.makeText(getApplicationContext(),"There's no trails for this experiment!",Toast.LENGTH_SHORT);
