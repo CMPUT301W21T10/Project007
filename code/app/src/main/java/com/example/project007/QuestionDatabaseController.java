@@ -131,7 +131,7 @@ public class QuestionDatabaseController {
      * Return Void
      */
     public static boolean setQuestionanswer(String id, ArrayList<String> valueList){
-        DocumentReference docRef = question_db.collection("Question").document(id);
+        DocumentReference docRef = question_db.collection("Questions").document(id);
         docRef.update("Answer_Id", valueList);
         return true;
     }
