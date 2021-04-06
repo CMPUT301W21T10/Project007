@@ -41,6 +41,9 @@ public class SearchResult extends AppCompatActivity {
     private ArrayList<Experiment> experimentDataList;
     final String TAG = "Sample";
     private String searchKey = "";
+    ArrayList<UserEntity> userList = new ArrayList<UserEntity>();
+    boolean condition;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +76,8 @@ public class SearchResult extends AppCompatActivity {
                         if (doc.exists()) {
                             // convert document to POJO
                             oneExperiment = doc.toObject(Experiment.class);
-                            if (processData(oneExperiment)){
+
+                            if (processData(oneExperiment) | condition){
                                 experimentDataList.add(oneExperiment);
                             }
 
@@ -138,10 +142,9 @@ public class SearchResult extends AppCompatActivity {
         if (!experiment.isCondition() && searchKey.equals("Processing")){
             return true;
         }
-
+        condition = false;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-
         reference.child("data").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -155,16 +158,13 @@ public class SearchResult extends AppCompatActivity {
                         userEntity.setPhone(next.child("phone").getValue().toString());
                         userEntity.setUid(next.getKey());
                         userEntity.setUsername(next.child("username").getValue().toString());
-                        TextView a = findViewById(R.id.value);
-
-                        if (userEntity.getUid().equals(experiment.getUserId())){
-                            a.setText("1");
-                        }
-
+                        final FirebaseFirestore db;
+                        db = FirebaseFirestore.getInstance();
+                        DatabaseController.setDb(db);
+                        final CollectionReference collectionReference = db.collection("Users");
+                        collectionReference.document(userEntity.getUid()).set(userEntity);
                     }
                 }
-
-
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -172,13 +172,43 @@ public class SearchResult extends AppCompatActivity {
             }
         });
 
-        TextView a = findViewById(R.id.value);
-        if (a.getText().toString().equals("1")){
-            a.setText("0");
-            return true;
-        }
+        final FirebaseFirestore db = DatabaseController.getDb();
+        final CollectionReference collectionReference = db.collection("Users");
+        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                // Clear the old list
+                if (error!=null){
+                    Log.d(TAG,"Error:"+error.getMessage());
+                }
+                else {
+                    userList.clear();
+                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
 
-        return false;
+                        UserEntity user = null;
+                        if (doc.exists()) {
+                            // convert document to POJO
+                            user = doc.toObject(UserEntity.class);
+                            System.out.println(user);
+
+                            if (user.getUsername().contains(searchKey)){
+                                userList.add(user);
+                            }
+                        } else {
+                            System.out.println("No such document!");
+                        }
+                    }
+                    for (int i = 0; i <userList.size(); i ++){
+                        if (userList.get(i).getUid().equals(experiment.getUserId())){
+                            condition = true;
+                        }
+                    }
+                }
+
+            }
+        });
+
+        return condition;
 
     }
 }
