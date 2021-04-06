@@ -84,7 +84,15 @@ public class SubscriptionFragment extends Fragment {
 
                         switch (action){
                             case "publish":
-                                instance.setPublishCondition(!instance.isPublishCondition());
+                                if (DatabaseController.isPublish()){
+                                    instance.setPublishCondition(false);
+                                    Toast.makeText(getActivity(), "UnPublish Succeed", Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    instance.setPublishCondition(true);
+                                    Toast.makeText(getActivity(), "Publish Succeed", Toast.LENGTH_SHORT).show();
+                                }
+                                DatabaseController.modify_experiment("Experiments",instance);
                                 break;
 
                             case "edit":
@@ -105,6 +113,7 @@ public class SubscriptionFragment extends Fragment {
                                     if (instance.getTrailsId().size() >= minimum){
                                         instance.setCondition(false);
                                         Toast.makeText(getActivity(), "end Succeed", Toast.LENGTH_SHORT).show();
+                                        DatabaseController.modify_experiment("Experiments",instance);
                                     }
                                     else{
                                         Toast.makeText(getActivity(), "do not satisfy minimum trails", Toast.LENGTH_SHORT).show();
@@ -146,6 +155,7 @@ public class SubscriptionFragment extends Fragment {
                 }
                 else {
                     experimentDataList.clear();
+                    experimentDataList2.clear();
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
 
                         Experiment oneExperiment = null;
@@ -159,7 +169,8 @@ public class SubscriptionFragment extends Fragment {
                             }
                             if (oneExperiment.getUserId().equals((DatabaseController.getUserId()))){
                                 experimentDataList2.add(oneExperiment);
-                            }                        } else {
+                            }
+                        } else {
                             System.out.println("No such document!");
                         }
 
@@ -187,7 +198,7 @@ public class SubscriptionFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), TrailsActivity.class);
-                Experiment instanceExperiment = experimentDataList.get(position);
+                Experiment instanceExperiment = experimentDataList2.get(position);
                 intent.putExtra("com.example.project007.INSTANCE", instanceExperiment);
                 intent.putExtra("com.example.project007.POSITION", position);
                 startActivity(intent);
@@ -198,7 +209,7 @@ public class SubscriptionFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Experiment instance = experimentDataList.get(position);
+                Experiment instance = experimentDataList2.get(position);
 
                 if (DatabaseController.getUserId().equals(instance.getUserId())) {
                     savedPosition = position;

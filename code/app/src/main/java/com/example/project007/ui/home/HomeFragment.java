@@ -112,7 +112,15 @@ public class HomeFragment extends Fragment {
 
                         switch (action){
                             case "publish":
-                                instance.setPublishCondition(!instance.isPublishCondition());
+                                if (DatabaseController.isPublish()){
+                                    instance.setPublishCondition(false);
+                                    Toast.makeText(getActivity(), "UnPublish Succeed", Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    instance.setPublishCondition(true);
+                                    Toast.makeText(getActivity(), "Publish Succeed", Toast.LENGTH_SHORT).show();
+                                }
+                                DatabaseController.modify_experiment("Experiments",instance);
                                 break;
 
                             case "edit":
@@ -133,6 +141,7 @@ public class HomeFragment extends Fragment {
                                     if (instance.getTrailsId().size() >= minimum){
                                         instance.setCondition(false);
                                         Toast.makeText(getActivity(), "end Succeed", Toast.LENGTH_SHORT).show();
+                                        DatabaseController.modify_experiment("Experiments",instance);
                                     }
                                     else{
                                         Toast.makeText(getActivity(), "do not satisfy minimum trails", Toast.LENGTH_SHORT).show();
@@ -143,6 +152,7 @@ public class HomeFragment extends Fragment {
                                 }
                                 break;
                         }
+
 
 
                     }

@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:layout_gravity="top|end"
+        android:layout_gravity="bottom|end"
         android:text = "@string/fab1"
         app:srcCompat="@android:drawable/ic_input_add" />
 
