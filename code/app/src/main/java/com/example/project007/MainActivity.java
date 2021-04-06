@@ -1,28 +1,57 @@
 package com.example.project007;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * MainActivity
  * Switch Home, subscription, profile on main page
  * initialize shared attribute
  */
+
+
 public class MainActivity extends AppCompatActivity {
+
+    private PopupWindow popupWindow1;
+
+    private TextView popSearch;
+    private EditText popUsernameEt;
+    private int[] location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
+        initSearch();
     }
 
     @Override
@@ -56,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
-                Toast.makeText(this, "Action Search",  Toast.LENGTH_SHORT).show();
+                popupWindow1.showAtLocation(MainActivity.this.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
                 break;
             case R.id.action_scan:
                 startActivity(new Intent(MainActivity.this, ScanActivity.class));
@@ -66,4 +96,37 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    private void initSearch() {
+        LayoutInflater inflater = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        @SuppressLint("InflateParams") View inflate = inflater.inflate(R.layout.exp_search, null);
+
+        popupWindow1 = new PopupWindow(inflate, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        inflate.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        popupWindow1.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow1.setOutsideTouchable(true);
+        popupWindow1.setFocusable(true);
+
+        popSearch = inflate.findViewById(R.id.pop_search);
+        popUsernameEt = inflate.findViewById(R.id.pop_username);
+
+
+
+        popSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (TextUtils.isEmpty(popUsernameEt.getText().toString())) {
+                    Toast.makeText(MainActivity.this, "Experiment name is empty.",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Intent intent = new Intent(MainActivity.this, SearchResult.class);
+                    intent.putExtra("Key", popUsernameEt.getText().toString());
+                    startActivity(intent);
+                    popUsernameEt.setText("");
+                    popupWindow1.dismiss();
+                }
+            }
+        });
+    }
 }
