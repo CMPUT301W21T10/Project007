@@ -20,8 +20,8 @@ public class QuestionDatabaseController {
 
     @SuppressLint("StaticFieldLeak")
     private static FirebaseFirestore question_db;
-    private static String UserId = "1";
-    private static Integer maxQuestionId=0;
+    private static String UserId;
+    private static Integer maxQuestionId = 0;
 
     public static FirebaseFirestore getQuestion_db() {
         return question_db;
@@ -57,11 +57,13 @@ public class QuestionDatabaseController {
         HashMap<String, Object> data = new HashMap<>();
 
         String idString = question.getId().toString();
-        data.put("Question", question.getQuestion());
+        data.put("question", question.getQuestion());
+        data.put("id", question.getId());
+
         if (question.getAnswer_id() != null){
-            data.put("Answer_Id", question.getAnswer_id());
+            data.put("answer_id", question.getAnswer_id());
         }else{
-            data.put("Answer_Id",new ArrayList<String>());
+            data.put("answer_id", null);
         }
 
         final boolean[] condition = new boolean[1];
@@ -131,8 +133,8 @@ public class QuestionDatabaseController {
      * Return Void
      */
     public static boolean setQuestionanswer(String id, ArrayList<String> valueList){
-        DocumentReference docRef = question_db.collection("Question").document(id);
-        docRef.update("Answer_Id", valueList);
+        DocumentReference docRef = question_db.collection("Questions").document(id);
+        docRef.update("answer_id", valueList);
         return true;
     }
 }
