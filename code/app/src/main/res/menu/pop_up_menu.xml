@@ -11,4 +11,20 @@
         android:orderInCategory="100"
         android:title="Un-Ignore Trail?"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/QRcodeOpt"
+        android:orderInCategory="100"
+        android:title="QRcode"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/addBarcode"
+        android:orderInCategory="100"
+        android:title="Add Barcode"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/deleteBarcode"
+        android:orderInCategory="100"
+        android:title="Delete Barcode"
+        app:showAsAction="never"/>
+
 </menu>
