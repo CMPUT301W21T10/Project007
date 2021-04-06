@@ -102,7 +102,8 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
 
         if (experimentUser != null){
             String userId = experiment.getUserId();
-            experimentUser.setText(userId);
+            String userName = DatabaseController.getUserName(userId);
+            experimentUser.setText(userName);
         }
 
         /*

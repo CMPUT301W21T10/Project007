@@ -24,6 +24,7 @@ public class Experiment implements Serializable {
     private boolean condition;
     private Integer minimumTrails;
     private String region;
+    private boolean publishCondition;
 
     public Experiment() {
     }
@@ -53,6 +54,7 @@ public class Experiment implements Serializable {
         this.condition = condition;
         this.minimumTrails = minimumTrails;
         this.region = region;
+        this.publishCondition = false;
     }
 
     public String getUserId() {
@@ -141,5 +143,13 @@ public class Experiment implements Serializable {
 
     public void setRegion(String region) {
         this.region = region;
+    }
+
+    public boolean isPublishCondition() {
+        return publishCondition;
+    }
+
+    public void setPublishCondition(boolean publishCondition) {
+        this.publishCondition = publishCondition;
     }
 }
