@@ -179,7 +179,7 @@ public class QuestionActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 question = questionAdapter.getItem(position);
                 AnswerFragment fragment = new AnswerFragment();
-                //getSupportFragmentManager().beginTransaction().replace(R.id.container_answer, fragment).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_answer, fragment).addToBackStack(null).commit();
 
             }
         });

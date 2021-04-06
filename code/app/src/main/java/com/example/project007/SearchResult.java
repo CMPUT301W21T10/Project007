@@ -1,18 +1,26 @@
 package com.example.project007;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.project007.ui.subscription.SubscriptionViewModel;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,6 +30,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class SearchResult extends AppCompatActivity {
 
@@ -100,37 +110,73 @@ public class SearchResult extends AppCompatActivity {
 
     public boolean processData( Experiment experiment){
 
-            if (experiment.getName().contains(searchKey)){
-                return true;
+        if (experiment.getName().contains(searchKey)){
+            return true;
+
+        }
+        if (experiment.getDescription().contains(searchKey)){
+            return true;
+
+        }
+        if (experiment.getRegion().contains(searchKey)){
+            return true;
+
+        }
+        if (experiment.getType().contains(searchKey)){
+            return true;
+
+        }
+        if (experiment.getDate().contains(searchKey)){
+            return true;
+
+        }
+
+        if (experiment.isCondition() && searchKey.equals("End")){
+            return true;
+
+        }
+        if (!experiment.isCondition() && searchKey.equals("Processing")){
+            return true;
+        }
+
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
+        reference.child("data").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
+
+                while (iterator.hasNext()){
+                    DataSnapshot next = iterator.next();
+                    if (next.child("username").getValue().toString().contains(searchKey)){
+                        UserEntity userEntity = new UserEntity();
+                        userEntity.setEmail(next.child("email").getValue().toString());
+                        userEntity.setPhone(next.child("phone").getValue().toString());
+                        userEntity.setUid(next.getKey());
+                        userEntity.setUsername(next.child("username").getValue().toString());
+                        TextView a = findViewById(R.id.value);
+
+                        if (userEntity.getUid().equals(experiment.getUserId())){
+                            a.setText("1");
+                        }
+
+                    }
+                }
+
 
             }
-            if (experiment.getDescription().contains(searchKey)){
-                return true;
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
-            if (experiment.getRegion().contains(searchKey)){
-                return true;
+        });
 
-            }
-            if (experiment.getType().contains(searchKey)){
-                return true;
-
-            }
-            if (experiment.getDate().contains(searchKey)){
-                return true;
-
-            }
-
-            if (experiment.isCondition() && searchKey.equals("End")){
-                return true;
-
-            }
-            if (!experiment.isCondition() && searchKey.equals("Processing")){
-                return true;
-            }
-
-
-
+        TextView a = findViewById(R.id.value);
+        if (a.getText().toString().equals("1")){
+            a.setText("0");
+            return true;
+        }
 
         return false;
 

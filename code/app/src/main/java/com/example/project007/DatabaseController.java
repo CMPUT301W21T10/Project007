@@ -33,6 +33,7 @@ public class DatabaseController {
     private static String UserId;//get this in trails
     private static Integer maxExperimentId;
     private static boolean publish = true;
+    private static String searchedUserId;
 
     public static boolean isPublish() {
         return publish;
@@ -115,63 +116,6 @@ public class DatabaseController {
         docRef.update("subscriptionId", valueList2);
 
     }
-
-    public static String getUserName(String uid){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        String[] userName = {""};
-
-        reference.child("data").child(uid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                userName[0]=snapshot.child("username").getValue().toString();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        return userName[0];
-    }
-
-
-       /*
-
-
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                UserEntity user = dataSnapshot.getValue(UserEntity.class);
-                userName[0] = user.getUsername();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-            }
-        };
-        reference.addValueEventListener(postListener);
-
-        reference.child("data").child(uid).child("username").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                }
-                else {
-                    userName[0] = String.valueOf(task.getResult().getValue());
-                    Log.e("firebase", "Error getting data", task.getException());
-
-                }
-            }
-        });
-
-
-        return userName[0];
-        */
-
 
     public static void setExperimentQuestions(String id, ArrayList<String> valueList) {
         DocumentReference docRef = db.collection("Experiments").document(id);

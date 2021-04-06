@@ -43,4 +43,11 @@
         </ListView>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/value"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
