@@ -46,16 +46,22 @@ public class SubscriptionFragment extends Fragment {
 
     private SubscriptionViewModel subscriptionViewModel;
     private ListView experimentList;
+    private ListView experimentList2;
     private ArrayAdapter<Experiment> experimentAdapter;
+    private ArrayAdapter<Experiment> experimentAdapter2;
+
     private ArrayList<Experiment> experimentDataList;
+    private ArrayList<Experiment> experimentDataList2;
     final String TAG = "Sample";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         experimentDataList = new ArrayList<>();
+        experimentDataList2 = new ArrayList<>();
 
         experimentAdapter = new ExperimentAdapter(this.getContext(), experimentDataList);
+        experimentAdapter2 = new ExperimentAdapter(this.getContext(), experimentDataList2);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -66,6 +72,8 @@ public class SubscriptionFragment extends Fragment {
 
         experimentList = root.findViewById(R.id.subscript_list);
         experimentList.setAdapter(experimentAdapter);
+
+        experimentList2 = root.findViewById(R.id.own_list);
 
         final FirebaseFirestore db;
         db = DatabaseController.getDb();
@@ -91,7 +99,9 @@ public class SubscriptionFragment extends Fragment {
                             if (oneExperiment.getSubscriptionId().contains(DatabaseController.getUserId())){
                                 experimentDataList.add(oneExperiment);
                             }
-                        } else {
+                            if (oneExperiment.getUserId().equals((DatabaseController.getUserId()))){
+                                experimentDataList2.add(oneExperiment);
+                            }                        } else {
                             System.out.println("No such document!");
                         }
 
