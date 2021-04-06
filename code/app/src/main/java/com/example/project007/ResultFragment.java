@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -41,7 +43,8 @@ import lecho.lib.hellocharts.view.LineChartView;
  * The six numbers are the three quartile numbers and median and mean.<br>
  * The two plots are the histogram and the linear chart run with the time.<br>
  *     </p>
- * @return view to show the result of the experiment.
+ * @return
+ * Return a view to show the result of the experiment.
  */
 
 public class ResultFragment extends Fragment{
@@ -78,7 +81,7 @@ public class ResultFragment extends Fragment{
     /**
      * This function calculate the quartiles, which includes three numbers.
      * @param val The double list of numbers.
-     * @return A double list which contains the three quartiles.
+     * @return Return a double list which contains the three quartiles.
      */
     public double[] Quartiles(double[] val) {
         double[] ans = new double[3];
@@ -117,7 +120,7 @@ public class ResultFragment extends Fragment{
     /**
      * This function calculate the average.
      * @param x A list of double type numbers.
-     * @return A double type number to show the average of the arraylist of numbers.
+     * @return Return a double type number to show the average of the arraylist of numbers.
      */
     private static double avg(double[] x) {
         double sum = 0;
@@ -140,7 +143,7 @@ public class ResultFragment extends Fragment{
      * The data includes six numbers,which are the three quartile numbers and median and mean.
      * @param argument Trails of the experiment.
      * @param activity From the TrailsActivity
-     * @return A list to represent the important information like quartiles, median, average, standard deviation and type, description, title of the experiement.
+     * @return Return a list to represent the important information like quartiles, median, average, standard deviation and type, description, title of the experiement.
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public ArrayList<String> CreateList(ArrayList<Trails> argument,TrailsActivity activity){
@@ -187,8 +190,12 @@ public class ResultFragment extends Fragment{
         return l;
     }
 
-
-
+    private double getRateOfSuccess(Trails t) {
+        double s = Double.parseDouble(t.getSuccess());
+        double f = Double.parseDouble(t.getFailure());
+        double m = s / (s + f);
+        return m;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private double[] getList(ArrayList<Trails> argument,String name){
@@ -196,7 +203,7 @@ public class ResultFragment extends Fragment{
         int l = 0;
         if(name.equals("Binomial")){
             for(Trails t : argument){
-                list.add(Double.parseDouble(t.getSuccess()));
+                list.add(getRateOfSuccess(t));
             }
         }else if(name.equals("Count-based")){
             for(Trails t : argument){
@@ -240,7 +247,7 @@ public class ResultFragment extends Fragment{
     private void resetViewport(ArrayList<Trails> argument,String name) {
         final Viewport v = new Viewport(lineChartView.getMaximumViewport());
         v.bottom = 0;
-        v.top = new Float(getMaxValue(getList(argument,name))+1.0);
+        v.top = new Float(getMaxValue(getList(argument,name))+0.2);
         v.left=0;
         v.right = numberOfPoints - 1;
         lineChartView.setMaximumViewport(v);
@@ -287,7 +294,7 @@ public class ResultFragment extends Fragment{
                 if (name.equals("Count-based")){
                     axisY.setName("quantity");
                 }else if(name.equals("Binomial")){
-                    axisY.setName("Number of Success");
+                    axisY.setName("Rate of Success");
                 }else {
                     axisY.setName("Mean");
                 }
@@ -318,6 +325,7 @@ public class ResultFragment extends Fragment{
         }
         return i;
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private double[] getNum(ArrayList<Trails> argument){
@@ -416,7 +424,7 @@ public class ResultFragment extends Fragment{
                 for (int j = 0; j < numSubcolumns; ++j) {
                     values.add(new SubcolumnValue(lu.get(i), ChartUtils.pickColor()));
                 }
-                String s = (lm.get(i)+"-"+lm.get(i+1));
+                @SuppressLint("DefaultLocale") String s = (String.format("%.2f",lm.get(i))+"-"+String.format("%.2f",lm.get(i+1)));
                 mAxisXValues.add(new AxisValue(i).setLabel(s));
                 Column column = new Column(values);
                 column.setHasLabels(hasLabels);
@@ -448,6 +456,19 @@ public class ResultFragment extends Fragment{
         arr.sort((p1, p2) -> p1.getTime().compareTo(p2.getTime()));
         return arr;
     }
+    //disable menu in frag
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+    }
+    //disable menu in frag
+
     /**
      * This method create a view to show the results and the plots.
      * The six numbers are the three quartile numbers and median and mean.
@@ -455,7 +476,7 @@ public class ResultFragment extends Fragment{
      * @param inflater load layout
      * @param container Gather views
      * @param savedInstanceState Save current data to avoid data loss.
-     * @return view
+     * @return Return a view, which shows the results of the experiments and the two plots.
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override

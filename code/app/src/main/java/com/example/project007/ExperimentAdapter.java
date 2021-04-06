@@ -87,10 +87,10 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
         experimentName.setText(experiment.getName());
         experimentDescription.setText(experiment.getDescription());
         switch (experiment.getType()){
+            case "Count-based": image.setImageResource(R.drawable.c); break;
             case "Binomial": image.setImageResource(R.drawable.b); break;
+            case "Non-negative": image.setImageResource(R.drawable.n); break;
             case "Measurement": image.setImageResource(R.drawable.m); break;
-            case "Count": image.setImageResource(R.drawable.c); break;
-            case "IntCount": image.setImageResource(R.drawable.n); break;
         }
 
         TextView experimentUser = view.findViewById(R.id.owner_view);

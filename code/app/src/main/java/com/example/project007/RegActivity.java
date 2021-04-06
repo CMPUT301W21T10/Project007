@@ -105,7 +105,7 @@ public class RegActivity extends AppCompatActivity {
                             reference.child("data").child(getAndroidId(RegActivity.this)+ "").child("phone").setValue(regPhone.getText().toString());
                             reference.child("data").child(getAndroidId(RegActivity.this) + "").child("username").setValue(regName.getText().toString());
                             reference.child("data").child(getAndroidId(RegActivity.this) + "").child("email").setValue(regEmail.getText().toString());
-                            Toast.makeText(RegActivity.this, " UID is  reg suc !",
+                            Toast.makeText(RegActivity.this, " UID is registered successfully!",
                                     Toast.LENGTH_SHORT).show();
                             finish();
                         }

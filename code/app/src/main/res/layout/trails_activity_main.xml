@@ -5,99 +5,97 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:textColor="@color/white"
-    tools:context=".TrailsActivity"
-    >
+    tools:context=".TrailsActivity">
 
 
     <LinearLayout
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
 
-        android:id="@+id/info"
-        android:orientation="vertical">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/title_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="2dp"
             android:orientation="horizontal"
+            android:paddingStart="2dp"
             tools:ignore="RtlSymmetry">
 
             <ImageView
                 android:id="@+id/experiment_image"
+                android:layout_width="60dip"
+                android:layout_height="60dip"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
                 android:maxWidth="40dp"
                 android:maxHeight="40dp"
-                android:layout_margin="10dp"
-                android:layout_gravity="center"
-                android:scaleType="centerInside"
-                android:layout_width="60dip"
-                android:layout_height="60dip" />
+                android:scaleType="centerInside" />
 
             <LinearLayout
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:paddingStart="2dp"
-                android:orientation="vertical">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/name_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLength="10"
-                android:text="@string/name"
-                android:textSize="40sp"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textStyle="bold">
-            </TextView>
+                <TextView
+                    android:id="@+id/name_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="10"
+                    android:singleLine="true"
+                    android:text="@string/name"
+                    android:textColor="@color/black"
+                    android:textSize="40sp"
+                    android:textStyle="bold"></TextView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="2dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingStart="2dp">
 
                     <TextView
                         android:id="@+id/process"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="0.1"
+                        android:background="@drawable/button"
+                        android:backgroundTint="@color/edit"
                         android:text="Processing"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:background="@drawable/button"
-                        android:backgroundTint="@color/edit"
-                        android:layout_marginEnd="5dp"
-                        android:visibility="invisible"
-                        android:layout_weight="0.1" />
+                        android:visibility="invisible" />
 
                     <TextView
                         android:id="@+id/location"
-                        android:text="Location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="0.1"
                         android:background="@drawable/button"
                         android:backgroundTint="#FFE8D000"
-                        android:layout_marginEnd="5dp"
-                        android:visibility="invisible"
-                        android:layout_weight="0.1"/>
+                        android:text="Location"
+                        android:textSize="20sp"
+                        android:visibility="invisible" />
 
                     <TextView
                         android:id="@+id/owner"
-                        android:text="Owner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="0.1"
                         android:background="@drawable/button"
                         android:backgroundTint="@color/owner"
-                        android:layout_marginEnd="5dp"
-                        android:visibility="invisible"
-                        android:layout_weight="0.1"/>
+                        android:text="Owner"
+                        android:textSize="20sp"
+                        android:visibility="invisible" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -106,21 +104,20 @@
         </LinearLayout>
 
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="2dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingStart="2dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Description: "
                 android:paddingStart="10dp"
+                android:text="Description: "
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
 
             <TextView
@@ -128,15 +125,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/details"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="2dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingStart="2dp">
 
 
             <TextView
@@ -174,14 +171,13 @@
                 android:textSize="20sp" />
 
 
-
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="2dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingStart="2dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -206,17 +202,17 @@
                 android:text="Type: "
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
 
             <TextView
                 android:id="@+id/type"
-                android:textColor="@color/details"
                 android:layout_width="match_parent"
-                android:paddingEnd="10dp"
-                android:gravity="right"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"/>
+                android:gravity="right"
+                android:paddingEnd="10dp"
+                android:textColor="@color/details"
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -264,15 +260,32 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/info"
-            tools:listitem="@android:layout/simple_list_item_1"></ListView>
+            tools:listitem="@android:layout/simple_list_item_1" />
     </LinearLayout>
 
+    <!--<Button
+        android:id="@+id/experimentBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="627dp"
+        android:layout_marginBottom="5dp"
+        android:hint="Add Trail?"
+        android:paddingBottom="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </Button>-->
 
 
     <FrameLayout
         android:id="@+id/data_container2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:elevation="5dp"
+        android:paddingBottom="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -282,7 +295,7 @@
 
     </FrameLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/experimentBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -294,18 +307,21 @@
         android:layout_marginBottom="109dp"
         android:clickable="true"
         android:focusable="true"
+        android:elevation="-10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@android:drawable/ic_input_add" />-->
+
 
     <ScrollView
         android:id="@+id/data_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:elevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

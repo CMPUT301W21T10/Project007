@@ -4,6 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.myapplication.MainActivity">
     <item
+        android:id="@+id/action_add"
+        android:orderInCategory="1"
+        android:icon="@drawable/ic_baseline_add_24"
+        android:title="Add"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/questionsOpt"
         android:orderInCategory="100"
         android:title="Questions"
@@ -11,7 +17,7 @@
     <item
         android:id="@+id/viewResult"
         android:orderInCategory="100"
-        android:title="View Result(Plots)"
+        android:title="View Result"
         app:showAsAction="never" />
     <item
         android:id="@+id/QROpt"

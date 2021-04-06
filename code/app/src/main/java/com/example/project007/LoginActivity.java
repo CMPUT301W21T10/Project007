@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if (next.getKey().equals(getAndroidId(LoginActivity.this))){
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class).putExtra("uid",next.getKey()));
                                     logged = true;
-                                    Toast.makeText(LoginActivity.this, " Uid login suc!",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, " Uid login successfully!",Toast.LENGTH_SHORT).show();
                                     finish();
                                 }
                             }
