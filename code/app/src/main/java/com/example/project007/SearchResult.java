@@ -84,9 +84,10 @@ public class SearchResult extends AppCompatActivity {
 
                     }
                     if(experimentDataList.size() == 0) {
-                        Toast.makeText(SearchResult.this, "No related result.",
-                                Toast.LENGTH_SHORT).show();
-                        finish();
+                        final Toast test = Toast.makeText(SearchResult.this, "No related result.", Toast.LENGTH_SHORT);
+                        test.show();
+                        test.cancel();
+                        SearchResult.this.finish();
                     }
                 }
                 experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
