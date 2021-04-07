@@ -94,7 +94,8 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             if (!logged){
                                 regEmail.setText(getAndroidId(LoginActivity.this));
-                                Toast.makeText(LoginActivity.this, " Uid not reg!",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, " please registry!",Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(LoginActivity.this, RegActivity.class));
                             }
                         }
 
@@ -112,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
+/*
     @OnClick({R.id.reg_btn, R.id.reg_signup})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -151,5 +152,5 @@ public class LoginActivity extends AppCompatActivity {
                 });
                 break;
         }
-    }
+    }*/
 }
