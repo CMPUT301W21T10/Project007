@@ -85,6 +85,11 @@ public class SearchResult extends AppCompatActivity {
                         }
 
                     }
+                    if(experimentDataList.size() == 0) {
+                        Toast.makeText(SearchResult.this, "No related result.",
+                                Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
                 }
                 experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
 
@@ -93,11 +98,7 @@ public class SearchResult extends AppCompatActivity {
 
 
 
-        if(experimentDataList.size() == 0) {
-            Toast.makeText(SearchResult.this, "No related result.",
-                    Toast.LENGTH_SHORT).show();
-            finish();
-        }
+
         // listener to access detail of an element
         // package an experiment and position info in intent
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
