@@ -38,7 +38,7 @@ tools:context=".ui.subscription.SubscriptionFragment">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="  Subscription"
+                android:text="Subscription"
                 android:fontFamily="serif"
                 android:textSize="45sp"/>
         </LinearLayout>
