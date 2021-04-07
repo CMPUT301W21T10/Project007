@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -99,7 +100,8 @@ public class ModifyExperimentFragment extends DialogFragment{
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
         experimentRegion.setAdapter(adapter2);
-
+        TextView hintHint = view.findViewById(R.id.hintHint);
+        hintHint.setVisibility(View.INVISIBLE);
         if (currentExperiment != null){
             experimentName.setText(currentExperiment.getName());
             experimentDescription.setText(currentExperiment.getDescription());
@@ -118,6 +120,9 @@ public class ModifyExperimentFragment extends DialogFragment{
             experimentRegion.setSelection(spinnerPosition2);
             int spinnerPosition = adapter.getPosition(currentExperiment.getType());
             typeSpinner.setSelection(spinnerPosition);
+
+            typeSpinner.setEnabled(false);
+            hintHint.setVisibility(View.VISIBLE);
         }
 
         //auto set date

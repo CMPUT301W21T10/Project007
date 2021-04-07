@@ -70,10 +70,10 @@ public class HomeFragment extends Fragment {
                         Experiment experiment = (Experiment) bundle.getSerializable("com.example.project007.modifiedExperiment");
                         boolean addResult = DatabaseController.modify_experiment("Experiments", experiment);
                         if (addResult){
-                            Toast.makeText(getActivity(), "Add Succeed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Add Failed", Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            Toast.makeText(getActivity(), "Add Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Add Succeed", Toast.LENGTH_SHORT).show();
                         }//revert logic
                     }
                 });
