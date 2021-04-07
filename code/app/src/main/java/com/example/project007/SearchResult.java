@@ -41,6 +41,7 @@ public class SearchResult extends AppCompatActivity {
     private ArrayList<Experiment> experimentDataList;
     final String TAG = "Sample";
     private String searchKey = "";
+    public static String hello="nihaoya";
     ArrayList<UserEntity> userList = new ArrayList<UserEntity>();
     boolean condition;
 
@@ -143,7 +144,8 @@ public class SearchResult extends AppCompatActivity {
             return true;
         }
         condition = false;
-
+        Toast toast = Toast.makeText(getApplicationContext(),hello,Toast.LENGTH_SHORT);
+        toast.show();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.child("data").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -164,6 +166,8 @@ public class SearchResult extends AppCompatActivity {
                         final CollectionReference collectionReference = db.collection("Users");
                         collectionReference.document(userEntity.getUid()).set(userEntity);
                     }
+                    else {
+                        hello="Dragon"; }
                 }
             }
             @Override
@@ -171,6 +175,7 @@ public class SearchResult extends AppCompatActivity {
 
             }
         });
+
 
         final FirebaseFirestore db = DatabaseController.getDb();
         final CollectionReference collectionReference = db.collection("Users");

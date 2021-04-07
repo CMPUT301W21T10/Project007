@@ -17,7 +17,7 @@ public class CustomizeScanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.customize_scan);// 自定义布局
+        setContentView(R.layout.customize_scan);
 
         barcodeScannerView = (DecoratedBarcodeView) findViewById(R.id.customize_scan);
 
