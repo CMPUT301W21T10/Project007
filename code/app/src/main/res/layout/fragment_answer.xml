@@ -13,6 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="50dp"
+        android:textColor="@color/white"
+        android:background="@drawable/custombutton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -32,7 +34,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Add Answer Here"
-        android:inputType="textPersonName"
+        android:background="@drawable/custombutton"
+        android:textColor="@color/white"
+        android:maxLines="5"
+        android:lines="1"
+        android:textColorHint="@color/white"
+        android:textSize="25sp"
+        android:inputType="textMultiLine"
         app:layout_constraintBottom_toTopOf="@+id/add_answer_button"/>
 
     <Button
@@ -40,6 +48,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add Answers?"
+        android:background="@drawable/custombutton"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

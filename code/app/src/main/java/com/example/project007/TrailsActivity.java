@@ -10,6 +10,7 @@ import android.graphics.PorterDuff;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
@@ -355,7 +356,11 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         trail_List.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //Delete event
+                //Delete event with long click vibrate
+                //https://stackoverflow.com/questions/9509840/how-can-i-add-a-vibrate-event-to-the-onlongclick-method
+                //by blessenm answered Mar 1 '12 at 3:50
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                vibrator.vibrate(10);
                 String databaseUserId = DatabaseController.getUserId();
                 String experimentId = experiment.getUserId();
                 if (databaseUserId.matches(experimentId)){

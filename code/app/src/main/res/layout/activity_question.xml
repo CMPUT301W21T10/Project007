@@ -23,8 +23,14 @@
         android:id="@+id/add_question_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/custombutton"
+        android:textColor="@color/white"
         android:hint="Add Question Here"
-        android:inputType="textPersonName"
+        android:textColorHint="@color/white"
+        android:maxLines="5"
+        android:lines="1"
+        android:textSize="25sp"
+        android:inputType="textMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/add_question_button"/>
@@ -34,6 +40,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add Questions"
+        android:background="@drawable/custombutton"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
