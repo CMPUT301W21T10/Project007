@@ -124,16 +124,16 @@ public class AppTest {
         solo.clickOnMenuItem("Help/Tips");
         sleep(1000);
         solo.goBack();
-        solo.goBack();
+        //solo.goBack();
 
-        //delete Count-base
+        /*//delete Count-base
         ListView experimentListView = (ListView) solo.getView("experiment_list");
-        View experimentView =  experimentListView.getChildAt(0);
+        View experimentView = experimentListView.getChildAt(0);
         solo.clickLongOnView(experimentView);
         View deleteview = (View) solo.getView("button2");
         solo.clickOnView(deleteview);
         assertFalse(solo.waitForText("Count-base", 1, 2000));
-        //delete Count-base
+        //delete Count-base*/
 
 
         //add Binomial
@@ -145,14 +145,14 @@ public class AppTest {
         solo.clickOnText("OK");
         solo.clickOnView(navView);
         ListView ownListView1 = (ListView) solo.getView("own_list");
-        View ownView1 =  ownListView1.getChildAt(0);
+        View ownView1 =  ownListView1.getChildAt(1);
         solo.clickLongOnView(ownView1);
         solo.clickOnView(btn4view);
         solo.clickOnView(homeView);
         assertTrue(solo.waitForText("Binomial", 1, 2000));
         //find&enter Binomial
         ListView currentListView1 = (ListView) solo.getView("experiment_list");
-        View view2 =  currentListView1.getChildAt(0);
+        View view2 =  currentListView1.getChildAt(1);
         solo.clickOnView(view2);
         solo.assertCurrentActivity("Wrong Activity", TrailsActivity.class);
         final TextView textView2 = (TextView) solo.getView("name_view"); // Get the listview
@@ -193,9 +193,16 @@ public class AppTest {
         solo.pressSpinnerItem(0, 2);
         solo.enterText((EditText) solo.getView(R.id.minimumTrails), "0");
         solo.clickOnText("OK");
+        solo.clickOnView(navView);
+        ListView ownListView2 = (ListView) solo.getView("own_list");
+        View ownView2 =  ownListView2.getChildAt(2);
+        solo.clickLongOnView(ownView2);
+        solo.clickOnView(btn4view);
+        solo.clickOnView(homeView);
         assertTrue(solo.waitForText("Non-nega", 1, 2000));
         //查找并进入Non-negative
-        View view3 =  currentListView.getChildAt(2);
+        ListView currentListView2 = (ListView) solo.getView("experiment_list");
+        View view3 =  currentListView2.getChildAt(2);
         solo.clickOnView(view3);
         solo.assertCurrentActivity("Wrong Activity", TrailsActivity.class);
         final TextView textView3 = (TextView) solo.getView("name_view"); // Get the listview
@@ -233,9 +240,16 @@ public class AppTest {
         solo.pressSpinnerItem(0, 3);
         solo.enterText((EditText) solo.getView(R.id.minimumTrails), "0");
         solo.clickOnText("OK");
+        solo.clickOnView(navView);
+        ListView ownListView3 = (ListView) solo.getView("own_list");
+        View ownView3 =  ownListView3.getChildAt(1);
+        solo.clickLongOnView(ownView3);
+        solo.clickOnView(btn4view);
+        solo.clickOnView(homeView);
         assertTrue(solo.waitForText("Measurement", 1, 2000));
         //查找并进入Measurement
-        View view4 =  currentListView.getChildAt(3);
+        ListView currentListView3 = (ListView) solo.getView("experiment_list");
+        View view4 =  currentListView3.getChildAt(2);
         solo.clickOnView(view4);
         solo.assertCurrentActivity("Wrong Activity", TrailsActivity.class);
         final TextView textView4 = (TextView) solo.getView("name_view"); // Get the listview
