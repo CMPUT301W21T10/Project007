@@ -14,9 +14,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|center"
         android:layout_weight="1"
+        android:layout_marginBottom="5dp"
         android:background="#EFC7B5"
         android:text="Publish"
-        android:textColor="@color/black" />
+        android:textColor="@color/white" />
 
     <Button
         android:id="@+id/button"
