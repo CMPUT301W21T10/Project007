@@ -218,6 +218,8 @@ public class HomeFragment extends Fragment {
                 }
                 else {
                     experimentDataList.clear();
+                    int experimentId = 0;
+
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
 
                         Experiment oneExperiment = null;
@@ -229,21 +231,18 @@ public class HomeFragment extends Fragment {
                             if (oneExperiment.isPublishCondition()){
                                 experimentDataList.add(oneExperiment);
                             }
+                            if (oneExperiment.getId() > experimentId){
+                                experimentId = oneExperiment.getId();
+                            }
                         } else {
                             System.out.println("No such document!");
                         }
                     }
-
+                    DatabaseController.setMaxExperimentId(experimentId);
                     experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
                 }
 
-                int experimentId = 0;
-                for (int i = 0; i < experimentDataList.size(); i++){
-                    if (experimentDataList.get(i).getId() > experimentId){
-                        experimentId = experimentDataList.get(i).getId();
-                    }
-                }
-                DatabaseController.setMaxExperimentId(experimentId);
+
 
             }
         });
