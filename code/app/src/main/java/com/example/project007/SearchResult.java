@@ -97,7 +97,7 @@ public class SearchResult extends AppCompatActivity {
 
             }
         });
-
+        //
         // listener to access detail of an element
         // package an experiment and position info in intent
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
