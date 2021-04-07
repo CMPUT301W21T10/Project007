@@ -144,8 +144,7 @@ public class SearchResult extends AppCompatActivity {
             return true;
         }
         condition = false;
-        Toast toast = Toast.makeText(getApplicationContext(),hello,Toast.LENGTH_SHORT);
-        toast.show();
+
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.child("data").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -165,9 +164,12 @@ public class SearchResult extends AppCompatActivity {
                         DatabaseController.setDb(db);
                         final CollectionReference collectionReference = db.collection("Users");
                         collectionReference.document(userEntity.getUid()).set(userEntity);
+                        if (userEntity.getUid().equals(experiment.getUserId())){
+                            hello="Dragon";
+                            Toast.makeText(SearchResult.this, hello,
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
-                    else {
-                        hello="Dragon"; }
                 }
             }
             @Override
@@ -175,7 +177,7 @@ public class SearchResult extends AppCompatActivity {
 
             }
         });
-
+/*
 
         final FirebaseFirestore db = DatabaseController.getDb();
         final CollectionReference collectionReference = db.collection("Users");
@@ -212,7 +214,7 @@ public class SearchResult extends AppCompatActivity {
 
             }
         });
-
+*/
         return condition;
 
     }
