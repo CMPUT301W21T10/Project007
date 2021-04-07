@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="regionValue">
+        <item>Mr.Ma\'s heart</item>
+        <item>China</item>
+        <item>USA</item>
+        <item>Canada</item>
+    </string-array>
+</resources>

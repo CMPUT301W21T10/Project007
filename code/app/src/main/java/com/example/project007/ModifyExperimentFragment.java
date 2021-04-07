@@ -42,13 +42,14 @@ public class ModifyExperimentFragment extends DialogFragment{
     private EditText experimentName;
     private EditText experimentDescription;
     private TextView experimentDate;
-    private EditText experimentRegion;
+    private Spinner experimentRegion;
     private EditText experimentMinimumTrails;
     CheckBox location;
 
     private String type = "None";
     public Experiment currentExperiment = null;
     private final String[] types = {"Count-based", "Binomial", "Non-negative","Measurement"};
+    private final String[] regions = {"Mr.Ma's heart","China","USA","Canada"};
     private boolean requireLocation = false;
     private Integer minimumTrails;
     private String region;
@@ -82,16 +83,29 @@ public class ModifyExperimentFragment extends DialogFragment{
         experimentDate = view.findViewById(R.id.editTextDate);
         Spinner typeSpinner = view.findViewById(R.id.typeChooser);
         location = view.findViewById(R.id.checkBox);
-        experimentRegion = view.findViewById(R.id.regionEditText);
+        experimentRegion = view.findViewById(R.id.regionSpinner);
         experimentMinimumTrails = view.findViewById(R.id.minimumTrails);
 
-        // set saved information if it's modifying
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(),
+                R.array.experimentType, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        typeSpinner.setAdapter(adapter);
+
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(requireContext(),
+                R.array.regionValue, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        experimentRegion.setAdapter(adapter2);
+
         if (currentExperiment != null){
             experimentName.setText(currentExperiment.getName());
             experimentDescription.setText(currentExperiment.getDescription());
             experimentDate.setText(currentExperiment.getDate());
             location.setChecked(currentExperiment.isRequireLocation());
-            experimentRegion.setText(currentExperiment.getRegion());
             experimentMinimumTrails.setText(currentExperiment.getMinimumTrails().toString());
 
             id = currentExperiment.getId();
@@ -100,6 +114,11 @@ public class ModifyExperimentFragment extends DialogFragment{
             condition = currentExperiment.isCondition();
             publishCondition = currentExperiment.isPublishCondition();
             questionId = currentExperiment.getQuestionId();
+
+            int spinnerPosition2 = adapter2.getPosition(currentExperiment.getRegion());
+            experimentRegion.setSelection(spinnerPosition2);
+            int spinnerPosition = adapter.getPosition(currentExperiment.getType());
+            typeSpinner.setSelection(spinnerPosition);
         }
 
         //auto set date
@@ -129,12 +148,8 @@ public class ModifyExperimentFragment extends DialogFragment{
             }
         });
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(),
-                R.array.experimentType, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-        typeSpinner.setAdapter(adapter);
+
+
         ImageView image = view.findViewById(R.id.instance_image);
 
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -155,6 +170,18 @@ public class ModifyExperimentFragment extends DialogFragment{
             }
         });
 
+        experimentRegion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                region = regions[position];
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //experimentType.setText("NONE");
+            }
+        });
         // dialog part, show UI commit information
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         AlertDialog dialog = builder.setView(view)
@@ -180,7 +207,6 @@ public class ModifyExperimentFragment extends DialogFragment{
                     date = experimentDate.getText().toString();
                     requireLocation = location.isChecked();
                     minimumTrails = Integer.parseInt(experimentMinimumTrails.getText().toString());
-                    region = experimentRegion.getText().toString();
                     success = true;
                 }catch(Exception e){Toast.makeText(getActivity(), "Invalid input", Toast.LENGTH_SHORT).show();}
                 if (success){
