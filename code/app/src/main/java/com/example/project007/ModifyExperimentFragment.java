@@ -49,7 +49,6 @@ public class ModifyExperimentFragment extends DialogFragment{
     private String type = "None";
     public Experiment currentExperiment = null;
     private final String[] types = {"Count-based", "Binomial", "Non-negative","Measurement"};
-    private final String[] regions = {"Mr.Ma's heart","China","USA","Canada"};
     private boolean requireLocation = false;
     private Integer minimumTrails;
     private String region;
@@ -173,7 +172,7 @@ public class ModifyExperimentFragment extends DialogFragment{
         experimentRegion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                region = regions[position];
+                region = parent.getItemAtPosition(position).toString();
 
             }
 
