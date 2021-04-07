@@ -39,12 +39,9 @@ public class SearchResult extends AppCompatActivity {
     private SubscriptionViewModel subscriptionViewModel;
     private ListView experimentList;
     private ArrayAdapter<Experiment> experimentAdapter;
-    private ArrayList<Experiment> experimentDataList = new ArrayList<>();
+    private ArrayList<Experiment> experimentDataList;
     final String TAG = "Sample";
     private String searchKey = "";
-    ArrayList<UserEntity> userList = new ArrayList<UserEntity>();
-    public static boolean condition;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +49,8 @@ public class SearchResult extends AppCompatActivity {
 
         Intent intent = getIntent();
         searchKey = intent.getStringExtra("Key");
+
+        experimentDataList = new ArrayList<>();
         experimentAdapter = new ExperimentAdapter(this, experimentDataList);
         experimentList = findViewById(R.id.subscript_list);
         experimentList.setAdapter(experimentAdapter);
@@ -75,7 +74,6 @@ public class SearchResult extends AppCompatActivity {
                         if (doc.exists()) {
                             // convert document to POJO
                             oneExperiment = doc.toObject(Experiment.class);
-
                             if (processData(oneExperiment)){
                                 experimentDataList.add(oneExperiment);
                             }
@@ -96,9 +94,6 @@ public class SearchResult extends AppCompatActivity {
             }
         });
 
-
-
-
         // listener to access detail of an element
         // package an experiment and position info in intent
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -116,9 +111,6 @@ public class SearchResult extends AppCompatActivity {
 
     public boolean processData( Experiment experiment){
 
-        if (!experiment.isPublishCondition()){
-            return false;
-        }
         if (experiment.getName().contains(searchKey)){
             return true;
 
@@ -147,6 +139,9 @@ public class SearchResult extends AppCompatActivity {
         if (!experiment.isCondition() && searchKey.equals("Processing")){
             return true;
         }
+
+
+
 
         return false;
 
