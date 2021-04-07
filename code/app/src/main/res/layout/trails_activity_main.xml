@@ -251,7 +251,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:choiceMode="singleChoice"
-            android:paddingStart="5dp"
             tools:listitem="@android:layout/simple_list_item_1" />
     </LinearLayout>
 
