@@ -42,7 +42,7 @@ public class AppTest {
     public void StartTest() throws InterruptedException {
         //测试进入
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
-        solo.clickOnText("Sign In");
+        //solo.clickOnText("Sign In");
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
 
         //添加count-base

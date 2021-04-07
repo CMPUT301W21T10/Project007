@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.InputType;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
@@ -179,7 +181,15 @@ public class AddBinoTrailFragment extends Fragment {
             //initialize map content
             /*Fragment fragment = new MapFragment();
             getChildFragmentManager().beginTransaction().replace(R.id.map_container, fragment).commit();*/
-            Toast.makeText(getActivity(), "This trail require you to enter location data!",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "This trail require you to enter location data!",Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("Warning!")
+                    .setMessage("This trail require you to enter location data!")
+                    .setPositiveButton(android.R.string.yes,  new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface arg0, int arg1) {
+
+                        }
+                    }).create().show();
             //warn experimenter for location data acquire
         }
 
