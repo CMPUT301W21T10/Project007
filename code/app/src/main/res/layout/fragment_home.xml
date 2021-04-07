@@ -12,9 +12,6 @@
     android:orientation="vertical"
     tools:context=".ui.home.HomeFragment">
 
-
-
-
     <ListView
         android:id="@+id/experiment_list"
         android:layout_width="match_parent"
