@@ -2,6 +2,7 @@ package com.example.project007;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -107,6 +108,7 @@ public class RegActivity extends AppCompatActivity {
                             reference.child("data").child(getAndroidId(RegActivity.this) + "").child("email").setValue(regEmail.getText().toString());
                             Toast.makeText(RegActivity.this, " UID is registered successfully!",
                                     Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(RegActivity.this, MainActivity.class).putExtra("uid",reference.child("data").child(getAndroidId(RegActivity.this)+ "").getKey()));
                             finish();
                         }
                     }
