@@ -49,7 +49,8 @@
 
         <activity android:name=".AfterLoginActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".RegActivity" />
+        <activity android:name=".RegActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".ScanActivity" />
         <activity android:name="CustomizeScanActivity"/>
         <activity android:name="ReadBarCodeActivity"/>

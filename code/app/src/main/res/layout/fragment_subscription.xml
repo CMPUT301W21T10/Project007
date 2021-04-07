@@ -15,9 +15,9 @@ tools:context=".ui.subscription.SubscriptionFragment">
         android:layout_height="0dp"
         android:orientation="vertical"
         android:padding="5dp"
-        android:layout_marginBottom="20dp"
         android:layout_weight="0.5"
         android:background="#63EAF7FF"
+        android:layout_marginBottom="1dp"
         >
 
         <LinearLayout
