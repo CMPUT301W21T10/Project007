@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(LoginActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, 0);
     }
 
-    public  String getAndroidId(Context context) {
+    public String getAndroidId(Context context) {
         String ANDROID_ID = Settings.System.getString(context.getContentResolver(), Settings.System.ANDROID_ID);
         return ANDROID_ID;
     }

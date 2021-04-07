@@ -39,12 +39,9 @@ public class SearchResult extends AppCompatActivity {
     private SubscriptionViewModel subscriptionViewModel;
     private ListView experimentList;
     private ArrayAdapter<Experiment> experimentAdapter;
-    private ArrayList<Experiment> experimentDataList = new ArrayList<>();
+    private ArrayList<Experiment> experimentDataList;
     final String TAG = "Sample";
     private String searchKey = "";
-    ArrayList<UserEntity> userList = new ArrayList<UserEntity>();
-    public static boolean condition;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +49,8 @@ public class SearchResult extends AppCompatActivity {
 
         Intent intent = getIntent();
         searchKey = intent.getStringExtra("Key");
+
+        experimentDataList = new ArrayList<>();
         experimentAdapter = new ExperimentAdapter(this, experimentDataList);
         experimentList = findViewById(R.id.subscript_list);
         experimentList.setAdapter(experimentAdapter);
@@ -60,8 +59,7 @@ public class SearchResult extends AppCompatActivity {
         db = DatabaseController.getDb();
         final CollectionReference collectionReference = db.collection("Experiments");
 
-        final CollectionReference collectionReference2 = db.collection("Users");
-        collectionReference2.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
                 // Clear the old list
@@ -69,72 +67,34 @@ public class SearchResult extends AppCompatActivity {
                     Log.d(TAG,"Error:"+error.getMessage());
                 }
                 else {
-                    userList.clear();
+                    experimentDataList.clear();
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
 
-                        UserEntity user = null;
+                        Experiment oneExperiment = null;
                         if (doc.exists()) {
                             // convert document to POJO
-                            user = doc.toObject(UserEntity.class);
-                            System.out.println(user);
-
-                            if (user.getUsername().contains(searchKey)){
-                                userList.add(user);
+                            oneExperiment = doc.toObject(Experiment.class);
+                            if (processData(oneExperiment)){
+                                experimentDataList.add(oneExperiment);
                             }
+
                         } else {
                             System.out.println("No such document!");
                         }
+
+                    }
+                    if(experimentDataList.size() == 0) {
+                        final Toast test = Toast.makeText(SearchResult.this, "No related result.", Toast.LENGTH_SHORT);
+                        test.show();
+                        test.cancel();
+                        SearchResult.this.finish();
                     }
                 }
-
-                collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                        // Clear the old list
-                        if (error!=null){
-                            Log.d(TAG,"Error:"+error.getMessage());
-                        }
-                        else {
-                            experimentDataList.clear();
-                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-
-                                Experiment oneExperiment = null;
-                                if (doc.exists()) {
-                                    // convert document to POJO
-                                    oneExperiment = doc.toObject(Experiment.class);
-
-                                    if (processData(oneExperiment)){
-                                        experimentDataList.add(oneExperiment);
-                                    }
-                                    if (!experimentDataList.contains(oneExperiment)){
-                                        for (int i = 0 ;  i < userList.size(); i ++){
-                                            if (userList.get(i).getUid().equals(oneExperiment.getUserId())){
-                                                experimentDataList.add(oneExperiment);
-                                                break;
-                                            }
-                                        }
-                                    }
-
-                                } else {
-                                    System.out.println("No such document!");
-                                }
-
-                            }
-                        }
-                        experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
-
-                    }
-                });
-
-
+                experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
 
             }
         });
-        if(experimentDataList.size() == 0) {
-            Toast.makeText(SearchResult.this, "No related result.",
-                    Toast.LENGTH_SHORT).show();
-            finish();
-        }
+
         // listener to access detail of an element
         // package an experiment and position info in intent
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -181,33 +141,6 @@ public class SearchResult extends AppCompatActivity {
             return true;
         }
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("data").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
-
-                while (iterator.hasNext()){
-                    DataSnapshot next = iterator.next();
-                    if (next.child("username").getValue().toString().contains(searchKey)){
-                        UserEntity userEntity = new UserEntity();
-                        userEntity.setEmail(next.child("email").getValue().toString());
-                        userEntity.setPhone(next.child("phone").getValue().toString());
-                        userEntity.setUid(next.getKey());
-                        userEntity.setUsername(next.child("username").getValue().toString());
-                        final FirebaseFirestore db;
-                        db = FirebaseFirestore.getInstance();
-                        DatabaseController.setDb(db);
-                        final CollectionReference collectionReference = db.collection("Users");
-                        collectionReference.document(userEntity.getUid()).set(userEntity);
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
 
 

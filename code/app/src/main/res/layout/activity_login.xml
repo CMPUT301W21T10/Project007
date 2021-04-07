@@ -9,7 +9,7 @@
     android:gravity="center_vertical"
     >
     <TextView
-        android:text="Nice to meet you!"
+        android:text="Welcome to Project007!"
         android:layout_gravity="center_horizontal"
         android:textSize="28dp"
         android:fontFamily="cursive"
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Welcome to Project007"
+            android:text="Nice to meet you!"
             android:fontFamily="cursive"
             android:textColor="#49558A"
             android:textSize="30sp" />
