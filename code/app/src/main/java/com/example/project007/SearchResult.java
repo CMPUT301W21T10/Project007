@@ -42,7 +42,7 @@ public class SearchResult extends AppCompatActivity {
     final String TAG = "Sample";
     private String searchKey = "";
     ArrayList<UserEntity> userList = new ArrayList<UserEntity>();
-    boolean condition;
+    public boolean condition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +77,12 @@ public class SearchResult extends AppCompatActivity {
                             // convert document to POJO
                             oneExperiment = doc.toObject(Experiment.class);
 
-                            if (processData(oneExperiment) | condition){
+                            if (processData(oneExperiment)){
                                 experimentDataList.add(oneExperiment);
+                            }
+                            if (condition && !experimentDataList.contains(oneExperiment)){
+                                experimentDataList.add(oneExperiment);
+
                             }
 
                         } else {
