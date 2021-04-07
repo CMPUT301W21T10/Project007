@@ -32,6 +32,7 @@
                 android:layout_margin="10dp"
                 android:maxWidth="40dp"
                 android:maxHeight="40dp"
+                android:background="@drawable/c"
                 android:scaleType="centerInside" />
 
             <LinearLayout
