@@ -8,7 +8,7 @@
     android:id="@+id/singleView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/content"
+    android:background="#26617DAE"
 
     android:paddingStart="2dp"
     android:orientation="vertical"
@@ -45,9 +45,10 @@
                 android:layout_height="wrap_content"
                 android:maxLength="10"
                 android:text="@string/name"
+                android:fontFamily="serif"
+                android:textColor="#55556E"
                 android:textSize="40sp"
                 android:singleLine="true"
-                android:textColor="@color/black"
                 android:textStyle="bold">
 
             </TextView>
@@ -62,6 +63,7 @@
                     android:layout_height="wrap_content"
                     android:text="Owner"
                     android:singleLine="true"
+                    android:textColor="@color/details"
                     android:layout_weight="1"
                     android:textSize="25sp">
 
@@ -73,7 +75,8 @@
                     android:layout_height="wrap_content"
                     android:text="Condition"
                     android:singleLine="true"
-                    android:background="@color/blue"
+                    android:textColor="@color/details"
+                    android:background="#B5FFF5B3"
                     android:textSize="25sp">
                 </TextView>
 
@@ -96,6 +99,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Description: "
+        android:textColor="@color/details"
         android:singleLine="true"
         android:textSize="25sp">
 
@@ -105,6 +109,7 @@
         android:id="@+id/description_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/details"
         android:text="@string/description"
         android:textSize="25sp">
 
