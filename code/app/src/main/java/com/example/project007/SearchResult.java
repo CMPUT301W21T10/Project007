@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -38,11 +39,11 @@ public class SearchResult extends AppCompatActivity {
     private SubscriptionViewModel subscriptionViewModel;
     private ListView experimentList;
     private ArrayAdapter<Experiment> experimentAdapter;
-    private ArrayList<Experiment> experimentDataList;
+    private ArrayList<Experiment> experimentDataList = new ArrayList<>();
     final String TAG = "Sample";
     private String searchKey = "";
     ArrayList<UserEntity> userList = new ArrayList<UserEntity>();
-    public boolean condition;
+    public static boolean condition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +52,6 @@ public class SearchResult extends AppCompatActivity {
 
         Intent intent = getIntent();
         searchKey = intent.getStringExtra("Key");
-
-        experimentDataList = new ArrayList<>();
         experimentAdapter = new ExperimentAdapter(this, experimentDataList);
         experimentList = findViewById(R.id.subscript_list);
         experimentList.setAdapter(experimentAdapter);
@@ -61,7 +60,8 @@ public class SearchResult extends AppCompatActivity {
         db = DatabaseController.getDb();
         final CollectionReference collectionReference = db.collection("Experiments");
 
-        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        final CollectionReference collectionReference2 = db.collection("Users");
+        collectionReference2.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
                 // Clear the old list
@@ -69,38 +69,72 @@ public class SearchResult extends AppCompatActivity {
                     Log.d(TAG,"Error:"+error.getMessage());
                 }
                 else {
-                    experimentDataList.clear();
+                    userList.clear();
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
 
-                        Experiment oneExperiment = null;
+                        UserEntity user = null;
                         if (doc.exists()) {
                             // convert document to POJO
-                            oneExperiment = doc.toObject(Experiment.class);
+                            user = doc.toObject(UserEntity.class);
+                            System.out.println(user);
 
-                            if (processData(oneExperiment)){
-                                experimentDataList.add(oneExperiment);
+                            if (user.getUsername().contains(searchKey)){
+                                userList.add(user);
                             }
-                            if (condition && !experimentDataList.contains(oneExperiment)){
-                                experimentDataList.add(oneExperiment);
-
-                            }
-
                         } else {
                             System.out.println("No such document!");
                         }
-
-                    }
-                    if(experimentDataList.size() == 0) {
-                        Toast.makeText(SearchResult.this, "No related result.",
-                                Toast.LENGTH_SHORT).show();
-                        finish();
                     }
                 }
-                experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
+
+                collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                        // Clear the old list
+                        if (error!=null){
+                            Log.d(TAG,"Error:"+error.getMessage());
+                        }
+                        else {
+                            experimentDataList.clear();
+                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+
+                                Experiment oneExperiment = null;
+                                if (doc.exists()) {
+                                    // convert document to POJO
+                                    oneExperiment = doc.toObject(Experiment.class);
+
+                                    if (processData(oneExperiment)){
+                                        experimentDataList.add(oneExperiment);
+                                    }
+                                    if (!experimentDataList.contains(oneExperiment)){
+                                        for (int i = 0 ;  i < userList.size(); i ++){
+                                            if (userList.get(i).getUid().equals(oneExperiment.getUserId())){
+                                                experimentDataList.add(oneExperiment);
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                } else {
+                                    System.out.println("No such document!");
+                                }
+
+                            }
+                        }
+                        experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
+
+                    }
+                });
+
+
 
             }
         });
-
+        if(experimentDataList.size() == 0) {
+            Toast.makeText(SearchResult.this, "No related result.",
+                    Toast.LENGTH_SHORT).show();
+            finish();
+        }
         // listener to access detail of an element
         // package an experiment and position info in intent
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -146,7 +180,6 @@ public class SearchResult extends AppCompatActivity {
         if (!experiment.isCondition() && searchKey.equals("Processing")){
             return true;
         }
-        condition = false;
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.child("data").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -176,43 +209,9 @@ public class SearchResult extends AppCompatActivity {
             }
         });
 
-        final FirebaseFirestore db = DatabaseController.getDb();
-        final CollectionReference collectionReference = db.collection("Users");
-        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                // Clear the old list
-                if (error!=null){
-                    Log.d(TAG,"Error:"+error.getMessage());
-                }
-                else {
-                    userList.clear();
-                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
 
-                        UserEntity user = null;
-                        if (doc.exists()) {
-                            // convert document to POJO
-                            user = doc.toObject(UserEntity.class);
-                            System.out.println(user);
 
-                            if (user.getUsername().contains(searchKey)){
-                                userList.add(user);
-                            }
-                        } else {
-                            System.out.println("No such document!");
-                        }
-                    }
-                    for (int i = 0; i <userList.size(); i ++){
-                        if (userList.get(i).getUid().equals(experiment.getUserId())){
-                            condition = true;
-                        }
-                    }
-                }
-
-            }
-        });
-
-        return condition;
+        return false;
 
     }
 }
