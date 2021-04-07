@@ -76,11 +76,11 @@
         android:layout_height="wrap_content">
 
 
-        <EditText
-            android:id="@+id/regionEditText"
+        <Spinner
+            android:id="@+id/regionSpinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/add_region_hint"
+            android:hint="Choose region"
             android:layout_weight="1" />
 
         <CheckBox
@@ -88,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:text="Trails Geo-Location" />
+            android:text="Need Geo-Location" />
 
     </LinearLayout>
 
