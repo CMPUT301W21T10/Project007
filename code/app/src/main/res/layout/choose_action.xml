@@ -12,22 +12,23 @@
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_gravity="center|center"
-        android:textColor="@color/black"
-        android:background="@color/yellow"
-        android:text="Publish" />
+        android:layout_weight="1"
+        android:background="#EFC7B5"
+        android:text="Publish"
+        android:textColor="@color/black" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_gravity="center|center"
-        android:textColor="@color/color_fff"
-        android:background="@color/edit"
         android:layout_marginBottom="5dp"
-        android:text="Edit" />
+        android:layout_weight="1"
+        android:background="#DEB2BD"
+        android:text="Edit"
+        android:textColor="@color/color_fff" />
+
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
@@ -35,7 +36,7 @@
         android:layout_weight="1"
         android:layout_gravity="center|center"
         android:textColor="@color/color_fff"
-        android:background="@color/delete"
+        android:background="#DFC8E7"
         android:layout_marginBottom="5dp"
         android:text="Delete" />
 
@@ -48,6 +49,6 @@
         android:layout_weight="1"
         android:layout_gravity="center|center"
         android:textColor="@color/color_fff"
-        android:background="@color/end"
+        android:background="#F2C2C3"
         android:text="End" />
 </LinearLayout>
