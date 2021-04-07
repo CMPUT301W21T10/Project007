@@ -61,7 +61,7 @@
         app:rippleColor="#33728dff"
         app:elevation="8dp"
         app:pressedTranslationZ="16dp"
-        app:backgroundTint="#ABC2FF"
+        app:backgroundTint="#FFEBAE"
         app:srcCompat="@drawable/add"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
