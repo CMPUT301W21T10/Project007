@@ -1,6 +1,5 @@
 package com.example.project007;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;

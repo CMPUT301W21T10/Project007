@@ -19,7 +19,7 @@ public class CustomizeScanActivity extends AppCompatActivity {
 
         setContentView(R.layout.customize_scan);// 自定义布局
 
-        barcodeScannerView = (DecoratedBarcodeView) findViewById(R.id.customize_scan);
+        barcodeScannerView = findViewById(R.id.customize_scan);
 
         capture = new CaptureManager(this, barcodeScannerView);
         capture.initializeFromIntent(getIntent(), savedInstanceState);
@@ -51,7 +51,7 @@ public class CustomizeScanActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         capture.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 

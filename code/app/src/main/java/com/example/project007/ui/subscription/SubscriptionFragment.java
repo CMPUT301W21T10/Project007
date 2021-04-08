@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,7 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.project007.DatabaseController;
@@ -27,11 +25,7 @@ import com.example.project007.ModifyExperimentFragment;
 import com.example.project007.R;
 import com.example.project007.TrailsActivity;
 import com.example.project007.ui.home.ActionFragment;
-import com.example.project007.ui.home.HomeViewModel;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -47,9 +41,6 @@ import java.util.ArrayList;
  */
 public class SubscriptionFragment extends Fragment {
 
-    private SubscriptionViewModel subscriptionViewModel;
-    private ListView experimentList;
-    private ListView experimentList2;
     private ArrayAdapter<Experiment> experimentAdapter;
     private ArrayAdapter<Experiment> experimentAdapter2;
 
@@ -132,14 +123,13 @@ public class SubscriptionFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        subscriptionViewModel =
-                new ViewModelProvider(this).get(SubscriptionViewModel.class);
+        SubscriptionViewModel subscriptionViewModel = new ViewModelProvider(this).get(SubscriptionViewModel.class);
         View root = inflater.inflate(R.layout.fragment_subscription, container, false);
 
-        experimentList = root.findViewById(R.id.subscript_list);
+        ListView experimentList = root.findViewById(R.id.subscript_list);
         experimentList.setAdapter(experimentAdapter);
 
-        experimentList2 = root.findViewById(R.id.own_list);
+        ListView experimentList2 = root.findViewById(R.id.own_list);
         experimentList2.setAdapter(experimentAdapter2);
 
         final FirebaseFirestore db;

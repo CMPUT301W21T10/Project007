@@ -7,7 +7,7 @@ public class Question implements Serializable {
 
     private String question;
     private Integer id;
-    private ArrayList<String> answer_id = new ArrayList<String>();
+    private ArrayList<String> answer_id = new ArrayList<>();
 
 
     Question(){ }

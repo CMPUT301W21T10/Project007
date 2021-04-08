@@ -46,11 +46,9 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
-    private ListView experimentList;
     private ArrayAdapter<Experiment> experimentAdapter;
     private ArrayList<Experiment> experimentDataList;
     private final String TAG = "Sample";
-    private HomeViewModel homeViewModel;
     private Integer savedPosition;
 
 
@@ -143,11 +141,10 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        experimentList = root.findViewById(R.id.experiment_list);
+        ListView experimentList = root.findViewById(R.id.experiment_list);
         experimentList.setAdapter(experimentAdapter);
 
         final FirebaseFirestore db;

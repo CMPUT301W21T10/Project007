@@ -21,11 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
@@ -37,13 +32,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * MainActivity
  * Switch Home, subscription, profile on main page
@@ -54,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
     private PopupWindow popupWindow1;
 
-    private TextView popSearch;
     private EditText popUsernameEt;
     private int[] location;
 
@@ -123,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         popupWindow1.setOutsideTouchable(true);
         popupWindow1.setFocusable(true);
 
-        popSearch = inflate.findViewById(R.id.pop_search);
+        TextView popSearch = inflate.findViewById(R.id.pop_search);
         popUsernameEt = inflate.findViewById(R.id.pop_username);
 
 

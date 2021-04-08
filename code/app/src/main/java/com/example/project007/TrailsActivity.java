@@ -14,7 +14,6 @@ import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,8 +38,6 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -74,7 +71,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     ResultFragment resultFragment;
     QrcodeFragment qrcode;
     private Experiment experiment;
-    private Integer position;
     boolean needLocation;
     String type;
     String binomial_type="null";
@@ -120,7 +116,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         //receive data from experiment
         Intent intent = getIntent();
         experiment = (Experiment) intent.getSerializableExtra("com.example.project007.INSTANCE");
-        position = intent.getIntExtra("com.example.project007.POSITION", -1);
+        Integer position = intent.getIntExtra("com.example.project007.POSITION", -1);
         //receive data from experiment
 
         type = experiment.getType();
@@ -229,7 +225,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         String UserId = (String)doc.getData().get("UserId");
                         Location location;
 
-                        boolean ignoreCondition = Boolean.valueOf(ignore);
+                        boolean ignoreCondition = Boolean.parseBoolean(ignore);
 
                         if (longitude != null & latitude != null) {
                             location = new Location(Double.parseDouble(longitude), Double.parseDouble(latitude));//error prone
@@ -299,7 +295,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                             String databaseUserId = DatabaseController.getUserId();
                             String experimentId = experiment.getUserId();
                             chooseIgnore(id, newtrail, databaseUserId, experimentId);
-                            trail_Adapter.notifyDataSetChanged();;
+                            trail_Adapter.notifyDataSetChanged();
                             return false;
                         }
                     });
@@ -340,7 +336,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                             String experimentId = experiment.getUserId();
                             //compare with experimenter id
                             chooseIgnore(id, newtrail, databaseUserId, experimentId);
-                            trail_Adapter.notifyDataSetChanged();;
+                            trail_Adapter.notifyDataSetChanged();
                             return false;
                         }
                     });

@@ -16,16 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.example.project007.AfterLoginActivity;
 import com.example.project007.DatabaseController;
-import com.example.project007.ModifyExperimentFragment;
 import com.example.project007.R;
 import com.example.project007.RvAdapter;
 import com.example.project007.UserEntity;
@@ -40,18 +36,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * This is ProfileFragment
  * This class shows Profile and interaction about profile
- * connect with AfterLoginActivity
+ * connect with SearchUsers
  */
 public class ProfileFragment extends Fragment {
-
-    private TextView mainId;
 
     private TextView mainBt1;
     private TextView mainBt2;
@@ -59,29 +51,23 @@ public class ProfileFragment extends Fragment {
     private DatabaseReference reference;
     private EditText popPhone;
     private EditText popEmail;
-    private TextView popId;
     private EditText popUsername;
     private int[] location;
-    private TextView popEdit;
     private PopupWindow popupWindow1;
-    private TextView popSearch;
     private EditText popUsernameEt;
     private PopupWindow popupWindow2;
     private RecyclerView mRecyclerView;
     private RvAdapter adapter;
-    private TextView popEdit1;
     private PopupWindow popupWindow3;
     private List<UserEntity> temp;
-    private ProfileViewModel profileViewModel;
 
     @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        profileViewModel =
-                new ViewModelProvider(this).get(ProfileViewModel.class);
+        ProfileViewModel profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(requireActivity());
-        mainId = root.findViewById(R.id.main_id);
+        TextView mainId = root.findViewById(R.id.main_id);
         mainId.setText("uid:"+ DatabaseController.getUserId());
         mainBt1 = root.findViewById(R.id.main_bt1);
         mainBt2 = root.findViewById(R.id.main_bt2);
@@ -153,7 +139,7 @@ public class ProfileFragment extends Fragment {
         popupWindow2.setFocusable(true);
         mainBt2.getLocationOnScreen(location);
         mRecyclerView = inflate.findViewById(R.id.mRecyclerView);
-        popEdit1 = inflate.findViewById(R.id.pop_edit);
+        TextView popEdit1 = inflate.findViewById(R.id.pop_edit);
         popEdit1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -177,7 +163,7 @@ public class ProfileFragment extends Fragment {
         popupWindow1.setOutsideTouchable(true);
         popupWindow1.setFocusable(true);
         mainBt2.getLocationOnScreen(location);
-        popSearch = inflate.findViewById(R.id.pop_search);
+        TextView popSearch = inflate.findViewById(R.id.pop_search);
         popUsernameEt = inflate.findViewById(R.id.pop_username);
 
 
@@ -195,11 +181,8 @@ public class ProfileFragment extends Fragment {
                 reference.child("data").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
-                        while (iterator.hasNext()){
-                            DataSnapshot next = iterator.next();
-
-                            if (next.child("username").getValue().toString().contains(popUsernameEt.getText().toString())){
+                        for (DataSnapshot next : snapshot.getChildren()) {
+                            if (next.child("username").getValue().toString().contains(popUsernameEt.getText().toString())) {
                                 UserEntity userEntity = new UserEntity();
                                 userEntity.setEmail(next.child("email").getValue().toString());
                                 userEntity.setPhone(next.child("phone").getValue().toString());
@@ -243,8 +226,8 @@ public class ProfileFragment extends Fragment {
         View inflate = inflater.inflate(R.layout.pop_profile, null);
 
 
-        popId = inflate.findViewById(R.id.pop_id);
-        popEdit = inflate.findViewById(R.id.pop_edit);
+        TextView popId = inflate.findViewById(R.id.pop_id);
+        TextView popEdit = inflate.findViewById(R.id.pop_edit);
         popEmail = inflate.findViewById(R.id.pop_email);
         popPhone = inflate.findViewById(R.id.pop_phone);
         popUsername = inflate.findViewById(R.id.pop_username);
