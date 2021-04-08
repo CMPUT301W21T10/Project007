@@ -1,7 +1,10 @@
 package com.example.project007;
 
 import android.app.Activity;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -13,6 +16,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import static java.lang.Thread.sleep;
+import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
@@ -22,55 +27,56 @@ import static junit.framework.TestCase.assertTrue;
 public class Question_AnswerTest {
     private Solo solo;
     @Rule
-    //Waiting for editing
-    public ActivityTestRule<QuestionActivity> rule = new ActivityTestRule<QuestionActivity>(QuestionActivity.class, true, true);
-
-    /**
-     * Runs before all tests
-     * @throws Exception
-     */
+    public ActivityTestRule<LoginActivity> rule =
+            new ActivityTestRule<>(LoginActivity.class, true, true);
     @Before
-    public void setUp() throws Exception{
-        solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
+    public void setup(){
+        solo = new Solo(InstrumentationRegistry.getInstrumentation(),rule.getActivity());
     }
-
     /**
-     * Get the activity
-     * @throws Exception
+     *Login into the app.
      */
-    @Test
-    public void start() throws Exception {
-        Activity activity = rule.getActivity();
-    }
 
-    /**
-     *Add a question to the listview and check question using assertTrue
-     */
     @Test
-    public void showQuestionTest() {
+    public void TestQA() {
         //could do the switch from ExperimentActivity to QuestionActivity
         //Waiting for editing
-        solo.assertCurrentActivity("Wrong Activity", QuestionActivity.class);
-        solo.enterText((EditText) solo.getView(R.id.add_question_text), "qq");
+        //add NonNegative
+        //testing entry
+        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
+        //solo.clickOnText("Sign In");
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
 
-        solo.clickOnButton("Add Questions?");
+        solo.clickOnView(solo.getView(R.id.add_experiment_button));
+        solo.enterText((EditText) solo.getView(R.id.editTextName), "NN-test");
+        solo.enterText((EditText) solo.getView(R.id.editTextDescription), "non negative");
+        solo.pressSpinnerItem(0, 2);
+        solo.enterText((EditText) solo.getView(R.id.minimumTrails), "0");
+        solo.clickOnText("OK");
+        View navView = solo.getView(R.id.nav_view);
+        solo.clickOnView(navView);
+        ListView ownListView1 = (ListView) solo.getView("own_list");
+        View ownView1 =  ownListView1.getChildAt(0);
+        solo.clickLongOnView(ownView1);
+        View btn4view = solo.getView("button4");
+        solo.clickOnView(btn4view);
+        View homeView = solo.getView(R.id.navigation_home);
+        solo.clickOnView(homeView);
+        assertTrue(solo.waitForText("NN-test", 1, 2000));
+        //find&enter Binomial
+        ListView currentListView1 = (ListView) solo.getView("experiment_list");
+        View view2 =  currentListView1.getChildAt(0);
+        solo.clickOnView(view2);
+        solo.assertCurrentActivity("Wrong Activity", TrailsActivity.class);
+        final TextView textView2 = (TextView) solo.getView("name_view"); // Get the listview
+        String message2 = textView2.getText().toString(); // Get item from first position
+        assertEquals("NN-test", message2);
 
-        solo.clearEditText((EditText) solo.getView(R.id.add_question_text));//Clear edit text
+        solo.clickOnMenuItem("Questions");
 
-        assertTrue(solo.waitForText("qq", 1, 2000));
-        //solo.clickLongInList(0,0,2000);
-        //assertFalse(solo.waitForText("qq", 1, 2000));
-    }
-
-    /**
-     * Long click a question to view answer of this question and check if the is added successfully
-     */
-    @Test
-    public void showAnswerTest() {
-        solo.assertCurrentActivity("Wrong Activity", QuestionActivity.class);
         solo.enterText((EditText) solo.getView(R.id.add_question_text), "qqqq");
 
-        solo.clickOnButton("Add Questions?");
+        solo.clickOnButton("Add Questions");
 
         solo.clearEditText((EditText) solo.getView(R.id.add_question_text));//Clear edit text
 
@@ -81,7 +87,7 @@ public class Question_AnswerTest {
         solo.clickOnButton("Add Answers?");
         solo.clearEditText((EditText) solo.getView(R.id.add_answer_text));
         assertTrue(solo.waitForText("aaaa", 1, 2000));
-        solo.clickLongInList(0,0,2000);
+        solo.clickLongInList(0,1,2000);
         assertFalse(solo.waitForText("aaaa", 1, 2000));
 
         solo.goBack();

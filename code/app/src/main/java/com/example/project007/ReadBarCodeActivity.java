@@ -25,10 +25,9 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ReadBarCodeActivity extends AppCompatActivity {
-    private TextView textView;
-    private String userid;
     private String isbarcode="false";
     private String trail_id;
     final String TAG = "Trails_Sample";
@@ -39,16 +38,16 @@ public class ReadBarCodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent intent=getIntent();
         setContentView(R.layout.qrcode_scan_content);
-        textView = this.findViewById(R.id.textview_zxing);
+        TextView textView = this.findViewById(R.id.textview_zxing);
         isbarcode=intent.getStringExtra("IsBarcode");
-        userid=intent.getStringExtra("ID");
+        String userid = intent.getStringExtra("ID");
         trail_id=intent.getStringExtra("trail_id");
         new IntentIntegrator(this)
                 .setCaptureActivity(CustomizeScanActivity.class)
-                .setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES)// 扫码的类型,可选：一维码，二维码，一/二维码
-                .setCameraId(0)// 选择摄像头,可使用前置或者后置
-                .setBeepEnabled(true)// 是否开启声音,扫完码之后会"哔"的一声
-                .initiateScan();// 初始化扫码
+                .setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES)// choose the scan type we want to use
+                .setCameraId(0)// choose camera
+                .setBeepEnabled(true)// choose if use warning tone
+                .initiateScan();// initialize
 
     }
 
@@ -69,12 +68,13 @@ public class ReadBarCodeActivity extends AppCompatActivity {
             } else if (isbarcode.equals("true")){
                 String databaseUserId = DatabaseController.getUserId();
                 String result = intentResult.getContents();//return value
+                //delete the one already in the database
                 Query value = collectionReference.whereEqualTo(databaseUserId,result);
                 value.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 Log.d(TAG, document.getId());
                                 if(!document.getId().equals(trail_id)){
                                     final DocumentReference DocumentReference = db.collection("Trails").document(document.getId());
@@ -87,7 +87,6 @@ public class ReadBarCodeActivity extends AppCompatActivity {
 
                         }   }
                 });
-
                 //add new one
                 Map<String, String> adding = new HashMap<>();
                 adding.put(databaseUserId, result);
