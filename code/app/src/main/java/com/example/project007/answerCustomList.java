@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import androidx.fragment.app.Fragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,8 +17,8 @@ import java.util.ArrayList;
  */
 public class answerCustomList extends ArrayAdapter<Answer> {
 
-    private ArrayList<Answer> answers;
-    private Context context;
+    private final ArrayList<Answer> answers;
+    private final Context context;
 
     public answerCustomList(Context context, ArrayList<Answer> answers){
         super(context,0, answers);

@@ -1,12 +1,8 @@
 package com.example.project007;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,8 +14,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,19 +22,17 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 
 public class QuestionActivity extends AppCompatActivity {
 
-    private ListView questionList;
-    private ArrayAdapter<Question> questionAdapter;
-    private ArrayList<Question> questionDataList;
-    private ArrayList<String> answer_id = new ArrayList<String>();
-    private Question question;
-    private String experimentId;
-    private ArrayList<String> questionsId = new ArrayList<String>();
+    ListView questionList;
+    ArrayAdapter<Question> questionAdapter;
+    ArrayList<Question> questionDataList;
+    ArrayList<String> answer_id = new ArrayList<>();
+    Question question;
+    //String experimentId;
+    ArrayList<String> questionsId = new ArrayList<>();
+    Experiment experiment;
 
 
     @Override
@@ -60,22 +52,26 @@ public class QuestionActivity extends AppCompatActivity {
         //database for unique questions
 
         //receive data from experiment
-        Intent intent = getIntent();
+        /*Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("experiment");
         experimentId = bundle.getString("experimentId");
-        questionsId = bundle.getStringArrayList("questionsId");
+        questionsId = bundle.getStringArrayList("questionsId");*/
+        Intent intent = getIntent();
+        experiment = (Experiment) intent.getSerializableExtra("ExperimentFromTrail");
         //receive data from experiment
 
         addQuestionButton = findViewById(R.id.add_question_button);
         addQuestionEditText = findViewById(R.id.add_question_text);
 
         questionList = findViewById(R.id.question_list);
-        questionDataList = new ArrayList<Question>();
+        questionDataList = new ArrayList<>();
         questionAdapter = new questionCustomList(this, questionDataList);
 
         questionList.setAdapter(questionAdapter);
 
-/*
+/*        *//**
+         * fire store uploading
+         *//*
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
@@ -101,9 +97,6 @@ public class QuestionActivity extends AppCompatActivity {
         });
         //fire store uploading*/
 
-        /**
-         * firestore uploading
-         */
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
@@ -113,29 +106,37 @@ public class QuestionActivity extends AppCompatActivity {
                 }
                 else {
                     questionDataList.clear();
+                    int questionId = 0;
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
 
+                        String idString = doc.getId();
+                        int ID = Integer.parseInt(idString);
+                        if (ID > questionId) {
+                            questionId = ID;
+                        }
                         Question oneQuestion = null;
-                        if (doc.exists()) {
-                            // convert document to POJO
-                            oneQuestion = doc.toObject(Question.class);
-                            //System.out.println(oneExperiment);
-                            questionDataList.add(oneQuestion);
-                        } else {
-                            System.out.println("No such document!");
+                        if (experiment.getQuestionId().contains(idString)) {
+                            if (doc.exists()) {
+                                // convert document to POJO
+                                oneQuestion = doc.toObject(Question.class);
+                                //System.out.println(oneExperiment);
+                                questionDataList.add(oneQuestion);
+                            } else {
+                                System.out.println("No such document!");
+                            }
                         }
                     }
-
+                    QuestionDatabaseController.setMaxQuestionId(questionId);
                     questionAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
                 }
 
-                int questionId = 0;
+                /*int questionId = 0;
                 for (int i = 0; i < questionDataList.size(); i++){
-                    if (questionDataList.get(i).getId() > questionId){
+                    if ( questionDataList.get(i).getId() > questionId){
                         questionId = questionDataList.get(i).getId();
                     }
-                }
-                QuestionDatabaseController.setMaxQuestionId(questionId);
+                }*/
+
             }
         });
 
@@ -150,17 +151,16 @@ public class QuestionActivity extends AppCompatActivity {
                 final String questionName = addQuestionEditText.getText().toString();
                 if(questionName.length()>0) {
                     Question question = new Question(QuestionDatabaseController.generateQuestionId(), questionName, answer_id);
-                    //lock on question
-                    ArrayList<String> valueList = questionsId;
-                    valueList.add(experimentId);
-                    DatabaseController.setExperimentQuestions(experimentId, valueList);
+                    ArrayList<String> valueList = experiment.getQuestionId();
+                    valueList.add(question.getId().toString());
+                    DatabaseController.setExperimentQuestions(experiment.getId().toString(), valueList);
                     //lock on answer
                     boolean addQuestion = QuestionDatabaseController.add_Question("Questions", question);
                     if (addQuestion){
-                        Toast.makeText(getApplicationContext(), "Add Succeed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Add Failed", Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        Toast.makeText(getApplicationContext(), "Add Failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Add Succeed", Toast.LENGTH_SHORT).show();
                     }
                     addQuestionEditText.setText("");
                 }
@@ -190,16 +190,32 @@ public class QuestionActivity extends AppCompatActivity {
         questionList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                String databaseUserId = DatabaseController.getUserId();
+                String experimentId = experiment.getUserId();
+                if (databaseUserId.matches(experimentId)){
+                    Question question = questionAdapter.getItem(position);
+                    String idString = question.getId().toString();
 
-                Question question = questionAdapter.getItem(position);
-                boolean deleteQuestion = QuestionDatabaseController.delete_Question("Questions", question);
-                questionAdapter.notifyDataSetChanged();
-                if (deleteQuestion){
-                    Toast.makeText(getApplicationContext(), "Delete Succeed", Toast.LENGTH_SHORT).show();
+                    ArrayList<String> temp =  experiment.getTrailsId();
+                    for (int i = 0; i < temp.size(); i++) {
+                        if (temp.get(i).equals(idString)) {
+                            temp.remove(i);
+                        }
+                    }
+                    DatabaseController.setExperimentQuestions(experiment.getId().toString(), temp);
+                    boolean deleteQuestion = QuestionDatabaseController.delete_Question("Questions", question);
+                    questionAdapter.notifyDataSetChanged();
+                    if (deleteQuestion){
+                        Toast.makeText(getApplicationContext(), "Delete Failed", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Delete Succeed", Toast.LENGTH_SHORT).show();
+                    }
+                    Toast.makeText(getApplicationContext(), "Access granted！", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Oops, you have no access to delete this question", Toast.LENGTH_SHORT).show();
                 }
-                else{
-                    Toast.makeText(getApplicationContext(), "Delete Failed", Toast.LENGTH_SHORT).show();
-                }
+
                 return true;
             }
         });
