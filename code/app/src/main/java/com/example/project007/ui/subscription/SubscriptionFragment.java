@@ -55,7 +55,7 @@ public class SubscriptionFragment extends Fragment {
 
     private ArrayList<Experiment> experimentDataList;
     private ArrayList<Experiment> experimentDataList2;
-    final String TAG = "Sample";
+    private final String TAG = "Sample";
     private Integer savedPosition;
 
     @Override

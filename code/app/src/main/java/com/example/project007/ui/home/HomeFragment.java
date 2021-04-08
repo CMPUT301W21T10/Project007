@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment {
     private ListView experimentList;
     private ArrayAdapter<Experiment> experimentAdapter;
     private ArrayList<Experiment> experimentDataList;
-    final String TAG = "Sample";
+    private final String TAG = "Sample";
     private HomeViewModel homeViewModel;
     private Integer savedPosition;
 

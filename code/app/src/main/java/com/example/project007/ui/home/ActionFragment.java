@@ -28,15 +28,10 @@ import com.example.project007.R;
 import java.util.Calendar;
 /**
  * This is ActionFragment
- * This class performances three button click
- * Only use from HomeFragment
+ * This class performances four button click
+ * use on HomeFragment, SubscriptionFragment
  */
 public class ActionFragment extends DialogFragment {
-
-    Button edit;
-    Button delete;
-    Button end;
-    Button publish;
 
     // create dialog
     @SuppressLint("SetTextI18n")
@@ -45,10 +40,10 @@ public class ActionFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         // set basic show up information
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.choose_action, null);
-        publish = view.findViewById(R.id.button4);
-        edit = view.findViewById(R.id.button);
-        delete = view.findViewById(R.id.button2);
-        end = view.findViewById(R.id.button3);
+        Button publish = view.findViewById(R.id.button4);
+        Button edit = view.findViewById(R.id.button);
+        Button delete = view.findViewById(R.id.button2);
+        Button end = view.findViewById(R.id.button3);
 
         if (!DatabaseController.isPublish()){
             publish.setText("Publish");

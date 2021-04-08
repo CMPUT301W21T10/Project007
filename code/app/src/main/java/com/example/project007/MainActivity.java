@@ -50,7 +50,6 @@ import butterknife.ButterKnife;
  * initialize shared attribute
  */
 
-
 public class MainActivity extends AppCompatActivity {
 
     private PopupWindow popupWindow1;

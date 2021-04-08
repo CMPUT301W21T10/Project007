@@ -50,12 +50,11 @@ import butterknife.OnClick;
  * connect with AfterLoginActivity
  */
 public class ProfileFragment extends Fragment {
-    Integer userId;
 
-    TextView mainId;
+    private TextView mainId;
 
-    TextView mainBt1;
-    TextView mainBt2;
+    private TextView mainBt1;
+    private TextView mainBt2;
     private PopupWindow popupWindow;
     private DatabaseReference reference;
     private EditText popPhone;

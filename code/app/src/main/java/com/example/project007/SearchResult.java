@@ -33,14 +33,18 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+/**
+ * SearchResult class
+ * Perform search and show result
+ * called from MainActivity
+ */
 public class SearchResult extends AppCompatActivity {
 
     private SubscriptionViewModel subscriptionViewModel;
     private ListView experimentList;
     private ArrayAdapter<Experiment> experimentAdapter;
     private ArrayList<Experiment> experimentDataList;
-    final String TAG = "Sample";
+    private final String TAG = "Sample";
     private String searchKey = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
