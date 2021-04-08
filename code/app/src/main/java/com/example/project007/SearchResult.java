@@ -104,6 +104,10 @@ public class SearchResult extends AppCompatActivity {
 
     public boolean processData( Experiment experiment){
 
+        if (!experiment.isPublishCondition()){
+            return false;
+        }
+
         if (experiment.getName().contains(searchKey)){
             return true;
 
