@@ -609,12 +609,13 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.data_container2, qrcode);
-                transaction.commit();
+                transaction.addToBackStack(null).commit();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("result",trails_DataList);
                 qrcode.setArguments(bundle);
 
             }
+            return true;
         }else if (id == R.id.LocView){
             //view all location for this experiment
             //extends a new frag to show this

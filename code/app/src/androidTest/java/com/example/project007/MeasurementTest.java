@@ -1,6 +1,5 @@
 package com.example.project007;
 
-import android.app.Activity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -21,10 +20,7 @@ import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
-/**
- * Test view, add question and view, add answer. All the UI tests are written here, using Robotium test framework.
- */
-public class Question_AnswerTest {
+public class MeasurementTest {
     private Solo solo;
     @Rule
     public ActivityTestRule<LoginActivity> rule =
@@ -36,21 +32,18 @@ public class Question_AnswerTest {
     /**
      *Login into the app.
      */
-
     @Test
-    public void TestQA() {
-        //could do the switch from ExperimentActivity to QuestionActivity
-        //Waiting for editing
-        //add NonNegative
+    public void StartTest() throws InterruptedException {
         //testing entry
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
         //solo.clickOnText("Sign In");
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
 
+        //add Measurment
         solo.clickOnView(solo.getView(R.id.add_experiment_button));
-        solo.enterText((EditText) solo.getView(R.id.editTextName), "NN-test");
-        solo.enterText((EditText) solo.getView(R.id.editTextDescription), "non negative");
-        solo.pressSpinnerItem(0, 2);
+        solo.enterText((EditText) solo.getView(R.id.editTextName), "MS-Test");
+        solo.enterText((EditText) solo.getView(R.id.editTextDescription), "Measurment");
+        solo.pressSpinnerItem(0, 3);
         solo.enterText((EditText) solo.getView(R.id.minimumTrails), "0");
         solo.clickOnText("OK");
         View navView = solo.getView(R.id.nav_view);
@@ -62,51 +55,52 @@ public class Question_AnswerTest {
         solo.clickOnView(btn4view);
         View homeView = solo.getView(R.id.navigation_home);
         solo.clickOnView(homeView);
-        assertTrue(solo.waitForText("NN-test", 1, 2000));
-        //find&enter Binomial
+        assertTrue(solo.waitForText("MS-Test", 1, 2000));
+        //find&enter Measurment
         ListView currentListView1 = (ListView) solo.getView("experiment_list");
         View view2 =  currentListView1.getChildAt(0);
         solo.clickOnView(view2);
         solo.assertCurrentActivity("Wrong Activity", TrailsActivity.class);
         final TextView textView2 = (TextView) solo.getView("name_view"); // Get the listview
         String message2 = textView2.getText().toString(); // Get item from first position
-        assertEquals("NN-test", message2);
-
-        solo.clickOnMenuItem("Questions");
-
-        solo.enterText((EditText) solo.getView(R.id.add_question_text), "qqqq");
-
-        solo.clickOnButton("Add Questions");
-
-        solo.clearEditText((EditText) solo.getView(R.id.add_question_text));//Clear edit text
-
-        solo.waitForText("qqqq", 1, 2000);
-
-        solo.clickInList(0);//Long click question to view answer of this question
-        solo.enterText((EditText) solo.getView(R.id.add_answer_text), "aaaa");
-        solo.clickOnButton("Add Answers?");
-        solo.clearEditText((EditText) solo.getView(R.id.add_answer_text));
-        assertTrue(solo.waitForText("aaaa", 1, 2000));
-        solo.clickLongInList(0,1,2000);
-        assertFalse(solo.waitForText("aaaa", 1, 2000));
-
+        assertEquals("MS-Test", message2);
+        //add first Measurment trail
+        solo.clickOnView(solo.getView(R.id.action_add));
+        solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail1");
+        solo.enterText((EditText) solo.getView(R.id.ResultText), "22.2");
+        solo.clickOnView(solo.getView(R.id.ok_pressed));
+        assertTrue(solo.waitForText("Trail1",1,1000));
+        //add second Measurment trail
+        solo.clickOnView(solo.getView(R.id.action_add));
+        solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail2");
+        solo.enterText((EditText) solo.getView(R.id.ResultText), "23.3");
+        solo.clickOnView(solo.getView(R.id.ok_pressed));
+        assertTrue(solo.waitForText("Trail2",1,1000));
+        //add third Measurment trail
+        solo.clickOnView(solo.getView(R.id.action_add));
+        solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail3");
+        solo.enterText((EditText) solo.getView(R.id.ResultText), "30.0");
+        solo.clickOnView(solo.getView(R.id.ok_pressed));
+        solo.scrollToBottom();
+        assertTrue(solo.waitForText("Trail3",1,1000));
+        //test results
+        solo.clickOnMenuItem("View Result");
+        sleep(3000);
         solo.goBack();
-        solo.clickLongInList(0,0,2000);
-        assertFalse(solo.waitForText("qqqq", 1, 2000));
+        solo.goBack();
 
-
+        //delete Measurment-base
+        ListView experimentListView = (ListView) solo.getView("experiment_list");
+        View experimentView = experimentListView.getChildAt(0);
+        solo.clickLongOnView(experimentView);
+        View deleteview = (View) solo.getView("button2");
+        solo.clickOnView(deleteview);
+        assertFalse(solo.waitForText("MS-Test", 1, 2000));
+        //delete Measurment-base
     }
 
-    /**
-     * Close activity after each test
-     * @throws Exception
-     */
     @After
-    public void tearDown() throws Exception {
+    public void tearDown(){
         solo.finishOpenedActivities();
     }
-
-
-
-
 }

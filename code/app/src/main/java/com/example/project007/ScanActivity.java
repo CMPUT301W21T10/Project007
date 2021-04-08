@@ -36,10 +36,10 @@ public class ScanActivity extends AppCompatActivity {
         textView = this.findViewById(R.id.textview_zxing);
         new IntentIntegrator(this)
                 .setCaptureActivity(CustomizeScanActivity.class)
-                .setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES)// 扫码的类型,可选：一维码，二维码，一/二维码
-                .setCameraId(0)// 选择摄像头,可使用前置或者后置
-                .setBeepEnabled(true)// 是否开启声音,扫完码之后会"哔"的一声
-                .initiateScan();// 初始化扫码
+                .setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES)// choose the scan type we want to use
+                .setCameraId(0)// choose camera
+                .setBeepEnabled(true)// choose if use warning tone
+                .initiateScan();// initialize
 
     }
 
