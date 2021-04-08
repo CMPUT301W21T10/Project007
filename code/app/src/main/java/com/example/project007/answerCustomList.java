@@ -13,6 +13,9 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ * This class customize the context of answers in the listview of question activity
+ */
 public class answerCustomList extends ArrayAdapter<Answer> {
 
     private ArrayList<Answer> answers;

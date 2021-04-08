@@ -13,6 +13,9 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ * This class customize the context of questions in the listview of question activity
+ */
 public class questionCustomList extends ArrayAdapter<Question> {
 
     private ArrayList<Question> questions;

@@ -32,16 +32,16 @@ import java.util.ArrayList;
 
 public class AnswerFragment extends Fragment {
 
-    ListView answerList;
-    ArrayAdapter<Answer> answerAdapter;
-    ArrayList<Answer> answerDataList;
-    Question question;
-    String question_detail;
-    TextView questionView;
+    private ListView answerList;
+    private ArrayAdapter<Answer> answerAdapter;
+    private ArrayList<Answer> answerDataList;
+    private Question question;
+    private String question_detail;
+    private TextView questionView;
 
-    Button addAnswerButton;
-    EditText addAnswerEditText;
-    FirebaseFirestore db;
+    private Button addAnswerButton;
+    private EditText addAnswerEditText;
+    private FirebaseFirestore db;
 
 
     public AnswerFragment() {

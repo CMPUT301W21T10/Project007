@@ -34,14 +34,13 @@ import java.util.List;
 
 public class QuestionActivity extends AppCompatActivity {
 
-    ListView questionList;
-    ArrayAdapter<Question> questionAdapter;
-    ArrayList<Question> questionDataList;
-    //Integer id;
-    ArrayList<String> answer_id = new ArrayList<String>();
-    Question question;
-    String experimentId;
-    ArrayList<String> questionsId = new ArrayList<String>();
+    private ListView questionList;
+    private ArrayAdapter<Question> questionAdapter;
+    private ArrayList<Question> questionDataList;
+    private ArrayList<String> answer_id = new ArrayList<String>();
+    private Question question;
+    private String experimentId;
+    private ArrayList<String> questionsId = new ArrayList<String>();
 
 
     @Override
@@ -76,9 +75,7 @@ public class QuestionActivity extends AppCompatActivity {
 
         questionList.setAdapter(questionAdapter);
 
-/*        *//**
-         * fire store uploading
-         *//*
+/*
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
@@ -104,6 +101,9 @@ public class QuestionActivity extends AppCompatActivity {
         });
         //fire store uploading*/
 
+        /**
+         * firestore uploading
+         */
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
