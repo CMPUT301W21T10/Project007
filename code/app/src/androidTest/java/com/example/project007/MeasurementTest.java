@@ -104,3 +104,4 @@ public class MeasurementTest {
         solo.finishOpenedActivities();
     }
 }
+

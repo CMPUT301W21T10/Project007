@@ -46,8 +46,9 @@ public class BinomialTest {
         solo.clickOnView(solo.getView(R.id.add_experiment_button));
         solo.enterText((EditText) solo.getView(R.id.editTextName), "Binomial");
         solo.enterText((EditText) solo.getView(R.id.editTextDescription), "TrueOrFalse");
-        solo.pressSpinnerItem(0, 1);
+        solo.pressSpinnerItem(1, 1);
         solo.enterText((EditText) solo.getView(R.id.minimumTrails), "0");
+        solo.pressSpinnerItem(1, 0);
         solo.clickOnText("OK");
         View navView = solo.getView(R.id.nav_view);
         solo.clickOnView(navView);
