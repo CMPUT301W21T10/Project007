@@ -47,7 +47,6 @@
 
         <activity android:name=".QuestionActivity" />
 
-        <activity android:name=".AfterLoginActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".RegActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

@@ -129,12 +129,9 @@ public class QuestionDatabaseController {
 
     /**
      * This function is design to delete a connection between Question and Answers when deleting Questions
-     * @return
-     * Return Void
      */
-    public static boolean setQuestionanswer(String id, ArrayList<String> valueList){
+    public static void setQuestionanswer(String id, ArrayList<String> valueList){
         DocumentReference docRef = question_db.collection("Questions").document(id);
         docRef.update("answer_id", valueList);
-        return true;
     }
 }

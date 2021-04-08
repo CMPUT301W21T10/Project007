@@ -1,27 +1,18 @@
 package com.example.project007;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.project007.ui.subscription.SubscriptionViewModel;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,18 +20,19 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
+/**
+ * SearchResult class
+ * Perform search and show result
+ * called from MainActivity
+ */
 public class SearchResult extends AppCompatActivity {
 
     private SubscriptionViewModel subscriptionViewModel;
-    private ListView experimentList;
     private ArrayAdapter<Experiment> experimentAdapter;
     private ArrayList<Experiment> experimentDataList;
-    final String TAG = "Sample";
+    private final String TAG = "Sample";
     private String searchKey = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +44,7 @@ public class SearchResult extends AppCompatActivity {
 
         experimentDataList = new ArrayList<>();
         experimentAdapter = new ExperimentAdapter(this, experimentDataList);
-        experimentList = findViewById(R.id.subscript_list);
+        ListView experimentList = findViewById(R.id.subscript_list);
         experimentList.setAdapter(experimentAdapter);
 
         final FirebaseFirestore db;
@@ -137,14 +129,7 @@ public class SearchResult extends AppCompatActivity {
             return true;
 
         }
-        if (!experiment.isCondition() && searchKey.equals("Processing")){
-            return true;
-        }
-
-
-
-
-        return false;
+        return !experiment.isCondition() && searchKey.equals("Processing");
 
     }
 }

@@ -3,9 +3,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -17,7 +14,6 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,13 +22,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * This is ModifyExperimentFragment
@@ -43,7 +36,6 @@ public class ModifyExperimentFragment extends DialogFragment{
     private EditText experimentName;
     private EditText experimentDescription;
     private TextView experimentDate;
-    private Spinner experimentRegion;
     private EditText experimentMinimumTrails;
     CheckBox location;
 
@@ -83,7 +75,7 @@ public class ModifyExperimentFragment extends DialogFragment{
         experimentDate = view.findViewById(R.id.editTextDate);
         Spinner typeSpinner = view.findViewById(R.id.typeChooser);
         location = view.findViewById(R.id.checkBox);
-        experimentRegion = view.findViewById(R.id.regionSpinner);
+        Spinner experimentRegion = view.findViewById(R.id.regionSpinner);
         experimentMinimumTrails = view.findViewById(R.id.minimumTrails);
 
 
@@ -188,12 +180,11 @@ public class ModifyExperimentFragment extends DialogFragment{
         });
         // dialog part, show UI commit information
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        AlertDialog dialog = builder.setView(view)
+
+        return builder.setView(view)
                 .setTitle("Add/Edit Experiment")
                 .setNegativeButton("Cancel", null)
                 .setPositiveButton("OK", null).create();
-
-        return dialog;
     }
     @Override
     public void onResume() {

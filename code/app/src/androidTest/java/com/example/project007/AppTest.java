@@ -1,8 +1,6 @@
 package com.example.project007;
 
-import android.app.Activity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -10,15 +8,12 @@ import android.widget.TextView;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.robotium.solo.Solo;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.concurrent.Flow;
 
 import static java.lang.Thread.sleep;
 import static junit.framework.TestCase.assertEquals;
@@ -32,7 +27,7 @@ public class AppTest {
     private Solo solo;
     @Rule
     public ActivityTestRule<LoginActivity> rule =
-            new ActivityTestRule<LoginActivity>(LoginActivity.class,true,true);
+            new ActivityTestRule<>(LoginActivity.class, true, true);
     @Before
     public void setup(){
         solo = new Solo(InstrumentationRegistry.getInstrumentation(),rule.getActivity());
@@ -48,7 +43,7 @@ public class AppTest {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
 
         //adding count-base
-        solo.clickOnView((FloatingActionButton) solo.getView(R.id.add_experiment_button));
+        solo.clickOnView(solo.getView(R.id.add_experiment_button));
         solo.enterText((EditText) solo.getView(R.id.editTextName), "Count-base");
         solo.enterText((EditText) solo.getView(R.id.editTextDescription), "Count Numbers");
         solo.pressSpinnerItem(0, 0);
@@ -60,7 +55,7 @@ public class AppTest {
         ListView ownListView = (ListView) solo.getView("own_list");
         View ownView =  ownListView.getChildAt(0);
         solo.clickLongOnView(ownView);
-        View btn4view = (View) solo.getView("button4");
+        View btn4view = solo.getView("button4");
         solo.clickOnView(btn4view);
         View homeView = solo.getView(R.id.navigation_home);
         solo.clickOnView(homeView);
@@ -72,7 +67,7 @@ public class AppTest {
         solo.clickOnView(view1);
         solo.assertCurrentActivity("Wrong Activity", TrailsActivity.class);
         final TextView textView1 = (TextView) solo.getView("name_view"); // Get the listview
-        String message1 = (String) textView1.getText().toString(); // Get item from first position
+        String message1 = textView1.getText().toString(); // Get item from first position
         assertEquals("Count-base", message1);
         //add first count-base trail
         solo.clickOnView(solo.getView(R.id.action_add));
@@ -137,7 +132,7 @@ public class AppTest {
 
 
         //add Binomial
-        solo.clickOnView((FloatingActionButton) solo.getView(R.id.add_experiment_button));
+        solo.clickOnView(solo.getView(R.id.add_experiment_button));
         solo.enterText((EditText) solo.getView(R.id.editTextName), "Binomial");
         solo.enterText((EditText) solo.getView(R.id.editTextDescription), "TrueOrFalse");
         solo.pressSpinnerItem(0, 1);
@@ -156,7 +151,7 @@ public class AppTest {
         solo.clickOnView(view2);
         solo.assertCurrentActivity("Wrong Activity", TrailsActivity.class);
         final TextView textView2 = (TextView) solo.getView("name_view"); // Get the listview
-        String message2 = (String) textView2.getText().toString(); // Get item from first position
+        String message2 = textView2.getText().toString(); // Get item from first position
         assertEquals("Binomial", message2);
         //添加第一条Binomial的trail
         solo.clickOnView(solo.getView(R.id.action_add));
@@ -187,7 +182,7 @@ public class AppTest {
         solo.goBack();
 
         //添加Non-negative
-        solo.clickOnView((FloatingActionButton) solo.getView(R.id.add_experiment_button));
+        solo.clickOnView(solo.getView(R.id.add_experiment_button));
         solo.enterText((EditText) solo.getView(R.id.editTextName), "Non-nega");
         solo.enterText((EditText) solo.getView(R.id.editTextDescription), "Integer numbers");
         solo.pressSpinnerItem(0, 2);
@@ -206,7 +201,7 @@ public class AppTest {
         solo.clickOnView(view3);
         solo.assertCurrentActivity("Wrong Activity", TrailsActivity.class);
         final TextView textView3 = (TextView) solo.getView("name_view"); // Get the listview
-        String message3 = (String) textView3.getText().toString(); // Get item from first position
+        String message3 = textView3.getText().toString(); // Get item from first position
         assertEquals("Non-nega", message3);
         //添加第一条Non-negative的trail
         solo.clickOnView(solo.getView(R.id.action_add));
@@ -234,7 +229,7 @@ public class AppTest {
         solo.goBack();
 
         //添加Measurement
-        solo.clickOnView((FloatingActionButton) solo.getView(R.id.add_experiment_button));
+        solo.clickOnView(solo.getView(R.id.add_experiment_button));
         solo.enterText((EditText) solo.getView(R.id.editTextName), "Measurement");
         solo.enterText((EditText) solo.getView(R.id.editTextDescription), "Floating numbers");
         solo.pressSpinnerItem(0, 3);
@@ -253,7 +248,7 @@ public class AppTest {
         solo.clickOnView(view4);
         solo.assertCurrentActivity("Wrong Activity", TrailsActivity.class);
         final TextView textView4 = (TextView) solo.getView("name_view"); // Get the listview
-        String message4 = (String) textView4.getText().toString(); // Get item from first position
+        String message4 = textView4.getText().toString(); // Get item from first position
         assertEquals("Measurement", message4);
         //添加第一条Measurement的trail
         solo.clickOnView(solo.getView(R.id.action_add));

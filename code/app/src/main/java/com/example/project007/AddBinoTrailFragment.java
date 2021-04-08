@@ -1,11 +1,9 @@
 package com.example.project007;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -22,22 +20,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
-
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.protobuf.StringValue;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -49,8 +33,8 @@ public class AddBinoTrailFragment extends Fragment {
     private EditText success;
     private EditText fail;
     private EditText time_generate;
-    private Integer ID = null;
-    private String UserId = null;
+    private final Integer ID = null;
+    private final String UserId = null;
     private FragmentInteractionListener listener;
     private TextView latitude;
     private TextView longitude;
