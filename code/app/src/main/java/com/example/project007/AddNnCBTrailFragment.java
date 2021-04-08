@@ -32,8 +32,8 @@ public class AddNnCBTrailFragment extends Fragment {
     private EditText title;
     private EditText NnCBData;
     private EditText time_generate;
-    private Integer ID = null;
-    private String UserId = null;
+    private final Integer ID = null;
+    private final String UserId = null;
     private AddBinoTrailFragment.FragmentInteractionListener listener;
     private TextView latitude;
     private TextView longitude;

@@ -1,7 +1,5 @@
 package com.example.project007;
 
-import android.graphics.drawable.Drawable;
-
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
@@ -18,10 +16,10 @@ public class Experiment implements Serializable {
     private String type;
     private Integer id;
     private String userId;
-    private ArrayList<String> trailsId = new ArrayList<String>();
+    private ArrayList<String> trailsId = new ArrayList<>();
     //added questionsId
-    private ArrayList<String> questionId = new ArrayList<String>();
-    private ArrayList<String> subscriptionId = new ArrayList<String>();
+    private ArrayList<String> questionId = new ArrayList<>();
+    private ArrayList<String> subscriptionId = new ArrayList<>();
     private boolean requireLocation;
     private boolean condition;
     private Integer minimumTrails;

@@ -3,15 +3,12 @@ package com.example.project007;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,7 +31,7 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
 
     private final ArrayList<Experiment> experiments;
     private final Context context;
-    private Animation animation;
+    private final Animation animation;
 
     private View globalView;
 

@@ -57,24 +57,24 @@ public class ResultFragment extends Fragment{
     private LineChartData lineChartData;
     private ColumnChartView columnCharView;
     private ColumnChartData columnChartData;
-    private int numberOfLines = 1;
+    private final int numberOfLines = 1;
     private int numberOfPoints = 10000000;
     float[][] randomNumbersTab = new float[numberOfLines][numberOfPoints];
 
-    private boolean hasAxes = true;
-    private boolean hasAxesNames = true;
-    private boolean hasLines = true;
-    private boolean hasPoints = true;
-    private ValueShape shape = ValueShape.CIRCLE;
-    private boolean isFilled = false;
-    private boolean hasLabels = false;
-    private boolean isCubic = false;
-    private boolean hasLabelForSelected = false;
+    private final boolean hasAxes = true;
+    private final boolean hasAxesNames = true;
+    private final boolean hasLines = true;
+    private final boolean hasPoints = true;
+    private final ValueShape shape = ValueShape.CIRCLE;
+    private final boolean isFilled = false;
+    private final boolean hasLabels = false;
+    private final boolean isCubic = false;
+    private final boolean hasLabelForSelected = false;
     private boolean pointsHaveDifferentColor;
 
     private ColumnChartView columnChartView;
     private ColumnChartData data;
-    private List<AxisValue> mAxisXValues = new ArrayList<AxisValue>();
+    private final List<AxisValue> mAxisXValues = new ArrayList<>();
 
 
 
@@ -264,7 +264,7 @@ public class ResultFragment extends Fragment{
     }
 
     private void generateData(String name) {
-        List<Line> lines = new ArrayList<Line>();
+        List<Line> lines = new ArrayList<>();
         for (int i = 0; i < numberOfLines; ++i) {
             List<PointValue> values = new ArrayList<>();
             for (int j = 0; j < numberOfPoints; ++j) {
@@ -395,7 +395,7 @@ public class ResultFragment extends Fragment{
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void generateDefaultData(ArrayList<Trails> argument, String name) {
         // Column can have many subcolumns, here by default I use 1 subcolumn in each of 8 columns.
-        List<Column> columns = new ArrayList<Column>();
+        List<Column> columns = new ArrayList<>();
         List<SubcolumnValue> values;
         String[] str = {"True","False"};
         int numSubcolumns = 1;
@@ -405,7 +405,7 @@ public class ResultFragment extends Fragment{
             l.add(getNumberOfSuccess(argument));
             l.add(getNumberOfFailure(argument));
             for (int i = 0; i < numColumns; ++i) {
-                values = new ArrayList<SubcolumnValue>();
+                values = new ArrayList<>();
                 for (int j = 0; j < numSubcolumns; ++j) {
                     values.add(new SubcolumnValue(l.get(i), ChartUtils.pickColor()));
                 }

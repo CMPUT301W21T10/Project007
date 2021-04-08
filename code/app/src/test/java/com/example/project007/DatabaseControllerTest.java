@@ -6,17 +6,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 class DatabaseControllerTest {
 
 
     private Experiment mockExperiment() {
-        return new Experiment("name","description","2021-04-08","Count-based",DatabaseController.generateExperimentId(),new ArrayList<String>(),
-                new ArrayList<String>(),false,true,2,"China",false,new ArrayList<String>()) ;
+        return new Experiment("name","description","2021-04-08","Count-based",DatabaseController.generateExperimentId(), new ArrayList<>(),
+                new ArrayList<>(),false,true,2,"China",false, new ArrayList<>()) ;
     }
 
     @Test

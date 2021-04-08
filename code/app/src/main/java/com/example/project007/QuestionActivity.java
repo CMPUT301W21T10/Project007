@@ -1,16 +1,10 @@
 package com.example.project007;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,8 +14,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,19 +22,16 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 
 public class QuestionActivity extends AppCompatActivity {
 
     ListView questionList;
     ArrayAdapter<Question> questionAdapter;
     ArrayList<Question> questionDataList;
-    ArrayList<String> answer_id = new ArrayList<String>();
+    ArrayList<String> answer_id = new ArrayList<>();
     Question question;
     //String experimentId;
-    ArrayList<String> questionsId = new ArrayList<String>();
+    ArrayList<String> questionsId = new ArrayList<>();
     Experiment experiment;
 
 
@@ -75,7 +64,7 @@ public class QuestionActivity extends AppCompatActivity {
         addQuestionEditText = findViewById(R.id.add_question_text);
 
         questionList = findViewById(R.id.question_list);
-        questionDataList = new ArrayList<Question>();
+        questionDataList = new ArrayList<>();
         questionAdapter = new questionCustomList(this, questionDataList);
 
         questionList.setAdapter(questionAdapter);
@@ -121,7 +110,7 @@ public class QuestionActivity extends AppCompatActivity {
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
 
                         String idString = doc.getId();
-                        Integer ID = Integer.parseInt(idString);
+                        int ID = Integer.parseInt(idString);
                         if (ID > questionId) {
                             questionId = ID;
                         }

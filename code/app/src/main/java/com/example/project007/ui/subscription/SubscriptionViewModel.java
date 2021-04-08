@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 public class SubscriptionViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private final MutableLiveData<String> mText;
 
     public SubscriptionViewModel() {
         mText = new MutableLiveData<>();
