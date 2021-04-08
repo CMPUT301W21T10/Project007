@@ -1,10 +1,9 @@
 package com.example.project007;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.pm.PackageManager;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -20,22 +19,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
-
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.protobuf.StringValue;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -47,8 +33,8 @@ public class AddBinoTrailFragment extends Fragment {
     private EditText success;
     private EditText fail;
     private EditText time_generate;
-    private Integer ID = null;
-    private String UserId = null;
+    private final Integer ID = null;
+    private final String UserId = null;
     private FragmentInteractionListener listener;
     private TextView latitude;
     private TextView longitude;
@@ -179,7 +165,15 @@ public class AddBinoTrailFragment extends Fragment {
             //initialize map content
             /*Fragment fragment = new MapFragment();
             getChildFragmentManager().beginTransaction().replace(R.id.map_container, fragment).commit();*/
-            Toast.makeText(getActivity(), "This trail require you to enter location data!",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "This trail require you to enter location data!",Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("Warning!")
+                    .setMessage("This trail require you to enter location data!")
+                    .setPositiveButton(android.R.string.yes,  new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface arg0, int arg1) {
+
+                        }
+                    }).create().show();
             //warn experimenter for location data acquire
         }
 

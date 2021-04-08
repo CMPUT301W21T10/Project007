@@ -1,7 +1,5 @@
 package com.example.project007;
 
-import android.graphics.drawable.Drawable;
-
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
@@ -18,21 +16,22 @@ public class Experiment implements Serializable {
     private String type;
     private Integer id;
     private String userId;
-    private ArrayList<String> trailsId = new ArrayList<String>();
+    private ArrayList<String> trailsId = new ArrayList<>();
     //added questionsId
-    private ArrayList<String> questionId = new ArrayList<String>();
-    private ArrayList<String> subscriptionId = new ArrayList<String>();
+    private ArrayList<String> questionId = new ArrayList<>();
+    private ArrayList<String> subscriptionId = new ArrayList<>();
     private boolean requireLocation;
     private boolean condition;
     private Integer minimumTrails;
     private String region;
+    private boolean publishCondition;
 
     public Experiment() {
     }
 
     public Experiment(String name, String description, String date, String type,
-                      @Nullable Integer id, @Nullable ArrayList<String> trails, @Nullable ArrayList<String> questionsId, @Nullable ArrayList<String> subscriptionId,
-                      boolean requireLocation, boolean condition, Integer minimumTrails, String region) {
+                      @Nullable Integer id, @Nullable ArrayList<String> trails, @Nullable ArrayList<String> subscriptionId,
+                      boolean requireLocation, boolean condition, Integer minimumTrails, String region, boolean publishCondition, @Nullable ArrayList<String> questionId) {
         this.name = name;
         this.description = description;
         this.date = date;
@@ -48,8 +47,8 @@ public class Experiment implements Serializable {
         if (trails != null){
             this.trailsId = trails;
         }
-        if (questionsId != null){
-            this.questionId = questionsId;
+        if (questionId != null){
+            this.questionId = questionId;
         }
         if (subscriptionId != null){
             this.subscriptionId = subscriptionId;
@@ -58,6 +57,7 @@ public class Experiment implements Serializable {
         this.condition = condition;
         this.minimumTrails = minimumTrails;
         this.region = region;
+        this.publishCondition = publishCondition;
     }
 
     public String getUserId() {
@@ -154,5 +154,13 @@ public class Experiment implements Serializable {
 
     public void setRegion(String region) {
         this.region = region;
+    }
+
+    public boolean isPublishCondition() {
+        return publishCondition;
+    }
+
+    public void setPublishCondition(boolean publishCondition) {
+        this.publishCondition = publishCondition;
     }
 }

@@ -4,19 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:textColor="@color/white"
+    android:background="#A7C0E6"
     tools:context=".TrailsActivity">
-
 
     <LinearLayout
         android:id="@+id/info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-
+        android:background="#A7C0E6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
         <LinearLayout
             android:id="@+id/title_info"
             android:layout_width="match_parent"
@@ -33,6 +31,7 @@
                 android:layout_margin="10dp"
                 android:maxWidth="40dp"
                 android:maxHeight="40dp"
+                android:background="@drawable/c"
                 android:scaleType="centerInside" />
 
             <LinearLayout
@@ -50,7 +49,8 @@
                     android:maxLength="10"
                     android:singleLine="true"
                     android:text="@string/name"
-                    android:textColor="@color/black"
+                    android:fontFamily="serif"
+                    android:textColor="#55556E"
                     android:textSize="40sp"
                     android:textStyle="bold"></TextView>
 
@@ -67,7 +67,7 @@
                         android:layout_marginEnd="5dp"
                         android:layout_weight="0.1"
                         android:background="@drawable/button"
-                        android:backgroundTint="@color/edit"
+                        android:backgroundTint="#FFF7BE"
                         android:text="Processing"
                         android:textSize="20sp"
                         android:textStyle="bold"
@@ -80,8 +80,9 @@
                         android:layout_marginEnd="5dp"
                         android:layout_weight="0.1"
                         android:background="@drawable/button"
-                        android:backgroundTint="#FFE8D000"
+                        android:backgroundTint="#FFF7BE"
                         android:text="Location"
+                        android:textStyle="bold"
                         android:textSize="20sp"
                         android:visibility="invisible" />
 
@@ -92,8 +93,9 @@
                         android:layout_marginEnd="5dp"
                         android:layout_weight="0.1"
                         android:background="@drawable/button"
-                        android:backgroundTint="@color/owner"
+                        android:backgroundTint="#FFF7BE"
                         android:text="Owner"
+                        android:textStyle="bold"
                         android:textSize="20sp"
                         android:visibility="invisible" />
 
@@ -115,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="10dp"
                 android:text="Description: "
-                android:textColor="@color/black"
+                android:textColor="#0D1E4A"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -141,13 +143,13 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="10dp"
                 android:text="Region: "
-                android:textColor="@color/black"
+                android:textColor="#0D1E4A"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/region"
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/details"
                 android:textSize="20sp" />
@@ -157,16 +159,14 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:text="Minimum trials: "
-                android:textColor="@color/black"
+                android:textColor="#0D1E4A"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/minimumTrails"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="20dp"
-                android:paddingEnd="10dp"
                 android:textColor="@color/details"
                 android:textSize="20sp" />
 
@@ -184,14 +184,14 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="10dp"
                 android:text="Date: "
-                android:textColor="@color/black"
+                android:textColor="#0D1E4A"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
 
             <TextView
                 android:id="@+id/date"
-                android:layout_width="123dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/details"
                 android:textSize="20sp" />
@@ -200,7 +200,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Type: "
-                android:textColor="@color/black"
+                android:textColor="#0D1E4A"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -209,7 +209,6 @@
                 android:id="@+id/type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:paddingEnd="10dp"
                 android:textColor="@color/details"
                 android:textSize="20sp" />
@@ -240,11 +239,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="510dp"
+        android:layout_height="0dp"
         android:orientation="horizontal"
-        android:paddingTop="10dp"
-        android:paddingBottom="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/info"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -254,13 +250,7 @@
             style="@style/dividedListStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="0dp"
             android:choiceMode="singleChoice"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/info"
             tools:listitem="@android:layout/simple_list_item_1" />
     </LinearLayout>
 

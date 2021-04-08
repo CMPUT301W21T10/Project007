@@ -2,7 +2,6 @@ package com.example.project007;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -13,8 +12,8 @@ import java.util.List;
 
 
 public class RvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<UserEntity> mlist;
-    private Context context;
+    private final List<UserEntity> mlist;
+    private final Context context;
     public RvAdapter(List<UserEntity> list, Context context) {
         this.mlist = list;
         this.context = context;
@@ -92,7 +91,7 @@ public class RvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView itemName;
         public MyViewHolder(View itemView) {
             super(itemView);
-            itemName = (TextView) itemView.findViewById(R.id.item_name);
+            itemName = itemView.findViewById(R.id.item_name);
         }
     }
 }

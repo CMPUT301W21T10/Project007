@@ -10,10 +10,10 @@ import android.graphics.PorterDuff;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,8 +38,6 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -73,7 +71,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     ResultFragment resultFragment;
     QrcodeFragment qrcode;
     private Experiment experiment;
-    private Integer position;
     boolean needLocation;
     String type;
     String binomial_type="null";
@@ -119,7 +116,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         //receive data from experiment
         Intent intent = getIntent();
         experiment = (Experiment) intent.getSerializableExtra("com.example.project007.INSTANCE");
-        position = intent.getIntExtra("com.example.project007.POSITION", -1);
+        Integer position = intent.getIntExtra("com.example.project007.POSITION", -1);
         //receive data from experiment
 
         type = experiment.getType();
@@ -228,7 +225,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         String UserId = (String)doc.getData().get("UserId");
                         Location location;
 
-                        boolean ignoreCondition = Boolean.valueOf(ignore);
+                        boolean ignoreCondition = Boolean.parseBoolean(ignore);
 
                         if (longitude != null & latitude != null) {
                             location = new Location(Double.parseDouble(longitude), Double.parseDouble(latitude));//error prone
@@ -298,7 +295,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                             String databaseUserId = DatabaseController.getUserId();
                             String experimentId = experiment.getUserId();
                             chooseIgnore(id, newtrail, databaseUserId, experimentId);
-                            trail_Adapter.notifyDataSetChanged();;
+                            trail_Adapter.notifyDataSetChanged();
                             return false;
                         }
                     });
@@ -339,7 +336,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                             String experimentId = experiment.getUserId();
                             //compare with experimenter id
                             chooseIgnore(id, newtrail, databaseUserId, experimentId);
-                            trail_Adapter.notifyDataSetChanged();;
+                            trail_Adapter.notifyDataSetChanged();
                             return false;
                         }
                     });
@@ -355,7 +352,11 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         trail_List.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //Delete event
+                //Delete event with long click vibrate
+                //https://stackoverflow.com/questions/9509840/how-can-i-add-a-vibrate-event-to-the-onlongclick-method
+                //by blessenm answered Mar 1 '12 at 3:50
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                vibrator.vibrate(10);
                 String databaseUserId = DatabaseController.getUserId();
                 String experimentId = experiment.getUserId();
                 if (databaseUserId.matches(experimentId)){
@@ -705,7 +706,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
 
 
     public void openQuestionActivity() {
-        Bundle bundle = new Bundle();
+        /*Bundle bundle = new Bundle();
         Intent intent = new Intent(this, QuestionActivity.class);
         ArrayList<String> mockQuestionId = new ArrayList<String>();
         mockQuestionId.add("1");
@@ -715,6 +716,10 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         }
         bundle.putStringArrayList("questionsId",experiment.getQuestionId());
         intent.putExtra("experiment", bundle);
+        startActivity(intent);*/
+        Intent intent = new Intent(this, QuestionActivity.class);
+        //Experiment instanceExperiment = experiment;
+        intent.putExtra("ExperimentFromTrail", experiment);
         startActivity(intent);
     }
 

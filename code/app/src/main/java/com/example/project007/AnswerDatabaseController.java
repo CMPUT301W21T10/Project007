@@ -2,7 +2,6 @@ package com.example.project007;
 
 import android.annotation.SuppressLint;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -19,7 +18,7 @@ public class AnswerDatabaseController {
 
     @SuppressLint("StaticFieldLeak")
     private static FirebaseFirestore db; // answer db
-    private static String UserId = "1";
+    private static String UserId;
     private static Integer maxAnswerId;
 
     public static Integer getMaxAnswerId() {
@@ -56,9 +55,8 @@ public class AnswerDatabaseController {
         HashMap<String, String> data = new HashMap<>();
 
         String idString = answer.getId().toString();
-
         data.put("Answer", answer.getAnswer());
-
+        data.put("id", answer.getId().toString());
 
 
         final boolean[] condition = new boolean[1];

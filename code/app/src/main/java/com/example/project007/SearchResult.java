@@ -20,16 +20,19 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * SearchResult class
+ * Perform search and show result
+ * called from MainActivity
+ */
 public class SearchResult extends AppCompatActivity {
 
     private SubscriptionViewModel subscriptionViewModel;
-    private ListView experimentList;
     private ArrayAdapter<Experiment> experimentAdapter;
     private ArrayList<Experiment> experimentDataList;
-    final String TAG = "Sample";
+    private final String TAG = "Sample";
     private String searchKey = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,7 @@ public class SearchResult extends AppCompatActivity {
 
         experimentDataList = new ArrayList<>();
         experimentAdapter = new ExperimentAdapter(this, experimentDataList);
-        experimentList = findViewById(R.id.subscript_list);
+        ListView experimentList = findViewById(R.id.subscript_list);
         experimentList.setAdapter(experimentAdapter);
 
         final FirebaseFirestore db;
@@ -73,9 +76,10 @@ public class SearchResult extends AppCompatActivity {
 
                     }
                     if(experimentDataList.size() == 0) {
-                        Toast.makeText(SearchResult.this, "No related result.",
-                                Toast.LENGTH_SHORT).show();
-                        finish();
+                        final Toast test = Toast.makeText(SearchResult.this, "No related result.", Toast.LENGTH_SHORT);
+                        test.show();
+                        test.cancel();
+                        SearchResult.this.finish();
                     }
                 }
                 experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
@@ -100,39 +104,36 @@ public class SearchResult extends AppCompatActivity {
 
     public boolean processData( Experiment experiment){
 
-            if (experiment.getName().contains(searchKey)){
-                return true;
+        if (!experiment.isPublishCondition()){
+            return false;
+        }
 
-            }
-            if (experiment.getDescription().contains(searchKey)){
-                return true;
+        if (experiment.getName().contains(searchKey)){
+            return true;
 
-            }
-            if (experiment.getRegion().contains(searchKey)){
-                return true;
+        }
+        if (experiment.getDescription().contains(searchKey)){
+            return true;
 
-            }
-            if (experiment.getType().contains(searchKey)){
-                return true;
+        }
+        if (experiment.getRegion().contains(searchKey)){
+            return true;
 
-            }
-            if (experiment.getDate().contains(searchKey)){
-                return true;
+        }
+        if (experiment.getType().contains(searchKey)){
+            return true;
 
-            }
+        }
+        if (experiment.getDate().contains(searchKey)){
+            return true;
 
-            if (experiment.isCondition() && searchKey.equals("End")){
-                return true;
+        }
 
-            }
-            if (!experiment.isCondition() && searchKey.equals("Processing")){
-                return true;
-            }
+        if (experiment.isCondition() && searchKey.equals("End")){
+            return true;
 
-
-
-
-        return false;
+        }
+        return !experiment.isCondition() && searchKey.equals("Processing");
 
     }
 }

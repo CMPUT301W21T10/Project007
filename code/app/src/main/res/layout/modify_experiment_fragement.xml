@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
+    android:background="#26617DAE"
     tools:context=".ModifyExperimentFragment">
-
+    <LinearLayout
+        android:padding="10dp"
+        android:background="#26617DAE"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <EditText
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
@@ -51,19 +56,44 @@
             android:maxHeight="15dp"
             android:scaleType="centerInside" />
 
-        <TextView
-            android:id="@+id/hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/choose_type_hint"
-            android:textSize="20sp" />
-
-        <Spinner
-            android:id="@+id/typeChooser"
-            android:text = "@string/choosetype"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp" />
+
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/choose_type_hint"
+                    android:textColor="@color/details"
+                    android:textSize="20sp" />
+
+                <Spinner
+                    android:id="@+id/typeChooser"
+                    android:text = "@string/choosetype"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/hintHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type can't be changed!"
+                android:textColor="@color/red"
+                android:layout_gravity="end"
+                android:visibility="invisible"
+                android:textSize="15sp" />
+
+        </LinearLayout>
 
 
     </LinearLayout>
@@ -76,11 +106,11 @@
         android:layout_height="wrap_content">
 
 
-        <EditText
-            android:id="@+id/regionEditText"
+        <Spinner
+            android:id="@+id/regionSpinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/add_region_hint"
+            android:hint="Choose region"
             android:layout_weight="1" />
 
         <CheckBox
@@ -88,7 +118,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:text="Trails Geo-Location" />
+            android:textColor="@color/details"
+            android:text="Need Geo-Location" />
 
     </LinearLayout>
 
@@ -120,5 +151,6 @@
         android:layout_weight="0.1"
 
         tools:ignore="Deprecated" />
+    </LinearLayout>
 
 </LinearLayout>

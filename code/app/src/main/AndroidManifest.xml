@@ -11,6 +11,8 @@
         android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
         tools:ignore="ProtectedPermissions" />
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,7 +23,8 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,16 +45,11 @@
 
         <activity android:name=".TrailsActivity"/>
 
-        <activity android:name=".QuestionActivity"
-            android:parentActivityName=".TrailsActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".TrailsActivity" />
-        </activity>
+        <activity android:name=".QuestionActivity" />
 
-        <activity android:name=".AfterLoginActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".RegActivity" />
+        <activity android:name=".RegActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".ScanActivity" />
         <activity android:name="CustomizeScanActivity"/>
         <activity android:name="ReadBarCodeActivity"/>

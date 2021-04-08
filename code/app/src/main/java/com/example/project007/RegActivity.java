@@ -1,10 +1,9 @@
 package com.example.project007;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -20,9 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,14 +48,9 @@ public class RegActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
 
     public Boolean isEmail(String str) {
-        Boolean isEmail = false;
+        boolean isEmail = false;
         String expr = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
         if (str.matches(expr)) {
             isEmail = true;
@@ -68,64 +60,55 @@ public class RegActivity extends AppCompatActivity {
 
     @OnClick({R.id.reg_btn})
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.reg_btn:
-                if (TextUtils.isEmpty(regEmail.getText().toString()) || !isEmail(regEmail.getText().toString())) {
-                    Toast.makeText(RegActivity.this, " email account error!",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(regName.getText().toString())) {
-                    Toast.makeText(RegActivity.this, " name is empty!",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(regPhone.getText().toString())) {
-                    Toast.makeText(RegActivity.this, " phone is empty!",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                reference.child("data").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
-                        int tempInt =0;
-                        while (iterator.hasNext()) {
-                            DataSnapshot next = iterator.next();
-                            if (next.getKey().equals(getAndroidId(RegActivity.this))){
-                                tempInt++;
-                            }
-                        }
-                        if (tempInt>0){
-                            Toast.makeText(RegActivity.this, " UID is  exist!",
-                                    Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        else{
-                            reference.child("data").child(getAndroidId(RegActivity.this)+ "").child("phone").setValue(regPhone.getText().toString());
-                            reference.child("data").child(getAndroidId(RegActivity.this) + "").child("username").setValue(regName.getText().toString());
-                            reference.child("data").child(getAndroidId(RegActivity.this) + "").child("email").setValue(regEmail.getText().toString());
-                            Toast.makeText(RegActivity.this, " UID is registered successfully!",
-                                    Toast.LENGTH_SHORT).show();
-                            finish();
+        if (view.getId() == R.id.reg_btn) {
+            if (TextUtils.isEmpty(regEmail.getText().toString()) || !isEmail(regEmail.getText().toString())) {
+                Toast.makeText(RegActivity.this, " email account error!",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (TextUtils.isEmpty(regName.getText().toString())) {
+                Toast.makeText(RegActivity.this, " name is empty!",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (TextUtils.isEmpty(regPhone.getText().toString())) {
+                Toast.makeText(RegActivity.this, " phone is empty!",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            reference.child("data").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
+                    int tempInt = 0;
+                    while (iterator.hasNext()) {
+                        DataSnapshot next = iterator.next();
+                        if (next.getKey().equals(getAndroidId(RegActivity.this))) {
+                            tempInt++;
                         }
                     }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
+                    if (tempInt > 0) {
+                        Toast.makeText(RegActivity.this, " UID is  exist!",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    } else {
+                        reference.child("data").child(getAndroidId(RegActivity.this) + "").child("phone").setValue(regPhone.getText().toString());
+                        reference.child("data").child(getAndroidId(RegActivity.this) + "").child("username").setValue(regName.getText().toString());
+                        reference.child("data").child(getAndroidId(RegActivity.this) + "").child("email").setValue(regEmail.getText().toString());
+                        Toast.makeText(RegActivity.this, " UID is registered successfully!",
+                                Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(RegActivity.this, MainActivity.class).putExtra("uid", reference.child("data").child(getAndroidId(RegActivity.this) + "").getKey()));
+                        finish();
                     }
-                });
+                }
 
-
-                break;
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
         }
     }
-
-
-
     public  String getAndroidId(Context context) {
-        String ANDROID_ID = Settings.System.getString(context.getContentResolver(), Settings.System.ANDROID_ID);
-        return ANDROID_ID;
+        return Settings.System.getString(context.getContentResolver(), Settings.System.ANDROID_ID);
     }
 }

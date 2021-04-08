@@ -14,8 +14,8 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 public class TrailList_OtherFrags extends ArrayAdapter<Trails> {
-    private ArrayList<Trails> trails;
-    private Context context;
+    private final ArrayList<Trails> trails;
+    private final Context context;
 
     public TrailList_OtherFrags(Context context, ArrayList<Trails> trails){
         super(context,0, trails);
@@ -37,7 +37,7 @@ public class TrailList_OtherFrags extends ArrayAdapter<Trails> {
         ImageView ignore = view.findViewById(R.id.ignoreImg);
 
         if (displayLoc!=null){
-            String LocString = String.valueOf(displayLoc.getLatitude()) + ":" + String.valueOf(displayLoc.getLongitude());
+            String LocString = displayLoc.getLatitude() + ":" + displayLoc.getLongitude();
             location.setText(LocString);
         }
         trailTitle.setText(trail.getTrail_title());

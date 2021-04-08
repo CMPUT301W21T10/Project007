@@ -25,6 +25,24 @@ public class DatabaseController {
     private static FirebaseFirestore db;
     private static String UserId;//get this in trails
     private static Integer maxExperimentId;
+    private static boolean publish = true;
+    private static boolean searchCondition;
+
+    public static boolean isSearchCondition() {
+        return searchCondition;
+    }
+
+    public static void setSearchCondition(boolean searchCondition) {
+        DatabaseController.searchCondition = searchCondition;
+    }
+
+    public static boolean isPublish() {
+        return publish;
+    }
+
+    public static void setPublish(boolean publish) {
+        DatabaseController.publish = publish;
+    }
 
     public static Integer getMaxExperimentId() {
         return maxExperimentId;
@@ -32,6 +50,7 @@ public class DatabaseController {
 
     public static void setMaxExperimentId(Integer maxExperimentId) {
         DatabaseController.maxExperimentId = maxExperimentId;
+
     }
 
     public static String getUserId() {
@@ -101,7 +120,7 @@ public class DatabaseController {
 
     public static void setExperimentQuestions(String id, ArrayList<String> valueList) {
         DocumentReference docRef = db.collection("Experiments").document(id);
-        docRef.update("questionsId", valueList);
+        docRef.update("questionId", valueList);
     }
 
 }

@@ -2,8 +2,10 @@ package com.example.project007;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -11,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -18,25 +21,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * MainActivity
@@ -44,14 +38,23 @@ import butterknife.ButterKnife;
  * initialize shared attribute
  */
 
-
 public class MainActivity extends AppCompatActivity {
 
     private PopupWindow popupWindow1;
 
-    private TextView popSearch;
     private EditText popUsernameEt;
     private int[] location;
+
+    /**
+     * Set the navigation bar's color.
+     *
+     * @param window The window.
+     * @param color  The navigation bar's color.
+     */
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    public static void setNavBarColor(@NonNull final Window window, @ColorInt final int color) {
+        window.setNavigationBarColor(color);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         popupWindow1.setOutsideTouchable(true);
         popupWindow1.setFocusable(true);
 
-        popSearch = inflate.findViewById(R.id.pop_search);
+        TextView popSearch = inflate.findViewById(R.id.pop_search);
         popUsernameEt = inflate.findViewById(R.id.pop_username);
 
 
@@ -128,5 +131,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed(){
+        new AlertDialog.Builder(this)
+                .setTitle("Really Exit?")
+                .setMessage("Are you sure you want to exit?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes,  new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        MainActivity.super.onBackPressed();
+                    }
+                }).create().show();
     }
 }
