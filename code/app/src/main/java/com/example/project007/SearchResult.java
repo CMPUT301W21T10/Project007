@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -41,10 +42,6 @@ public class SearchResult extends AppCompatActivity {
     private ArrayList<Experiment> experimentDataList;
     final String TAG = "Sample";
     private String searchKey = "";
-    public static String hello="nihaoya";
-    ArrayList<UserEntity> userList = new ArrayList<UserEntity>();
-    boolean condition;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,8 +74,7 @@ public class SearchResult extends AppCompatActivity {
                         if (doc.exists()) {
                             // convert document to POJO
                             oneExperiment = doc.toObject(Experiment.class);
-
-                            if (processData(oneExperiment) | condition){
+                            if (processData(oneExperiment)){
                                 experimentDataList.add(oneExperiment);
                             }
 
@@ -88,16 +84,17 @@ public class SearchResult extends AppCompatActivity {
 
                     }
                     if(experimentDataList.size() == 0) {
-                        Toast.makeText(SearchResult.this, "No related result.",
-                                Toast.LENGTH_SHORT).show();
-                        finish();
+                        final Toast test = Toast.makeText(SearchResult.this, "No related result.", Toast.LENGTH_SHORT);
+                        test.show();
+                        test.cancel();
+                        SearchResult.this.finish();
                     }
                 }
                 experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
 
             }
         });
-        //
+
         // listener to access detail of an element
         // package an experiment and position info in intent
         experimentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -143,77 +140,11 @@ public class SearchResult extends AppCompatActivity {
         if (!experiment.isCondition() && searchKey.equals("Processing")){
             return true;
         }
-        condition = false;
-        Toast toast = Toast.makeText(getApplicationContext(),hello,Toast.LENGTH_SHORT);
-        toast.show();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("data").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
-
-                while (iterator.hasNext()){
-                    DataSnapshot next = iterator.next();
-                    if (next.child("username").getValue().toString().contains(searchKey)){
-                        UserEntity userEntity = new UserEntity();
-                        userEntity.setEmail(next.child("email").getValue().toString());
-                        userEntity.setPhone(next.child("phone").getValue().toString());
-                        userEntity.setUid(next.getKey());
-                        userEntity.setUsername(next.child("username").getValue().toString());
-                        final FirebaseFirestore db;
-                        db = FirebaseFirestore.getInstance();
-                        DatabaseController.setDb(db);
-                        final CollectionReference collectionReference = db.collection("Users");
-                        collectionReference.document(userEntity.getUid()).set(userEntity);
-                    }
-                    else {
-                        hello="Dragon"; }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
 
-        final FirebaseFirestore db = DatabaseController.getDb();
-        final CollectionReference collectionReference = db.collection("Users");
-        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                // Clear the old list
-                if (error!=null){
-                    Log.d(TAG,"Error:"+error.getMessage());
-                }
-                else {
-                    userList.clear();
-                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
 
-                        UserEntity user = null;
-                        if (doc.exists()) {
-                            // convert document to POJO
-                            user = doc.toObject(UserEntity.class);
-                            System.out.println(user);
 
-                            if (user.getUsername().contains(searchKey)){
-                                userList.add(user);
-                            }
-                        } else {
-                            System.out.println("No such document!");
-                        }
-                    }
-                    for (int i = 0; i <userList.size(); i ++){
-                        if (userList.get(i).getUid().equals(experiment.getUserId())){
-                            condition = true;
-                        }
-                    }
-                }
-
-            }
-        });
-
-        return condition;
+        return false;
 
     }
 }

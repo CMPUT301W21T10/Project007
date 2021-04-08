@@ -33,7 +33,15 @@ public class DatabaseController {
     private static String UserId;//get this in trails
     private static Integer maxExperimentId;
     private static boolean publish = true;
-    private static String searchedUserId;
+    private static boolean searchCondition;
+
+    public static boolean isSearchCondition() {
+        return searchCondition;
+    }
+
+    public static void setSearchCondition(boolean searchCondition) {
+        DatabaseController.searchCondition = searchCondition;
+    }
 
     public static boolean isPublish() {
         return publish;

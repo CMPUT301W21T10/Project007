@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(LoginActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, 0);
     }
 
-    public  String getAndroidId(Context context) {
+    public String getAndroidId(Context context) {
         String ANDROID_ID = Settings.System.getString(context.getContentResolver(), Settings.System.ANDROID_ID);
         return ANDROID_ID;
     }
@@ -94,7 +94,8 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             if (!logged){
                                 regEmail.setText(getAndroidId(LoginActivity.this));
-                                Toast.makeText(LoginActivity.this, " Uid not reg!",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, " please registry!",Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(LoginActivity.this, RegActivity.class));
                             }
                         }
 
@@ -112,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
+/*
     @OnClick({R.id.reg_btn, R.id.reg_signup})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -151,5 +152,5 @@ public class LoginActivity extends AppCompatActivity {
                 });
                 break;
         }
-    }
+    }*/
 }

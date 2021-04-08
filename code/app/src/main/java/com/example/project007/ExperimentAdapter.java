@@ -133,12 +133,12 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:  //手指按下
-                        downX = event.getX(); //获取手指x坐标
+                    case MotionEvent.ACTION_DOWN:
+                        downX = event.getX();
                         if (globalDelButton != null)
                         break;
-                    case MotionEvent.ACTION_UP:  //手指离开
-                        upX = event.getX(); //获取x坐标值
+                    case MotionEvent.ACTION_UP:
+                        upX = event.getX();
                         break;
                 }
 

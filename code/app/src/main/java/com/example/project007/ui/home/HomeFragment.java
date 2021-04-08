@@ -1,15 +1,9 @@
 package com.example.project007.ui.home;
 
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -30,30 +24,19 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.project007.ExperimentAdapter;
 import com.example.project007.DatabaseController;
 import com.example.project007.Experiment;
-import com.example.project007.MainActivity;
 import com.example.project007.ModifyExperimentFragment;
-import com.example.project007.Question;
-import com.example.project007.QuestionDatabaseController;
 import com.example.project007.R;
 import com.example.project007.SearchResult;
 import com.example.project007.TrailsActivity;
-import com.example.project007.UserEntity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Objects;
 
 /**
  * This is HomeFragment
@@ -87,11 +70,11 @@ public class HomeFragment extends Fragment {
                         Experiment experiment = (Experiment) bundle.getSerializable("com.example.project007.modifiedExperiment");
                         boolean addResult = DatabaseController.modify_experiment("Experiments", experiment);
                         if (addResult){
-                            Toast.makeText(getActivity(), "Add Succeed", Toast.LENGTH_SHORT).show();
-                        }
-                        else{
                             Toast.makeText(getActivity(), "Add Failed", Toast.LENGTH_SHORT).show();
                         }
+                        else{
+                            Toast.makeText(getActivity(), "Add Succeed", Toast.LENGTH_SHORT).show();
+                        }//revert logic
                     }
                 });
 
@@ -218,6 +201,8 @@ public class HomeFragment extends Fragment {
                 }
                 else {
                     experimentDataList.clear();
+                    int experimentId = 0;
+
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
 
                         Experiment oneExperiment = null;
@@ -229,21 +214,18 @@ public class HomeFragment extends Fragment {
                             if (oneExperiment.isPublishCondition()){
                                 experimentDataList.add(oneExperiment);
                             }
+                            if (oneExperiment.getId() > experimentId){
+                                experimentId = oneExperiment.getId();
+                            }
                         } else {
                             System.out.println("No such document!");
                         }
                     }
-
+                    DatabaseController.setMaxExperimentId(experimentId);
                     experimentAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
                 }
 
-                int experimentId = 0;
-                for (int i = 0; i < experimentDataList.size(); i++){
-                    if (experimentDataList.get(i).getId() > experimentId){
-                        experimentId = experimentDataList.get(i).getId();
-                    }
-                }
-                DatabaseController.setMaxExperimentId(experimentId);
+
 
             }
         });
