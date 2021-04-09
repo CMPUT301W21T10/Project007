@@ -152,18 +152,21 @@ public class AppTest {
         final TextView textView2 = (TextView) solo.getView("name_view"); // Get the listview
         String message2 = textView2.getText().toString(); // Get item from first position
         assertEquals("Binomial", message2);
+        //添加第一条Binomial的trail
         solo.clickOnView(solo.getView(R.id.action_add));
         solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail1");
         solo.enterText((EditText) solo.getView(R.id.SuccessText), "10");
         solo.enterText((EditText) solo.getView(R.id.failText), "10");
         solo.clickOnView(solo.getView(R.id.ok_pressed));
         assertTrue(solo.waitForText("Trail1",1,1000));
+        //添加第二条Binomial的trail
         solo.clickOnView(solo.getView(R.id.action_add));
         solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail2");
         solo.enterText((EditText) solo.getView(R.id.SuccessText), "20");
         solo.enterText((EditText) solo.getView(R.id.failText), "10");
         solo.clickOnView(solo.getView(R.id.ok_pressed));
         assertTrue(solo.waitForText("Trail2",1,1000));
+        //添加第三条Binomial的trail
         solo.clickOnView(solo.getView(R.id.action_add));
         solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail3");
         solo.enterText((EditText) solo.getView(R.id.SuccessText), "30");
@@ -171,11 +174,13 @@ public class AppTest {
         solo.clickOnView(solo.getView(R.id.ok_pressed));
         solo.scrollToBottom();
         assertTrue(solo.waitForText("Trail3",1,1000));
+        //测试results
         solo.clickOnMenuItem("View Result");
         sleep(3000);
         solo.goBack();
         solo.goBack();
 
+        //添加Non-negative
         solo.clickOnView(solo.getView(R.id.add_experiment_button));
         solo.enterText((EditText) solo.getView(R.id.editTextName), "Non-nega");
         solo.enterText((EditText) solo.getView(R.id.editTextDescription), "Integer numbers");
@@ -189,6 +194,7 @@ public class AppTest {
         solo.clickOnView(btn4view);
         solo.clickOnView(homeView);
         assertTrue(solo.waitForText("Non-nega", 1, 2000));
+        //查找并进入Non-negative
         ListView currentListView2 = (ListView) solo.getView("experiment_list");
         View view3 =  currentListView2.getChildAt(2);
         solo.clickOnView(view3);
@@ -196,27 +202,32 @@ public class AppTest {
         final TextView textView3 = (TextView) solo.getView("name_view"); // Get the listview
         String message3 = textView3.getText().toString(); // Get item from first position
         assertEquals("Non-nega", message3);
+        //添加第一条Non-negative的trail
         solo.clickOnView(solo.getView(R.id.action_add));
         solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail1");
         solo.enterText((EditText) solo.getView(R.id.ResultText), "0");
         solo.clickOnView(solo.getView(R.id.ok_pressed));
         assertTrue(solo.waitForText("Trail1",1,1000));
+        //添加第二条Non-negative的trail
         solo.clickOnView(solo.getView(R.id.action_add));
         solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail2");
         solo.enterText((EditText) solo.getView(R.id.ResultText), "10");
         solo.clickOnView(solo.getView(R.id.ok_pressed));
         assertTrue(solo.waitForText("Trail2",1,1000));
+        //添加第三条Non-negative的trail
         solo.clickOnView(solo.getView(R.id.action_add));
         solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail3");
         solo.enterText((EditText) solo.getView(R.id.ResultText), "20");
         solo.clickOnView(solo.getView(R.id.ok_pressed));
         solo.scrollToBottom();
         assertTrue(solo.waitForText("Trail3",1,1000));
+        //测试results
         solo.clickOnMenuItem("View Result");
         sleep(3000);
         solo.goBack();
         solo.goBack();
 
+        //添加Measurement
         solo.clickOnView(solo.getView(R.id.add_experiment_button));
         solo.enterText((EditText) solo.getView(R.id.editTextName), "Measurement");
         solo.enterText((EditText) solo.getView(R.id.editTextDescription), "Floating numbers");
@@ -230,6 +241,7 @@ public class AppTest {
         solo.clickOnView(btn4view);
         solo.clickOnView(homeView);
         assertTrue(solo.waitForText("Measurement", 1, 2000));
+        //查找并进入Measurement
         ListView currentListView3 = (ListView) solo.getView("experiment_list");
         View view4 =  currentListView3.getChildAt(2);
         solo.clickOnView(view4);
@@ -237,27 +249,32 @@ public class AppTest {
         final TextView textView4 = (TextView) solo.getView("name_view"); // Get the listview
         String message4 = textView4.getText().toString(); // Get item from first position
         assertEquals("Measurement", message4);
+        //添加第一条Measurement的trail
         solo.clickOnView(solo.getView(R.id.action_add));
         solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail1");
         solo.enterText((EditText) solo.getView(R.id.ResultText), "10.0");
         solo.clickOnView(solo.getView(R.id.ok_pressed));
         assertTrue(solo.waitForText("Trail1",1,1000));
+        //添加第二条Measurement的trail
         solo.clickOnView(solo.getView(R.id.action_add));
         solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail2");
         solo.enterText((EditText) solo.getView(R.id.ResultText), "20.0");
         solo.clickOnView(solo.getView(R.id.ok_pressed));
         assertTrue(solo.waitForText("Trail2",1,1000));
+        //添加第三条Measurement的trail
         solo.clickOnView(solo.getView(R.id.action_add));
         solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail3");
         solo.enterText((EditText) solo.getView(R.id.ResultText), "30.0");
         solo.clickOnView(solo.getView(R.id.ok_pressed));
         solo.scrollToBottom();
         assertTrue(solo.waitForText("Trail3",1,1000));
+        //测试results
         solo.clickOnMenuItem("View Result");
         sleep(3000);
         solo.goBack();
         solo.goBack();
 
+        //测试长按的实验
         solo.clickLongOnView(view1);
 
     }
