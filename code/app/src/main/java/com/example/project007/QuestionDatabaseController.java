@@ -16,6 +16,10 @@ import java.util.HashMap;
 
 import static android.content.ContentValues.TAG;
 
+/**
+ * Connecting to the database
+ * perform add, delete and modify questions
+ */
 public class QuestionDatabaseController {
 
     @SuppressLint("StaticFieldLeak")
