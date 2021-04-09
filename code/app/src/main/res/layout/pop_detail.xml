@@ -25,6 +25,7 @@
             android:textSize="16sp"
             android:text="ID:"
             android:textColor="#49558A"
+            android:visibility="invisible"
             android:layout_marginTop="10dp"
             android:layout_marginRight="15dp"
             android:layout_width="wrap_content"
