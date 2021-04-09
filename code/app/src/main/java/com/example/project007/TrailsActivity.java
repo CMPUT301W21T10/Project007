@@ -407,7 +407,8 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 qrcode = new QrcodeFragment(newtrail, "trail", binomial_type);
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.data_container2, qrcode).addToBackStack(null).commit();
+                transaction.replace(R.id.data_container2, qrcode).addToBackStack(null);
+                transaction.commit();
             }
         }
         else if(id==R.id.addBarcode){
@@ -442,8 +443,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         qrcode=new QrcodeFragment(newtrail,"trail",binomial_type);
                         FragmentManager fragmentManager = getSupportFragmentManager();
                         FragmentTransaction transaction = fragmentManager.beginTransaction();
-                        transaction.replace(R.id.data_container2, qrcode);
-                        transaction.addToBackStack(null);
+                        transaction.replace(R.id.data_container2, qrcode).addToBackStack(null);
                         transaction.commit();
                     }
                 });
@@ -455,8 +455,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         qrcode=new QrcodeFragment(newtrail,"trail",binomial_type);
                         FragmentManager fragmentManager = getSupportFragmentManager();
                         FragmentTransaction transaction = fragmentManager.beginTransaction();
-                        transaction.replace(R.id.data_container2, qrcode);
-                        transaction.addToBackStack(null);
+                        transaction.replace(R.id.data_container2, qrcode).addToBackStack(null);
                         transaction.commit();
                     }
                 });
