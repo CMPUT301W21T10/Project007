@@ -14,6 +14,10 @@ import java.util.HashMap;
 
 import static android.content.ContentValues.TAG;
 
+/**
+ * Connecting to the database
+ * perform add, delete and modify answers
+ */
 public class AnswerDatabaseController {
 
     @SuppressLint("StaticFieldLeak")
