@@ -39,10 +39,10 @@ public class MeasurementTest {
         //solo.clickOnText("Sign In");
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
 
-        //add Measurment
+        //add Measurement
         solo.clickOnView(solo.getView(R.id.add_experiment_button));
         solo.enterText((EditText) solo.getView(R.id.editTextName), "MS-Test");
-        solo.enterText((EditText) solo.getView(R.id.editTextDescription), "Measurment");
+        solo.enterText((EditText) solo.getView(R.id.editTextDescription), "Measurement");
         solo.pressSpinnerItem(0, 3);
         solo.enterText((EditText) solo.getView(R.id.minimumTrails), "0");
         solo.clickOnText("OK");
@@ -56,7 +56,7 @@ public class MeasurementTest {
         View homeView = solo.getView(R.id.navigation_home);
         solo.clickOnView(homeView);
         assertTrue(solo.waitForText("MS-Test", 1, 2000));
-        //find&enter Measurment
+        //find&enter Measurement
         ListView currentListView1 = (ListView) solo.getView("experiment_list");
         View view2 =  currentListView1.getChildAt(0);
         solo.clickOnView(view2);

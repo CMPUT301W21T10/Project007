@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -83,7 +84,7 @@ public class ResultFragment extends Fragment{
      * @param val The double list of numbers.
      * @return Return a double list which contains the three quartiles.
      */
-    public double[] Quartiles(double[] val) {
+    public static double[] Quartiles(double[] val) {
         double[] ans = new double[3];
 
         for (int quartileType = 1; quartileType < 4; quartileType++) {
@@ -122,7 +123,7 @@ public class ResultFragment extends Fragment{
      * @param x A list of double type numbers.
      * @return Return a double type number to show the average of the arraylist of numbers.
      */
-    private static double avg(double[] x) {
+    public static double avg(double[] x) {
         double sum = 0;
         for (double v : x) {
             sum += v;
@@ -130,7 +131,7 @@ public class ResultFragment extends Fragment{
         double average = sum / x.length;
         return average;
     }
-    private static double StandardDiviation(double[] x) {
+    public static double StandardDiviation(double[] x) {
         double dAve=avg(x);
         double dVar=0;
         for (double v : x) {
