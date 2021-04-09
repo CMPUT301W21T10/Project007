@@ -118,7 +118,7 @@
                 android:paddingStart="10dp"
                 android:text="Description: "
                 android:textColor="#0D1E4A"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
 
@@ -127,7 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/details"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -144,15 +144,15 @@
                 android:paddingStart="10dp"
                 android:text="Region: "
                 android:textColor="#0D1E4A"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/region"
-                android:layout_width="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/details"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -160,7 +160,8 @@
                 android:gravity="right"
                 android:text="Minimum trials: "
                 android:textColor="#0D1E4A"
-                android:textSize="20sp"
+                android:textSize="18sp"
+                android:paddingStart="1dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -168,7 +169,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/details"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
 
         </LinearLayout>
@@ -185,23 +186,23 @@
                 android:paddingStart="10dp"
                 android:text="Date: "
                 android:textColor="#0D1E4A"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
 
             <TextView
                 android:id="@+id/date"
-                android:layout_width="100dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/details"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Type: "
                 android:textColor="#0D1E4A"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
 
@@ -211,7 +212,7 @@
                 android:layout_height="wrap_content"
                 android:paddingEnd="10dp"
                 android:textColor="@color/details"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
         </LinearLayout>
 
