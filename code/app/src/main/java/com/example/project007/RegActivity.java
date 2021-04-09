@@ -29,13 +29,13 @@ public class RegActivity extends AppCompatActivity {
     @BindView(R.id.reg_name)
     public EditText regName;
     @BindView(R.id.reg_email)
-    EditText regEmail;
+    public EditText regEmail;
     @BindView(R.id.reg_phone)
-    EditText regPhone;
+    public EditText regPhone;
     @BindView(R.id.reg_btn)
-    TextView regBtn;
+    public TextView regBtn;
     @BindView(R.id.reg_uidtext)
-    TextView regUidtext;
+    public TextView regUidtext;
     private DatabaseReference reference;
 
     @Override
