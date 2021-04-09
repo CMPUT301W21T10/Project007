@@ -42,9 +42,7 @@ import lecho.lib.hellocharts.view.LineChartView;
  * <p>
  * The six numbers are the three quartile numbers and median and mean.<br>
  * The two plots are the histogram and the linear chart run with the time.<br>
- *     </p>
- * @return
- * Return a view to show the result of the experiment.
+ * </p>
  */
 
 public class ResultFragment extends Fragment{
@@ -478,7 +476,6 @@ public class ResultFragment extends Fragment{
     /**
      * This method show the menu.
      * @param savedInstanceState keep data
-     * @return
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -489,7 +486,6 @@ public class ResultFragment extends Fragment{
      * Hide the menu.
      * @param menu Menu
      * @param inflater The inflater of Menu
-     * @return
      */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

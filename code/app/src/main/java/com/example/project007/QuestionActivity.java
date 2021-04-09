@@ -185,7 +185,7 @@ public class QuestionActivity extends AppCompatActivity {
                     else{
                         Toast.makeText(getApplicationContext(), "Delete Succeed", Toast.LENGTH_SHORT).show();
                     }
-                    Toast.makeText(getApplicationContext(), "Access granted！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Access granted!", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(getApplicationContext(), "Oops, you have no access to delete this question", Toast.LENGTH_SHORT).show();
                 }

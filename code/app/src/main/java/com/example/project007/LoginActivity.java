@@ -1,6 +1,7 @@
 package com.example.project007;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -37,10 +38,13 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.reg_email)
     TextView regEmail;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.reg_signup)
     TextView regSignup;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.reg_btn)
     TextView regBtn;
     private DatabaseReference reference;
