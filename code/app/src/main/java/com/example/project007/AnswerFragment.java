@@ -53,7 +53,7 @@ public class AnswerFragment extends Fragment {
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return
+     * @return return the view of this answer fragment
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
