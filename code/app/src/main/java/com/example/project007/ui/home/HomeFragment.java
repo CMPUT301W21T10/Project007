@@ -104,8 +104,14 @@ public class HomeFragment extends Fragment {
                                 break;
 
                             case "edit":
-                                new ModifyExperimentFragment(experimentDataList.get(savedPosition)).show(getChildFragmentManager(), "EDIT_EXPERIMENT");
-                                Toast.makeText(getActivity(), "edit Succeed", Toast.LENGTH_SHORT).show();
+                                if (instance.isCondition()){
+                                    new ModifyExperimentFragment(experimentDataList.get(savedPosition)).show(getChildFragmentManager(), "EDIT_EXPERIMENT");
+                                    Toast.makeText(getActivity(), "edit Succeed", Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    Toast.makeText(getActivity(), "End Experiment cannot be modified", Toast.LENGTH_SHORT).show();
+                                }
+
                                 break;
 
                             case "delete":
