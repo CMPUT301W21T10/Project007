@@ -36,12 +36,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCe9XKgYb4pwBLwgp_HzKvWJ5PCD_GzQOY" />
 
-        <activity android:name=".SearchResult"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
+        <activity android:name=".SearchResult"/>
 
         <activity android:name=".TrailsActivity"/>
 
