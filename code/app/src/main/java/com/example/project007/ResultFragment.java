@@ -81,7 +81,7 @@ public class ResultFragment extends Fragment{
      * @param val The double list of numbers.
      * @return Return a double list which contains the three quartiles.
      */
-    public double[] Quartiles(double[] val) {
+    public static double[] Quartiles(double[] val) {
         double[] ans = new double[3];
 
         for (int quartileType = 1; quartileType < 4; quartileType++) {
@@ -120,7 +120,7 @@ public class ResultFragment extends Fragment{
      * @param x A list of double type numbers.
      * @return Return a double type number to show the average of the arraylist of numbers.
      */
-    private static double avg(double[] x) {
+    public static double avg(double[] x) {
         double sum = 0;
         for (double v : x) {
             sum += v;
