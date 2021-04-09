@@ -306,6 +306,8 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
 
                     }
                 });
+            }else{
+                Toast.makeText(getApplicationContext(), "You can't modify this trail while experiment is ended!", Toast.LENGTH_SHORT).show();
             }
         } else {
             /*addButton.setOnClickListener(new View.OnClickListener() {
@@ -346,6 +348,8 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         popup.show();
                     }
                 });
+            }else{
+                Toast.makeText(getApplicationContext(), "You can't modify this trail while experiment is ended!", Toast.LENGTH_SHORT).show();
             }
         }
 
