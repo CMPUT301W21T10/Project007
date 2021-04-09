@@ -104,13 +104,12 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             getCurrentLoc();
             //Toast.makeText(getApplicationContext(), "Getting loc", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             //request permission here
             ActivityCompat.requestPermissions(TrailsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION}
+                            Manifest.permission.ACCESS_COARSE_LOCATION}
                     , 100);
         }
-
 
 
         //receive data from experiment
@@ -221,8 +220,8 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         String variesData = (String) doc.getData().get("VariesData");
                         String longitude = (String) doc.getData().get("longitude");
                         String latitude = (String) doc.getData().get("latitude");
-                        String ignore = (String)doc.getData().get("IgnoreCondition");
-                        String UserId = (String)doc.getData().get("UserId");
+                        String ignore = (String) doc.getData().get("IgnoreCondition");
+                        String UserId = (String) doc.getData().get("UserId");
                         Location location;
 
                         boolean ignoreCondition = Boolean.parseBoolean(ignore);
@@ -279,34 +278,35 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                     //addButton.setVisibility(View.INVISIBLE);
                 }
             });*/
-
-            trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Trails newtrail = trail_Adapter.getItem(position);
-                    int pos = parent.getPositionForView(view);
-                    //Toast.makeText(getApplicationContext(),pos+"",Toast.LENGTH_SHORT).show();
-                    PopupMenu popup = new PopupMenu(TrailsActivity.this, view);
-                    popup.getMenuInflater().inflate(R.menu.pop_up_menu, popup.getMenu());
-                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            int id = item.getItemId();
-                            String databaseUserId = DatabaseController.getUserId();
-                            String experimentId = experiment.getUserId();
-                            chooseIgnore(id, newtrail, databaseUserId, experimentId);
-                            trail_Adapter.notifyDataSetChanged();
-                            return false;
-                        }
-                    });
-                    //
-                    popup.show();
+            if (experiment.isCondition()) {
+                trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Trails newtrail = trail_Adapter.getItem(position);
+                        int pos = parent.getPositionForView(view);
+                        //Toast.makeText(getApplicationContext(),pos+"",Toast.LENGTH_SHORT).show();
+                        PopupMenu popup = new PopupMenu(TrailsActivity.this, view);
+                        popup.getMenuInflater().inflate(R.menu.pop_up_menu, popup.getMenu());
+                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                int id = item.getItemId();
+                                String databaseUserId = DatabaseController.getUserId();
+                                String experimentId = experiment.getUserId();
+                                chooseIgnore(id, newtrail, databaseUserId, experimentId);
+                                trail_Adapter.notifyDataSetChanged();
+                                return false;
+                            }
+                        });
+                        //
+                        popup.show();
                     /*Trails newtrail = trail_Adapter.getItem(position);
                     AddBinoTrailFragment fragment = AddBinoTrailFragment.newInstance(newtrail);
                     getSupportFragmentManager().beginTransaction().replace(R.id.data_container, fragment).addToBackStack(null).commit();*/
-                }
-            });
 
+                    }
+                });
+            }
         } else {
             /*addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -316,80 +316,84 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                     getSupportFragmentManager().beginTransaction().replace(R.id.data_container2, addNnCBTrailFragment).addToBackStack(null).commit();
                 }
             });*/
-            trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    /*Trails newtrail = trail_Adapter.getItem(position);
-                    AddNnCBTrailFragment NcCb_fragment = AddNnCBTrailFragment.newInstance(newtrail);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.data_container, NcCb_fragment).addToBackStack(null).commit();*/
-                    Trails newtrail = trail_Adapter.getItem(position);
-                    int pos = parent.getPositionForView(view);
-                    //Toast.makeText(getApplicationContext(),pos+"",Toast.LENGTH_SHORT).show();
-                    PopupMenu popup = new PopupMenu(TrailsActivity.this, view);
-                    popup.getMenuInflater().inflate(R.menu.pop_up_menu, popup.getMenu());
-                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            int id = item.getItemId();
-                            //String UserId = newtrail.getUserId();
-                            String databaseUserId = DatabaseController.getUserId();
-                            String experimentId = experiment.getUserId();
-                            //compare with experimenter id
-                            chooseIgnore(id, newtrail, databaseUserId, experimentId);
-                            trail_Adapter.notifyDataSetChanged();
-                            return false;
-                        }
-                    });
-                    //
-                    popup.show();
-                }
-            });
+            if (experiment.isCondition()) {
+
+                trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        /*Trails newtrail = trail_Adapter.getItem(position);
+                        AddNnCBTrailFragment NcCb_fragment = AddNnCBTrailFragment.newInstance(newtrail);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.data_container, NcCb_fragment).addToBackStack(null).commit();*/
+                        Trails newtrail = trail_Adapter.getItem(position);
+                        int pos = parent.getPositionForView(view);
+                        //Toast.makeText(getApplicationContext(),pos+"",Toast.LENGTH_SHORT).show();
+                        PopupMenu popup = new PopupMenu(TrailsActivity.this, view);
+                        popup.getMenuInflater().inflate(R.menu.pop_up_menu, popup.getMenu());
+                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                int id = item.getItemId();
+                                //String UserId = newtrail.getUserId();
+                                String databaseUserId = DatabaseController.getUserId();
+                                String experimentId = experiment.getUserId();
+                                //compare with experimenter id
+                                chooseIgnore(id, newtrail, databaseUserId, experimentId);
+                                trail_Adapter.notifyDataSetChanged();
+                                return false;
+                            }
+                        });
+                        //
+                        popup.show();
+                    }
+                });
+            }
         }
 
 
-
         //longClick action for delete data
-        trail_List.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //Delete event with long click vibrate
-                //https://stackoverflow.com/questions/9509840/how-can-i-add-a-vibrate-event-to-the-onlongclick-method
-                //by blessenm answered Mar 1 '12 at 3:50
-                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                vibrator.vibrate(10);
-                String databaseUserId = DatabaseController.getUserId();
-                String experimentId = experiment.getUserId();
-                if (databaseUserId.matches(experimentId)){
-                    Trails newtrail = trail_Adapter.getItem(position);
-                    String idString = newtrail.getID().toString();
+        if (experiment.isCondition()) {
+            trail_List.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    //Delete event with long click vibrate
+                    //https://stackoverflow.com/questions/9509840/how-can-i-add-a-vibrate-event-to-the-onlongclick-method
+                    //by blessenm answered Mar 1 '12 at 3:50
+                    Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    vibrator.vibrate(10);
+                    String databaseUserId = DatabaseController.getUserId();
+                    String experimentId = experiment.getUserId();
+                    if (databaseUserId.matches(experimentId)) {
+                        Trails newtrail = trail_Adapter.getItem(position);
+                        String idString = newtrail.getID().toString();
 
-                    ArrayList<String> temp =  experiment.getTrailsId();
-                    for (int i = 0; i < temp.size(); i++) {
-                        if (temp.get(i).equals(idString)) {
-                            temp.remove(i);
+                        ArrayList<String> temp = experiment.getTrailsId();
+                        for (int i = 0; i < temp.size(); i++) {
+                            if (temp.get(i).equals(idString)) {
+                                temp.remove(i);
+                            }
                         }
-                    }
-                    DatabaseController.setExperimentTrails(experiment.getId().toString(),temp,experiment.getSubscriptionId());
+                        DatabaseController.setExperimentTrails(experiment.getId().toString(), temp, experiment.getSubscriptionId());
 
-                    trail_Adapter.notifyDataSetChanged();
+                        trail_Adapter.notifyDataSetChanged();
 
-                    boolean deleteResult = TrailsDatabaseController.delete_Trails("Trails", newtrail);
-                    if (deleteResult) {
-                        Toast.makeText(getApplicationContext(), "Delete Failed", Toast.LENGTH_SHORT).show();
+                        boolean deleteResult = TrailsDatabaseController.delete_Trails("Trails", newtrail);
+                        if (deleteResult) {
+                            Toast.makeText(getApplicationContext(), "Delete Failed", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Delete Succeed", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(getApplicationContext(), "Delete Succeed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "You don't have access to delete this trail", Toast.LENGTH_SHORT).show();
                     }
-                }else{
-                    Toast.makeText(getApplicationContext(), "You don't have access to delete this trail", Toast.LENGTH_SHORT).show();
-                }
 
-                //revert logic
-                return false;
-            }
-        });
-        trail_List.setAdapter(trail_Adapter);
-        //https://stackoverflow.com/questions/4834750/how-to-get-the-selected-item-from-listview
-        //from xandy's answer Jan 29 '11 at 2:57*/
+                    //revert logic
+                    return false;
+                }
+            });
+            trail_List.setAdapter(trail_Adapter);
+            //https://stackoverflow.com/questions/4834750/how-to-get-the-selected-item-from-listview
+            //from xandy's answer Jan 29 '11 at 2:57*/
+        }
     }
 
 
@@ -562,6 +566,9 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         if (!experiment.isCondition()) {
             menu.findItem(R.id.action_add).setVisible(false);
         }
+        /*if (!experiment.isCondition()) {
+            menu.findItem(R.id.action_add).setVisible(false);
+        }*/
         super.onPrepareOptionsMenu(menu);
         return true;
     }
