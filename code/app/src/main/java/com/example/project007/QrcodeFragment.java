@@ -34,7 +34,7 @@ public class QrcodeFragment extends Fragment {
         this.testtype=testtype;
     }
     public QrcodeFragment(){}
-    public QrcodeFragment(Trails trails,String testtype,String binomial_type ){
+    public QrcodeFragment(Trails trails,String testtype,String binomial_type){
         this.trail=trails;
         this.testtype=testtype;
         this.binomial_type=binomial_type;

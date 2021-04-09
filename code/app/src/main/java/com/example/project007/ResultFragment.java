@@ -450,24 +450,38 @@ public class ResultFragment extends Fragment{
         }
         columnChartView.setColumnChartData(data);
     }
-
+    /**
+     * This method create an array to record a sorted time array..
+     * The data includes six numbers,which are the three quartile numbers and median and mean.
+     * @param arr The array we want to sort.
+     * @return Return a sorted array.
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public ArrayList<Trails> sortTime(ArrayList<Trails> arr){
         arr.sort((p1, p2) -> p1.getTime().compareTo(p2.getTime()));
         return arr;
     }
-    //disable menu in frag
+    /**
+     * This method show the menu.
+     * @param savedInstanceState keep data
+     * @return
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
+    /**
+     * Hide the menu.
+     * @param menu Menu
+     * @param inflater The inflater of Menu
+     * @return
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
     }
-    //disable menu in frag
 
     /**
      * This method create a view to show the results and the plots.

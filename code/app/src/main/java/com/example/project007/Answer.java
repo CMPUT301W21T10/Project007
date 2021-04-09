@@ -16,8 +16,6 @@ public class Answer implements Serializable {
             this.id = AnswerDatabaseController.generateAnswerId();
         }
     }
-//private Integer question_id;
-
 
 
     public String getAnswer() {
