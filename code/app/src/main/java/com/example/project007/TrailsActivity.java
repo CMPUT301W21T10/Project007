@@ -443,6 +443,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         FragmentManager fragmentManager = getSupportFragmentManager();
                         FragmentTransaction transaction = fragmentManager.beginTransaction();
                         transaction.replace(R.id.data_container2, qrcode);
+                        transaction.addToBackStack(null);
                         transaction.commit();
                     }
                 });
@@ -455,6 +456,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         FragmentManager fragmentManager = getSupportFragmentManager();
                         FragmentTransaction transaction = fragmentManager.beginTransaction();
                         transaction.replace(R.id.data_container2, qrcode);
+                        transaction.addToBackStack(null);
                         transaction.commit();
                     }
                 });
