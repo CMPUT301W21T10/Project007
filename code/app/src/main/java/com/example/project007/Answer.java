@@ -2,6 +2,10 @@ package com.example.project007;
 
 import java.io.Serializable;
 
+/**
+ * This is an Answer class
+ * This class gives a single frame of an answer
+ */
 public class Answer implements Serializable {
 
     private String answer;
@@ -16,6 +20,7 @@ public class Answer implements Serializable {
             this.id = AnswerDatabaseController.generateAnswerId();
         }
     }
+
 
 
     public String getAnswer() {
