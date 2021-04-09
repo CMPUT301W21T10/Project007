@@ -51,4 +51,27 @@ class ResultUnitTest {
         double answer = ResultFragment.avg(valList);
         assertEquals(2.50, answer);
     }
+
+    /**
+     * This function is meant to testing StandardDiviation in result
+     */
+    @Test
+    void testStandardDiviation() {
+        double[] valList = mockValueList();
+        double answer =  ResultFragment.StandardDiviation(valList);
+        @SuppressLint("DefaultLocale") String p1 = String.format("%.2f",answer);
+        assertEquals("1.12", p1);
+    }
+
+    /**
+     * This function is meant to testing median in result
+     */
+    @Test
+    void testMed() {
+        ArrayList<Double> valList = mockValueArrayList();
+        assertEquals(4, valList.size());
+        double answer =  ResultFragment.Med(valList);
+        assertEquals(2.50, answer);
+    }
+
 }
