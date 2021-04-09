@@ -28,7 +28,6 @@ import java.util.ArrayList;
  */
 public class SearchResult extends AppCompatActivity {
 
-    private SubscriptionViewModel subscriptionViewModel;
     private ArrayAdapter<Experiment> experimentAdapter;
     private ArrayList<Experiment> experimentDataList;
     private final String TAG = "Sample";
@@ -101,6 +100,13 @@ public class SearchResult extends AppCompatActivity {
 
     }
 
+
+    /**
+     * processData
+     * Perform compare
+     * @return
+     * return value: false if not published, true if found, otherwise false
+     */
     public boolean processData( Experiment experiment){
 
         if (!experiment.isPublishCondition()){
