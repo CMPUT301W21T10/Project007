@@ -46,7 +46,7 @@ public class NonNegativeTest {
         solo.clickOnView(solo.getView(R.id.add_experiment_button));
         solo.enterText((EditText) solo.getView(R.id.editTextName), "NN-Test");
         solo.enterText((EditText) solo.getView(R.id.editTextDescription), "Non-Negative");
-        solo.pressSpinnerItem(2, 0);
+        solo.pressSpinnerItem(0, 2);
         solo.enterText((EditText) solo.getView(R.id.minimumTrails), "0");
         solo.pressSpinnerItem(1, 0);
         solo.clickOnText("OK");
@@ -119,7 +119,7 @@ public class NonNegativeTest {
         solo.clickOnMenuItem("Help/Tips");
         sleep(1000);
         solo.goBack();
-        //solo.goBack();
+        solo.goBack();
 
         //delete Count-base
         ListView experimentListView = (ListView) solo.getView("experiment_list");

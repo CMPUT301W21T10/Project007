@@ -110,7 +110,17 @@ public class Question_AnswerTest {
         solo.clickLongInList(0,0,2000);
         assertFalse(solo.waitForText("questions", 1, 2000));
 
+        solo.goBack();
+        solo.goBack();
 
+        //delete Count-base
+        ListView experimentListView = (ListView) solo.getView("experiment_list");
+        View experimentView = experimentListView.getChildAt(0);
+        solo.clickLongOnView(experimentView);
+        View deleteview = (View) solo.getView("button2");
+        solo.clickOnView(deleteview);
+        assertFalse(solo.waitForText("NN-Test", 1, 2000));
+        //delete Count-base
     }
 
     /**
