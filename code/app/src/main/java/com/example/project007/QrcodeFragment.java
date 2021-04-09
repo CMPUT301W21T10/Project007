@@ -41,11 +41,11 @@ public class QrcodeFragment extends Fragment {
     }
 
     /**
-     * 生成固定大小的二维码(不需网络权限)
+     * generate a fixed-size QRcode(without network permission required)
      *
-     * @param content 需要生成的内容
-     * @param width   二维码宽度
-     * @param height  二维码高度
+     * @param content content of Qrcode
+     * @param width   width of Qrcode
+     * @param height  Height of Qrcode
      * @return
      */
     private Bitmap generateBitmap(String content, int width, int height) {

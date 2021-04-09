@@ -20,10 +20,7 @@ import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
-/**
- * Test view, add question and view, add answer. All the UI tests are written here, using Robotium test framework.
- */
-public class BinomialTest {
+public class MeasurementTest {
     private Solo solo;
     @Rule
     public ActivityTestRule<LoginActivity> rule =
@@ -42,13 +39,12 @@ public class BinomialTest {
         //solo.clickOnText("Sign In");
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
 
-        //add Binomial
+        //add Measurment
         solo.clickOnView(solo.getView(R.id.add_experiment_button));
-        solo.enterText((EditText) solo.getView(R.id.editTextName), "Binomial");
-        solo.enterText((EditText) solo.getView(R.id.editTextDescription), "TrueOrFalse");
-        solo.pressSpinnerItem(1, 1);
+        solo.enterText((EditText) solo.getView(R.id.editTextName), "MS-Test");
+        solo.enterText((EditText) solo.getView(R.id.editTextDescription), "Measurment");
+        solo.pressSpinnerItem(0, 3);
         solo.enterText((EditText) solo.getView(R.id.minimumTrails), "0");
-        solo.pressSpinnerItem(1, 0);
         solo.clickOnText("OK");
         View navView = solo.getView(R.id.nav_view);
         solo.clickOnView(navView);
@@ -59,34 +55,31 @@ public class BinomialTest {
         solo.clickOnView(btn4view);
         View homeView = solo.getView(R.id.navigation_home);
         solo.clickOnView(homeView);
-        assertTrue(solo.waitForText("Binomial", 1, 2000));
-        //find&enter Binomial
+        assertTrue(solo.waitForText("MS-Test", 1, 2000));
+        //find&enter Measurment
         ListView currentListView1 = (ListView) solo.getView("experiment_list");
         View view2 =  currentListView1.getChildAt(0);
         solo.clickOnView(view2);
         solo.assertCurrentActivity("Wrong Activity", TrailsActivity.class);
         final TextView textView2 = (TextView) solo.getView("name_view"); // Get the listview
         String message2 = textView2.getText().toString(); // Get item from first position
-        assertEquals("Binomial", message2);
-        //add first Binomial trail
+        assertEquals("MS-Test", message2);
+        //add first Measurment trail
         solo.clickOnView(solo.getView(R.id.action_add));
         solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail1");
-        solo.enterText((EditText) solo.getView(R.id.SuccessText), "10");
-        solo.enterText((EditText) solo.getView(R.id.failText), "10");
+        solo.enterText((EditText) solo.getView(R.id.ResultText), "22.2");
         solo.clickOnView(solo.getView(R.id.ok_pressed));
         assertTrue(solo.waitForText("Trail1",1,1000));
-        //add second Binomial trail
+        //add second Measurment trail
         solo.clickOnView(solo.getView(R.id.action_add));
         solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail2");
-        solo.enterText((EditText) solo.getView(R.id.SuccessText), "20");
-        solo.enterText((EditText) solo.getView(R.id.failText), "10");
+        solo.enterText((EditText) solo.getView(R.id.ResultText), "23.3");
         solo.clickOnView(solo.getView(R.id.ok_pressed));
         assertTrue(solo.waitForText("Trail2",1,1000));
-        //add third Binomial trail
+        //add third Measurment trail
         solo.clickOnView(solo.getView(R.id.action_add));
         solo.enterText((EditText) solo.getView(R.id.trail_Title_editText), "Trail3");
-        solo.enterText((EditText) solo.getView(R.id.SuccessText), "30");
-        solo.enterText((EditText) solo.getView(R.id.failText), "10");
+        solo.enterText((EditText) solo.getView(R.id.ResultText), "30.0");
         solo.clickOnView(solo.getView(R.id.ok_pressed));
         solo.scrollToBottom();
         assertTrue(solo.waitForText("Trail3",1,1000));
@@ -96,15 +89,14 @@ public class BinomialTest {
         solo.goBack();
         solo.goBack();
 
-        //delete Count-base
+        //delete Measurment-base
         ListView experimentListView = (ListView) solo.getView("experiment_list");
         View experimentView = experimentListView.getChildAt(0);
         solo.clickLongOnView(experimentView);
         View deleteview = (View) solo.getView("button2");
         solo.clickOnView(deleteview);
-        assertFalse(solo.waitForText("Binomial", 1, 2000));
-        //delete Count-base
-
+        assertFalse(solo.waitForText("MS-Test", 1, 2000));
+        //delete Measurment-base
     }
 
     @After
@@ -112,3 +104,4 @@ public class BinomialTest {
         solo.finishOpenedActivities();
     }
 }
+

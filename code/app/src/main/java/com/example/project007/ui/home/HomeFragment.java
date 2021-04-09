@@ -51,8 +51,6 @@ public class HomeFragment extends Fragment {
     private final String TAG = "Sample";
     private Integer savedPosition;
 
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,8 +102,14 @@ public class HomeFragment extends Fragment {
                                 break;
 
                             case "edit":
-                                new ModifyExperimentFragment(experimentDataList.get(savedPosition)).show(getChildFragmentManager(), "EDIT_EXPERIMENT");
-                                Toast.makeText(getActivity(), "edit Succeed", Toast.LENGTH_SHORT).show();
+                                if (instance.isCondition()){
+                                    new ModifyExperimentFragment(experimentDataList.get(savedPosition)).show(getChildFragmentManager(), "EDIT_EXPERIMENT");
+                                    Toast.makeText(getActivity(), "edit Succeed", Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    Toast.makeText(getActivity(), "End Experiment cannot be modified", Toast.LENGTH_SHORT).show();
+                                }
+
                                 break;
 
                             case "delete":
@@ -141,7 +145,6 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         ListView experimentList = root.findViewById(R.id.experiment_list);
