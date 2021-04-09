@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
 public class searchTest {
@@ -60,6 +61,17 @@ public class searchTest {
         solo.clickOnView(solo.getView(R.id.pop_search));
         assertTrue(solo.waitForText("NN-test", 1, 2000));
         solo.clickInList(0);//Long click
+        solo.goBack();
+        solo.goBack();
+
+        //delete Count-base
+        ListView experimentListView = (ListView) solo.getView("experiment_list");
+        View experimentView = experimentListView.getChildAt(0);
+        solo.clickLongOnView(experimentView);
+        View deleteview = (View) solo.getView("button2");
+        solo.clickOnView(deleteview);
+        assertFalse(solo.waitForText("NN-test", 1, 2000));
+        //delete Count-base
 
     }
 
