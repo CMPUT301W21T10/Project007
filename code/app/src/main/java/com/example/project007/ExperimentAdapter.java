@@ -169,7 +169,7 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
         return view;
 
     }
-
+/*
     public void deleteItem(View view,final int position)
     {
         view.startAnimation(animation);
@@ -191,6 +191,6 @@ public class ExperimentAdapter extends ArrayAdapter<Experiment> {
             }
         });
 
-    }
+    }*/
 
 }
