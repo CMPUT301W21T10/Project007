@@ -94,7 +94,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trails_activity_main);
-        // descriptionTrail = findViewById(R.id.descriptionforTrail);
         //database for unique trails
         final FirebaseFirestore db;
         db = FirebaseFirestore.getInstance();
@@ -109,7 +108,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 && ActivityCompat.checkSelfPermission(TrailsActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             getCurrentLoc();
-            //Toast.makeText(getApplicationContext(), "Getting loc", Toast.LENGTH_SHORT).show();
         } else {
             //request permission here
             ActivityCompat.requestPermissions(TrailsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
@@ -178,9 +176,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         if (experiment.getUserId().equals(DatabaseController.getUserId())) {
             owner.setVisibility(View.VISIBLE);
         }
-        //set flag to hide menu option
-
-        /*final FloatingActionButton addButton = findViewById(R.id.experimentBtn);*/
 
 
         trail_List = findViewById(R.id.trail_list);
@@ -275,22 +270,13 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         //add button is where we specify the different experiment trails
         //once firestrore ready this part will get type from database
         if (type.equals("Binomial")) {
-            /*addButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //initialize fragment
-                    addBinoTrailFragment = new AddBinoTrailFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.data_container2, addBinoTrailFragment).addToBackStack(null).commit();
-                    //addButton.setVisibility(View.INVISIBLE);
-                }
-            });*/
+
             if (experiment.isCondition()) {
                 trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Trails newtrail = trail_Adapter.getItem(position);
                         int pos = parent.getPositionForView(view);
-                        //Toast.makeText(getApplicationContext(),pos+"",Toast.LENGTH_SHORT).show();
                         PopupMenu popup = new PopupMenu(TrailsActivity.this, view);
                         popup.getMenuInflater().inflate(R.menu.pop_up_menu, popup.getMenu());
                         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -306,9 +292,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                         });
                         //
                         popup.show();
-                    /*Trails newtrail = trail_Adapter.getItem(position);
-                    AddBinoTrailFragment fragment = AddBinoTrailFragment.newInstance(newtrail);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.data_container, fragment).addToBackStack(null).commit();*/
 
                     }
                 });
@@ -316,32 +299,21 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 Toast.makeText(getApplicationContext(), "You can't modify this trail while experiment is ended!", Toast.LENGTH_SHORT).show();
             }
         } else {
-            /*addButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //initialize fragment
-                    addNnCBTrailFragment = new AddNnCBTrailFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.data_container2, addNnCBTrailFragment).addToBackStack(null).commit();
-                }
-            });*/
+
             if (experiment.isCondition()) {
 
                 trail_List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        /*Trails newtrail = trail_Adapter.getItem(position);
-                        AddNnCBTrailFragment NcCb_fragment = AddNnCBTrailFragment.newInstance(newtrail);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.data_container, NcCb_fragment).addToBackStack(null).commit();*/
+
                         Trails newtrail = trail_Adapter.getItem(position);
                         int pos = parent.getPositionForView(view);
-                        //Toast.makeText(getApplicationContext(),pos+"",Toast.LENGTH_SHORT).show();
                         PopupMenu popup = new PopupMenu(TrailsActivity.this, view);
                         popup.getMenuInflater().inflate(R.menu.pop_up_menu, popup.getMenu());
                         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
                             public boolean onMenuItemClick(MenuItem item) {
                                 int id = item.getItemId();
-                                //String UserId = newtrail.getUserId();
                                 String databaseUserId = DatabaseController.getUserId();
                                 String experimentId = experiment.getUserId();
                                 //compare with experimenter id
@@ -350,7 +322,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                                 return false;
                             }
                         });
-                        //
                         popup.show();
                     }
                 });
@@ -576,9 +547,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         if (!experiment.isCondition()) {
             menu.findItem(R.id.action_add).setVisible(false);
         }
-        /*if (!experiment.isCondition()) {
-            menu.findItem(R.id.action_add).setVisible(false);
-        }*/
         super.onPrepareOptionsMenu(menu);
         return true;
     }
@@ -615,7 +583,6 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 bundle.putSerializable("result",trails_DataList);
                 resultFragment.setArguments(bundle);
             }
-//            startActivity(new Intent(TrailsActivity.this,Test.class));
             return true;
         }else if (id == R.id.QROpt){  // this is where you put the scan yi scan
             if(trails_DataList.size()==0){
@@ -638,12 +605,10 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
             //extends a new frag to show this
             ViewAllMapFragment = new AllMapViewFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.data_container2, ViewAllMapFragment).addToBackStack(null).commit();
-            /*Toast.makeText(getApplicationContext(), "location is :" + currentLat + ":" + currentLong, Toast.LENGTH_SHORT).show();*/
             return true;
         }else if (id == R.id.HelpOpt){
             //tips for user
             Toast.makeText(getApplicationContext(),"Welcome! Please note: Long Click item for item deleting~",Toast.LENGTH_SHORT).show();
-            //Toast.makeText(getApplicationContext(),trails_DataList.toString(),Toast.LENGTH_SHORT).show();
             return true;
         }else if(id == R.id.action_add){
             if (type.equals("Binomial")) {
@@ -726,19 +691,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
      * Start question activity
      */
     public void openQuestionActivity() {
-        /*Bundle bundle = new Bundle();
         Intent intent = new Intent(this, QuestionActivity.class);
-        ArrayList<String> mockQuestionId = new ArrayList<String>();
-        mockQuestionId.add("1");
-        bundle.putString("experimentId",experiment.getId().toString());
-        if (experiment.getQuestionId() == null) {
-            experiment.setQuestionId(mockQuestionId);
-        }
-        bundle.putStringArrayList("questionsId",experiment.getQuestionId());
-        intent.putExtra("experiment", bundle);
-        startActivity(intent);*/
-        Intent intent = new Intent(this, QuestionActivity.class);
-        //Experiment instanceExperiment = experiment;
         intent.putExtra("ExperimentFromTrail", experiment);
         startActivity(intent);
     }
