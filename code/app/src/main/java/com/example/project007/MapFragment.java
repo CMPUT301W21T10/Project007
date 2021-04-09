@@ -20,7 +20,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 //for current location we going to catch it in trails activity and use database to pass it in here
 //https://www.youtube.com/watch?v=UKUb7C3b0us How to Fetch Current Location in Android Studio | CurrentLocation | By Android Coding 2020.09.01
 
-
+/**
+ * This class shows the Map.
+ * <p>
+ * User can choose a location through the map.<br>
+ * </p>
+ */
 public class MapFragment extends Fragment{
 
     double returnLatitude;
@@ -29,23 +34,14 @@ public class MapFragment extends Fragment{
     double currentLong;
     boolean needLocation;
 
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
-
-
         SupportMapFragment supportMapFragment = (SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.google_map);
-
-
-
 
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -86,6 +82,12 @@ public class MapFragment extends Fragment{
 
         return view;
     }
+
+    /**
+     * This function calculate the quartiles, which includes three numbers.
+     * @param longitude a double number represent longitude.
+     * @param latitude a double number represent latitude.
+     */
     public void sendFragResult (double longitude, double latitude){
         Bundle location = new Bundle();
         location.putSerializable("Location", new Location(longitude, latitude));

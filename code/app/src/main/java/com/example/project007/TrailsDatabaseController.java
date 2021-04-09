@@ -15,6 +15,14 @@ import java.util.HashMap;
 
 import static android.content.ContentValues.TAG;
 
+
+/**
+ * Connect to the Database
+ * <p>
+ * perform add, delete, modify trail.<br>
+ * </p>
+
+ */
 public class TrailsDatabaseController {
     @SuppressLint("StaticFieldLeak")
     private static FirebaseFirestore Trail_db;

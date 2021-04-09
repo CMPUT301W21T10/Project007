@@ -1,5 +1,10 @@
 package com.example.project007;
-
+/**
+ * This class prepare an instance of a UserEntity
+ * <p>
+ * Store Uid, username, phone, email.<br>
+ * </p>
+ */
 public class UserEntity {
 
     public String getUid() {

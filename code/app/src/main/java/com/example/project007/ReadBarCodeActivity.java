@@ -27,6 +27,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * This activity read Barcode
+ * <p>
+ * Use camera to get info from a bar code.<br>
+ * </p>
+ */
 public class ReadBarCodeActivity extends AppCompatActivity {
     private String isbarcode="false";
     private String trail_id;

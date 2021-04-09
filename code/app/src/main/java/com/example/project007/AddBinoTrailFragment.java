@@ -27,6 +27,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+/**
+ * This class add Binomial trail to a experiment
+ * <p>
+ * The program requests personal information from the user for registration.<br>
+ * The program automatically obtains the Android ID in the device for user registration.<br>
+ * </p>
+ */
 public class AddBinoTrailFragment extends Fragment {
     private TextView date_generate;
     private EditText title;
@@ -41,10 +48,6 @@ public class AddBinoTrailFragment extends Fragment {
     private Location location;
     private boolean needLocation;
     private boolean ignorance;
-
-
-
-
 
     //https://stackoverflow.com/questions/37121091/passing-data-from-activity-to-fragment-using-interface
     //Answered by Masum at May 9 '16 at 17:57
