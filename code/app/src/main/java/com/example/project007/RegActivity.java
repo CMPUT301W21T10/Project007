@@ -24,7 +24,13 @@ import java.util.Iterator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
+/**
+ * This class shows the registered interface.
+ * <p>
+ * The program requests personal information from the user for registration.<br>
+ * The program automatically obtains the Android ID in the device for user registration.<br>
+ * </p>
+ */
 public class RegActivity extends AppCompatActivity {
     @BindView(R.id.reg_name)
     public EditText regName;
@@ -48,7 +54,10 @@ public class RegActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     *  Determine the mailbox format entered by the user<br>
+     * @return the result of checking wether is a valid email or not.
+     */
     public Boolean isEmail(String str) {
         boolean isEmail = false;
         String expr = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
@@ -108,6 +117,10 @@ public class RegActivity extends AppCompatActivity {
             });
         }
     }
+    /**
+     *  * The program obtains permission from the user to obtain system information.<br>
+     * @return Return AndroidId.
+     */
     public  String getAndroidId(Context context) {
         return Settings.System.getString(context.getContentResolver(), Settings.System.ANDROID_ID);
     }
