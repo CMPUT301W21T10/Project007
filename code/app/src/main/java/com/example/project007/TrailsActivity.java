@@ -407,8 +407,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 qrcode = new QrcodeFragment(newtrail, "trail", binomial_type);
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.data_container2, qrcode);
-                transaction.commit();
+                transaction.replace(R.id.data_container2, qrcode).addToBackStack(null).commit();
             }
         }
         else if(id==R.id.addBarcode){
