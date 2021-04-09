@@ -29,11 +29,11 @@ public class LoginActivity extends AppCompatActivity {
 
 
     @BindView(R.id.reg_email)
-    TextView regEmail;
+    public TextView regEmail;
     @BindView(R.id.reg_signup)
-    TextView regSignup;
+    public TextView regSignup;
     @BindView(R.id.reg_btn)
-    TextView regBtn;
+    public TextView regBtn;
     private DatabaseReference reference;
 
     @Override
