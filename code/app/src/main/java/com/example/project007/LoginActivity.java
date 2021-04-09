@@ -24,16 +24,25 @@ import java.util.Iterator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
+
+/**
+ * This class shows the program start interface.
+ * <p>
+ * The program obtains permission from the user to obtain system information.<br>
+ * The program checks whether the user is a new user for registration or an old user for logs in.<br>
+ * </p>
+ */
 public class LoginActivity extends AppCompatActivity {
 
 
 
     @BindView(R.id.reg_email)
-    TextView regEmail;
+    public TextView regEmail;
     @BindView(R.id.reg_signup)
-    TextView regSignup;
+    public TextView regSignup;
     @BindView(R.id.reg_btn)
-    TextView regBtn;
+    public TextView regBtn;
     private DatabaseReference reference;
 
     @Override
@@ -44,11 +53,16 @@ public class LoginActivity extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference();
         reload();
     }
-
+    /**
+     * Tinitialization
+     */
     private void reload() {
         ActivityCompat.requestPermissions(LoginActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, 0);
     }
-
+    /**
+     *  * The program obtains permission from the user to obtain system information.<br>
+     * @return Return AndroidId.
+     */
     public String getAndroidId(Context context) {
         return Settings.System.getString(context.getContentResolver(), Settings.System.ANDROID_ID);
     }

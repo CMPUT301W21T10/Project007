@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.project007.ui.subscription.SubscriptionViewModel;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,7 +28,6 @@ import java.util.ArrayList;
  */
 public class SearchResult extends AppCompatActivity {
 
-    private SubscriptionViewModel subscriptionViewModel;
     private ArrayAdapter<Experiment> experimentAdapter;
     private ArrayList<Experiment> experimentDataList;
     private final String TAG = "Sample";
@@ -102,6 +100,13 @@ public class SearchResult extends AppCompatActivity {
 
     }
 
+
+    /**
+     * processData
+     * Perform compare
+     * @return
+     * return value: false if not published, true if found, otherwise false
+     */
     public boolean processData( Experiment experiment){
 
         if (!experiment.isPublishCondition()){
