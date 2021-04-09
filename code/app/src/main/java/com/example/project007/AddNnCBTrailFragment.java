@@ -159,13 +159,10 @@ public class AddNnCBTrailFragment extends Fragment {
         Fragment fragment = new MapFragment();
         getChildFragmentManager().beginTransaction().replace(R.id.map_container, fragment).commit();
         if (!needLocation){
-            //mapButton.setVisibility(View.INVISIBLE);
-            //if doesn't require the location
+
         }else{
             //initialize map content
-            /*Fragment fragment = new MapFragment();
-            getChildFragmentManager().beginTransaction().replace(R.id.map_container, fragment).commit();*/
-            //Toast.makeText(getActivity(), "This trail require you to enter location data!",Toast.LENGTH_LONG).show();
+
             new AlertDialog.Builder(getActivity())
                     .setTitle("Warning!")
                     .setMessage("This trail require you to enter location data!")

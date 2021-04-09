@@ -162,13 +162,9 @@ public class AddBinoTrailFragment extends Fragment {
         Fragment fragment = new MapFragment();
         getChildFragmentManager().beginTransaction().replace(R.id.map_container, fragment).commit();
         if (!needLocation){
-            //mapButton.setVisibility(View.INVISIBLE);
-            //if doesn't require the location
+
         }else{
             //initialize map content
-            /*Fragment fragment = new MapFragment();
-            getChildFragmentManager().beginTransaction().replace(R.id.map_container, fragment).commit();*/
-            //Toast.makeText(getActivity(), "This trail require you to enter location data!",Toast.LENGTH_SHORT).show();
             new AlertDialog.Builder(getActivity())
                     .setTitle("Warning!")
                     .setMessage("This trail require you to enter location data!")
@@ -271,7 +267,6 @@ public class AddBinoTrailFragment extends Fragment {
             Integer id = argument.getID();
             Location oldLocation = argument.getLocation();
             if (oldLocation != null){
-                //Toast.makeText(getActivity(),"need location is "+ needLocation,Toast.LENGTH_SHORT).show();
                 latitude.setText(String.valueOf(oldLocation.getLatitude()));
                 longitude.setText(String.valueOf(oldLocation.getLongitude()));
             }else{
