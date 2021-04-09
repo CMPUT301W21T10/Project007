@@ -119,7 +119,7 @@ public class NonNegativeTest {
         solo.clickOnMenuItem("Help/Tips");
         sleep(1000);
         solo.goBack();
-        //solo.goBack();
+        solo.goBack();
 
         //delete Count-base
         ListView experimentListView = (ListView) solo.getView("experiment_list");
