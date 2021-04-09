@@ -69,6 +69,15 @@ public class DatabaseController {
         DatabaseController.db = db;
     }
 
+
+    /**
+     * modify_experiment
+     * add, modify Experiment
+     * @param collection is mostly a String "Experiments"
+     * @param experiment is an experiment which needed to be added
+     * @return
+     * a boolean represent modified condition
+     */
     public static boolean modify_experiment(String collection, Experiment experiment){
         // Retrieving the city name and the province name from the EditText fields
         CollectionReference collectionReference =  db.collection(collection);
@@ -98,6 +107,11 @@ public class DatabaseController {
         return condition[0];
     }
 
+    /**
+     * deleteExperiment
+     * delete Experiment
+     * @param instance is an experiment which needed to be delete
+     */
     public static void deleteExperiment(Experiment instance){
         ArrayList<String> ids = instance.getTrailsId();
         for (int i = 0;i<ids.size();i++){
@@ -107,10 +121,23 @@ public class DatabaseController {
 
     }
 
+    /**
+     * generateExperimentId
+     * generate a max id
+     * @return
+     * a integer represent Id
+     */
     public static Integer generateExperimentId(){
         return maxExperimentId + 1;
     }
 
+    /**
+     * setExperimentTrails
+     * set Experiment trails id for a experiment in Database
+     * @param id is experiment id
+     * @param valueList is a list of trails id
+     * @param valueList2 is a list of subscriptions id
+     */
     public static void setExperimentTrails(String id, ArrayList<String> valueList,ArrayList<String> valueList2){
         DocumentReference docRef = db.collection("Experiments").document(id);
         docRef.update("trailsId", valueList);
@@ -118,6 +145,12 @@ public class DatabaseController {
 
     }
 
+    /**
+     * setExperimentQuestions
+     * set Experiment questions id for a experiment in Database
+     * @param id is experiment id
+     * @param valueList is a list of questions id
+     */
     public static void setExperimentQuestions(String id, ArrayList<String> valueList) {
         DocumentReference docRef = db.collection("Experiments").document(id);
         docRef.update("questionId", valueList);

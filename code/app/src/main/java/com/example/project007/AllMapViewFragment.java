@@ -19,10 +19,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
+
+/**
+ * AllMapViewFragment
+ * generate location view
+ * click to select location
+ */
 //this frag is design to show all trails location (if it has)
 //we will catch all trails location data in this class
 public class AllMapViewFragment extends Fragment {
-
 
     ArrayList<Location> locationArrayList;
     ArrayList<String> trailsTitleList;
@@ -46,13 +51,8 @@ public class AllMapViewFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
-
-
         SupportMapFragment supportMapFragment = (SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.google_map);
-
-
-
 
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override

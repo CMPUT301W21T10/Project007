@@ -3,6 +3,10 @@ package com.example.project007;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * This is Question class
+ * This class gives a frame of a single question
+ */
 public class Question implements Serializable {
 
     private String question;

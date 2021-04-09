@@ -23,6 +23,12 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.util.Map;
 
+/**
+ * This class the default frame of scanning
+ * <p>
+ * Base frame of scanning.<br>
+ * </p>
+ */
 public class ScanActivity extends AppCompatActivity {
     private TextView textView;
     private String userid;

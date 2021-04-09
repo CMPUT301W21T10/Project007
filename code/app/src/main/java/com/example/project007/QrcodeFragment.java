@@ -25,6 +25,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * QrcodeFragment
+ * <p>
+ * The fragment shows QRcode <br>
+ * </p>
+ */
 public class QrcodeFragment extends Fragment {
     public String testtype="null";
     public String binomial_type="null";
@@ -34,7 +40,7 @@ public class QrcodeFragment extends Fragment {
         this.testtype=testtype;
     }
     public QrcodeFragment(){}
-    public QrcodeFragment(Trails trails,String testtype,String binomial_type ){
+    public QrcodeFragment(Trails trails,String testtype,String binomial_type){
         this.trail=trails;
         this.testtype=testtype;
         this.binomial_type=binomial_type;

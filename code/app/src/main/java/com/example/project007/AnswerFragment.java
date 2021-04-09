@@ -27,18 +27,21 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 
+/**
+ * This fragment allows people to brose and modify the answer of a question
+ */
 public class AnswerFragment extends Fragment {
 
-    ListView answerList;
-    ArrayAdapter<Answer> answerAdapter;
-    ArrayList<Answer> answerDataList;
-    Question question;
-    String question_detail;
-    TextView questionView;
+    private ListView answerList;
+    private ArrayAdapter<Answer> answerAdapter;
+    private ArrayList<Answer> answerDataList;
+    private Question question;
+    private String question_detail;
+    private TextView questionView;
 
-    Button addAnswerButton;
-    EditText addAnswerEditText;
-    FirebaseFirestore db;
+    private Button addAnswerButton;
+    private EditText addAnswerEditText;
+    private FirebaseFirestore db;
 
 
     public AnswerFragment() {
@@ -129,41 +132,6 @@ public class AnswerFragment extends Fragment {
             }
         });
 
-/*        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                // Clear the old list
-                if (error!=null){
-                    Log.d(TAG,"Error:"+error.getMessage());
-                }
-                else {
-                    answerDataList.clear();
-                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-
-                        Answer oneAnswer = null;
-                        if (doc.exists()) {
-                            // convert document to POJO
-                            oneAnswer = doc.toObject(Answer.class);
-                            //System.out.println(oneExperiment);
-                            answerDataList.add(oneAnswer);
-                        } else {
-                            System.out.println("No such document!");
-                        }
-                    }
-
-                    answerAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
-                }
-
-                int answerId = 0;
-                for (int i = 0; i < answerDataList.size(); i++){
-                    if ( answerDataList.get(i).getId() > answerId){
-                        answerId = answerDataList.get(i).getId();
-                    }
-                }
-                AnswerDatabaseController.setMaxAnswerId(answerDataList.size());
-            }
-        });*/
-        //fire store uploading
 
         /**
          * add answer by click the button

@@ -2,6 +2,12 @@ package com.example.project007;
 
 import java.io.Serializable;
 
+/**
+ * This class prepare an instance of a trail
+ * <p>
+ * Store trail_title, date, type, time, success failure, VariesDate, UserId, Id, location, ignoreCondition.<br>
+ * </p>
+ * */
 public class Trails implements Serializable {
     private String trail_title;
     private String date;

@@ -52,31 +52,37 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class is a terminal and called from homeFragment and contain multiple functionality
+ * <p>
+ * implements AddBinoTrailFragment.FragmentInteractionListener, AddNnCBTrailFragment.FragmentInteractionListener.<br>
+ * </p>
+ * */
 public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFragment.FragmentInteractionListener, AddNnCBTrailFragment.FragmentInteractionListener {
-    ListView trail_List;
-    ArrayAdapter<Trails> trail_Adapter;
-    ArrayList<Trails> trails_DataList;
-    ArrayList<Location> location_DataList;
-    ArrayList<String> trailsTitle_DataList;
-    AddBinoTrailFragment addBinoTrailFragment;
-    AddNnCBTrailFragment addNnCBTrailFragment;
-    AllMapViewFragment ViewAllMapFragment;
-    final String TAG = "Trails_Sample";
-    double currentLat = 0;
-    double currentLong = 0;
-    boolean ignoreCheck = false;
+    private ListView trail_List;
+    private ArrayAdapter<Trails> trail_Adapter;
+    private ArrayList<Trails> trails_DataList;
+    private ArrayList<Location> location_DataList;
+    private ArrayList<String> trailsTitle_DataList;
+    private AddBinoTrailFragment addBinoTrailFragment;
+    private AddNnCBTrailFragment addNnCBTrailFragment;
+    private AllMapViewFragment ViewAllMapFragment;
+    private final String TAG = "Trails_Sample";
+    private double currentLat = 0;
+    private double currentLong = 0;
+    private boolean ignoreCheck = false;
 
 
-    TextView descriptionTrail;
-    ResultFragment resultFragment;
-    QrcodeFragment qrcode;
+    private TextView descriptionTrail;
+    private ResultFragment resultFragment;
+    private QrcodeFragment qrcode;
     private Experiment experiment;
-    boolean needLocation;
-    String type;
-    String binomial_type="null";
+    private boolean needLocation;
+    private String type;
+    private String binomial_type="null";
 
-    String description;
-    String title;
+    private String description;
+    private String title;
 
 
     android.location.Location currrentLocation;
@@ -716,7 +722,9 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         return title;
     }
 
-
+    /**
+     * Start question activity
+     */
     public void openQuestionActivity() {
         /*Bundle bundle = new Bundle();
         Intent intent = new Intent(this, QuestionActivity.class);

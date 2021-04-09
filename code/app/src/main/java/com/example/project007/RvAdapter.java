@@ -10,7 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-
+/**
+ * This class is customList of UserEntity.
+ * <p>
+ * Show convert view<br>
+ * </p>
+ */
 public class RvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final List<UserEntity> mlist;
     private final Context context;
@@ -19,20 +24,15 @@ public class RvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.context = context;
     }
 
-    //第一步 定义接口
     public interface OnItemClickListener {
         void onClick(int position);
     }
 
     private OnItemClickListener listener;
 
-    //第二步， 写一个公共的方法
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
-
-
-
 
     public interface OnItemLongClickListener {
         void onClick(int position);

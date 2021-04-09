@@ -13,6 +13,12 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ * This class is customList of Binomial experiment.
+ * <p>
+ * Show convert view<br>
+ * </p>
+ */
 public class TrailList_Bino extends ArrayAdapter<Trails> {
     private final ArrayList<Trails> trails;
     private final Context context;

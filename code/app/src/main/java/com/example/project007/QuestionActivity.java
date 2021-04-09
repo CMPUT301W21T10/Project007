@@ -23,16 +23,19 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+/**
+ * This activity shows the questions asked by others of an unique experiment
+ * It also alows people to click to brose and modify answers of the question
+ */
 public class QuestionActivity extends AppCompatActivity {
 
-    ListView questionList;
-    ArrayAdapter<Question> questionAdapter;
-    ArrayList<Question> questionDataList;
-    ArrayList<String> answer_id = new ArrayList<>();
-    Question question;
-    //String experimentId;
-    ArrayList<String> questionsId = new ArrayList<>();
-    Experiment experiment;
+    private ListView questionList;
+    private ArrayAdapter<Question> questionAdapter;
+    private ArrayList<Question> questionDataList;
+    private ArrayList<String> answer_id = new ArrayList<>();
+    private Question question;
+    private ArrayList<String> questionsId = new ArrayList<>();
+    private Experiment experiment;
 
 
     @Override
@@ -52,10 +55,6 @@ public class QuestionActivity extends AppCompatActivity {
         //database for unique questions
 
         //receive data from experiment
-        /*Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("experiment");
-        experimentId = bundle.getString("experimentId");
-        questionsId = bundle.getStringArrayList("questionsId");*/
         Intent intent = getIntent();
         experiment = (Experiment) intent.getSerializableExtra("ExperimentFromTrail");
         //receive data from experiment
@@ -69,34 +68,9 @@ public class QuestionActivity extends AppCompatActivity {
 
         questionList.setAdapter(questionAdapter);
 
-/*        *//**
-         * fire store uploading
-         *//*
-        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                // Clear the old list
-                if (error!=null){
-                    Log.d(TAG,"Error:"+error.getMessage());
-                }else{
-                    questionDataList.clear();
-                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                        Log.d(TAG, String.valueOf(doc.getData().get("Question")));
-                        String question = (String) doc.getData().get("Question");
-                        ArrayList<String> answer_id = (ArrayList<String>)doc.getData().get("Answer_Id");
-                        String idString = doc.getId();
-                        Integer ID = Integer.parseInt(idString);
-
-                        questionDataList.add(new Question(ID, question, answer_id));
-
-                    }
-                    questionAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched
-                }
-                QuestionDatabaseController.setMaxQuestionId(questionDataList.size());
-            }
-        });
-        //fire store uploading*/
-
+        /**
+         * Firestore uploading
+         */
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
@@ -223,7 +197,7 @@ public class QuestionActivity extends AppCompatActivity {
 
     /**
      * sending value from activity to frag
-     * @return
+     * @return question
      */
     public Question SendQuestion(){
         return question;

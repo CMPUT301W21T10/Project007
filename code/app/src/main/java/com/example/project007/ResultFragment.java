@@ -10,7 +10,6 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -84,7 +83,7 @@ public class ResultFragment extends Fragment{
      * @param val The double list of numbers.
      * @return Return a double list which contains the three quartiles.
      */
-    public static double[] Quartiles(double[] val) {
+    public double[] Quartiles(double[] val) {
         double[] ans = new double[3];
 
         for (int quartileType = 1; quartileType < 4; quartileType++) {
@@ -123,7 +122,7 @@ public class ResultFragment extends Fragment{
      * @param x A list of double type numbers.
      * @return Return a double type number to show the average of the arraylist of numbers.
      */
-    public static double avg(double[] x) {
+    private static double avg(double[] x) {
         double sum = 0;
         for (double v : x) {
             sum += v;
@@ -131,6 +130,11 @@ public class ResultFragment extends Fragment{
         double average = sum / x.length;
         return average;
     }
+    /**
+     * This function calculate the average.
+     * @param x A list of double type numbers.
+     * @return Return a double type number to show the average of the arraylist of numbers.
+     */
     public static double StandardDiviation(double[] x) {
         double dAve=avg(x);
         double dVar=0;
@@ -190,16 +194,25 @@ public class ResultFragment extends Fragment{
         l.add(title);
         return l;
     }
-
-    private double getRateOfSuccess(Trails t) {
+    /**
+     * This function calculate the rate of success.
+     * @param t Trails
+     * @return Return the rate of success.
+     */
+    public double getRateOfSuccess(Trails t) {
         double s = Double.parseDouble(t.getSuccess());
         double f = Double.parseDouble(t.getFailure());
         double m = s / (s + f);
         return m;
     }
-
+    /**
+     * This function calculate the rate of success.
+     * @param argument A list of trails.
+     * @param name
+     * @return Return the rate of success.
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private double[] getList(ArrayList<Trails> argument,String name){
+    public double[] getList(ArrayList<Trails> argument,String name){
         ArrayList<Double> list = new ArrayList<>();
         int l = 0;
         if(name.equals("Binomial")){
@@ -451,18 +464,33 @@ public class ResultFragment extends Fragment{
         }
         columnChartView.setColumnChartData(data);
     }
-
+    /**
+     * This method create an array to record a sorted time array..
+     * The data includes six numbers,which are the three quartile numbers and median and mean.
+     * @param arr The array we want to sort.
+     * @return Return a sorted array.
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public ArrayList<Trails> sortTime(ArrayList<Trails> arr){
         arr.sort((p1, p2) -> p1.getTime().compareTo(p2.getTime()));
         return arr;
     }
-    //disable menu in frag
+    /**
+     * This method show the menu.
+     * @param savedInstanceState keep data
+     * @return
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
+    /**
+     * Hide the menu.
+     * @param menu Menu
+     * @param inflater The inflater of Menu
+     * @return
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);

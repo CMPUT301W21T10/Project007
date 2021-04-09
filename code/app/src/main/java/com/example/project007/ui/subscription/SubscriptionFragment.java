@@ -123,7 +123,6 @@ public class SubscriptionFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SubscriptionViewModel subscriptionViewModel = new ViewModelProvider(this).get(SubscriptionViewModel.class);
         View root = inflater.inflate(R.layout.fragment_subscription, container, false);
 
         ListView experimentList = root.findViewById(R.id.subscript_list);
