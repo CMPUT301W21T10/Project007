@@ -33,7 +33,7 @@ import butterknife.OnClick;
  */
 public class RegActivity extends AppCompatActivity {
     @BindView(R.id.reg_name)
-    EditText regName;
+    public EditText regName;
     @BindView(R.id.reg_email)
     EditText regEmail;
     @BindView(R.id.reg_phone)

@@ -99,7 +99,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    /**
+     * initSearch
+     * initialize Search function
+     */
     private void initSearch() {
         LayoutInflater inflater = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         @SuppressLint("InflateParams") View inflate = inflater.inflate(R.layout.exp_search, null);
@@ -133,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // Make a confirm dialog
     @Override
     public void onBackPressed(){
         new AlertDialog.Builder(this)
