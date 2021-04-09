@@ -10,7 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-
+/**
+ * This class is customList of UserEntity.
+ * <p>
+ * Show convert view<br>
+ * </p>
+ */
 public class RvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final List<UserEntity> mlist;
     private final Context context;

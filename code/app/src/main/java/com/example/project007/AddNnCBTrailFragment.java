@@ -27,6 +27,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+/**
+ * AddNnCBTrailFragment
+ * perform add, delete Non-negative countBase trail
+ */
 public class AddNnCBTrailFragment extends Fragment {
     private TextView date_generate;
     private EditText title;

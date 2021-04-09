@@ -52,6 +52,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class is a terminal and called from homeFragment and contain multiple functionality
+ * <p>
+ * implements AddBinoTrailFragment.FragmentInteractionListener, AddNnCBTrailFragment.FragmentInteractionListener.<br>
+ * </p>
+ * */
 public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFragment.FragmentInteractionListener, AddNnCBTrailFragment.FragmentInteractionListener {
     private ListView trail_List;
     private ArrayAdapter<Trails> trail_Adapter;
@@ -716,7 +722,9 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         return title;
     }
 
-
+    /**
+     * Start question activity
+     */
     public void openQuestionActivity() {
         /*Bundle bundle = new Bundle();
         Intent intent = new Intent(this, QuestionActivity.class);

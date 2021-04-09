@@ -104,6 +104,7 @@ public class SearchResult extends AppCompatActivity {
     /**
      * processData
      * Perform compare
+     * @param experiment is the experiment need to be compared
      * @return
      * return value: false if not published, true if found, otherwise false
      */
