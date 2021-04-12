@@ -243,16 +243,20 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                             if (success == null) {//case for non-binomial trails
                                 if (location != null) {
                                     trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID, location, ignoreCondition, UserId));
-                                    location_DataList.add(location);
-                                    trailsTitle_DataList.add(trail_title);
+                                    if (ignoreCondition){
+                                        location_DataList.add(location);
+                                        trailsTitle_DataList.add(trail_title);
+                                    }
                                 } else {
                                     trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID, ignoreCondition, UserId));
                                 }
                             } else if (variesData == null) {//case for binomial trails
                                 if (location != null) {
                                     trails_DataList.add(new Trails(trail_title, date, type, time, success, failure, ID, location, ignoreCondition, UserId));
-                                    location_DataList.add(location);
-                                    trailsTitle_DataList.add(trail_title);
+                                    if(ignoreCondition){
+                                        location_DataList.add(location);
+                                        trailsTitle_DataList.add(trail_title);
+                                    }
                                 } else {
                                     trails_DataList.add(new Trails(trail_title, date, type, time, success, failure, ID, ignoreCondition, UserId));
                                 }
