@@ -58,6 +58,21 @@ public class SubscriptionFragment extends Fragment {
         experimentAdapter = new ExperimentAdapter(this.getContext(), experimentDataList);
         experimentAdapter2 = new ExperimentAdapter(this.getContext(), experimentDataList2);
 
+        getChildFragmentManager()
+                .setFragmentResultListener("homeRequest", this, new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
+                        // Do something with the result
+                        Experiment experiment = (Experiment) bundle.getSerializable("com.example.project007.modifiedExperiment");
+                        boolean addResult = DatabaseController.modify_experiment("Experiments", experiment);
+                        if (addResult){
+                            Toast.makeText(getActivity(), "Add/Edit Failed", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(getActivity(), "Add/Edit Succeed", Toast.LENGTH_SHORT).show();
+                        }//revert logic
+                    }
+                });
 
         getChildFragmentManager()
                 .setFragmentResultListener("actionRequest", this, new FragmentResultListener() {
@@ -88,7 +103,6 @@ public class SubscriptionFragment extends Fragment {
 
                             case "edit":
                                 new ModifyExperimentFragment(experimentDataList2.get(savedPosition)).show(getChildFragmentManager(), "EDIT_EXPERIMENT");
-                                Toast.makeText(getActivity(), "edit Succeed", Toast.LENGTH_SHORT).show();
                                 break;
 
                             case "delete":
