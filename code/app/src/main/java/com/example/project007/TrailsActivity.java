@@ -578,7 +578,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 toast.show();
             }else{
                 resultFragment = new ResultFragment();
-                ArrayList<Trails> trails_list = new ArrayList<Trails>;
+                ArrayList<Trails> trails_list = null;
                 for(Trails t:trails_DataList){
                     if(!t.isIgnoreCondition()){
                         trails_list.add(t);
