@@ -578,9 +578,15 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                 toast.show();
             }else{
                 resultFragment = new ResultFragment();
+                ArrayList<Trails> trails_list = null;
+                for(Trails t:trails_DataList){
+                    if(!t.isIgnoreCondition()){
+                        trails_list.add(t);
+                    }
+                }
                 getSupportFragmentManager().beginTransaction().replace(R.id.data_container, resultFragment).addToBackStack(null).commit();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("result",trails_DataList);
+                bundle.putSerializable("result",trails_list);
                 resultFragment.setArguments(bundle);
             }
             return true;
