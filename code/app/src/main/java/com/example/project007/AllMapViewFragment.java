@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -70,6 +71,7 @@ public class AllMapViewFragment extends Fragment {
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
                     LatLng currentLoc = new LatLng(latitude, longitude);
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 10));
                     googleMap.addMarker(new MarkerOptions().title(TrailsTitle).position(currentLoc));
                 }
                 googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
