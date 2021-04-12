@@ -65,10 +65,10 @@ public class HomeFragment extends Fragment {
                         Experiment experiment = (Experiment) bundle.getSerializable("com.example.project007.modifiedExperiment");
                         boolean addResult = DatabaseController.modify_experiment("Experiments", experiment);
                         if (addResult){
-                            Toast.makeText(getActivity(), "Add Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Add/Edit Failed", Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            Toast.makeText(getActivity(), "Add Succeed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Add/Edit Succeed", Toast.LENGTH_SHORT).show();
                         }//revert logic
                     }
                 });
@@ -103,7 +103,6 @@ public class HomeFragment extends Fragment {
                             case "edit":
                                 if (instance.isCondition()){
                                     new ModifyExperimentFragment(experimentDataList.get(savedPosition)).show(getChildFragmentManager(), "EDIT_EXPERIMENT");
-                                    Toast.makeText(getActivity(), "edit Succeed", Toast.LENGTH_SHORT).show();
                                 }
                                 else{
                                     Toast.makeText(getActivity(), "End Experiment cannot be modified", Toast.LENGTH_SHORT).show();
