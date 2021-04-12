@@ -71,7 +71,7 @@ public class AllMapViewFragment extends Fragment {
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
                     LatLng currentLoc = new LatLng(latitude, longitude);
-                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 10));
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 5));
                     googleMap.addMarker(new MarkerOptions().title(TrailsTitle).position(currentLoc));
                 }
                 googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
