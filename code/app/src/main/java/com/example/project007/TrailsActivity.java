@@ -208,6 +208,8 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                     Log.d(TAG, "Error:" + error.getMessage());
                 } else {
                     trails_DataList.clear();
+                    location_DataList.clear();
+                    trailsTitle_DataList.clear();
                     int trailId = 0;
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                         Log.d(TAG, String.valueOf(doc.getData().get("Trail_title")));
@@ -243,7 +245,7 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
                             if (success == null) {//case for non-binomial trails
                                 if (location != null) {
                                     trails_DataList.add(new Trails(trail_title, date, type, time, variesData, ID, location, ignoreCondition, UserId));
-                                    if (!ignoreCondition){
+                                    if(!ignoreCondition){
                                         location_DataList.add(location);
                                         trailsTitle_DataList.add(trail_title);
                                     }
@@ -663,10 +665,19 @@ public class TrailsActivity extends AppCompatActivity implements AddBinoTrailFra
         return currentLong;
     }
 
+    /**
+     * This returns ArrayList<Location> for CurrentLocation
+     * @return
+     * Return ArrayList<Location>
+     */
     public ArrayList<Location> sendLocationData(){
         return  location_DataList;
     }
-
+    /**
+     * This returns ArrayList<String> for sendTrailsTitleData
+     * @return
+     * Return ArrayList<String>
+     */
     public ArrayList<String> sendTrailsTitleData(){
         return  trailsTitle_DataList;
     }
