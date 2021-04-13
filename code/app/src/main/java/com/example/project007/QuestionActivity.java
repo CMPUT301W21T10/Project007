@@ -170,7 +170,7 @@ public class QuestionActivity extends AppCompatActivity {
                     Question question = questionAdapter.getItem(position);
                     String idString = question.getId().toString();
 
-                    ArrayList<String> temp =  experiment.getTrailsId();
+                    ArrayList<String> temp =  experiment.getQuestionId();
                     for (int i = 0; i < temp.size(); i++) {
                         if (temp.get(i).equals(idString)) {
                             temp.remove(i);
