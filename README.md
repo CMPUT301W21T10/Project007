@@ -22,3 +22,6 @@ https://stackoverflow.com/questions/18259644/how-to-check-if-a-string-matches-a-
 https://stackoverflow.com/questions/10770055/use-toast-inside-fragment 
 https://stackoverflow.com/questions/21917107/automatic-date-and-time-in-edittext-android 
 https://stackoverflow.com/questions/43043936/close-a-fragment-on-button-click-which-is-inside-that-fragment 
+
+demo video:
+https://www.youtube.com/watch?v=oTrUELGC-c4
